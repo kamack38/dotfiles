@@ -1,0 +1,77 @@
+[core]
+    editor = code --wait
+	
+[user]
+    name = kamack38
+    email = 64226248+kamack38@users.noreply.github.com
+    signingkey = C4583B304CDA4CA0
+
+[commit]
+    gpgsign = true
+
+[tag]
+    gpgSign = true
+
+[gpg]
+    program = "C:\\Program Files (x86)\\GnuPG\\bin\\gpg.exe"
+
+[alias]
+    dtf = !git --git-dir=$HOME/.dotfiles --work-tree=$HOME
+    alias = !git config --list | grep ^alias\\. | cut -c 7- | grep -Ei --color \"$1\" "#"
+    gconfig = !git config --global
+    commits = !git log --all --graph --pretty=format:'%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+    unstage = restore --staged
+    s = status -s
+    b = branch -a
+    co = checkout
+    pon = !git push -u origin $(git rev-parse --abbrev-ref HEAD)
+    quickhelp = "!{ \
+            echo stash - create stash; \
+            echo clean - revert file to current commit; \
+          };"
+
+# URL shorthands
+
+[url "git@github.com:"]
+
+    insteadOf = "gh:"
+    pushInsteadOf = "github:"
+    pushInsteadOf = "git://github.com/"
+
+[url "git://github.com/"]
+
+    insteadOf = "github:"
+
+[url "git@gist.github.com:"]
+
+    insteadOf = "gst:"
+    pushInsteadOf = "gist:"
+    pushInsteadOf = "git://gist.github.com/"
+
+[url "git://gist.github.com/"]
+
+    insteadOf = "gist:"
+
+[color]
+    ui = true
+
+[help]
+    autocorrect = 1
+
+[pager]
+    diff = delta
+    log = delta
+    reflog = delta
+    show = delta
+
+[delta]
+    plus-style = "syntax #012800"
+    minus-style = "syntax #340001"
+    syntax-theme = dark
+    navigate = true
+    line-numbers = true
+
+[interactive]
+    diffFilter = delta --color-only
+[init]
+    defaultBranch = main
