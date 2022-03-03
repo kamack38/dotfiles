@@ -1,5 +1,10 @@
-pacman -Syu
-pacman -Sy git nodejs python code bat exa croc yt-dlp ffmpeg mpv firefox-developer-edition openjdk delta onefetch discord ngrok neovim 
+sudo pacman -Syu
+sudo pacman -Sy git python code bat exa croc yt-dlp ffmpeg mpv firefox-developer-edition openjdk delta onefetch discord ngrok neovim
+
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
+
+sudo wget https://github.com/JanDeDobbeleer/oh-my-posh/releases/latest/download/posh-linux-amd64 -O /usr/local/bin/oh-my-posh
+sudo chmod +x /usr/local/bin/oh-my-posh
 
 # Install npm packages
 npm i -g carbon-now-cli
