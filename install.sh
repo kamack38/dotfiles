@@ -15,7 +15,7 @@ npm i --prefix ~\.quokka dotenv-quokka-plugin
 npm i --prefix ~\.quokka jsdom-quokka-plugin
 
 # Restore settings files
-DOTFILES="$HOME/dotfiles"
+DOTFILES="$HOME/.dotfiles"
 repo="https://github.com/kamack38/linux-dotfiles.git"
 
 git clone --bare $repo $DOTFILES
