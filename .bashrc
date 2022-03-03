@@ -131,7 +131,7 @@ if ! shopt -oq posix; then
 fi
 
 # Load ohmyposh
-eval "$(oh-my-posh --init --shell bash --config https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/v$(oh-my-posh --version)/themes/jandedobbeleer.omp.json)"
+eval "$(oh-my-posh --init --shell bash --config .config/ohmyposh/kamack.omp.json)"
 
 # Load shell theme
 export_poshconfig "~/.mytheme.omp.json" json
