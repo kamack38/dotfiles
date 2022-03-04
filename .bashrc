@@ -84,10 +84,7 @@ if ! shopt -oq posix; then
 fi
 
 # Load ohmyposh
-eval "$(oh-my-posh --init --shell bash --config .config/ohmyposh/kamack.omp.json)"
+eval "$(oh-my-posh --init --shell bash --config .config/oh-my-posh/kamack.omp.json)"
 
 # Add neofetch
 neofetch
-
-# SETTING THE STARSHIP PROMPT
-# eval "$(starship init bash)"

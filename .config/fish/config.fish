@@ -28,4 +28,4 @@ alias cls="clear"
 
 neofetch
 
-oh-my-posh --init --shell fish --config '~/.config/ohmyposh/kamack.omp.json' | source
+oh-my-posh --init --shell fish --config '~/.config/oh-my-posh/kamack.omp.json' | source
