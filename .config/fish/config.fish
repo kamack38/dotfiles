@@ -1,3 +1,11 @@
+#   ___  __    _____ ______   ________  ________
+#  |\  \|\  \ |\   _ \  _   \|\_____  \|\   __  \
+#  \ \  \/  /|\ \  \\\__\ \  \|_____\  \ \  \|\  \    Kamack38
+#   \ \   ___  \ \  \\|__| \  \|______  \ \   __  \   https://twitter.com/kamack38
+#    \ \  \\ \  \ \  \    \ \  \| ____\  \ \  \|\  \  https://github.com/kamack38
+#     \ \__\\ \__\ \__\    \ \__\|\_______\ \_______\
+#      \|__| \|__|\|__|     \|__|\|_______|\|_______|
+
 if status is-interactive
     # Commands to run in interactive sessions can go here
 end
