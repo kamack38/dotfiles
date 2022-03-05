@@ -11,7 +11,7 @@ if status is-interactive
 end
 
 # Remove fish default greeting
-set --erase fish_greeting
+set fish_greeting
 
 # LS aliases
 alias ll='ls -alF'
