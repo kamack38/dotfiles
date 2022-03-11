@@ -12,9 +12,6 @@
 [tag]
     gpgSign = true
 
-[gpg]
-    program = "C:\\Program Files (x86)\\GnuPG\\bin\\gpg.exe"
-
 [alias]
     dtf = !git --git-dir=$HOME/.dotfiles --work-tree=$HOME
     alias = !git config --list | grep ^alias\\. | cut -c 7- | grep -Ei --color \"$1\" "#"

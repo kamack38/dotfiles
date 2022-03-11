@@ -1,10 +1,19 @@
-sudo pacman -Syu
-sudo pacman -Sy git python code bat exa croc yt-dlp ffmpeg mpv firefox-developer-edition jre-openjdk git-delta onefetch neofetch neovim fish
+pacman -Sy git python code bat exa croc yt-dlp ffmpeg mpv firefox-developer-edition jre-openjdk git-delta onefetch neofetch neovim fish
 
+# Install nvm
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
 
+# Install oh-my-posh
 sudo wget https://github.com/JanDeDobbeleer/oh-my-posh/releases/latest/download/posh-linux-amd64 -O /usr/local/bin/oh-my-posh
 sudo chmod +x /usr/local/bin/oh-my-posh
+
+# Install NeoVim
+git clone https://github.com/NvChad/NvChad ~/.config/nvim --depth 1
+
+nvim \
++'autocmd User PackerComplete sleep 100m | write ~/.packer.sync.result | qall' \
++PackerSync
+cat ~/.packer.sync.result | grep -v 'Press'
 
 # Install ohmyfish
 curl https://raw.githubusercontent.com/oh-my-fish/oh-my-fish/master/bin/install | fish
