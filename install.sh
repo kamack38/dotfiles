@@ -1,4 +1,4 @@
-pacman -Sy git python code bat exa croc yt-dlp ffmpeg mpv firefox-developer-edition jre-openjdk git-delta onefetch neofetch neovim fish
+pacman -Sy --noconfirm --needed git python code bat exa croc yt-dlp ffmpeg mpv firefox-developer-edition jre-openjdk git-delta onefetch neofetch neovim fish
 
 # Install nvm
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
@@ -35,4 +35,4 @@ repo="https://github.com/kamack38/linux-dotfiles.git"
 git clone --bare $repo $DOTFILES
 git --git-dir="$DOTFILES" --work-tree="$HOME" fetch --all
 git --git-dir="$DOTFILES" --work-tree="$HOME" config --local status.showUntrackedFiles no
-git --git-dir="$DOTFILES" --work-tree="$HOME" checkout
+git --git-dir="$DOTFILES" --work-tree="$HOME" checkout --force
