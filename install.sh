@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 pacman -Sy --noconfirm --needed git python code bat exa croc yt-dlp ffmpeg mpv firefox-developer-edition jre-openjdk git-delta onefetch neofetch neovim fish
 
 # Install nvm
