@@ -1,0 +1,29 @@
+{
+    "bracketSpacing": true,
+    "semi": false,
+    "tabWidth": 4,
+    "printWidth": 180,
+    "trailingComma": "all",
+    "singleQuote": true,
+    "arrowParens": "always",
+    "overrides": [
+        {
+            "files": "*.yml",
+            "options": {
+                "tabWidth": 2
+            }
+        },
+        {
+            "files": "*.md",
+            "options": {
+                "tabWidth": 1
+            }
+        },
+        {
+            "files": "*.html",
+            "options": {
+                "printWidth": 160
+            }
+        }
+    ]
+}
