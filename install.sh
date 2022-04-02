@@ -40,18 +40,17 @@ git clone https://github.com/NvChad/NvChad ~/.config/nvim --depth 1
 # +PackerSync
 # cat ~/.packer.sync.result | grep -v 'Press'
 
+# Install npm packages
+npm i -g carbon-now-cli yarn pm2 neovim npm-check-updates git-cz
+
+npm i --prefix ~\.quokka dotenv-quokka-plugin
+npm i --prefix ~\.quokka jsdom-quokka-plugin
+
 # Install ohmyfish
 curl https://raw.githubusercontent.com/oh-my-fish/oh-my-fish/master/bin/install | fish
 
 # Install oh-my-fish plugins
 omf install nvm
-
-# Install npm packages
-npm i -g carbon-now-cli
-npm i -g neovim
-
-npm i --prefix ~\.quokka dotenv-quokka-plugin
-npm i --prefix ~\.quokka jsdom-quokka-plugin
 
 # Restore settings files
 DOTFILES="$HOME/.dotfiles"
