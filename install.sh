@@ -69,7 +69,7 @@ git clone https://github.com/NvChad/NvChad ~/.config/nvim --depth 1
 # cat ~/.packer.sync.result | grep -v 'Press'
 
 # Install ohmyfish
-curl https://raw.githubusercontent.com/oh-my-fish/oh-my-fish/master/bin/install | fish
+curl https://raw.githubusercontent.com/oh-my-fish/oh-my-fish/master/bin/install | fish --
 
 # Install oh-my-fish plugins
 fish -c 'omf install nvm'
