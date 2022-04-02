@@ -23,6 +23,7 @@ alias ..="cd .."
 alias ...="cd ../.."
 alias ....="cd ../../.."
 alias .....="cd ../../../.."
+alias ......="cd ../../../../.."
 # alias ~="cd ~"
 alias cls="clear"
 
