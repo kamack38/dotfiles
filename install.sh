@@ -20,7 +20,7 @@ sudo pacman -Sy --noconfirm --needed neofetch
 sudo pacman -Sy --noconfirm --needed neovim
 sudo pacman -Sy --noconfirm --needed fish
 
-installYay() {
+install_yay() {
     if pacman -Si yay >/dev/null 2>&1; then
         echo "---------------------------"
         echo "Installing yay using pacman"
@@ -37,7 +37,7 @@ installYay() {
     fi
 }
 
-installYay
+install_yay
 
 # Install nvm
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
@@ -69,13 +69,20 @@ git clone https://github.com/NvChad/NvChad ~/.config/nvim --depth 1
 # cat ~/.packer.sync.result | grep -v 'Press'
 
 # Install ohmyfish
-curl https://raw.githubusercontent.com/oh-my-fish/oh-my-fish/master/bin/install | fish -- &
+curl https://raw.githubusercontent.com/oh-my-fish/oh-my-fish/master/bin/install | fish --
 
 # Install oh-my-fish plugins
 fish -c 'omf install nvm'
 
-# Set default shell
-chsh -s /bin/fish &
+setup_shell() {
+    if [ "$(basename -- "$SHELL")" = "fish" ]; then
+        return
+    fi
+    # Set default shell
+    chsh -s /bin/fish
+}
+
+setup_shell
 
 # Restore settings files
 DOTFILES="$HOME/.dotfiles"
