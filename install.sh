@@ -1,9 +1,32 @@
 #!/usr/bin/env bash
 
-pacman -Sy --noconfirm --needed git python code bat exa croc yt-dlp ffmpeg mpv firefox-developer-edition jre-openjdk git-delta onefetch neofetch neovim fish
+sudo pacman -Sy --noconfirm --needed git
+sudo pacman -Sy --noconfirm --needed python
+sudo pacman -Sy --noconfirm --needed code
+sudo pacman -Sy --noconfirm --needed bat
+sudo pacman -Sy --noconfirm --needed exa
+sudo pacman -Sy --noconfirm --needed croc
+sudo pacman -Sy --noconfirm --needed yt-dlp
+sudo pacman -Sy --noconfirm --needed ffmpeg
+sudo pacman -Sy --noconfirm --needed mpv
+sudo pacman -Sy --noconfirm --needed firefox-developer-edition
+sudo pacman -Sy --noconfirm --needed jre-openjdk
+sudo pacman -Sy --noconfirm --needed git-delta
+sudo pacman -Sy --noconfirm --needed onefetch
+sudo pacman -Sy --noconfirm --needed neofetch
+sudo pacman -Sy --noconfirm --needed neovim
+sudo pacman -Sy --noconfirm --needed fish
 
 # Install nvm
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
+
+# Load nvm
+export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+
+# Install Node.js
+nvm install --lts
+nvm use --lts
 
 # Install oh-my-posh
 sudo wget https://github.com/JanDeDobbeleer/oh-my-posh/releases/latest/download/posh-linux-amd64 -O /usr/local/bin/oh-my-posh
