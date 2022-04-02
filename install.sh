@@ -35,10 +35,10 @@ sudo chmod +x /usr/local/bin/oh-my-posh
 # Install NeoVim
 git clone https://github.com/NvChad/NvChad ~/.config/nvim --depth 1
 
-nvim \
-+'autocmd User PackerComplete sleep 100m | write ~/.packer.sync.result | qall' \
-+PackerSync
-cat ~/.packer.sync.result | grep -v 'Press'
+# nvim \
+# +'autocmd User PackerComplete sleep 100m | write ~/.packer.sync.result | qall' \
+# +PackerSync
+# cat ~/.packer.sync.result | grep -v 'Press'
 
 # Install ohmyfish
 curl https://raw.githubusercontent.com/oh-my-fish/oh-my-fish/master/bin/install | fish
