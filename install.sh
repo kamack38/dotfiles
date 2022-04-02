@@ -5,7 +5,7 @@ sudo pacman -S --noconfirm --needed base-devel
 sudo pacman -S --noconfirm --needed wget
 sudo pacman -S --noconfirm --needed ripgrep
 sudo pacman -S --noconfirm --needed python
-sudo pacman -S --noconfirm --needed code
+sudo pacman -S --noconfirm --needed snapd
 sudo pacman -S --noconfirm --needed bat
 sudo pacman -S --noconfirm --needed exa
 sudo pacman -S --noconfirm --needed croc
@@ -38,6 +38,8 @@ install_yay() {
 }
 
 install_yay
+
+yay -S visual-studio-code-bin
 
 # Install nvm
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
