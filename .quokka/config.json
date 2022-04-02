@@ -1,0 +1,7 @@
+{
+    "pro": true,
+    "plugins": [
+        "jsdom-quokka-plugin",
+        "dotenv-quokka-plugin"
+    ]
+}
