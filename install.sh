@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 
 sudo pacman -Sy --noconfirm --needed git
+sudo pacman -Sy --noconfirm --needed base-devel
+sudo pacman -Sy --noconfirm --needed wget
+sudo pacman -Sy --noconfirm --needed ripgrep
 sudo pacman -Sy --noconfirm --needed python
 sudo pacman -Sy --noconfirm --needed code
 sudo pacman -Sy --noconfirm --needed bat
@@ -16,6 +19,12 @@ sudo pacman -Sy --noconfirm --needed onefetch
 sudo pacman -Sy --noconfirm --needed neofetch
 sudo pacman -Sy --noconfirm --needed neovim
 sudo pacman -Sy --noconfirm --needed fish
+
+# Install yay
+git clone "https://aur.archlinux.org/yay.git"
+cd yay && makepkg -si
+cd .. && rm -rf yay
+$YAY_INSTALLED=true
 
 # Install nvm
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
