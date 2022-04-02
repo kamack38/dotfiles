@@ -28,6 +28,12 @@ export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || pr
 nvm install --lts
 nvm use --lts
 
+# Install npm packages
+npm i -g carbon-now-cli yarn pm2 neovim npm-check-updates git-cz
+
+npm i --prefix ~\.quokka dotenv-quokka-plugin
+npm i --prefix ~\.quokka jsdom-quokka-plugin
+
 # Install oh-my-posh
 sudo wget https://github.com/JanDeDobbeleer/oh-my-posh/releases/latest/download/posh-linux-amd64 -O /usr/local/bin/oh-my-posh
 sudo chmod +x /usr/local/bin/oh-my-posh
@@ -40,17 +46,14 @@ git clone https://github.com/NvChad/NvChad ~/.config/nvim --depth 1
 # +PackerSync
 # cat ~/.packer.sync.result | grep -v 'Press'
 
-# Install npm packages
-npm i -g carbon-now-cli yarn pm2 neovim npm-check-updates git-cz
-
-npm i --prefix ~\.quokka dotenv-quokka-plugin
-npm i --prefix ~\.quokka jsdom-quokka-plugin
-
 # Install ohmyfish
 curl https://raw.githubusercontent.com/oh-my-fish/oh-my-fish/master/bin/install | fish
 
 # Install oh-my-fish plugins
-omf install nvm
+fish -c 'omf install nvm'
+
+# Set default shell
+chsh -s /bin/fish
 
 # Restore settings files
 DOTFILES="$HOME/.dotfiles"
