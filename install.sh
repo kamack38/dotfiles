@@ -1,24 +1,24 @@
 #!/usr/bin/env bash
 
 sudo pacman -Sy --noconfirm --needed git
-sudo pacman -Sy --noconfirm --needed base-devel
-sudo pacman -Sy --noconfirm --needed wget
-sudo pacman -Sy --noconfirm --needed ripgrep
-sudo pacman -Sy --noconfirm --needed python
-sudo pacman -Sy --noconfirm --needed code
-sudo pacman -Sy --noconfirm --needed bat
-sudo pacman -Sy --noconfirm --needed exa
-sudo pacman -Sy --noconfirm --needed croc
-sudo pacman -Sy --noconfirm --needed yt-dlp
-sudo pacman -Sy --noconfirm --needed ffmpeg
-sudo pacman -Sy --noconfirm --needed mpv
-sudo pacman -Sy --noconfirm --needed firefox-developer-edition
-sudo pacman -Sy --noconfirm --needed jre-openjdk
-sudo pacman -Sy --noconfirm --needed git-delta
-sudo pacman -Sy --noconfirm --needed onefetch
-sudo pacman -Sy --noconfirm --needed neofetch
-sudo pacman -Sy --noconfirm --needed neovim
-sudo pacman -Sy --noconfirm --needed fish
+sudo pacman -S --noconfirm --needed base-devel
+sudo pacman -S --noconfirm --needed wget
+sudo pacman -S --noconfirm --needed ripgrep
+sudo pacman -S --noconfirm --needed python
+sudo pacman -S --noconfirm --needed code
+sudo pacman -S --noconfirm --needed bat
+sudo pacman -S --noconfirm --needed exa
+sudo pacman -S --noconfirm --needed croc
+sudo pacman -S --noconfirm --needed yt-dlp
+sudo pacman -S --noconfirm --needed ffmpeg
+sudo pacman -S --noconfirm --needed mpv
+sudo pacman -S --noconfirm --needed firefox-developer-edition
+sudo pacman -S --noconfirm --needed jre-openjdk
+sudo pacman -S --noconfirm --needed git-delta
+sudo pacman -S --noconfirm --needed onefetch
+sudo pacman -S --noconfirm --needed neofetch
+sudo pacman -S --noconfirm --needed neovim
+sudo pacman -S --noconfirm --needed fish
 
 install_yay() {
     if pacman -Si yay >/dev/null 2>&1; then
