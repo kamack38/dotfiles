@@ -79,7 +79,7 @@ setup_shell() {
         return
     fi
     # Set default shell
-    chsh -s /bin/fish
+    sudo chsh -s /bin/fish $USER
 }
 
 setup_shell
