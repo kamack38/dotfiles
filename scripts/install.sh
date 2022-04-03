@@ -42,6 +42,7 @@ install_yay
 
 yay -S visual-studio-code-bin
 yay -S openrgb
+yay -S ff2mpv-native-messaging-host-git
 
 # Fix VSCode
 sudo pacman -S gnome-keyring libsecret
