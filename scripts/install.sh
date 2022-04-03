@@ -19,6 +19,7 @@ sudo pacman -S --noconfirm --needed onefetch
 sudo pacman -S --noconfirm --needed neofetch
 sudo pacman -S --noconfirm --needed neovim
 sudo pacman -S --noconfirm --needed fish
+sudo pacman -S --noconfirm --needed github-cli
 
 install_yay() {
     if pacman -Si yay >/dev/null 2>&1; then
