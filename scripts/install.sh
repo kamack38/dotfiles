@@ -40,6 +40,10 @@ install_yay() {
 install_yay
 
 yay -S visual-studio-code-bin
+yay -S openrgb
+
+# Fix VSCode
+sudo pacman -S gnome-keyring libsecret
 
 # Install nvm
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash

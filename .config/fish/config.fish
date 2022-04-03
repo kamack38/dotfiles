@@ -14,8 +14,11 @@ end
 set fish_greeting
 
 # LS aliases
-alias ll='ls -alF'
-alias la='ls -A'
+# alias ll='ls -alF'
+alias ll='exa -alF'
+alias ls='exa'
+# alias la='ls -A'
+alias la='exa -a'
 alias l='ls -CF'
 
 # Easier navigation: .., ..., ...., ....., ~ and -
@@ -26,6 +29,10 @@ alias .....="cd ../../../.."
 alias ......="cd ../../../../.."
 # alias ~="cd ~"
 alias cls="clear"
+
+alias reload="source ~/.config/fish/config.fish"
+
+bind \b 'backward-kill-bigword'
 
 neofetch
 
