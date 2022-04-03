@@ -3,12 +3,12 @@
 # .fonts dir is now deprecated
 # // Create .fonts directory
 # // mkdir ~/.fonts -p
+# // DirPrefix="$HOME/.fonts"
 
 mkdir -p ~/.local/share/fonts
+DirPrefix="$HOME/.local/share/fonts"
 
 installFiraCodeNF() {
-    DirPrefix="$HOME/.fonts"
-
     Prefix="https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/FiraCode"
     Bold="$Prefix/Bold/complete/Fira%20Code%20Bold%20Nerd%20Font%20Complete.ttf"
     Light="$Prefix/Light/complete/Fira%20Code%20Light%20Nerd%20Font%20Complete.ttf"
@@ -28,9 +28,6 @@ installFiraCodeNF() {
 }
 
 installFiraCodeMonoNF() {
-    # DirPrefix="$HOME/.fonts"
-    DirPrefix="$HOME/.local/share/fonts"
-
     Prefix="https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/FiraCode"
     Bold="$Prefix/Bold/complete/Fira%20Code%20Bold%20Nerd%20Font%20Complete%20Mono.ttf"
     Light="$Prefix/Light/complete/Fira%20Code%20Light%20Nerd%20Font%20Complete%20Mono.ttf"
