@@ -32,6 +32,8 @@ alias cls="clear"
 
 alias reload="source ~/.config/fish/config.fish"
 
+export GPG_TTY=(tty)
+
 bind \b 'backward-kill-bigword'
 
 neofetch
