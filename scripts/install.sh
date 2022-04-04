@@ -46,7 +46,7 @@ yay -S openrgb
 yay -S ff2mpv-native-messaging-host-git
 
 # Fix VSCode
-sudo pacman -S gnome-keyring libsecret
+sudo pacman -S --noconfirm --needed gnome-keyring libsecret
 
 # Install nvm
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
