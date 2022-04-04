@@ -3,5 +3,5 @@
 ## Installation
 
 ```bash
-curl -o- https://raw.githubusercontent.com/kamack38/linux-dotfiles/main/install.sh | bash
+curl -o- https://github.com/kamack38/linux-dotfiles/raw/main/scripts/install.sh | bash
 ```
