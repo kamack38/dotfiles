@@ -77,7 +77,7 @@ git clone https://github.com/NvChad/NvChad ~/.config/nvim --depth 1
 # cat ~/.packer.sync.result | grep -v 'Press'
 
 # Install fish plugins with fisher
-fish -c 'fisher install jorgebucaran/nvm.fish'
+fish -c 'fisher install jorgebucaran/nvm.fish' && echo "Installation succeeded!"
 
 setup_shell() {
     if [ "$(basename -- "$SHELL")" = "fish" ]; then
