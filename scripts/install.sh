@@ -41,6 +41,8 @@ install_yay() {
 
 install_yay
 
+yay -Syu
+
 yay -S visual-studio-code-bin --noconfirm --nodiffmenu --noeditmenu --nouseask --nocleanmenu --noupgrademenu
 yay -S ff2mpv-native-messaging-host-git --noconfirm --nodiffmenu --noeditmenu --nouseask --nocleanmenu --noupgrademenu
 
