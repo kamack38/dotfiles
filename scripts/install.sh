@@ -19,6 +19,7 @@ sudo pacman -S --noconfirm --needed onefetch
 sudo pacman -S --noconfirm --needed neofetch
 sudo pacman -S --noconfirm --needed neovim
 sudo pacman -S --noconfirm --needed fish
+sudo pacman -S --noconfirm --needed fisher
 sudo pacman -S --noconfirm --needed github-cli
 sudo pacman -S --noconfirm --needed caprine
 
@@ -45,6 +46,7 @@ yay -Syu
 
 yay -S visual-studio-code-bin --noconfirm --nodiffmenu --noeditmenu --nouseask --nocleanmenu --noupgrademenu
 yay -S ff2mpv-native-messaging-host-git --noconfirm --nodiffmenu --noeditmenu --nouseask --nocleanmenu --noupgrademenu
+yay -S oh-my-posh-bin --noconfirm --nodiffmenu --noeditmenu --nouseask --nocleanmenu --noupgrademenu
 
 # Fix VSCode
 sudo pacman -S --noconfirm --needed gnome-keyring libsecret
@@ -66,11 +68,7 @@ npm i -g carbon-now-cli yarn pm2 neovim npm-check-updates git-cz
 npm i --prefix ~\.quokka dotenv-quokka-plugin
 npm i --prefix ~\.quokka jsdom-quokka-plugin
 
-# Install oh-my-posh
-sudo wget https://github.com/JanDeDobbeleer/oh-my-posh/releases/latest/download/posh-linux-amd64 -O /usr/local/bin/oh-my-posh
-sudo chmod +x /usr/local/bin/oh-my-posh
-
-# Install NeoVim
+# Install NvChad
 git clone https://github.com/NvChad/NvChad ~/.config/nvim --depth 1
 
 # nvim \
@@ -78,11 +76,8 @@ git clone https://github.com/NvChad/NvChad ~/.config/nvim --depth 1
 # +PackerSync
 # cat ~/.packer.sync.result | grep -v 'Press'
 
-# Install ohmyfish
-curl https://raw.githubusercontent.com/oh-my-fish/oh-my-fish/master/bin/install | fish --
-
-# Install oh-my-fish plugins
-fish -c 'omf install nvm'
+# Install fish plugins with fisher
+fish -c 'fisher install jorgebucaran/nvm.fish'
 
 setup_shell() {
     if [ "$(basename -- "$SHELL")" = "fish" ]; then
