@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
 sudo pacman -Sy --noconfirm --needed git
 sudo pacman -S --noconfirm --needed base-devel

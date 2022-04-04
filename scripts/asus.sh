@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
 sudo pacman -Sy alsa-tools --noconfirm
 yay -S asusctl --noconfirm --nodiffmenu --noeditmenu --nouseask --nocleanmenu --noupgrademenu

@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
 # .fonts dir is now deprecated
 # // Create .fonts directory
