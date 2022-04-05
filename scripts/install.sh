@@ -38,29 +38,40 @@ install_yay() {
         cd yay && makepkg -si
         cd .. && rm -rf yay
     fi
+    yay -Syu
 }
 
 install_yay
 
-yay -Syu
-
-yay -S visual-studio-code-bin --noconfirm --nodiffmenu --noeditmenu --nouseask --nocleanmenu --noupgrademenu
-yay -S ff2mpv-native-messaging-host-git --noconfirm --nodiffmenu --noeditmenu --nouseask --nocleanmenu --noupgrademenu
-yay -S oh-my-posh-bin --noconfirm --nodiffmenu --noeditmenu --nouseask --nocleanmenu --noupgrademenu
+yay -S visual-studio-code-bin --needed --noconfirm --nodiffmenu --noeditmenu --nouseask --nocleanmenu --noupgrademenu
+yay -S ff2mpv-native-messaging-host-git --needed --noconfirm --nodiffmenu --noeditmenu --nouseask --nocleanmenu --noupgrademenu
+yay -S oh-my-posh-bin --needed --noconfirm --nodiffmenu --noeditmenu --nouseask --nocleanmenu --noupgrademenu
 
 # Fix VSCode
 sudo pacman -S --noconfirm --needed gnome-keyring libsecret
 
-# Install nvm
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
+setup_node() {
+    # Check if nvm is installed
+    if command -v nvm &>/dev/null; then
+        echo "You have already installed nvm! Skipping..."
+    else
+        echo "Installing nvm..."
+        curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
 
-# Load nvm
-export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+        # Load nvm
+        export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
+        [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+    fi
+    if command -v node &>/dev/null; then
+        echo "You have already installed Node.js! Skipping..."
+    else
+        echo "Installing Node.js..."
+        nvm install --lts
+        nvm use --lts
+    fi
+}
 
-# Install Node.js
-nvm install --lts
-nvm use --lts
+setup_node
 
 # Install npm packages
 npm i -g carbon-now-cli yarn pm2 neovim npm-check-updates git-cz
@@ -86,9 +97,10 @@ setup_fish && echo "Installation succeeded!"
 setup_shell() {
     if [ "$(basename -- "$SHELL")" = "fish" ]; then
         return
+    else
+        # Set default shell
+        sudo chsh -s /bin/fish $USER
     fi
-    # Set default shell
-    sudo chsh -s /bin/fish $USER
 }
 
 setup_shell
