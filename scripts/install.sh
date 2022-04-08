@@ -22,6 +22,8 @@ sudo pacman -S --noconfirm --needed fish
 sudo pacman -S --noconfirm --needed fisher
 sudo pacman -S --noconfirm --needed github-cli
 sudo pacman -S --noconfirm --needed caprine
+sudo pacman -S --noconfirm --needed libqalculate
+sudo pacman -S --noconfirm --needed qalculate-qt
 
 install_yay() {
     if pacman -Si yay >/dev/null 2>&1; then
@@ -87,8 +89,8 @@ git clone https://github.com/NvChad/NvChad ~/.config/nvim --depth 1
 # +PackerSync
 # cat ~/.packer.sync.result | grep -v 'Press'
 
-# Install fish plugins with fisher
 setup_fish() {
+    # Install fish plugins with fisher
     fish -c 'fisher install jorgebucaran/nvm.fish'
 }
 
