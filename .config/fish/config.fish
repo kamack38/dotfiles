@@ -7,35 +7,33 @@
 #      \|__| \|__|\|__|     \|__|\|_______|\|_______|
 
 if status is-interactive
-    # Commands to run in interactive sessions can go here
+    # LS aliases
+    # alias ll='ls -alF'
+    alias ll='exa -alF'
+    alias ls='exa'
+    # alias la='ls -A'
+    alias la='exa -a'
+    alias l='ls -CF'
+    
+    # Easier navigation: .., ..., ...., ....., ~ and -
+    alias ..="cd .."
+    alias ...="cd ../.."
+    alias ....="cd ../../.."
+    alias .....="cd ../../../.."
+    alias ......="cd ../../../../.."
+    # alias ~="cd ~"
+    alias cls="clear"
+    
+    alias reload="source ~/.config/fish/config.fish"
+    
+    export GPG_TTY=(tty)
+    
+    bind \b 'backward-kill-bigword'
+    
+    neofetch
+    
+    oh-my-posh --init --shell fish --config '~/.config/oh-my-posh/kamack.omp.json' | source
 end
 
 # Remove fish default greeting
 set fish_greeting
-
-# LS aliases
-# alias ll='ls -alF'
-alias ll='exa -alF'
-alias ls='exa'
-# alias la='ls -A'
-alias la='exa -a'
-alias l='ls -CF'
-
-# Easier navigation: .., ..., ...., ....., ~ and -
-alias ..="cd .."
-alias ...="cd ../.."
-alias ....="cd ../../.."
-alias .....="cd ../../../.."
-alias ......="cd ../../../../.."
-# alias ~="cd ~"
-alias cls="clear"
-
-alias reload="source ~/.config/fish/config.fish"
-
-export GPG_TTY=(tty)
-
-bind \b 'backward-kill-bigword'
-
-neofetch
-
-oh-my-posh --init --shell fish --config '~/.config/oh-my-posh/kamack.omp.json' | source
