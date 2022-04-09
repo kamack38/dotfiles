@@ -6,34 +6,42 @@
 #     \ \__\\ \__\ \__\    \ \__\|\_______\ \_______\
 #      \|__| \|__|\|__|     \|__|\|_______|\|_______|
 
-if status is-interactive
-    # LS aliases
-    # alias ll='ls -alF'
-    alias ll='exa -alF'
-    alias ls='exa'
-    # alias la='ls -A'
-    alias la='exa -a'
-    alias l='ls -CF'
-    
-    # Easier navigation: .., ..., ...., ....., ~ and -
-    alias ..="cd .."
-    alias ...="cd ../.."
-    alias ....="cd ../../.."
-    alias .....="cd ../../../.."
-    alias ......="cd ../../../../.."
-    # alias ~="cd ~"
-    alias cls="clear"
-    
-    alias reload="source ~/.config/fish/config.fish"
-    
-    export GPG_TTY=(tty)
-    
-    bind \b 'backward-kill-bigword'
-    
-    neofetch
-    
-    oh-my-posh --init --shell fish --config '~/.config/oh-my-posh/kamack.omp.json' | source
-end
-
 # Remove fish default greeting
 set fish_greeting
+
+# LS aliases
+alias ll='exa -alF'
+# alias ll='ls -alF'
+alias ls='exa'
+alias la='exa -a'
+# alias la='ls -A'
+alias l='ls -CF'
+
+# Easier navigation: .., ..., ...., ....., ~ and -
+alias ..="cd .."
+alias ...="cd ../.."
+alias ....="cd ../../.."
+alias .....="cd ../../../.."
+alias ......="cd ../../../../.."
+# alias ~="cd ~"
+alias cls="clear"
+
+alias reload="source ~/.config/fish/config.fish"
+
+export GPG_TTY=(tty)
+
+bind \b 'backward-kill-bigword'
+
+# Cleanup orphaned packages
+alias cleanup='sudo pacman -Rns (pacman -Qtdq)'
+
+# Get the error messages from journalctl
+alias jctl="journalctl -p 3 -xb"
+
+if status is-interactive && type -q neofetch
+    neofetch
+end
+
+if status is-interactive && type -q oh-my-posh
+    oh-my-posh --init --shell fish --config '~/.config/oh-my-posh/kamack.omp.json' | source
+end
