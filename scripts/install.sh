@@ -4,6 +4,7 @@ set -e
 
 #Default vars
 HELPER="paru"
+neovimConfigDir=~/.config/nvim
 
 echo "Doing a system update, cause stuff may break if it's not the latest version..."
 sudo pacman --noconfirm -Syu
@@ -77,7 +78,10 @@ npm i --prefix ~/.quokka dotenv-quokka-plugin
 npm i --prefix ~/.quokka jsdom-quokka-plugin
 
 # Install NvChad
-git clone https://github.com/NvChad/NvChad ~/.config/nvim --depth 1
+if [ ! -d $neovimConfig/.git ]; then
+    echo "Installing NvChad..."
+    git clone https://github.com/NvChad/NvChad $neovimConfig --depth 1
+fi
 
 # nvim \
 # +'autocmd User PackerComplete sleep 100m | write ~/.packer.sync.result | qall' \
