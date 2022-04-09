@@ -26,19 +26,23 @@ sudo pacman -S --noconfirm --needed libqalculate
 sudo pacman -S --noconfirm --needed qalculate-qt
 
 install_yay() {
-    if pacman -Si yay >/dev/null 2>&1; then
-        echo "---------------------------"
-        echo "Installing yay using pacman"
-        echo "---------------------------"
-        sudo pacman -Sy --noconfirm --needed yay
+    if which yay >/dev/null 2>&1; then
+        echo "Yay is already installed!"
     else
-        echo "------------------------"
-        echo "Building yay from source"
-        echo "------------------------"
-        sudo pacman -Sy --noconfirm --needed go
-        git clone "https://aur.archlinux.org/yay.git"
-        cd yay && makepkg -si
-        cd .. && rm -rf yay
+        if pacman -Si yay >/dev/null 2>&1; then
+            echo "---------------------------"
+            echo "Installing yay using pacman"
+            echo "---------------------------"
+            sudo pacman -Sy --noconfirm --needed yay
+        else
+            echo "------------------------"
+            echo "Building yay from source"
+            echo "------------------------"
+            sudo pacman -Sy --noconfirm --needed go
+            git clone "https://aur.archlinux.org/yay.git"
+            cd yay && makepkg -si
+            cd .. && rm -rf yay
+        fi
     fi
     yay -Syu
 }
