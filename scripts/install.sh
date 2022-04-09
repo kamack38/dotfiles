@@ -18,7 +18,7 @@ mkdir -p ~/.srcs
 if ! command -v $HELPER &>/dev/null; then
     echo "It seems that you don't have $HELPER installed, I'll install that for you before continuing."
     git clone https://aur.archlinux.org/$HELPER.git ~/.srcs/$HELPER --force
-    (cd ~/.srcs/$HELPER/ && makepkg -si --noconfirm)
+    (cd ~/.srcs/$HELPER/ && makepkg --noconfirm -si)
 fi
 
 $HELPER -S --noconfirm --needed --quiet ripgrep \
