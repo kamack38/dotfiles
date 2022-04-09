@@ -1,8 +1,8 @@
 local M = {}
 local opt = vim.opt
 
-if vim.fn.has('win32') then
-   opt.shell = 'pwsh -nol'
+if vim.fn.has('win32') == 1 then
+   opt.shell = 'pwsh.exe -nol'
    opt.shellcmdflag = '-nop -c'
    opt.shellquote = '"'
    opt.shellxquote = ''
