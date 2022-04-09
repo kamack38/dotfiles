@@ -41,8 +41,10 @@ alias cleanup='sudo pacman -Rns (pacman -Qtdq)'
 # Get the error messages from journalctl
 alias jctl="journalctl -p 3 -xb"
 
-# Fzf + paru setup
-alias pas="paru -Slq | fzf --multi --preview 'paru -Si {1}' | xargs -ro paru -S"
+# Paru
+alias pas="paru -Slq | fzf --multi --preview 'paru -Si {1}' | xargs -ro paru -S" # fzf package search prompt
+alias yay="paru"
+alias spar="paru --noconfirm"
 
 if status is-interactive && type -q neofetch
     neofetch
