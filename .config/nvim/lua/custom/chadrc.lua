@@ -1,12 +1,14 @@
 local M = {}
 local opt = vim.opt
 
-opt.shell = 'pwsh -nol'
-opt.shellcmdflag = '-nop -c'
-opt.shellquote = '"'
-opt.shellxquote = ''
-opt.shellpipe = '| Out-File -Encoding UTF8 %s'
-opt.shellredir = '| Out-File -Encoding UTF8 %s'
+if vim.fn.has('win32') == 1 then
+   opt.shell = 'pwsh.exe -nol'
+   opt.shellcmdflag = '-nop -c'
+   opt.shellquote = '"'
+   opt.shellxquote = ''
+   opt.shellpipe = '| Out-File -Encoding UTF8 %s'
+   opt.shellredir = '| Out-File -Encoding UTF8 %s'
+end
 
 M.ui = {
   theme = "onedark"
