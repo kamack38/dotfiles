@@ -28,6 +28,9 @@ alias cls="clear"
 
 alias reload="source ~/.config/fish/config.fish"
 
+alias tarnow='tar -acf '
+alias untar='tar -xvf '
+
 export GPG_TTY=(tty)
 
 bind \b 'backward-kill-bigword'
