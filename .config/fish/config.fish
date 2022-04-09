@@ -23,7 +23,7 @@ alias ...="cd ../.."
 alias ....="cd ../../.."
 alias .....="cd ../../../.."
 alias ......="cd ../../../../.."
-# alias ~="cd ~"
+
 alias cls="clear"
 
 alias reload="source ~/.config/fish/config.fish"

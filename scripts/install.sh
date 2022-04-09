@@ -45,10 +45,9 @@ $HELPER -S --noconfirm --needed --quiet ripgrep \
     ff2mpv-native-messaging-host-git \
     oh-my-posh-bin \
     fzf \
-    nvm
-
-# Fix VSCode
-sudo pacman -S --noconfirm --needed gnome-keyring libsecret
+    nvm \
+    gnome-keyring \
+    libsecret
 
 if ! command -v nvm &>/dev/null; then
     echo "Loading nvm..."
