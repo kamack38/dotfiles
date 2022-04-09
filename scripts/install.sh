@@ -45,7 +45,8 @@ $HELPER -S --noconfirm --needed --quiet ripgrep \
     visual-studio-code-bin \
     ff2mpv-native-messaging-host-git \
     oh-my-posh-bin \
-    fzf
+    fzf \
+    nvm
 
 # Fix VSCode
 sudo pacman -S --noconfirm --needed gnome-keyring libsecret
