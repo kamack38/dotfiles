@@ -1,5 +1,6 @@
 #!/bin/bash
 
+set -x
 sudo pacman -Sy --noconfirm --needed git
 sudo pacman -S --noconfirm --needed base-devel
 sudo pacman -S --noconfirm --needed wget

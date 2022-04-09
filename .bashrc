@@ -88,3 +88,4 @@ eval "$(oh-my-posh --init --shell bash --config ~/.config/oh-my-posh/kamack.omp.
 
 # Add neofetch
 neofetch
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
