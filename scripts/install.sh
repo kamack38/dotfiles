@@ -94,8 +94,6 @@ setup_fish() {
     fish -c 'fisher install jorgebucaran/nvm.fish'
 }
 
-setup_fish && echo "Installation succeeded!"
-
 setup_shell() {
     if [ "$(basename -- "$SHELL")" = "fish" ]; then
         return
@@ -105,27 +103,31 @@ setup_shell() {
     fi
 }
 
-setup_shell
+setup_dotfiles() {
+    # Restore settings files
+    DOTFILES="$HOME/.dotfiles"
+    repo="https://github.com/kamack38/linux-dotfiles.git"
 
-# Restore settings files
-DOTFILES="$HOME/.dotfiles"
-repo="https://github.com/kamack38/linux-dotfiles.git"
+    git clone --bare $repo $DOTFILES
+    git --git-dir="$DOTFILES" --work-tree="$HOME" fetch --all
+    git --git-dir="$DOTFILES" --work-tree="$HOME" config --local status.showUntrackedFiles no
+    git --git-dir="$DOTFILES" --work-tree="$HOME" checkout --force
+}
 
-git clone --bare $repo $DOTFILES
-git --git-dir="$DOTFILES" --work-tree="$HOME" fetch --all
-git --git-dir="$DOTFILES" --work-tree="$HOME" config --local status.showUntrackedFiles no
-git --git-dir="$DOTFILES" --work-tree="$HOME" checkout --force
+setup_others() {
+    read -p "Do you want to setup NerdFonts? [y/N] " fonts_setup
 
-read -p "Do you want to setup NerdFonts? [y/N] " fonts_setup
+    if [[ $fonts_setup == "y*" ]]; then
+        echo "Running script..."
+        bash ~/script/fonts.sh
+    fi
 
-if [[ $fonts_setup == "y*" ]]; then
-    echo "Running script..."
-    bash ~/script/fonts.sh
-fi
+    read -p "Do you want to run script for asus laptops? [y/N] " asus_script
 
-read -p "Do you want to run script for asus laptops? [y/N] " asus_script
+    if [[ $asus_script == "y*" ]]; then
+        echo "Running script..."
+        bash ~/script/asus.sh
+    fi
+}
 
-if [[ $asus_script == "y*" ]]; then
-    echo "Running script..."
-    bash ~/script/asus.sh
-fi
+setup_fish && setup_shell && setup_dotfiles && setup_others
