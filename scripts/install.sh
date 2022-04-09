@@ -1,6 +1,5 @@
 #!/bin/env bash
 
-set -x
 set -e
 
 #Default vars
