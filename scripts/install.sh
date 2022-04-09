@@ -47,7 +47,8 @@ $HELPER -S --noconfirm --needed --quiet ripgrep \
     fzf \
     nvm \
     gnome-keyring \
-    libsecret
+    libsecret \
+    nerd-fonts-fira-code
 
 if ! command -v nvm &>/dev/null; then
     echo "Loading nvm..."
@@ -72,8 +73,8 @@ npm i -g carbon-now-cli \
     npm-check-updates \
     git-cz
 
-npm i --prefix ~\.quokka dotenv-quokka-plugin
-npm i --prefix ~\.quokka jsdom-quokka-plugin
+npm i --prefix ~/.quokka dotenv-quokka-plugin
+npm i --prefix ~/.quokka jsdom-quokka-plugin
 
 # Install NvChad
 git clone https://github.com/NvChad/NvChad ~/.config/nvim --depth 1
@@ -85,9 +86,7 @@ git clone https://github.com/NvChad/NvChad ~/.config/nvim --depth 1
 
 fish -c 'fisher install jorgebucaran/nvm.fish'
 
-if [ "$(basename -- "$SHELL")" = "fish" ]; then
-    return
-else
+if [ ! "$(basename -- "$SHELL")" = "fish" ]; then
     # Set default shell
     sudo chsh -s /bin/fish $USER
 fi

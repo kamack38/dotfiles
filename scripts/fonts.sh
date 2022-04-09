@@ -46,10 +46,8 @@ installFiraCodeMonoNF() {
     wget $Retina -O "$DirPrefix/$FilePrefix Retina.ttf"
 }
 
-# installFiraCodeNF
-# installFiraCodeMonoNF
-
-yay -S nerd-fonts-fira-code --needed --noconfirm --nodiffmenu --noeditmenu --nouseask --nocleanmenu --noupgrademenu
+installFiraCodeNF
+installFiraCodeMonoNF
 
 read -p "Do you want to refresh font cache? [y/N] " refresh
 
