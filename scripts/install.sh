@@ -22,30 +22,30 @@ if ! command -v $HELPER &>/dev/null; then
 fi
 
 $HELPER -S --noconfirm --needed --quiet ripgrep \
-python \
-snapd \
-bat \
-exa \
-croc \
-yt-dlp \
-ffmpeg \
-mpv \
-firefox-developer-edition \
-jre-openjdk \
-git-delta \
-onefetch \
-neofetch \
-neovim \
-fish \
-fisher \
-github-cli \
-caprine \
-libqalculate \
-qalculate-qt \
-visual-studio-code-bin \
-ff2mpv-native-messaging-host-git \
-oh-my-posh-bin \
-fzf
+    python \
+    snapd \
+    bat \
+    exa \
+    croc \
+    yt-dlp \
+    ffmpeg \
+    mpv \
+    firefox-developer-edition \
+    jre-openjdk \
+    git-delta \
+    onefetch \
+    neofetch \
+    neovim \
+    fish \
+    fisher \
+    github-cli \
+    caprine \
+    libqalculate \
+    qalculate-qt \
+    visual-studio-code-bin \
+    ff2mpv-native-messaging-host-git \
+    oh-my-posh-bin \
+    fzf
 
 # Fix VSCode
 sudo pacman -S --noconfirm --needed gnome-keyring libsecret
@@ -67,11 +67,11 @@ fi
 
 # Install npm packages
 npm i -g carbon-now-cli \
-yarn \
-pm2 \
-neovim \
-npm-check-updates \
-git-cz
+    yarn \
+    pm2 \
+    neovim \
+    npm-check-updates \
+    git-cz
 
 npm i --prefix ~\.quokka dotenv-quokka-plugin
 npm i --prefix ~\.quokka jsdom-quokka-plugin
