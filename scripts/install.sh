@@ -50,7 +50,9 @@ $HELPER -S --noconfirm --needed --quiet ripgrep \
     nvm \
     gnome-keyring \
     libsecret \
-    nerd-fonts-fira-code
+    nerd-fonts-fira-code \
+    tldr \
+    procs
 
 if ! command -v nvm &>/dev/null; then
     echo "Loading nvm..."
