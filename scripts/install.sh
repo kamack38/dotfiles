@@ -4,7 +4,7 @@ set -e
 
 #Default vars
 HELPER="paru"
-neovimConfigDir=~/.config/nvim
+neovimConfigDir="$HOME/.config/nvim"
 
 echo "Doing a system update, cause stuff may break if it's not the latest version..."
 sudo pacman --noconfirm -Syu
@@ -12,14 +12,14 @@ sudo pacman --noconfirm -Syu
 sudo pacman -S --noconfirm --needed base-devel wget git
 
 # Create dirs
-mkdir -p ~/.local/share/fonts
+mkdir -p $HOME/.local/share/fonts
 mkdir -p $neovimConfigDir
-mkdir -p ~/.srcs
+mkdir -p $HOME/.srcs
 
 if ! command -v $HELPER &>/dev/null; then
     echo "It seems that you don't have $HELPER installed, I'll install that for you before continuing."
-    git clone https://aur.archlinux.org/$HELPER.git ~/.srcs/$HELPER
-    (cd ~/.srcs/$HELPER/ && makepkg --noconfirm -si)
+    git clone https://aur.archlinux.org/$HELPER.git $HOME/.srcs/$HELPER
+    (cd $HOME/.srcs/$HELPER/ && makepkg --noconfirm -si)
 fi
 
 $HELPER -S --noconfirm --needed --quiet ripgrep \
@@ -79,18 +79,18 @@ npm i -g carbon-now-cli \
     npm-check-updates \
     git-cz
 
-npm i --prefix ~/.quokka dotenv-quokka-plugin
-npm i --prefix ~/.quokka jsdom-quokka-plugin
+npm i --prefix $HOME/.quokka dotenv-quokka-plugin
+npm i --prefix $HOME/.quokka jsdom-quokka-plugin
 
 # Install NvChad
 echo "Installing NvChad..."
-mv $neovimConfigDir ~/.config/NVIM.BAK
+mv $neovimConfigDir $HOME/.config/NVIM.BAK
 git clone https://github.com/NvChad/NvChad $neovimConfigDir --depth 1
 
 nvim \
-    +'autocmd User PackerComplete sleep 100m | write ~/.packer.sync.result | qall' \
+    +'autocmd User PackerComplete sleep 100m | write $HOME/.packer.sync.result | qall' \
     +PackerSync
-cat ~/.packer.sync.result | grep -v 'Press'
+cat $HOME/.packer.sync.result | grep -v 'Press'
 
 fish -c 'fisher install jorgebucaran/nvm.fish'
 
@@ -111,12 +111,12 @@ read -r -p "Do you want to setup NerdFonts? [y/N] " fonts_setup
 
 if [[ $fonts_setup == y* ]]; then
     echo "Running script..."
-    bash ~/scripts/fonts.sh
+    bash $HOME/scripts/fonts.sh
 fi
 
 read -r -p "Do you want to run script for asus laptops? [y/N] " asus_script
 
 if [[ $asus_script == y* ]]; then
     echo "Running script..."
-    bash ~/scripts/asus.sh
+    bash $HOME/scripts/asus.sh
 fi
