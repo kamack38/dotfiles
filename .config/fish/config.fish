@@ -17,6 +17,9 @@ alias la='exa -a'
 # alias la='ls -A'
 alias l='ls -CF'
 
+# -------
+# Aliases
+# -------
 # Easier navigation: .., ..., ...., ....., ~ and -
 alias ..="cd .."
 alias ...="cd ../.."
@@ -30,6 +33,8 @@ alias reload="source ~/.config/fish/config.fish"
 
 alias tarnow='tar -acf '
 alias untar='tar -xvf '
+
+alias of="onefetch"
 
 export GPG_TTY=(tty)
 
