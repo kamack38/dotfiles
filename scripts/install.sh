@@ -53,7 +53,8 @@ $HELPER -S --noconfirm --needed --quiet ripgrep \
     nerd-fonts-fira-code \
     tldr \
     procs \
-    dust
+    dust \
+    bottom
 
 if ! command -v nvm &>/dev/null; then
     echo "Loading nvm..."
