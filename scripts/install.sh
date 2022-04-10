@@ -13,6 +13,7 @@ sudo pacman -S --noconfirm --needed base-devel wget git
 
 # Create dirs
 mkdir -p ~/.local/share/fonts
+mkdir -p neovimConfigDir
 mkdir -p ~/.srcs
 
 if ! command -v $HELPER &>/dev/null; then
