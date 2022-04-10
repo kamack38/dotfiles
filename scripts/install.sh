@@ -78,10 +78,9 @@ npm i --prefix ~/.quokka dotenv-quokka-plugin
 npm i --prefix ~/.quokka jsdom-quokka-plugin
 
 # Install NvChad
-if [ ! -d $neovimConfig/.git ]; then
-    echo "Installing NvChad..."
-    git clone https://github.com/NvChad/NvChad $neovimConfig --depth 1
-fi
+echo "Installing NvChad..."
+mv $neovimConfigDir ~/.config/NVIM.BAK
+git clone https://github.com/NvChad/NvChad $neovimConfigDir --depth 1
 
 # nvim \
 # +'autocmd User PackerComplete sleep 100m | write ~/.packer.sync.result | qall' \
