@@ -83,10 +83,10 @@ echo "Installing NvChad..."
 mv $neovimConfigDir ~/.config/NVIM.BAK
 git clone https://github.com/NvChad/NvChad $neovimConfigDir --depth 1
 
-# nvim \
-# +'autocmd User PackerComplete sleep 100m | write ~/.packer.sync.result | qall' \
-# +PackerSync
-# cat ~/.packer.sync.result | grep -v 'Press'
+nvim \
+    +'autocmd User PackerComplete sleep 100m | write ~/.packer.sync.result | qall' \
+    +PackerSync
+cat ~/.packer.sync.result | grep -v 'Press'
 
 fish -c 'fisher install jorgebucaran/nvm.fish'
 
