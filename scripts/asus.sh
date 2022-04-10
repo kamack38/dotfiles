@@ -3,9 +3,9 @@
 HELPER="paru"
 
 $HELPER -S --noconfirm --needed --quiet asusctl \
-alsa-tools \
-optimus-manager-qt \
-openrgb
+    alsa-tools \
+    optimus-manager-qt \
+    openrgb
 
 # slow internet
 # sudo sysctl net.ipv4.tcp_ecn=0
