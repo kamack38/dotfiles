@@ -105,14 +105,14 @@ git --git-dir="$DOTFILES" --work-tree="$HOME" checkout --force
 
 read -r -p "Do you want to setup NerdFonts? [y/N] " fonts_setup
 
-if [[ $fonts_setup == "y*" ]]; then
+if [[ $fonts_setup == y* ]]; then
     echo "Running script..."
     bash ~/script/fonts.sh
 fi
 
 read -r -p "Do you want to run script for asus laptops? [y/N] " asus_script
 
-if [[ $asus_script == "y*" ]]; then
+if [[ $asus_script == y* ]]; then
     echo "Running script..."
     bash ~/script/asus.sh
 fi
