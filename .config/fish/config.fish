@@ -9,17 +9,15 @@
 # Remove fish default greeting
 set fish_greeting
 
-# LS aliases
-alias ll='exa -alF'
-# alias ll='ls -alF'
-alias ls='exa'
-alias la='exa -a'
-# alias la='ls -A'
-alias l='ls -CF'
-
 # -------
 # Aliases
 # -------
+# LS aliases
+alias ll='exa -alF'
+alias ls='exa'
+alias la='exa -a'
+alias lt='exa -T'
+
 # Easier navigation: .., ..., ...., ....., ~ and -
 alias ..="cd .."
 alias ...="cd ../.."
