@@ -1,0 +1,33 @@
+{
+    "html": {
+        "snippets": {
+            "link:gfonts": "link[rel='preconnect' href='https://fonts.googleapis.com']+link[rel='preconnect' href='https://fonts.gstatic.com']",
+            "link:roboto": "link[href='https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap']",
+            "link:montserrat": "link[href='https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap']",
+
+            "meta:og:type": "meta[property='og:type' content=${1:website}]",
+            "meta:og:url": "meta[property='og:url' content=${1:https://metatags.io/}]",
+            "meta:og:title": "meta[property='og:title' content=${1:Meta Tags — Preview, Edit and Generate}]",
+            "meta:og:description": "meta[property='og:description' content=${1:Meta Tags Description}]",
+            "meta:og:image": "meta[property='og:image' content=${1:./img/banner.png}]",
+            "meta:og": "meta:og:type+meta:og:url+meta:og:title+meta:og:description+meta:og:image",
+
+            "meta:twitter:card": "meta[property='twitter:card' content=${1:summary_large_image}]",
+            "meta:twitter:url": "meta[property='twitter:url' content=${1:https://metatags.io/}]",
+            "meta:twitter:title": "meta[property='twitter:title' content=${1:title}]",
+            "meta:twitter:description": "meta[property='twitter:description' content=${1:description}]",
+            "meta:twitter:image": "meta[property='twitter:image' content=${1:./img/img.png}]",
+            "meta:twitter": "meta:twitter:card+meta:twitter:url+meta:twitter:title+meta:twitter:description+meta:twitter:image",
+
+            "navbar": "nav[aria-label='${1:Main}']>ul>(li>a[aria-current='page']{${2:Current Page}})+(li*3>a{${0:Another Page}})"
+        }
+    },
+    "css": {
+        "snippets": {
+            "gtc": "grid-template-columns:${1:repeat(${2})}|minmax(${1})",
+            "gtr": "grid-template-rows:${1:repeat(${2})}|minmax(${1})",
+            "gt": "grid-template:${1:repeat(${2})}${3}|minmax(${1})",
+            "ff": "font-family:'${1:Roboto}',sans-serif"
+        }
+    }
+}
