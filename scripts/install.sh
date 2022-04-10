@@ -107,12 +107,12 @@ read -r -p "Do you want to setup NerdFonts? [y/N] " fonts_setup
 
 if [[ $fonts_setup == y* ]]; then
     echo "Running script..."
-    bash ~/script/fonts.sh
+    bash ~/scripts/fonts.sh
 fi
 
 read -r -p "Do you want to run script for asus laptops? [y/N] " asus_script
 
 if [[ $asus_script == y* ]]; then
     echo "Running script..."
-    bash ~/script/asus.sh
+    bash ~/scripts/asus.sh
 fi
