@@ -88,4 +88,6 @@ fi
 eval "$(oh-my-posh --init --shell bash --config ~/.config/oh-my-posh/kamack.omp.json)"
 
 # Add neofetch
-neofetch
+if command -v neofetch &>/dev/null; then
+    neofetch
+fi
