@@ -7,7 +7,7 @@
 
             "meta:og:type": "meta[property='og:type' content=${1:website}]",
             "meta:og:url": "meta[property='og:url' content=${1:https://metatags.io/}]",
-            "meta:og:title": "meta[property='og:title' content=${1:Meta Tags — Preview, Edit and Generate}]",
+            "meta:og:title": "meta[property='og:title' content=${1:Meta Tags - Preview, Edit and Generate}]",
             "meta:og:description": "meta[property='og:description' content=${1:Meta Tags Description}]",
             "meta:og:image": "meta[property='og:image' content=${1:./img/banner.png}]",
             "meta:og": "meta:og:type+meta:og:url+meta:og:title+meta:og:description+meta:og:image",
