@@ -35,7 +35,7 @@ $HELPER -S --noconfirm --needed --quiet ripgrep \
     jre-openjdk \
     git-delta \
     onefetch \
-    neofetch \
+    neofetch-git \
     neovim \
     fish \
     fisher \
