@@ -4,6 +4,7 @@ HELPER="paru"
 
 $HELPER -S --noconfirm --needed --quiet asusctl \
     alsa-tools \
+    optimus-manager \
     optimus-manager-qt \
     openrgb
 

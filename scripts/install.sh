@@ -54,7 +54,8 @@ $HELPER -S --noconfirm --needed --quiet ripgrep \
     tldr \
     procs \
     dust \
-    bottom
+    bottom \
+    shfmt-bin
 
 if ! command -v nvm &>/dev/null; then
     echo "Loading nvm..."
