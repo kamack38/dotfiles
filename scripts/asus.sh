@@ -6,7 +6,8 @@ $HELPER -S --noconfirm --needed --quiet asusctl \
     alsa-tools \
     optimus-manager \
     optimus-manager-qt \
-    openrgb
+    openrgb \
+    polybar
 
 # slow internet
 # sudo sysctl net.ipv4.tcp_ecn=0
