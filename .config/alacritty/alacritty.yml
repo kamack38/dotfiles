@@ -1,0 +1,8 @@
+window:
+  dimensions:
+    columns: 112
+    lines: 28
+  opacity: 0.75
+
+scrolling:
+  auto_scroll: false
