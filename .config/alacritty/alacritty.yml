@@ -2,7 +2,19 @@ window:
   dimensions:
     columns: 112
     lines: 28
-  opacity: 0.75
+
+  padding:
+    x: 4
+    y: 2
+
+  opacity: 0.8
+
+font:
+  normal:
+    family: FiraCode Nerd Font
+    style: medium
+
+  size: 10
 
 scrolling:
   auto_scroll: false

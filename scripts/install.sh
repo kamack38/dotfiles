@@ -47,7 +47,6 @@ $HELPER -S --noconfirm --needed --quiet ripgrep \
     ff2mpv-native-messaging-host-git \
     oh-my-posh-bin \
     fzf \
-    nvm \
     gnome-keyring \
     libsecret \
     nerd-fonts-fira-code \
@@ -55,24 +54,27 @@ $HELPER -S --noconfirm --needed --quiet ripgrep \
     procs \
     dust \
     bottom \
-    shfmt-bin
+    shfmt-bin \
+    cava
 
-if ! command -v nvm &>/dev/null; then
-    echo "Loading nvm..."
-    source /usr/share/nvm/init-nvm.sh
-else
-    echo "Nvm is already loaded!"
-fi
+# Works only in bash
+# if ! command -v nvm &>/dev/null; then
+#     echo "Loading nvm..."
+#     source /usr/share/nvm/init-nvm.sh
+# else
+#     echo "Nvm is already loaded!"
+# fi
 
-if command -v node &>/dev/null; then
-    echo "You have already installed Node.js! Skipping..."
-else
-    echo "Installing Node.js..."
-    nvm install --lts
-    nvm use --lts
-fi
+# if command -v node &>/dev/null; then
+#     echo "You have already installed Node.js! Skipping..."
+# else
+#     echo "Installing Node.js..."
+#     nvm install --lts
+#     nvm use --lts
+# fi
 
-# Install npm packages
+# Install node & npm packages
+fish -c 'fisher install jorgebucaran/nvm.fish && nvm install lts'
 npm i -g carbon-now-cli \
     yarn \
     pm2 \
@@ -92,8 +94,6 @@ nvim \
     +'autocmd User PackerComplete sleep 100m | write $HOME/.packer.sync.result | qall' \
     +PackerSync
 cat $HOME/.packer.sync.result | grep -v 'Press'
-
-fish -c 'fisher install jorgebucaran/nvm.fish'
 
 if [ ! "$(basename -- "$SHELL")" = "fish" ]; then
     # Set default shell

@@ -45,14 +45,14 @@ alias cleanup='sudo pacman -Rns (pacman -Qtdq)'
 alias jctl="journalctl -p 3 -xb"
 
 # Paru
-function pas
-    paru -Slq | fzf --multi --preview 'paru -Si {1}' -q$argv | xargs -ro paru -S # fzf package search prompt
+function pas --description 'Search and install a package' -a pkg
+    command paru -Slq | fzf --multi --preview 'paru -Si {1}' -q$pkg | xargs -ro paru -S
 end
-function paq
-    paru -Qq | fzf --multi --preview 'paru -Si {1}' -q$argv | xargs -ro paru -Qi # fzf package querry prompt
+function paq --description 'Search and show info about a package' -a pkg
+    command paru -Qq | fzf --multi --preview 'paru -Si {1}' -q$pkg | xargs -ro paru -Qi
 end
-function par
-    paru -Qq | fzf --multi --preview 'paru -Si {1}' -q$argv | xargs -ro paru -Rns # fzf package querry prompt
+function par --description 'Search and remove a package' -a pkg
+    command paru -Qq | fzf --multi --preview 'paru -Si {1}' -q$pkg | xargs -ro paru -Rns # fzf package remove prompt
 end
 alias pan="paru --noconfirm"
 alias yay="paru"
@@ -61,7 +61,7 @@ alias yay="paru"
 function ffmpeg-extract-audio
     set -l input $argv[1]
     set -l output $argv[2]
-    ffmpeg -i "$input" -vn -f mp3 "$output"
+    command ffmpeg -i "$input" -vn -f mp3 "$output"
 end
 
 if status is-interactive && type -q neofetch
@@ -71,3 +71,5 @@ end
 if status is-interactive && type -q oh-my-posh
     oh-my-posh --init --shell fish --config '~/.config/oh-my-posh/kamack.omp.json' | source
 end
+
+# bluez bluez-utils # Bluetooth
