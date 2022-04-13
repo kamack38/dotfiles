@@ -5,11 +5,11 @@
 # // mkdir ~/.fonts -p
 # // DirPrefix="$HOME/.fonts"
 
-mkdir -p ~/.local/share/fonts
-DirPrefix="$HOME/.local/share/fonts"
+DirPrefix="$HOME/.local/share/fonts/FiraCode"
+mkdir -p $DirPrefix
 
 installFiraCodeNF() {
-    Prefix="https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/FiraCode"
+    Prefix="https://raw.githubusercontent.com/ryanoasis/nerd-fonts/master/patched-fonts/FiraCode/"
     Bold="$Prefix/Bold/complete/Fira%20Code%20Bold%20Nerd%20Font%20Complete.ttf"
     Light="$Prefix/Light/complete/Fira%20Code%20Light%20Nerd%20Font%20Complete.ttf"
     Medium="$Prefix/Medium/complete/Fira%20Code%20Medium%20Nerd%20Font%20Complete.ttf"
@@ -28,7 +28,7 @@ installFiraCodeNF() {
 }
 
 installFiraCodeMonoNF() {
-    Prefix="https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/FiraCode"
+    Prefix="https://raw.githubusercontent.com/ryanoasis/nerd-fonts/master/patched-fonts/FiraCode/"
     Bold="$Prefix/Bold/complete/Fira%20Code%20Bold%20Nerd%20Font%20Complete%20Mono.ttf"
     Light="$Prefix/Light/complete/Fira%20Code%20Light%20Nerd%20Font%20Complete%20Mono.ttf"
     Medium="$Prefix/Medium/complete/Fira%20Code%20Medium%20Nerd%20Font%20Complete%20Mono.ttf"
@@ -51,7 +51,7 @@ installFiraCodeMonoNF
 
 read -p "Do you want to refresh font cache? [y/N] " refresh
 
-if [[ $refresh == "y*" ]]; then
+if [[ $refresh == y* ]]; then
     echo "Refreshing font cache..."
     sudo fc-cache -fv
 fi

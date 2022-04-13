@@ -49,13 +49,18 @@ $HELPER -S --noconfirm --needed --quiet ripgrep \
     fzf \
     gnome-keyring \
     libsecret \
-    nerd-fonts-fira-code \
     tldr \
     procs \
     dust \
     bottom \
     shfmt-bin \
-    cava
+    cava \
+    ngrok \
+    ttf-font-awesome \
+    rofi \
+    jq
+
+# nerd-fonts-fira-code \
 
 # Works only in bash
 # if ! command -v nvm &>/dev/null; then
@@ -108,7 +113,7 @@ git --git-dir="$DOTFILES" --work-tree="$HOME" fetch --all
 git --git-dir="$DOTFILES" --work-tree="$HOME" config --local status.showUntrackedFiles no
 git --git-dir="$DOTFILES" --work-tree="$HOME" checkout --force
 
-read -r -p "Do you want to setup NerdFonts? [y/N] " fonts_setup
+read -r -p "Do you want to setup additional fonts? [y/N] " fonts_setup
 
 if [[ $fonts_setup == y* ]]; then
     echo "Running script..."
