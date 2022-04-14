@@ -24,6 +24,7 @@ fi
 
 $HELPER -S --noconfirm --needed --quiet ripgrep \
     python \
+    python-pip \
     snapd \
     bat \
     exa \
@@ -58,7 +59,8 @@ $HELPER -S --noconfirm --needed --quiet ripgrep \
     ngrok \
     ttf-font-awesome \
     rofi \
-    jq
+    jq \
+    playerctl
 
 # nerd-fonts-fira-code \
 
@@ -77,6 +79,9 @@ $HELPER -S --noconfirm --needed --quiet ripgrep \
 #     nvm install --lts
 #     nvm use --lts
 # fi
+
+# Install pip packages
+pip install dbus-python
 
 # Install node & npm packages
 fish -c 'fisher install jorgebucaran/nvm.fish && nvm install lts'
