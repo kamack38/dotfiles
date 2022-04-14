@@ -36,7 +36,9 @@ alias of="onefetch"
 
 export GPG_TTY=(tty)
 
+# Keybindings
 bind \b backward-kill-bigword
+bind \e\[3\;5~ kill-word
 
 # Cleanup orphaned packages
 alias cleanup='sudo pacman -Rns (pacman -Qtdq)'
