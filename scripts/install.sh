@@ -61,7 +61,8 @@ $HELPER -S --noconfirm --needed --quiet ripgrep \
     rofi \
     jq \
     playerctl \
-    mpv-mpris
+    mpv-mpris \
+    spicetify-cli
 
 # nerd-fonts-fira-code \
 
@@ -95,6 +96,9 @@ npm i -g carbon-now-cli \
 
 npm i --prefix $HOME/.quokka dotenv-quokka-plugin
 npm i --prefix $HOME/.quokka jsdom-quokka-plugin
+
+# Install spicetify-cli themes
+git clone https://github.com/spicetify/spicetify-themes.git $HOME/.config/spicetify/Themes/
 
 # Install NvChad
 echo "Installing NvChad..."
