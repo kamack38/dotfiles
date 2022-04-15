@@ -1,10 +1,5 @@
 #!/bin/bash
 
-# .fonts dir is now deprecated
-# // Create .fonts directory
-# // mkdir ~/.fonts -p
-# // DirPrefix="$HOME/.fonts"
-
 DirPrefix="$HOME/.local/share/fonts/FiraCode"
 mkdir -p $DirPrefix
 

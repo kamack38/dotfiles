@@ -6,12 +6,25 @@
 #     \ \__\\ \__\ \__\    \ \__\|\_______\ \_______\
 #      \|__| \|__|\|__|     \|__|\|_______|\|_______|
 
+
+# ------------
+# Envs
+# ------------
 # Remove fish default greeting
 set fish_greeting
 
-# -------
+# Set default node version
+set --universal nvm_default_version v16
+
+# ------------
+# Keybindings
+# ------------
+bind \b backward-kill-bigword
+bind \e\[3\;5~ kill-word
+
+# ------------
 # Aliases
-# -------
+# ------------
 # LS aliases
 alias ll='exa -alF'
 alias ls='exa'
@@ -35,10 +48,6 @@ alias untar='tar -xvf '
 alias of="onefetch"
 
 export GPG_TTY=(tty)
-
-# Keybindings
-bind \b backward-kill-bigword
-bind \e\[3\;5~ kill-word
 
 # Cleanup orphaned packages
 alias cleanup='sudo pacman -Rns (pacman -Qtdq)'
@@ -73,5 +82,3 @@ end
 if status is-interactive && type -q oh-my-posh
     oh-my-posh --init --shell fish --config '~/.config/oh-my-posh/kamack.omp.json' | source
 end
-
-# bluez bluez-utils # Bluetooth
