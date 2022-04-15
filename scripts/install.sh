@@ -60,7 +60,8 @@ $HELPER -S --noconfirm --needed --quiet ripgrep \
     ttf-font-awesome \
     rofi \
     jq \
-    playerctl
+    playerctl \
+    mpv-mpris
 
 # nerd-fonts-fira-code \
 
