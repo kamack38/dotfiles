@@ -1,6 +1,6 @@
 [Desktop Entry]
 Type=Application
-Exec=$HOME/.config/polybar/launch.sh
+Exec=bash $HOME/.config/polybar/launch.sh
 Hidden=false
 X-MATE-Autostart-enabled=true
 Name=Polybar
