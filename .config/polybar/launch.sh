@@ -8,6 +8,7 @@ polybar-msg cmd quit
 
 # Launch bar1 and bar2
 echo "---" | tee -a /tmp/polybar1.log /tmp/polybar2.log
+
 polybar km38-top 2>&1 | tee -a /tmp/polybar1.log &
 disown
 polybar km38-btm 2>&1 | tee -a /tmp/polybar2.log &
