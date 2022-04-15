@@ -62,6 +62,7 @@ $HELPER -S --noconfirm --needed --quiet ripgrep \
     jq \
     playerctl \
     mpv-mpris \
+    spotify \
     spicetify-cli
 
 # nerd-fonts-fira-code \
