@@ -8,7 +8,8 @@ $HELPER -S --noconfirm --needed --quiet asusctl \
     optimus-manager-qt \
     openrgb \
     polybar \
-    spectacle
+    spectacle \
+    latte-dock
 
 # slow internet
 # sudo sysctl net.ipv4.tcp_ecn=0
