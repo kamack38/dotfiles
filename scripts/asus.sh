@@ -7,7 +7,8 @@ $HELPER -S --noconfirm --needed --quiet asusctl \
     optimus-manager \
     optimus-manager-qt \
     openrgb \
-    polybar
+    polybar \
+    spectacle
 
 # slow internet
 # sudo sysctl net.ipv4.tcp_ecn=0
