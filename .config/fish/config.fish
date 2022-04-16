@@ -57,7 +57,7 @@ alias jctl="journalctl -p 3 -xb"
 
 # Paru
 function pas --description 'Search and install a package' -a pkg
-    command paru -Slq | fzf --multi --preview 'paru -Si {1}' -q$pkg | xargs -ro paru -S
+    command paru -Slq | fzf --multi --preview 'paru -Si {1}' -q$pkg | xargs -ro paru -S --review
 end
 function paq --description 'Search and show info about a package' -a pkg
     command paru -Qq | fzf --multi --preview 'paru -Si {1}' -q$pkg | xargs -ro paru -Qi
