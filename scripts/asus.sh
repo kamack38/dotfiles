@@ -6,7 +6,7 @@ $HELPER -S --noconfirm --needed --quiet asusctl \
     alsa-tools \
     optimus-manager \
     optimus-manager-qt \
-    openrgb \
+    openrgb-git \
     polybar \
     spectacle \
     latte-dock
