@@ -30,25 +30,32 @@
 
 # URL shorthands
 
+# Github
 [url "git@github.com:"]
-
     insteadOf = "gh:"
     pushInsteadOf = "github:"
     pushInsteadOf = "git://github.com/"
 
 [url "git://github.com/"]
-
     insteadOf = "github:"
 
+# Gist
 [url "git@gist.github.com:"]
-
     insteadOf = "gst:"
     pushInsteadOf = "gist:"
     pushInsteadOf = "git://gist.github.com/"
 
 [url "git://gist.github.com/"]
-
     insteadOf = "gist:"
+
+# Gitlab
+[url "git@gitlab.com:"]
+    insteadOf = "gl:"
+    pushInsteadOf = "gitlab:"
+    pushInsteadOf = "git://gitlab.com/"
+
+[url "git://gitlab.com/"]
+    insteadOf = "gitlab:"
 
 [color]
     ui = true
