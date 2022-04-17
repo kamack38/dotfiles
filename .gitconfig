@@ -22,6 +22,7 @@
     b = branch -a
     co = checkout
     cm = !git cz && git push
+    cdf = diff --cached
     pon = !git push -u origin $(git rev-parse --abbrev-ref HEAD)
     quickhelp = "!{ \
             echo stash - create stash; \
