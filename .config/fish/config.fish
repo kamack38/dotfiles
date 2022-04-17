@@ -42,6 +42,7 @@ alias cls="clear"
 
 alias reload="source ~/.config/fish/config.fish"
 alias udev-reload="sudo udevadm control --reload-rules && sudo udevadm trigger"
+alias gpg-reload="gpg-connect-agent reloadagent /bye"
 
 alias tarnow='tar -acf '
 alias untar='tar -xvf '
