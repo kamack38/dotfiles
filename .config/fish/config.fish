@@ -10,11 +10,11 @@
 # ------------
 # Envs
 # ------------
-# Remove fish default greeting
-set fish_greeting
-
 # Set default node version
 set --universal nvm_default_version v16
+
+# Set gpg tty
+export GPG_TTY=(tty)
 
 # ------------
 # Keybindings
@@ -49,8 +49,6 @@ alias untar='tar -xvf '
 
 alias of="onefetch"
 
-export GPG_TTY=(tty)
-
 # Cleanup orphaned packages
 alias cleanup='sudo pacman -Rns (pacman -Qtdq)'
 
@@ -77,7 +75,7 @@ function ffmpeg-extract-audio
     command ffmpeg -i "$input" -vn -f mp3 "$output"
 end
 
-if status is-interactive && type -q neofetch
+function fish_greeting
     neofetch
 end
 
