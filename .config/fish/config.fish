@@ -68,7 +68,7 @@ alias pan="paru --noconfirm"
 alias yay="paru"
 
 # ffmpeg
-function ffmpeg-extract-audio
+function ffmpeg-extract-audio -d 'Extracts audio from video'
     set -l input $argv[1]
     set -l output $argv[2]
     command ffmpeg -i "$input" -vn -f mp3 "$output"

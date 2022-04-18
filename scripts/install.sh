@@ -63,7 +63,9 @@ $HELPER -S --noconfirm --needed --quiet ripgrep \
     playerctl \
     mpv-mpris \
     spotify \
-    spicetify-cli
+    spicetify-cli \
+    update-grub \
+    gnupg
 
 # nerd-fonts-fira-code \
 
@@ -87,7 +89,7 @@ $HELPER -S --noconfirm --needed --quiet ripgrep \
 pip install dbus-python
 
 # Install node & npm packages
-fish -c 'fisher install jorgebucaran/nvm.fish && nvm install lts'
+fish -c 'fisher install jorgebucaran/nvm.fish && nvm install lts && nvm use lts'
 npm i -g carbon-now-cli \
     yarn \
     pm2 \
@@ -111,8 +113,8 @@ nvim \
     +PackerSync
 cat $HOME/.packer.sync.result | grep -v 'Press'
 
+# Set default shell to fish
 if [ ! "$(basename -- "$SHELL")" = "fish" ]; then
-    # Set default shell
     sudo chsh -s /bin/fish $USER
 fi
 

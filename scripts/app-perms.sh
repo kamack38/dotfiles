@@ -1,5 +1,7 @@
 #!/bin/env bash
 
+# Allow setting backlight
+
 # Get backlight card
 CARD=$(ls /sys/class/backlight/ | awk '{print $1 }')
 
