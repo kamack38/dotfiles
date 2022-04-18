@@ -67,24 +67,6 @@ $HELPER -S --noconfirm --needed --quiet ripgrep \
     update-grub \
     gnupg
 
-# nerd-fonts-fira-code \
-
-# Works only in bash
-# if ! command -v nvm &>/dev/null; then
-#     echo "Loading nvm..."
-#     source /usr/share/nvm/init-nvm.sh
-# else
-#     echo "Nvm is already loaded!"
-# fi
-
-# if command -v node &>/dev/null; then
-#     echo "You have already installed Node.js! Skipping..."
-# else
-#     echo "Installing Node.js..."
-#     nvm install --lts
-#     nvm use --lts
-# fi
-
 # Install pip packages
 pip install dbus-python
 
