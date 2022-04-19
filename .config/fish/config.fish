@@ -50,6 +50,8 @@ alias untar='tar -xvf '
 
 alias of="onefetch"
 
+alias makesrcinfo="makepkg --printsrcinfo > .SRCINFO"
+
 # Cleanup orphaned packages
 alias cleanup='sudo pacman -Rns (pacman -Qtdq)'
 

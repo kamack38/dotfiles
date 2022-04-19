@@ -18,6 +18,7 @@
     gconfig = !git config --global
     commits = !git log --all --graph --pretty=format:'%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
     unstage = restore --staged
+    clean-branches = remote prune origin
     s = status -s
     b = branch -a
     co = checkout
@@ -57,6 +58,12 @@
 
 [url "git://gitlab.com/"]
     insteadOf = "gitlab:"
+
+# AUR
+[url "aur@aur.archlinux.org:"]
+    insteadOf = "aur:"
+    pushInsteadOf = "git://aur@aur.archlinux.org"
+
 
 [color]
     ui = true
