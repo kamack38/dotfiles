@@ -13,4 +13,5 @@ $HELPER -S --noconfirm --needed --quiet xorg \
 sudo systemctl enable ssdm
 sudo systemctl enable NetworkManager
 
+# Remove unnecessary dependencies
 $HELPER -Rns --noconfirm konsole

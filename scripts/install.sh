@@ -26,6 +26,7 @@ $HELPER -S --noconfirm --needed --quiet ripgrep \
     python \
     python-pip \
     snapd \
+    flatpak \
     bat \
     exa \
     croc \
