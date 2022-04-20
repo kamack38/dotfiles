@@ -122,3 +122,22 @@ if [[ $asus_script == y* ]]; then
     echo "Running script..."
     bash $HOME/scripts/asus.sh
 fi
+
+echo "Which DE do you want to install?"
+read -r -p "1) None 2) KDE 3) xfce (Default = 1): " de_script
+
+case $de_script in
+
+2)
+    echo "Installing KDE..."
+    bash "$HOME/scripts/kde.sh"
+    ;;
+
+3)
+    echo "Installing xfce..."
+    bash "$HOME/scripts/xfce.sh"
+    ;;
+*)
+    echo "Skipping..."
+    ;;
+esac
