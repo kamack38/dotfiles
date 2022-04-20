@@ -73,7 +73,7 @@ alias yay="paru"
 
 # Flatpak
 function fltpk --description 'Search for flatpak packages' -a pkg
-    command flatpak remote-ls --columns=application,origin,name | fzf --multi --with-nth=3..8 --preview 'flatpak remote-info {2} {1}' -q$pkg | xargs -ro flatpak install # fzf package install prompt
+    command flatpak remote-ls --columns=application,origin,name | fzf --multi --with-nth=3.. --preview 'flatpak remote-info {2} {1}' -q$pkg | xargs -ro flatpak install # fzf package install prompt
 end
 
 # ffmpeg
