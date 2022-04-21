@@ -192,7 +192,7 @@ view_zoom_out=Meta+-,Meta+-,Zoom Out
 
 [lattedock]
 _k_friendly_name=Latte Dock
-activate entry 1=Esc\tMeta+1,Meta+1,Activate Entry 1
+activate entry 1=Meta+1,Meta+1,Activate Entry 1
 activate entry 10=none,Meta+0,Activate Entry 10
 activate entry 11=none,Meta+Z,Activate Entry 11
 activate entry 12=none,Meta+X,Activate Entry 12
