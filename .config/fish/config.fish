@@ -68,12 +68,20 @@ end
 function par --description 'Search and remove a package' -a pkg
     command paru -Qq | fzf --multi --preview 'paru -Si {1}' -q$pkg | xargs -ro paru -Rns # fzf package remove prompt
 end
+alias paru-clean-cache="paru -Sc"
 alias pan="paru --noconfirm"
 alias yay="paru"
 
 # Flatpak
 function fltpk --description 'Search for flatpak packages' -a pkg
     command flatpak remote-ls --columns=application,origin,name | fzf --multi --with-nth=3.. --preview 'flatpak remote-info {2} {1}' -q$pkg | xargs -ro flatpak install # fzf package install prompt
+end
+
+# Bottles
+if ! command -v bottles-cli
+    function bottles-cli
+        flatpak run --command=bottles-cli com.usebottles.bottles
+    end
 end
 
 # ffmpeg

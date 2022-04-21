@@ -18,6 +18,12 @@ SigLevel = DatabaseNever Optional TrustAll
 Server = https://arch.asus-linux.org
 EOT
 
+# Add multilib repo
+# sudo tee -a /etc/pacman.conf >/dev/null <<EOT
+# [multilib]
+# Include = /etc/pacman.d/mirrorlist
+# EOT
+
 # slow internet
 # sudo sysctl net.ipv4.tcp_ecn=0
 
