@@ -60,13 +60,13 @@ alias jctl="journalctl -p 3 -xb"
 
 # Paru
 function pas --description 'Search and install a package' -a pkg
-    command paru -Slq | fzf --multi --preview 'paru -Si {1}' -q$pkg | xargs -ro paru -S --review
+    command paru -Slq | fzf --multi --preview 'paru -Si {1}' --preview-window wrap -q$pkg | xargs -ro paru -S --review
 end
 function paq --description 'Search and show info about a package' -a pkg
-    command paru -Qq | fzf --multi --preview 'paru -Si {1}' -q$pkg | xargs -ro paru -Qi
+    command paru -Qq | fzf --multi --preview 'paru -Si {1}' --preview-window wrap -q$pkg | xargs -ro paru -Qi
 end
 function par --description 'Search and remove a package' -a pkg
-    command paru -Qq | fzf --multi --preview 'paru -Si {1}' -q$pkg | xargs -ro paru -Rns # fzf package remove prompt
+    command paru -Qq | fzf --multi --preview 'paru -Si {1}' --preview-window wrap -q$pkg | xargs -ro paru -Rns # fzf package remove prompt
 end
 alias paru-clean-cache="paru -Sc"
 alias pan="paru --noconfirm"
@@ -74,7 +74,7 @@ alias yay="paru"
 
 # Flatpak
 function fltpk --description 'Search for flatpak packages' -a pkg
-    command flatpak remote-ls --columns=application,origin,name | fzf --multi --with-nth=3.. --preview 'flatpak remote-info {2} {1}' -q$pkg | xargs -ro flatpak install # fzf package install prompt
+    command flatpak remote-ls --columns=application,origin,name | fzf --multi --with-nth=3.. --preview 'flatpak remote-info {2} {1}' --preview-window wrap -q$pkg | xargs -ro flatpak install # fzf package install prompt
 end
 
 # Bottles
