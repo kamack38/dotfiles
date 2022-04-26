@@ -26,7 +26,7 @@ cp -f "$HOME/.wakatime.cfg" "$backupDir/.wakatime.cfg"
 cp -rf "$HOME/.ssh" "$backupDir/.ssh"
 
 # Backup gpg keys
-gpg --output "$backupDir/backupkeys.pgp" --armor --export-secret-keys --export-options export-backup
+gpg --output "$backupDir/.keys/backupkeys.pgp" --armor --export-secret-keys --export-options export-backup
 
 # Create a tar archive
 tar -czvf backup.tar.gz --directory="$backupDir" .
