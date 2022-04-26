@@ -20,6 +20,7 @@
     unstage = restore --staged
     clean-branches = remote prune origin
     s = status -s
+    u = add -u
     b = branch -a
     co = checkout
     cm = !git cz && git push

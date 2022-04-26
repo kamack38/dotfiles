@@ -66,7 +66,8 @@ $HELPER -S --noconfirm --needed --quiet ripgrep \
     spotify \
     spicetify-cli \
     update-grub \
-    gnupg
+    gnupg \
+    unrar
 
 # Install pip packages
 pip install dbus-python
