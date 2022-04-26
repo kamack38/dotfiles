@@ -280,6 +280,7 @@
                     "foreground": "#d3d7cf",
                     "invert_powerline": true,
                     "powerline_symbol": "\ue0b0",
+                    "template": " {{ if gt .Code 0 }}\uf00d{{ else }}\uf42e{{ end }} ",
                     "properties": {
                         "always_enabled": true
                     },
