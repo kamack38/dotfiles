@@ -67,7 +67,8 @@ $HELPER -S --noconfirm --needed --quiet ripgrep \
     spicetify-cli \
     update-grub \
     gnupg \
-    unrar
+    unrar \
+    gdb
 
 # Install pip packages
 pip install dbus-python
