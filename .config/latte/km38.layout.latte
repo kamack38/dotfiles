@@ -18,10 +18,10 @@ onPrimary=true
 plugin=org.kde.latte.containment
 raiseOnActivityChange=false
 raiseOnDesktopChange=false
-timerHide=200
-timerShow=50
+timerHide=300
+timerShow=10
 viewType=0
-visibility=1
+visibility=2
 wallpaperplugin=org.kde.image
 
 [Containments][16][Applets][42]
@@ -37,7 +37,9 @@ DialogWidth=720
 
 [Containments][16][Applets][42][Configuration][General]
 favoritesPortedToKAstats=true
-systemFavorites=suspend\\,hibernate\\,reboot\\,shutdown
+primaryActions=3
+showActionButtonCaptions=false
+systemFavorites=lock-screen\\,logout\\,save-session\\,switch-user\\,suspend\\,hibernate\\,reboot\\,shutdown
 
 [Containments][16][Applets][42][Shortcuts]
 global=
@@ -47,7 +49,7 @@ immutability=1
 plugin=org.kde.plasma.icontasks
 
 [Containments][16][Applets][43][Configuration]
-PreloadWeight=25
+PreloadWeight=45
 
 [Containments][16][Applets][43][Configuration][ConfigDialog]
 DialogHeight=540
@@ -67,18 +69,21 @@ PreloadWeight=2
 
 [Containments][16][General]
 advanced=false
-alignment=0
 alignmentUpgraded=true
 appletOrder=42;43
+durationTime=x1
 editBackgroundOpacity=0.1
 iconSize=56
 maxLength=58
-panelSize=10
+panelSize=5
+shadowColor=000000
 shadowOpacity=60
 shadowSize=45
 shadows=All
 shadowsUpgraded=true
 showGlow=false
+splitterPosition=1
+splitterPosition2=4
 tasksUpgraded=true
 titleTooltips=false
 zoomLevel=2
