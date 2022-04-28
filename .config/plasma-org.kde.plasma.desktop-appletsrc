@@ -21,7 +21,7 @@ wallpaperplugin=org.kde.image
 memory/physical/used=61,174,233
 
 [Containments][1][ConfigDialog]
-DialogHeight=968
+DialogHeight=953
 DialogWidth=1527
 
 [Containments][1][Configuration]
@@ -31,8 +31,11 @@ PreloadWeight=0
 ToolBoxButtonState=topcenter
 ToolBoxButtonX=879
 
+[Containments][1][Wallpaper][com.github.casout.wallpaperEngineKde][General]
+SteamLibraryPath[$e]=file:$HOME/.local/share/Steam
+
 [Containments][1][Wallpaper][org.kde.image][General]
-Image=file:///opt/dwall-git/firewatch/20.png
+Image=/usr/share/backgrounds/archcraft/onedark.png
 SlidePaths=/usr/share/wallpapers
 
 [Containments][17]

@@ -135,6 +135,10 @@ ForegroundNormal=252,252,252
 ForegroundPositive=39,174,96
 ForegroundVisited=155,89,182
 
+[DirSelect Dialog]
+DirSelectDialog Size=844,598
+History Items[$e]=file:$HOME/.local/share/Steam
+
 [General]
 BrowserApplication=firefox-developer-edition.desktop
 ColorSchemeHash=d0b3d2da363261958945ede41bfed4e1744dd286
