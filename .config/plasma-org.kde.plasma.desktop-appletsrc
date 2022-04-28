@@ -59,7 +59,7 @@ ToolBoxButtonState=topcenter
 ToolBoxButtonX=559
 
 [Containments][17][Wallpaper][org.kde.image][General]
-Image=file:///opt/dwall-git/firewatch/20.png
+Image=file:///usr/share/backgrounds/minimal/minimal-20.jpeg
 SlidePaths=/usr/share/wallpapers
 
 [Containments][50]
