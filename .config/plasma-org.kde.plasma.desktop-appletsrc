@@ -15,7 +15,7 @@ immutability=1
 lastScreen=0
 location=0
 plugin=org.kde.plasma.folder
-wallpaperplugin=com.github.casout.wallpaperEngineKde
+wallpaperplugin=org.kde.image
 
 [Containments][1][Applets][23][Configuration][SensorColors]
 memory/physical/used=61,174,233
@@ -33,6 +33,7 @@ ToolBoxButtonX=879
 
 [Containments][1][Wallpaper][com.github.casout.wallpaperEngineKde][General]
 DisplayMode=1
+PauseMode=2
 SteamLibraryPath[$e]=file:$HOME/.local/share/Steam
 VideoBackend=1
 WallpaperFilePath[$e]=file:$HOME/.local/share/Steam/steamapps/workshop/content/431960/1954098547/scene.json
@@ -84,7 +85,7 @@ immutability=1
 plugin=org.kde.plasma.systemtray
 
 [Containments][50][Applets][52][Configuration]
-PreloadWeight=100
+PreloadWeight=92
 SystrayContainmentId=53
 
 [Containments][50][ConfigDialog]
@@ -92,7 +93,7 @@ DialogHeight=1080
 DialogWidth=168
 
 [Containments][50][Configuration]
-PreloadWeight=18
+PreloadWeight=10
 
 [Containments][50][General]
 AppletOrder=52
@@ -111,42 +112,42 @@ immutability=1
 plugin=org.kde.plasma.clipboard
 
 [Containments][53][Applets][54][Configuration]
-PreloadWeight=18
+PreloadWeight=10
 
 [Containments][53][Applets][55]
 immutability=1
 plugin=org.kde.plasma.devicenotifier
 
 [Containments][53][Applets][55][Configuration]
-PreloadWeight=33
+PreloadWeight=25
 
 [Containments][53][Applets][56]
 immutability=1
 plugin=org.kde.plasma.keyboardlayout
 
 [Containments][53][Applets][56][Configuration]
-PreloadWeight=18
+PreloadWeight=10
 
 [Containments][53][Applets][57]
 immutability=1
 plugin=org.kde.plasma.manage-inputmethod
 
 [Containments][53][Applets][57][Configuration]
-PreloadWeight=18
+PreloadWeight=10
 
 [Containments][53][Applets][58]
 immutability=1
 plugin=org.kde.plasma.notifications
 
 [Containments][53][Applets][58][Configuration]
-PreloadWeight=38
+PreloadWeight=30
 
 [Containments][53][Applets][59]
 immutability=1
 plugin=org.kde.plasma.volume
 
 [Containments][53][Applets][59][Configuration]
-PreloadWeight=23
+PreloadWeight=15
 
 [Containments][53][Applets][59][Configuration][General]
 volumeStep=2
@@ -163,17 +164,17 @@ immutability=1
 plugin=org.kde.plasma.battery
 
 [Containments][53][Applets][61][Configuration]
-PreloadWeight=33
+PreloadWeight=25
 
 [Containments][53][Applets][62]
 immutability=1
 plugin=org.kde.plasma.networkmanagement
 
 [Containments][53][Applets][62][Configuration]
-PreloadWeight=100
+PreloadWeight=92
 
 [Containments][53][Configuration]
-PreloadWeight=18
+PreloadWeight=10
 
 [Containments][53][General]
 extraItems=org.kde.plasma.battery,org.kde.plasma.clipboard,org.kde.plasma.devicenotifier,org.kde.plasma.keyboardlayout,org.kde.plasma.manage-inputmethod,org.kde.plasma.mediacontroller,org.kde.plasma.networkmanagement,org.kde.plasma.notifications,org.kde.plasma.volume
