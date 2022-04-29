@@ -15,13 +15,13 @@ immutability=1
 lastScreen=0
 location=0
 plugin=org.kde.plasma.folder
-wallpaperplugin=org.kde.image
+wallpaperplugin=com.github.casout.wallpaperEngineKde
 
 [Containments][1][Applets][23][Configuration][SensorColors]
 memory/physical/used=61,174,233
 
 [Containments][1][ConfigDialog]
-DialogHeight=953
+DialogHeight=935
 DialogWidth=1527
 
 [Containments][1][Configuration]
@@ -32,10 +32,15 @@ ToolBoxButtonState=topcenter
 ToolBoxButtonX=879
 
 [Containments][1][Wallpaper][com.github.casout.wallpaperEngineKde][General]
+DisplayMode=1
 SteamLibraryPath[$e]=file:$HOME/.local/share/Steam
+VideoBackend=1
+WallpaperFilePath[$e]=file:$HOME/.local/share/Steam/steamapps/workshop/content/431960/1954098547/scene.json
+WallpaperType=scene
+WallpaperWorkShopId=1954098547
 
 [Containments][1][Wallpaper][org.kde.image][General]
-Image=/usr/share/backgrounds/archcraft/onedark.png
+Image=file:///usr/share/backgrounds/archcraft/onedark.png
 SlidePaths=/usr/share/wallpapers
 
 [Containments][17]

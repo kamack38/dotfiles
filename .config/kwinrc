@@ -7,9 +7,11 @@ OpenGLIsUnsafe=false
 [Desktops]
 Id_1=1db74693-b3ca-4ec4-8848-bee6c3544534
 Id_2=c7c4a8b8-3118-4b4d-9af9-b10b433cde10
+Id_3=3a67b6b2-1e60-4bf0-94e1-ef612aebe464
 Name_1=Main
 Name_2=Second
-Number=2
+Name_3=Social
+Number=3
 Rows=1
 
 [ModifierOnlyShortcuts]
