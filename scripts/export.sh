@@ -5,6 +5,7 @@ firefoxConfigPath="$HOME/.mozilla/firefox"
 firefoxProfileName="Profile0"
 backupDir="$HOME/.backup"
 
+# Create backup directory
 mkdir -p "$backupDir/firefox"
 
 # Copy firefox settings
@@ -14,7 +15,7 @@ cp -rf "$firefoxConfigPath/$firefoxProfilePath" "$backupDir/firefox/$firefoxProf
 cp -rf "$firefoxConfigPath/profiles.ini" "$backupDir/firefox/profiles.ini"
 
 # Copy ngrok settings
-cp -rf "$HOME/.ngrok2" "$backupDir/.ngrok2"
+cp -rf "$HOME/.config/ngrok" "$backupDir/.config/ngrok"
 
 # Copy tokens/keys
 cp -rf "$HOME/.keys" "$backupDir/.keys"

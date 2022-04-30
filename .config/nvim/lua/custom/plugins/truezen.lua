@@ -1,6 +1,4 @@
-local true_zen = require "true-zen"
-
-true_zen.setup {
+require("true-zen").setup {
    ui = {
       bottom = {
          laststatus = 0,

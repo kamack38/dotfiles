@@ -70,7 +70,8 @@ $HELPER -S --noconfirm --needed --quiet ripgrep \
     unrar \
     gdb \
     mangohud \
-    wakatime
+    wakatime \
+    ueberzug
 
 # Install pip packages
 pip install dbus-python

@@ -1,41 +1,46 @@
 return {
-   { "wakatime/vim-wakatime" },
-   { "Pocco81/TrueZen.nvim" },
-   {
-      "andweeb/presence.nvim",
+   ["goolord/alpha-nvim"] = { disable = false, },
+   ["wakatime/vim-wakatime"] = {},
+   ["Pocco81/TrueZen.nvim"] = {
+      cmd = {
+         "TZAtaraxis",
+         "TZMinimalist",
+         "TZFocus",
+      },
       config = function()
-            require("presence"):setup({ main_image = "file" })
+         require "custom.plugins.truezen"
       end,
    },
-   {
-      "williamboman/nvim-lsp-installer",
+   ["andweeb/presence.nvim"] = {
       config = function()
-         require "custom.plugins.lspconfig"
+         require("presence"):setup({ main_image = "file" })
       end,
-
-      -- lazy load!
-      setup = function()
-         require("core.utils").packer_lazy_load "nvim-lsp-installer"
-         -- reload the current file so lsp actually starts for it
-         vim.defer_fn(function()
-            vim.cmd 'if &ft == "packer" | echo "" | else | silent! e %'
-         end, 0)
-      end,
-      opt = true,
    },
-   {
-      "karb94/neoscroll.nvim",
-      opt = true,
+   ["nvim-telescope/telescope-media-files.nvim"] = {
+      after = "telescope.nvim",
+      config = function()
+         require("telescope").setup {
+            extensions = {
+               media_files = {
+                  filetypes = { "png", "webp", "jpg", "jpeg" },
+                  find_cmd = "rg", -- find command (defaults to `fd`)
+               },
+            },
+         }
+         require("telescope").load_extension "media_files"
+      end,
+   },
+   ["karb94/neoscroll.nvim"] = {
       config = function()
          require("neoscroll").setup()
       end,
+
       -- lazy loading
       setup = function()
          require("core.utils").packer_lazy_load "neoscroll.nvim"
       end,
    },
-   {
-      "jose-elias-alvarez/null-ls.nvim",
+   ["jose-elias-alvarez/null-ls.nvim"] = {
       after = "nvim-lspconfig",
       config = function()
          require("custom.plugins.null-ls").setup()
