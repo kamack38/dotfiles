@@ -115,20 +115,6 @@ git --git-dir="$DOTFILES" --work-tree="$HOME" fetch --all
 git --git-dir="$DOTFILES" --work-tree="$HOME" config --local status.showUntrackedFiles no
 git --git-dir="$DOTFILES" --work-tree="$HOME" checkout --force
 
-read -r -p "Do you want to setup additional fonts? [y/N] " fonts_setup
-
-if [[ $fonts_setup == y* ]]; then
-    echo "Running script..."
-    bash $HOME/scripts/fonts.sh
-fi
-
-read -r -p "Do you want to run script for asus laptops? [y/N] " asus_script
-
-if [[ $asus_script == y* ]]; then
-    echo "Running script..."
-    bash $HOME/scripts/asus.sh
-fi
-
 echo "Which DE do you want to install?"
 read -r -p "1) None 2) KDE 3) xfce (Default = 1): " de_script
 
@@ -147,3 +133,25 @@ case $de_script in
     echo "Skipping..."
     ;;
 esac
+
+read -r -p "Do you want to setup additional programming fonts? [y/N] " fonts_setup
+
+if [[ $fonts_setup == y* ]]; then
+    echo "Running font script..."
+    bash $HOME/scripts/fonts.sh
+fi
+
+read -r -p "Do you want to run script for asus laptops? [y/N] " asus_script
+
+if [[ $asus_script == y* ]]; then
+    echo "Running asus script..."
+    bash $HOME/scripts/asus.sh
+fi
+
+read -r -p "Do you want to run script for razer hardware? [y/N] " razer_script
+
+if [[ $razer_script == y* ]]; then
+    echo "Running razer script..."
+    bash $HOME/scripts/razer.sh
+fi
+

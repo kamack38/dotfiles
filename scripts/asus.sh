@@ -6,9 +6,7 @@ $HELPER -S --noconfirm --needed --quiet asusctl-git \
     alsa-tools \
     optimus-manager \
     optimus-manager-qt \
-    polybar \
-    spectacle \
-    latte-dock
+    polybar
 
 # Add asusctl repo
 if grep -Fxq "[g14]" /etc/pacman.conf; then

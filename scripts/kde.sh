@@ -7,6 +7,7 @@ HELPER="paru"
 $HELPER -S --noconfirm --needed --quiet xorg \
     plasma-meta \
     kde-applications \
+    spectacle \
     latte-dock
 
 # Enable services
