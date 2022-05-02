@@ -15,7 +15,7 @@ installFiraCodeNF() {
     FilePrefix="FiraCode NF"
 
     wget $Bold -O "$DirPrefix/$FilePrefix Bold.ttf"
-    wget $Loght -O "$DirPrefix/$FilePrefix Light.ttf"
+    wget $Light -O "$DirPrefix/$FilePrefix Light.ttf"
     wget $Medium -O "$DirPrefix/$FilePrefix Medium.ttf"
     wget $Regular -O "$DirPrefix/$FilePrefix Regular.ttf"
     wget $SemiBold -O "$DirPrefix/$FilePrefix SemiBold.ttf"
@@ -34,7 +34,7 @@ installFiraCodeMonoNF() {
     FilePrefix="FiraCodeMono NF"
 
     wget $Bold -O "$DirPrefix/$FilePrefix Bold.ttf"
-    wget $Loght -O "$DirPrefix/$FilePrefix Light.ttf"
+    wget $Light -O "$DirPrefix/$FilePrefix Light.ttf"
     wget $Medium -O "$DirPrefix/$FilePrefix Medium.ttf"
     wget $Regular -O "$DirPrefix/$FilePrefix Regular.ttf"
     wget $SemiBold -O "$DirPrefix/$FilePrefix SemiBold.ttf"

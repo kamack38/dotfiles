@@ -14,16 +14,11 @@ if vim.fn.has('win32') == 1 then
 end
 
 M.ui = {
-   theme = "onedark"
+   theme = "onedark",
+   transparency = true,
 }
 
 M.plugins = {
-   status = {
-      colorizer = true, -- color RGB, HEX, CSS, NAME color codes
-      alpha = true,
-      -- snippets = true
-   },
-
    options = {
       lspconfig = {
          setup_lspconf = "custom.plugins.lspconfig",

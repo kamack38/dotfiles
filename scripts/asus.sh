@@ -2,17 +2,16 @@
 
 HELPER="paru"
 
-$HELPER -S --noconfirm --needed --quiet asusctl \
+$HELPER -S --noconfirm --needed --quiet asusctl-git \
     alsa-tools \
     optimus-manager \
     optimus-manager-qt \
-    openrgb-git \
     polybar \
     spectacle \
     latte-dock
 
 # Add asusctl repo
-if grep -Fxq "[archcraft]" /etc/pacman.conf; then
+if grep -Fxq "[g14]" /etc/pacman.conf; then
     echo "g14 repo already exists"
 else
     sudo tee -a /etc/pacman.conf >/dev/null <<EOT

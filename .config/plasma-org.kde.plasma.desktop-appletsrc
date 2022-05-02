@@ -36,9 +36,9 @@ DisplayMode=1
 PauseMode=2
 SteamLibraryPath[$e]=file:$HOME/.local/share/Steam
 VideoBackend=1
-WallpaperFilePath[$e]=file:$HOME/.local/share/Steam/steamapps/workshop/content/431960/1954098547/scene.json
+WallpaperFilePath[$e]=file:$HOME/.local/share/Steam/steamapps/workshop/content/431960/2229371846/scene.json
 WallpaperType=scene
-WallpaperWorkShopId=1954098547
+WallpaperWorkShopId=2229371846
 
 [Containments][1][Wallpaper][org.kde.image][General]
 Image=file:///usr/share/backgrounds/archcraft/onedark.png
@@ -85,7 +85,7 @@ immutability=1
 plugin=org.kde.plasma.systemtray
 
 [Containments][50][Applets][52][Configuration]
-PreloadWeight=89
+PreloadWeight=100
 SystrayContainmentId=53
 
 [Containments][50][ConfigDialog]
@@ -140,14 +140,14 @@ immutability=1
 plugin=org.kde.plasma.notifications
 
 [Containments][53][Applets][58][Configuration]
-PreloadWeight=22
+PreloadWeight=32
 
 [Containments][53][Applets][59]
 immutability=1
 plugin=org.kde.plasma.volume
 
 [Containments][53][Applets][59][Configuration]
-PreloadWeight=7
+PreloadWeight=12
 
 [Containments][53][Applets][59][Configuration][General]
 volumeStep=2
@@ -173,12 +173,16 @@ plugin=org.kde.plasma.networkmanagement
 [Containments][53][Applets][62][Configuration]
 PreloadWeight=84
 
+[Containments][53][Applets][63]
+immutability=1
+plugin=org.kde.plasma.bluetooth
+
 [Containments][53][Configuration]
 PreloadWeight=2
 
 [Containments][53][General]
-extraItems=org.kde.plasma.battery,org.kde.plasma.clipboard,org.kde.plasma.devicenotifier,org.kde.plasma.keyboardlayout,org.kde.plasma.manage-inputmethod,org.kde.plasma.mediacontroller,org.kde.plasma.networkmanagement,org.kde.plasma.notifications,org.kde.plasma.volume
-knownItems=org.kde.plasma.battery,org.kde.plasma.clipboard,org.kde.plasma.devicenotifier,org.kde.plasma.keyboardlayout,org.kde.plasma.manage-inputmethod,org.kde.plasma.mediacontroller,org.kde.plasma.networkmanagement,org.kde.plasma.notifications,org.kde.plasma.volume
+extraItems=org.kde.plasma.battery,org.kde.plasma.clipboard,org.kde.plasma.devicenotifier,org.kde.plasma.keyboardlayout,org.kde.plasma.manage-inputmethod,org.kde.plasma.mediacontroller,org.kde.plasma.networkmanagement,org.kde.plasma.notifications,org.kde.plasma.volume,org.kde.plasma.bluetooth
+knownItems=org.kde.plasma.battery,org.kde.plasma.clipboard,org.kde.plasma.devicenotifier,org.kde.plasma.keyboardlayout,org.kde.plasma.manage-inputmethod,org.kde.plasma.mediacontroller,org.kde.plasma.networkmanagement,org.kde.plasma.notifications,org.kde.plasma.volume,org.kde.plasma.bluetooth
 
 [Containments][60]
 ItemGeometries-1920x1080=

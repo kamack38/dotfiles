@@ -2,5 +2,4 @@
 Type=Application
 Exec=bash $HOME/.config/polybar/launch.sh
 Hidden=false
-X-MATE-Autostart-enabled=true
 Name=Polybar

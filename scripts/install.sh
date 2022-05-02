@@ -71,7 +71,8 @@ $HELPER -S --noconfirm --needed --quiet ripgrep \
     gdb \
     mangohud \
     wakatime \
-    ueberzug
+    ueberzug \
+    bash-language-server
 
 # Install pip packages
 pip install dbus-python
