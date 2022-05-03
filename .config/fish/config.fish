@@ -68,7 +68,7 @@ end
 function par --description 'Search and remove a package' -a pkg
     command paru -Qq | fzf --multi --preview 'paru -Si {1}' --preview-window wrap -q$pkg | xargs -ro paru -Rns # fzf package remove prompt
 end
-alias paru-clean-cache="paru -Sc"
+alias paru-clean-cache="paru -Sc --noconfirm"
 alias pan="paru --noconfirm"
 alias yay="paru"
 
