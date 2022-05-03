@@ -72,7 +72,8 @@ $HELPER -S --noconfirm --needed --quiet ripgrep \
     mangohud \
     wakatime \
     ueberzug \
-    bash-language-server
+    bash-language-server \
+    typescript-language-server
 
 # Install pip packages
 pip install dbus-python
