@@ -155,3 +155,10 @@ if [[ $razer_script == y* ]]; then
     bash $HOME/scripts/razer.sh
 fi
 
+read -r -p "Do you want to reboot? [y/N] " reboot_prompt
+
+if [[ $reboot_prompt == y* ]]; then
+    echo "Rebooting..."
+    systemctl reboot
+fi
+
