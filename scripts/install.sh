@@ -73,10 +73,12 @@ $HELPER -S --noconfirm --needed --quiet ripgrep \
     wakatime \
     ueberzug \
     bash-language-server \
-    typescript-language-server
+    typescript-language-server \
+    prettierd
 
 # Install pip packages
 pip install dbus-python
+pip install neovim
 
 # Install node & npm packages
 fish -c 'fisher install jorgebucaran/nvm.fish && nvm install lts && nvm use lts'
