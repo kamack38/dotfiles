@@ -17,64 +17,65 @@ mkdir -p $neovimConfigDir
 mkdir -p $HOME/.srcs
 
 if ! command -v $HELPER &>/dev/null; then
-    echo "It seems that you don't have $HELPER installed, I'll install that for you before continuing."
-    git clone https://aur.archlinux.org/$HELPER.git $HOME/.srcs/$HELPER
-    (cd $HOME/.srcs/$HELPER/ && makepkg --noconfirm -si)
+	echo "It seems that you don't have $HELPER installed, I'll install that for you before continuing."
+	git clone https://aur.archlinux.org/$HELPER.git $HOME/.srcs/$HELPER
+	(cd $HOME/.srcs/$HELPER/ && makepkg --noconfirm -si)
 fi
 
 $HELPER -S --noconfirm --needed --quiet ripgrep \
-    python \
-    python-pip \
-    snapd \
-    flatpak \
-    bat \
-    exa \
-    croc \
-    yt-dlp \
-    ffmpeg \
-    mpv \
-    firefox-developer-edition \
-    jre-openjdk \
-    git-delta \
-    onefetch \
-    neofetch-git \
-    neovim \
-    fish \
-    fisher \
-    github-cli \
-    caprine \
-    libqalculate \
-    qalculate-qt \
-    visual-studio-code-bin \
-    ff2mpv-native-messaging-host-git \
-    oh-my-posh-bin \
-    fzf \
-    gnome-keyring \
-    libsecret \
-    tldr \
-    procs \
-    dust \
-    bottom \
-    shfmt-bin \
-    cava \
-    ngrok \
-    ttf-font-awesome \
-    rofi \
-    jq \
-    playerctl \
-    mpv-mpris \
-    spotify \
-    spicetify-cli \
-    update-grub \
-    gnupg \
-    unrar \
-    gdb \
-    mangohud \
-    wakatime \
-    ueberzug \
-    bash-language-server \
-    typescript-language-server \
-    prettierd
+	python \
+	python-pip \
+	snapd \
+	flatpak \
+	bat \
+	exa \
+	croc \
+	yt-dlp \
+	ffmpeg \
+	mpv \
+	firefox-developer-edition \
+	jre-openjdk \
+	git-delta \
+	onefetch \
+	neofetch-git \
+	neovim \
+	fish \
+	fisher \
+	github-cli \
+	caprine \
+	libqalculate \
+	qalculate-qt \
+	visual-studio-code-bin \
+	ff2mpv-native-messaging-host-git \
+	oh-my-posh-bin \
+	fzf \
+	gnome-keyring \
+	libsecret \
+	tldr \
+	procs \
+	dust \
+	bottom \
+	shfmt-bin \
+	cava \
+	ngrok \
+	ttf-font-awesome \
+	rofi \
+	jq \
+	playerctl \
+	mpv-mpris \
+	spotify \
+	spicetify-cli \
+	update-grub \
+	gnupg \
+	unrar \
+	gdb \
+	mangohud \
+	wakatime \
+	ueberzug \
+	bash-language-server \
+	typescript-language-server \
+	prettierd \
+	ccls
 
 # Install pip packages
 pip install dbus-python
@@ -83,11 +84,11 @@ pip install neovim
 # Install node & npm packages
 fish -c 'fisher install jorgebucaran/nvm.fish && nvm install lts && nvm use lts'
 npm i -g carbon-now-cli \
-    yarn \
-    pm2 \
-    neovim \
-    npm-check-updates \
-    git-cz
+	yarn \
+	pm2 \
+	neovim \
+	npm-check-updates \
+	git-cz
 
 npm i --prefix $HOME/.quokka dotenv-quokka-plugin
 npm i --prefix $HOME/.quokka jsdom-quokka-plugin
@@ -101,13 +102,13 @@ mv $neovimConfigDir $HOME/.config/NVIM.BAK
 git clone https://github.com/NvChad/NvChad $neovimConfigDir --depth 1
 
 nvim \
-    +'autocmd User PackerComplete sleep 100m | write $HOME/.packer.sync.result | qall' \
-    +PackerSync
+	+'autocmd User PackerComplete sleep 100m | write $HOME/.packer.sync.result | qall' \
+	+PackerSync
 cat $HOME/.packer.sync.result | grep -v 'Press'
 
 # Set default shell to fish
 if [ ! "$(basename -- "$SHELL")" = "fish" ]; then
-    sudo chsh -s /bin/fish $USER
+	sudo chsh -s /bin/fish $USER
 fi
 
 DOTFILES="$HOME/.dotfiles"
@@ -124,44 +125,43 @@ read -r -p "1) None 2) KDE 3) xfce (Default = 1): " de_script
 case $de_script in
 
 2)
-    echo "Installing KDE..."
-    bash "$HOME/scripts/kde.sh"
-    ;;
+	echo "Installing KDE..."
+	bash "$HOME/scripts/kde.sh"
+	;;
 
 3)
-    echo "Installing xfce..."
-    bash "$HOME/scripts/xfce.sh"
-    ;;
+	echo "Installing xfce..."
+	bash "$HOME/scripts/xfce.sh"
+	;;
 *)
-    echo "Skipping..."
-    ;;
+	echo "Skipping..."
+	;;
 esac
 
 read -r -p "Do you want to setup additional programming fonts? [y/N] " fonts_setup
 
 if [[ $fonts_setup == y* ]]; then
-    echo "Running font script..."
-    bash $HOME/scripts/fonts.sh
+	echo "Running font script..."
+	bash $HOME/scripts/fonts.sh
 fi
 
 read -r -p "Do you want to run script for asus laptops? [y/N] " asus_script
 
 if [[ $asus_script == y* ]]; then
-    echo "Running asus script..."
-    bash $HOME/scripts/asus.sh
+	echo "Running asus script..."
+	bash $HOME/scripts/asus.sh
 fi
 
 read -r -p "Do you want to run script for razer hardware? [y/N] " razer_script
 
 if [[ $razer_script == y* ]]; then
-    echo "Running razer script..."
-    bash $HOME/scripts/razer.sh
+	echo "Running razer script..."
+	bash $HOME/scripts/razer.sh
 fi
 
 read -r -p "Do you want to reboot? [y/N] " reboot_prompt
 
 if [[ $reboot_prompt == y* ]]; then
-    echo "Rebooting..."
-    systemctl reboot
+	echo "Rebooting..."
+	systemctl reboot
 fi
-
