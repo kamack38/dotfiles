@@ -30,6 +30,8 @@ PreloadWeight=0
 [Containments][1][General]
 ToolBoxButtonState=topcenter
 ToolBoxButtonX=879
+positions={"2560x1440":[]\\,"1920x1080":[""]}
+sortMode=-1
 
 [Containments][1][Wallpaper][com.github.casout.wallpaperEngineKde][General]
 DisplayMode=1

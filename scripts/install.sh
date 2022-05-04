@@ -81,6 +81,9 @@ $HELPER -S --noconfirm --needed --quiet ripgrep \
 pip install dbus-python
 pip install neovim
 
+# Add .local/bin to PATH
+export PATH="$HOME/.local/bin:$PATH"
+
 # Install node & npm packages
 fish -c 'fisher install jorgebucaran/nvm.fish && nvm install lts && nvm use lts'
 npm i -g carbon-now-cli \
