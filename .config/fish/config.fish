@@ -18,8 +18,8 @@ export GPG_TTY=(tty)
 # ------------
 # Keybindings
 # ------------
-bind \b backward-kill-bigword
-bind \e\[3\;5~ kill-word
+# bind \b backward-kill-bigword
+# bind \e\[3\;5~ kill-word
 
 # ------------
 # Aliases

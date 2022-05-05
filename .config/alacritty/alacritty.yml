@@ -47,3 +47,7 @@ colors:
     magenta: '0xc678dd'
     cyan: '0x56b6c2'
     white: '0xffffff'
+
+key_bindings:
+  - { key: Back, mods: Control, chars: "\u0017" }
+  - { key: Delete, mods: Control, chars: "\u001B\u0064" }
