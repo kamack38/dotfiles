@@ -136,8 +136,8 @@ ForegroundPositive=39,174,96
 ForegroundVisited=155,89,182
 
 [DirSelect Dialog]
-DirSelectDialog Size=844,598
-History Items[$e]=file:$HOME/.local/share/Steam
+DirSelectDialog Size=839,598
+History Items[$e]=file:$HOME/.local/share/Steam,file:$HOME/.local/share/Steam
 
 [General]
 BrowserApplication=firefox-developer-edition.desktop

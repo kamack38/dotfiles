@@ -148,6 +148,13 @@ if [[ $fonts_setup == y* ]]; then
 	bash $HOME/scripts/fonts.sh
 fi
 
+read -r -p "Do you want to add additional pacman repositories (chaotic-aur, baclkarch, multilib, archcraft)? [y/N] " repos_script
+
+if [[ $repos_script == y* ]]; then
+	echo "Running repos script..."
+	bash $HOME/scripts/repos.sh
+fi
+
 read -r -p "Do you want to run script for asus laptops? [y/N] " asus_script
 
 if [[ $asus_script == y* ]]; then
