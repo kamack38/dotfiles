@@ -104,7 +104,7 @@ function vsr -d "List recently opened files with vscode"
 end
 
 function fcd -d "cd into favourite your dir"
-    z -l | fzf --with-nth=2.. --preview 'exa -alF {2..}' --height 50% --layout=reverse | awk '{print substr($0, 6)}'
+    cd $(z -l | fzf --with-nth=2.. --preview 'exa -alF {2..}' --height 50% --layout=reverse | awk '{print substr($2, 1)}')
 end
 
 # ffmpeg
