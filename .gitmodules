@@ -1,0 +1,4 @@
+[submodule ".config/polybar/scripts/gmail"]
+	path = .config/polybar/scripts/gmail
+	url = https://github.com/crabvk/polybar-gmail
+	update = rebase
