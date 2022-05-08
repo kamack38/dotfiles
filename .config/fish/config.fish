@@ -60,7 +60,7 @@ alias jctl="journalctl -p 3 -xb"
 
 # Paru
 function pas --description 'Search and install a package' -a pkg
-    command paru -Slq | fzf --multi --preview 'paru -Si {1}' --preview-window wrap -q$pkg | xargs -ro paru -S --review
+    command paru -Sl | fzf --with-nth=2 --multi --preview 'paru -Si {1}/{2}' --preview-window wrap -q$pkg | awk '{print $1"/"$2}' | xargs -ro paru -S --review
 end
 function paq --description 'Search and show info about a package' -a pkg
     command paru -Qq | fzf --multi --preview 'paru -Si {1}' --preview-window wrap -q$pkg | xargs -ro paru -Qi
@@ -95,7 +95,7 @@ function vsr -d "List recently opened files with vscode"
     end
 
     set -l selected (\
-          $grep '"path": "/.*[^/]"' "$vscode_path/storage.json" \
+          $grep '"path": "/.*[^/]"' "$vscode_path/User/globalStorage/storage.json" \
           | string replace -a '"path": ' '' \
           | string trim -c '"'\
           | fzf --exit-0 --height 50% --layout=reverse --preview 'if test -f {}; if begin [ $(string split -r -m1 . $(basename -- {}))[2] = "code-workspace" ]; and type -q as-tree; and type -q jq; end; cat {} | jq \'.folders[] .path\' | as-tree; else; bat --paging=never --color=always --style=plain {}; end; else; if test -d {}; exa {}; else; echo -e \'\033[0;31mDELETED\033[0m\'; end; end' )
