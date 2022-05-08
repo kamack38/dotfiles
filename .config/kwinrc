@@ -14,8 +14,20 @@ Name_3=Social
 Number=3
 Rows=1
 
+[Effect-kwin4_effect_translucency]
+MoveResize=90
+
 [ModifierOnlyShortcuts]
 Meta=org.kde.lattedock,/Latte,org.kde.LatteDock,activateLauncherMenu
+
+[Plugins]
+zoomEnabled=false
+
+[TabBox]
+LayoutName=thumbnail_grid
+
+[Windows]
+ElectricBorderCornerRatio=0.01
 
 [org.kde.kdecoration2]
 library=org.kde.kwin.aurorae
