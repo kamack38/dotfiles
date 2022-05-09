@@ -6,7 +6,7 @@ set -e
 HELPER="paru"
 $HELPER -S --noconfirm --needed --quiet xorg \
 	plasma-meta \
-	kde-applications \
+	networkmanager \
 	kdeplasma-addons \
 	spectacle \
 	latte-dock \
