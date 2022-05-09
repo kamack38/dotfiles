@@ -115,7 +115,8 @@ $HELPER -S --noconfirm --needed --quiet ripgrep \
 	bash-language-server \
 	typescript-language-server \
 	prettierd \
-	ccls
+	ccls \
+	alacritty
 
 # Install pip packages
 echo -e "${GREEN}:: ${BWHITE}Installing ${BLUE}pip${BWHITE} packages${NC}"
