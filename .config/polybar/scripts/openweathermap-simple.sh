@@ -2,6 +2,8 @@
 
 # source : https://github.com/polybar/polybar-scripts/tree/master/polybar-scripts/openweathermap-simple
 
+KEY_PATH="$HOME/.keys/openwheathermap.token"
+
 get_icon() {
     case $1 in
     # Icons for weather-icons
@@ -43,7 +45,11 @@ get_icon() {
     echo $icon
 }
 
-KEY=$(cat $HOME/.keys/openwheathermap.token)
+if [ ! -f $KEY_PATH ]; then
+    echo $'\e[0;31m'
+    exit 0
+fi
+KEY=$(cat $KEY_PATH)
 CITY="Wroclaw"
 UNITS="metric"
 SYMBOL="°"
