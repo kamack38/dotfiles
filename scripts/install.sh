@@ -16,6 +16,7 @@ HELPER="paru"
 DOTFILES="$HOME/.dotfiles"
 REPO="https://github.com/kamack38/linux-dotfiles.git"
 neovimConfigDir="$HOME/.config/nvim"
+NVCHAD_URL="https://github.com/NvChad/NvChad"
 
 # Show greetings
 echo -e "   ___  __    _____ ______  ________  ________"
@@ -113,33 +114,38 @@ export PATH="$HOME/.local/bin:$PATH"
 # Install node & npm packages
 echo -e "${GREEN}:: ${BWHITE}Installing ${BLUE}node${BWHITE} & ${BLUE}npm${BWHITE} packages${NC}"
 fish -c 'fisher install jorgebucaran/nvm.fish && nvm install lts && nvm use lts'
-npm i -g carbon-now-cli \
+fish -c 'npm i -g carbon-now-cli \
 	yarn \
 	pm2 \
 	neovim \
 	npm-check-updates \
-	git-cz
+	git-cz'
 
-npm i --prefix $HOME/.quokka dotenv-quokka-plugin
-npm i --prefix $HOME/.quokka jsdom-quokka-plugin
+echo -e "${GREEN}:: ${BWHITE}Installing ${BLUE}quokka.js plugins${NC}"
+fish -c 'npm i --prefix $HOME/.quokka dotenv-quokka-plugin \
+	jsdom-quokka-plugin'
 
 # Install spicetify-cli themes
 echo -e "${BLUE}:: ${BWHITE}Installing ${BLUE}spicetify themes${NC}"
 git clone https://github.com/spicetify/spicetify-themes.git $HOME/.config/spicetify/Themes/
 
 # Install NvChad
-echo -e "${BLUE}:: ${BWHITE}Installing ${BLUE}spicetify themes${NC}"
-mv $neovimConfigDir $HOME/.config/NVIM.BAK
-git clone https://github.com/NvChad/NvChad $neovimConfigDir --depth 1
+if [[ -d $neovimConfigDir/.git && $(git -C $neovimConfigDir ls-remote --get-url) != $NVCHAD_URL ]]; then
+	echo -e "${BLUE}:: ${BWHITE}Installing ${BLUE}NvChad${NC}"
+	mv $neovimConfigDir $HOME/.config/NVIM.BAK
+	git clone https://github.com/NvChad/NvChad $neovimConfigDir --depth 1
 
-nvim \
-	+'autocmd User PackerComplete sleep 100m | write $HOME/.packer.sync.result | qall' \
-	+PackerSync
-cat $HOME/.packer.sync.result | grep -v 'Press'
+	nvim \
+		+'autocmd User PackerComplete sleep 100m | write $HOME/.packer.sync.result | qall' \
+		+PackerSync
+	cat $HOME/.packer.sync.result | grep -v 'Press'
+else
+	echo -e "${YELLOW}:: ${BLUE}NvChad${BWHITE} is already installed!${NC}"
+fi
 
 # Set default shell to fish
-echo -e "${YELLOW}:: ${BWHITE}Setting default shell to ${BLUE}fish${NC}"
 if [ ! "$(basename -- "$SHELL")" = "fish" ]; then
+	echo -e "${YELLOW}:: ${BWHITE}Setting default shell to ${BLUE}fish${NC}"
 	sudo chsh -s /bin/fish $USER
 fi
 
