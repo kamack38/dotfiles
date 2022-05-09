@@ -42,12 +42,12 @@ mkdir -p $neovimConfigDir
 mkdir -p $HOME/.srcs
 
 if ! command -v $HELPER &>/dev/null; then
-	echo -e "${YELLOW}It seems that you don't have $HELPER installed, I'll install that for you before continuing.${NC}"
+	echo "${YELLOW}:: ${BWHITE}It seems that you don't have $HELPER installed${NC} -- installing"
 	git clone https://aur.archlinux.org/$HELPER.git $HOME/.srcs/$HELPER
 	(cd $HOME/.srcs/$HELPER/ && makepkg --noconfirm -si)
 fi
 
-echo -e "${GREEN}:: ${BWHITE}Installing packages using ${BLUE}${HELPER}${NC}"
+echo "${GREEN}:: ${BWHITE}Installing packages using ${BLUE}${HELPER}${NC}"
 $HELPER -S --noconfirm --needed --quiet ripgrep \
 	python \
 	python-pip \
