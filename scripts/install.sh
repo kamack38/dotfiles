@@ -4,6 +4,7 @@ set -e
 # Colours
 BLACK='\033[0;30m'
 WHITE='\033[0;37m'
+BWHITE='\033[1;37m'
 RED='\033[0;31m'
 BLUE='\033[0;34m'
 GREEN='\033[0;32m'
@@ -27,14 +28,14 @@ echo -e "      \|__| \|__|\|__|     \|__|\|_______|\|_______|"
 echo ""
 echo -e "		${RED}Thank you for using my script!${NC}"
 
-echo -e "${BLUE}:: ${NC}Doing a system update, cause stuff may break if it's not the latest version..."
+echo -e "${BLUE}:: ${BWHITE}Doing a system update, cause stuff may break if it's not the latest version...${NC}"
 sudo pacman --noconfirm -Syu
 
-echo -e "${BLUE}:: ${NC}Installing basic packages..."
+echo -e "${BLUE}:: ${BWHITE}Installing basic packages...${NC}"
 sudo pacman -S --noconfirm --needed base-devel wget git
 
 # Create dirs
-echo -e "${BLUE}:: ${NC}Creating directories..."
+echo -e "${BLUE}:: ${BWHITE}Creating directories...${NC}"
 mkdir -p $HOME/.local/share/fonts
 mkdir -p $neovimConfigDir
 mkdir -p $HOME/.srcs
@@ -45,7 +46,7 @@ if ! command -v $HELPER &>/dev/null; then
 	(cd $HOME/.srcs/$HELPER/ && makepkg --noconfirm -si)
 fi
 
-echo -e "${GREEN}:: ${NC}Installing packages using ${BLUE}${HELPER}${NC}"
+echo -e "${GREEN}:: ${BWHITE}Installing packages using ${BLUE}${HELPER}${NC}"
 $HELPER -S --noconfirm --needed --quiet ripgrep \
 	python \
 	python-pip \
@@ -102,7 +103,7 @@ $HELPER -S --noconfirm --needed --quiet ripgrep \
 	ccls
 
 # Install pip packages
-echo -e "${GREEN}:: ${NC}Installing ${BLUE}pip${NC} packages"
+echo -e "${GREEN}:: ${BWHITE}Installing ${BLUE}pip${BWHITE} packages${NC}"
 pip install dbus-python
 pip install neovim
 
@@ -110,7 +111,7 @@ pip install neovim
 export PATH="$HOME/.local/bin:$PATH"
 
 # Install node & npm packages
-echo -e "${GREEN}:: ${NC}Installing ${BLUE}node${NC} & ${BLUE}npm${NC} packages"
+echo -e "${GREEN}:: ${BWHITE}Installing ${BLUE}node${BWHITE} & ${BLUE}npm${BWHITE} packages${NC}"
 fish -c 'fisher install jorgebucaran/nvm.fish && nvm install lts && nvm use lts'
 npm i -g carbon-now-cli \
 	yarn \
@@ -123,30 +124,33 @@ npm i --prefix $HOME/.quokka dotenv-quokka-plugin
 npm i --prefix $HOME/.quokka jsdom-quokka-plugin
 
 # Install spicetify-cli themes
-echo -e "${BLUE}:: ${NC}Installing ${BLUE}spicetify themes${NC}"
+echo -e "${BLUE}:: ${BWHITE}Installing ${BLUE}spicetify themes${NC}"
 git clone https://github.com/spicetify/spicetify-themes.git $HOME/.config/spicetify/Themes/
 
 # Install NvChad
-echo "Installing NvChad..."
-mv $neovimConfigDir $HOME/.co
-DOTFILES="$HOME/.dotfiles"
-repo="https://github.com/kamack38/linux-dotfiles.git"
+echo -e "${BLUE}:: ${BWHITE}Installing ${BLUE}spicetify themes${NC}"
+mv $neovimConfigDir $HOME/.config/NVIM.BAK
+git clone https://github.com/NvChad/NvChad $neovimConfigDir --depth 1
+
+nvim \
+	+'autocmd User PackerComplete sleep 100m | write $HOME/.packer.sync.result | qall' \
+	+PackerSync
 cat $HOME/.packer.sync.result | grep -v 'Press'
 
 # Set default shell to fish
-echo -e "${YELLOW}:: ${NC}Setting default shell to ${BLUE}fish${NC}"
+echo -e "${YELLOW}:: ${BWHITE}Setting default shell to ${BLUE}fish${NC}"
 if [ ! "$(basename -- "$SHELL")" = "fish" ]; then
 	sudo chsh -s /bin/fish $USER
 fi
 
-echo -e "${YELLOW}:: ${NC}Cloning ${BLUE}dotfiles${NC} from ${BLUE}${REPO#*//*/}${NC}"
+echo -e "${YELLOW}:: ${BWHITE}Cloning ${BLUE}dotfiles${NC} from ${BLUE}${REPO#*//*/}${NC}"
 git clone --bare $REPO $DOTFILES
 git --git-dir="$DOTFILES" --work-tree="$HOME" fetch --all
 git --git-dir="$DOTFILES" --work-tree="$HOME" config --local status.showUntrackedFiles no
 git --git-dir="$DOTFILES" --work-tree="$HOME" checkout --force
 
 # Update submodules
-echo -e "${BLUE}:: ${NC}Updating ${BLUE}submodules${NC}"
+echo -e "${BLUE}:: ${BWHITE}Updating ${BLUE}submodules${NC}"
 git dtf submodule update --remote
 
 echo "Which DE do you want to install?"
