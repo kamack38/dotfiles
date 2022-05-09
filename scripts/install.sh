@@ -47,6 +47,18 @@ if ! command -v $HELPER &>/dev/null; then
 	(cd $HOME/.srcs/$HELPER/ && makepkg --noconfirm -si)
 fi
 
+if grep -Fxq "[multilib]" /etc/pacman.conf; then
+	echo "${YELLOW}:: ${BLUE}multilib ${BWHITE}repo already exists${NC} -- skipping"
+else
+	echo "${BLUE}:: ${BWHITE}Adding ${BLUE}multilib ${BWHITE}repo${NC}"
+	sudo tee -a /etc/pacman.conf >/dev/null <<EOT
+[multilib]
+Include = /etc/pacman.d/mirrorlist
+EOT
+fi
+
+sudo $HELPER -Sy
+
 echo "${GREEN}:: ${BWHITE}Installing packages using ${BLUE}${HELPER}${NC}"
 $HELPER -S --noconfirm --needed --quiet ripgrep \
 	python \
