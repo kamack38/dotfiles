@@ -10,7 +10,12 @@ $HELPER -S --noconfirm --needed --quiet xorg \
 	kdeplasma-addons \
 	spectacle \
 	latte-dock \
-	touchegg
+	touchegg \
+	dolphin \
+	ark \
+	desktop-file-utils \
+	partitionmanager \
+	kcron
 
 # Enable services
 sudo systemctl enable sddm
@@ -18,6 +23,3 @@ sudo systemctl enable NetworkManager
 
 sudo systemctl enable touchegg.service
 sudo systemctl start touchegg
-
-# Remove unnecessary dependencies
-$HELPER -Rns --noconfirm yakuake konsole

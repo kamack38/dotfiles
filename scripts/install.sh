@@ -16,8 +16,6 @@ HELPER="paru"
 DOTFILES="$HOME/.dotfiles"
 REPO="https://github.com/kamack38/linux-dotfiles"
 NEOVIM_CONFIG_DIR="$HOME/.config/nvim"
-SPIECTIFY_DIR="$HOME/.config/spicetify"
-SPIECTIFY_THEMES_URL="https://github.com/spicetify/spicetify-themes"
 NVCHAD_URL="https://github.com/NvChad/NvChad"
 
 # Show greetings
@@ -117,7 +115,8 @@ $HELPER -S --noconfirm --needed --quiet ripgrep \
 	prettierd \
 	ccls \
 	alacritty \
-	discord
+	discord \
+	bash-completion
 
 # Install pip packages
 echo -e "${GREEN}:: ${BWHITE}Installing ${BLUE}pip${BWHITE} packages${NC}"
@@ -140,14 +139,6 @@ fish -c 'nvm use lts && npm i -g carbon-now-cli \
 echo "${GREEN}:: ${BWHITE}Installing ${BLUE}quokka.js plugins${NC}"
 fish -c 'npm i --prefix $HOME/.quokka dotenv-quokka-plugin \
 	jsdom-quokka-plugin'
-
-# Install spicetify-cli themes
-if [[ -d "$SPIECTIFY_DIR/Themes/.git" && $(git -C $SPIECTIFY_DIR/Themes ls-remote --get-url) == "$SPIECTIFY_THEMES_URL"* ]]; then
-	echo "${YELLOW}:: ${BLUE}spicetify-cli themes${BWHITE} are already installed${NC} -- skipping"
-else
-	echo "${BLUE}:: ${BWHITE}Installing ${BLUE}spicetify themes${NC}"
-	git clone https://github.com/spicetify/spicetify-themes $HOME/.config/spicetify/Themes/
-fi
 
 # Install NvChad
 if [[ -d "$NEOVIM_CONFIG_DIR/.git" && $(git -C $NEOVIM_CONFIG_DIR ls-remote --get-url) == "$NVCHAD_URL"* ]]; then
@@ -184,7 +175,7 @@ fi
 
 # Update submodules
 echo "${BLUE}:: ${BWHITE}Updating ${BLUE}submodules${NC}"
-git dtf submodule update --remote
+git --git-dir="$DOTFILES" --work-tree="$HOME" submodule update --remote
 
 echo "${BLUE}:: ${BWHITE}Which DE do you want to install?${NC}"
 echo "	1) None 2) KDE 3) xfce"
