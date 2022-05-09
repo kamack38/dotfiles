@@ -14,7 +14,7 @@ NC=$'\e[0m' # No Colour
 # Default vars
 HELPER="paru"
 DOTFILES="$HOME/.dotfiles"
-REPO="https://github.com/kamack38/linux-dotfiles.git"
+REPO="https://github.com/kamack38/linux-dotfiles"
 NEOVIM_CONFIG_DIR="$HOME/.config/nvim"
 SPIECTIFY_DIR="$HOME/.config/spicetify"
 SPIECTIFY_THEMES_URL="https://github.com/spicetify/spicetify-themes"
@@ -140,7 +140,7 @@ fish -c 'npm i --prefix $HOME/.quokka dotenv-quokka-plugin \
 	jsdom-quokka-plugin'
 
 # Install spicetify-cli themes
-if [[ -d "$SPIECTIFY_DIR/Themes/.git" && $(git -C $SPIECTIFY_DIR/Themes ls-remote --get-url) == $SPIECTIFY_THEMES_URL ]]; then
+if [[ -d "$SPIECTIFY_DIR/Themes/.git" && $(git -C $SPIECTIFY_DIR/Themes ls-remote --get-url) == "$SPIECTIFY_THEMES_URL"* ]]; then
 	echo "${YELLOW}:: ${BLUE}spicetify-cli themes${BWHITE} are already installed${NC} -- skipping"
 else
 	echo "${BLUE}:: ${BWHITE}Installing ${BLUE}spicetify themes${NC}"
@@ -148,7 +148,7 @@ else
 fi
 
 # Install NvChad
-if [[ -d "$NEOVIM_CONFIG_DIR/.git" && $(git -C $NEOVIM_CONFIG_DIR ls-remote --get-url) == $NVCHAD_URL ]]; then
+if [[ -d "$NEOVIM_CONFIG_DIR/.git" && $(git -C $NEOVIM_CONFIG_DIR ls-remote --get-url) == "$NVCHAD_URL"* ]]; then
 	echo "${YELLOW}:: ${BLUE}NvChad${BWHITE} is already installed${NC} -- skipping"
 else
 	echo "${BLUE}:: ${BWHITE}Installing ${BLUE}NvChad${NC}"
@@ -167,11 +167,18 @@ if [ ! "$(basename -- "$SHELL")" = "fish" ]; then
 	sudo chsh -s /bin/fish $USER
 fi
 
-echo "${YELLOW}:: ${BWHITE}Cloning ${BLUE}dotfiles${NC} from ${BLUE}${REPO#*//*/}${NC}"
-git clone --bare $REPO $DOTFILES
-git --git-dir="$DOTFILES" --work-tree="$HOME" fetch --all
-git --git-dir="$DOTFILES" --work-tree="$HOME" config --local status.showUntrackedFiles no
-git --git-dir="$DOTFILES" --work-tree="$HOME" checkout --force
+# Install dotfiles
+if [[ -d "$DOTFILES" && "$(git -C $DOTFILES ls-remote --get-url)" == "$REPO"* ]]; then
+	echo "${YELLOW}:: ${BLUE}dotfiles${BWHITE} are already installed${NC} -- updating"
+	git --git-dir="$DOTFILES" --work-tree="$HOME" fetch --all
+	git --git-dir="$DOTFILES" --work-tree="$HOME" pull --all
+else
+	echo "${YELLOW}:: ${BWHITE}Cloning ${BLUE}dotfiles${NC} from ${BLUE}${REPO#*//*/}${NC}"
+	git clone --bare $REPO $DOTFILES
+	git --git-dir="$DOTFILES" --work-tree="$HOME" fetch --all
+	git --git-dir="$DOTFILES" --work-tree="$HOME" config --local status.showUntrackedFiles no
+	git --git-dir="$DOTFILES" --work-tree="$HOME" checkout --force
+fi
 
 # Update submodules
 echo "${BLUE}:: ${BWHITE}Updating ${BLUE}submodules${NC}"
