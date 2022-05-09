@@ -43,7 +43,7 @@ mkdir -p $HOME/.srcs
 
 # Install helper
 if ! command -v $HELPER &>/dev/null; then
-	echo "${YELLOW}:: ${BWHITE}It seems that you don't have $HELPER installed${NC} -- installing"
+	echo "${YELLOW}:: ${BWHITE}It seems that you don't have ${BLUE}$HELPER${BWHITE} installed${NC} -- installing"
 	git clone https://aur.archlinux.org/$HELPER.git $HOME/.srcs/$HELPER
 	(cd $HOME/.srcs/$HELPER/ && makepkg --noconfirm -si)
 else
