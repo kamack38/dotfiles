@@ -113,8 +113,8 @@ export PATH="$HOME/.local/bin:$PATH"
 
 # Install node & npm packages
 echo -e "${GREEN}:: ${BWHITE}Installing ${BLUE}node${BWHITE} & ${BLUE}npm${BWHITE} packages${NC}"
-fish -c 'fisher install jorgebucaran/nvm.fish && nvm install lts && nvm use lts'
-fish -c 'sudo npm i -g carbon-now-cli \
+fish -c 'fisher install jorgebucaran/nvm.fish && nvm install lts && nvm use lts && set --universal nvm_default_version lts'
+fish -c 'npm i -g carbon-now-cli \
 	yarn \
 	pm2 \
 	neovim \

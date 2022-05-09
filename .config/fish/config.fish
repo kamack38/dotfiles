@@ -10,7 +10,7 @@
 # Envs
 # ------------
 # Set default node version
-set --universal nvm_default_version v16
+set --universal nvm_default_version lts
 
 # Set gpg tty
 export GPG_TTY=(tty)
