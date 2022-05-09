@@ -15,7 +15,9 @@ NC=$'\e[0m' # No Colour
 HELPER="paru"
 DOTFILES="$HOME/.dotfiles"
 REPO="https://github.com/kamack38/linux-dotfiles.git"
-neovimConfigDir="$HOME/.config/nvim"
+NEOVIM_CONFIG_DIR="$HOME/.config/nvim"
+SPIECTIFY_DIR="$HOME/.config/spicetify"
+SPIECTIFY_THEMES_URL="https://github.com/spicetify/spicetify-themes"
 NVCHAD_URL="https://github.com/NvChad/NvChad"
 
 # Show greetings
@@ -38,7 +40,7 @@ sudo pacman -S --noconfirm --needed base-devel wget git
 # Create dirs
 echo "${BLUE}:: ${BWHITE}Creating directories...${NC}"
 mkdir -p $HOME/.local/share/fonts
-mkdir -p $neovimConfigDir
+mkdir -p $NEOVIM_CONFIG_DIR
 mkdir -p $HOME/.srcs
 
 if ! command -v $HELPER &>/dev/null; then
@@ -138,16 +140,20 @@ fish -c 'npm i --prefix $HOME/.quokka dotenv-quokka-plugin \
 	jsdom-quokka-plugin'
 
 # Install spicetify-cli themes
-echo "${BLUE}:: ${BWHITE}Installing ${BLUE}spicetify themes${NC}"
-git clone https://github.com/spicetify/spicetify-themes.git $HOME/.config/spicetify/Themes/
+if [[ -d "$SPIECTIFY_DIR/Themes/.git" && $(git -C $SPIECTIFY_DIR/Themes ls-remote --get-url) == $SPIECTIFY_THEMES_URL ]]; then
+	echo "${YELLOW}:: ${BLUE}spicetify-cli themes${BWHITE} are already installed${NC} -- skipping"
+else
+	echo "${BLUE}:: ${BWHITE}Installing ${BLUE}spicetify themes${NC}"
+	git clone https://github.com/spicetify/spicetify-themes $HOME/.config/spicetify/Themes/
+fi
 
 # Install NvChad
-if [[ -d "$neovimConfigDir/.git" && $(git -C $neovimConfigDir ls-remote --get-url) == $NVCHAD_URL ]]; then
+if [[ -d "$NEOVIM_CONFIG_DIR/.git" && $(git -C $NEOVIM_CONFIG_DIR ls-remote --get-url) == $NVCHAD_URL ]]; then
 	echo "${YELLOW}:: ${BLUE}NvChad${BWHITE} is already installed${NC} -- skipping"
 else
 	echo "${BLUE}:: ${BWHITE}Installing ${BLUE}NvChad${NC}"
-	mv $neovimConfigDir $HOME/.config/NVIM.BAK
-	git clone https://github.com/NvChad/NvChad $neovimConfigDir --depth 1
+	mv $NEOVIM_CONFIG_DIR $HOME/.config/NVIM.BAK
+	git clone https://github.com/NvChad/NvChad $NEOVIM_CONFIG_DIR --depth 1
 
 	nvim \
 		+'autocmd User PackerComplete sleep 100m | write $HOME/.packer.sync.result | qall' \
