@@ -46,7 +46,7 @@ get_icon() {
 }
 
 if [ ! -f $KEY_PATH ]; then
-    echo $'\e[0;31m'
+    echo '%{F#e56b6f}%{F-} '
     exit 0
 fi
 KEY=$(cat $KEY_PATH)
