@@ -13,7 +13,7 @@ $HELPER -S --noconfirm --needed --quiet xorg \
 	touchegg
 
 # Enable services
-sudo systemctl enable ssdm
+sudo systemctl enable sddm
 sudo systemctl enable NetworkManager
 
 sudo systemctl enable touchegg.service
