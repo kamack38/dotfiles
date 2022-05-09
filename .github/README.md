@@ -1,4 +1,4 @@
-<h1 align="center">My .dotfiles for Manjaro</h1>
+<h1 align="center">My .dotfiles for Arch Linux</h1>
 
 ## Installation
 
