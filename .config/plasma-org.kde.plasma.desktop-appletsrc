@@ -156,7 +156,7 @@ volumeStep=2
 
 [Containments][53][Applets][60]
 immutability=1
-plugin=org.kde.plasma.keyboardindicator
+plugin=org.kde.plasma.mediacontroller
 
 [Containments][53][Applets][60][Configuration]
 PreloadWeight=0

@@ -1,27 +1,51 @@
 #!/bin/env bash
 
 set -e
+# Colours
+BLACK='\033[0;30m'
+WHITE='\033[0;37m'
+RED='\033[0;31m'
+BLUE='\033[0;34m'
+GREEN='\033[0;32m'
+YELLOW='\033[0;33m'
+NC='\033[0m' # No Colour
 
-#Default vars
+# Default vars
 HELPER="paru"
+DOTFILES="$HOME/.dotfiles"
+REPO="https://github.com/kamack38/linux-dotfiles.git"
 neovimConfigDir="$HOME/.config/nvim"
 
-echo "Doing a system update, cause stuff may break if it's not the latest version..."
+# Show greetings
+echo -e "   ___  __    _____ ______  ________  ________"
+echo -e "  |\  \|\  \ |\   _ \  _  \|\_____  \|\   __  \ "
+echo -e "  \ \  \/  /|\ \  \\\\\__\ \  \|_____\  \ \  \|\  \    Kamack38"
+echo -e "   \ \   ___  \ \  \\\\|__| \  \|______  \ \   __  \   ${BLUE}https://twitter.com/kamack38${NC}"
+echo -e "    \ \  \\\\ \  \ \  \    \ \  \| ____\  \ \  \|\  \  https://github.com/kamack38"
+echo -e "     \ \__\\\\ \__\ \__\    \ \__\|\_______\ \_______\ "
+echo -e "      \|__| \|__|\|__|     \|__|\|_______|\|_______|"
+echo ""
+echo -e "		${RED}Thank you for using my script!${NC}"
+
+echo -e "${BLUE}:: ${NC}Doing a system update, cause stuff may break if it's not the latest version..."
 sudo pacman --noconfirm -Syu
 
+echo -e "${BLUE}:: ${NC}Installing basic packages..."
 sudo pacman -S --noconfirm --needed base-devel wget git
 
 # Create dirs
+echo -e "${BLUE}:: ${NC}Creating directories..."
 mkdir -p $HOME/.local/share/fonts
 mkdir -p $neovimConfigDir
 mkdir -p $HOME/.srcs
 
 if ! command -v $HELPER &>/dev/null; then
-	echo "It seems that you don't have $HELPER installed, I'll install that for you before continuing."
+	echo -e "${YELLOW}It seems that you don't have $HELPER installed, I'll install that for you before continuing.${NC}"
 	git clone https://aur.archlinux.org/$HELPER.git $HOME/.srcs/$HELPER
 	(cd $HOME/.srcs/$HELPER/ && makepkg --noconfirm -si)
 fi
 
+echo -e "${GREEN}:: ${NC}Installing packages using ${BLUE}${HELPER}${NC}"
 $HELPER -S --noconfirm --needed --quiet ripgrep \
 	python \
 	python-pip \
@@ -78,6 +102,7 @@ $HELPER -S --noconfirm --needed --quiet ripgrep \
 	ccls
 
 # Install pip packages
+echo -e "${GREEN}:: ${NC}Installing ${BLUE}pip${NC} packages"
 pip install dbus-python
 pip install neovim
 
@@ -85,6 +110,7 @@ pip install neovim
 export PATH="$HOME/.local/bin:$PATH"
 
 # Install node & npm packages
+echo -e "${GREEN}:: ${NC}Installing ${BLUE}node${NC} & ${BLUE}npm${NC} packages"
 fish -c 'fisher install jorgebucaran/nvm.fish && nvm install lts && nvm use lts'
 npm i -g carbon-now-cli \
 	yarn \
@@ -97,32 +123,30 @@ npm i --prefix $HOME/.quokka dotenv-quokka-plugin
 npm i --prefix $HOME/.quokka jsdom-quokka-plugin
 
 # Install spicetify-cli themes
+echo -e "${BLUE}:: ${NC}Installing ${BLUE}spicetify themes${NC}"
 git clone https://github.com/spicetify/spicetify-themes.git $HOME/.config/spicetify/Themes/
 
 # Install NvChad
 echo "Installing NvChad..."
-mv $neovimConfigDir $HOME/.config/NVIM.BAK
-git clone https://github.com/NvChad/NvChad $neovimConfigDir --depth 1
-
-nvim \
-	+'autocmd User PackerComplete sleep 100m | write $HOME/.packer.sync.result | qall' \
-	+PackerSync
+mv $neovimConfigDir $HOME/.co
+DOTFILES="$HOME/.dotfiles"
+repo="https://github.com/kamack38/linux-dotfiles.git"
 cat $HOME/.packer.sync.result | grep -v 'Press'
 
 # Set default shell to fish
+echo -e "${YELLOW}:: ${NC}Setting default shell to ${BLUE}fish${NC}"
 if [ ! "$(basename -- "$SHELL")" = "fish" ]; then
 	sudo chsh -s /bin/fish $USER
 fi
 
-DOTFILES="$HOME/.dotfiles"
-repo="https://github.com/kamack38/linux-dotfiles.git"
-
-git clone --bare $repo $DOTFILES
+echo -e "${YELLOW}:: ${NC}Cloning ${BLUE}dotfiles${NC} from ${BLUE}${REPO#*//*/}${NC}"
+git clone --bare $REPO $DOTFILES
 git --git-dir="$DOTFILES" --work-tree="$HOME" fetch --all
 git --git-dir="$DOTFILES" --work-tree="$HOME" config --local status.showUntrackedFiles no
 git --git-dir="$DOTFILES" --work-tree="$HOME" checkout --force
 
 # Update submodules
+echo -e "${BLUE}:: ${NC}Updating ${BLUE}submodules${NC}"
 git dtf submodule update --remote
 
 echo "Which DE do you want to install?"
@@ -151,7 +175,7 @@ if [[ $fonts_setup == y* ]]; then
 	bash $HOME/scripts/fonts.sh
 fi
 
-read -r -p "Do you want to add additional pacman repositories (chaotic-aur, baclkarch, multilib, archcraft)? [y/N] " repos_script
+read -r -p "Do you want to add additional pacman repositories (chaotic-aur, blackarch, multilib, archcraft)? [y/N] " repos_script
 
 if [[ $repos_script == y* ]]; then
 	echo "Running repos script..."
