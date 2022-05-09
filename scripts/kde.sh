@@ -20,4 +20,4 @@ sudo systemctl enable touchegg.service
 sudo systemctl start touchegg
 
 # Remove unnecessary dependencies
-$HELPER -Rns --noconfirm konsole
+$HELPER -Rns --noconfirm yakuake konsole
