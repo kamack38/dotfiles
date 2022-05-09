@@ -11,6 +11,7 @@
 # ------------
 # Set default node version
 set --universal nvm_default_version lts
+fish_add_path -aP $HOME/.local/bin
 
 # Set gpg tty
 export GPG_TTY=(tty)

@@ -73,7 +73,7 @@ echo "${GREEN}:: ${BWHITE}Installing packages using ${BLUE}${HELPER}${NC}"
 $HELPER -S --noconfirm --needed --quiet ripgrep \
 	python \
 	python-pip \
-	snapd \
+	python-gobject \
 	flatpak \
 	bat \
 	exa \
@@ -126,12 +126,16 @@ $HELPER -S --noconfirm --needed --quiet ripgrep \
 	ccls \
 	alacritty \
 	discord \
-	bash-completion
+	bash-completion \
+	polybar-git
 
 # Install pip packages
 echo -e "${GREEN}:: ${BWHITE}Installing ${BLUE}pip${BWHITE} packages${NC}"
-pip install dbus-python
-pip install neovim
+pip install --upgrade dbus-python \
+	google-api-python-client \
+	google-auth-httplib2 \
+	google-auth-oauthlib \
+	neovim
 
 # Add .local/bin to PATH
 export PATH="$HOME/.local/bin:$PATH"
@@ -172,7 +176,7 @@ fi
 
 # Update submodules
 echo "${BLUE}:: ${BWHITE}Updating ${BLUE}submodules${NC}"
-git --git-dir="$DOTFILES" --work-tree="$HOME" submodule update --remote
+git --git-dir="$DOTFILES" --work-tree="$HOME" submodule update --init --remote
 
 # Additional tools
 echo "${BLUE}:: ${BWHITE}Which DE do you want to install?${NC}"
