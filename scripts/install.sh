@@ -41,21 +41,31 @@ mkdir -p $HOME/.local/share/fonts
 mkdir -p $NEOVIM_CONFIG_DIR
 mkdir -p $HOME/.srcs
 
+# Install helper
 if ! command -v $HELPER &>/dev/null; then
 	echo "${YELLOW}:: ${BWHITE}It seems that you don't have $HELPER installed${NC} -- installing"
 	git clone https://aur.archlinux.org/$HELPER.git $HOME/.srcs/$HELPER
 	(cd $HOME/.srcs/$HELPER/ && makepkg --noconfirm -si)
+else
+	echo "${GREEN}:: ${BLUE}${HELPER}${BWHITE} is already installedR installed${NC} -- skipping"
 fi
 
-if grep -Fxq "[multilib]" /etc/pacman.conf; then
-	echo "${YELLOW}:: ${BLUE}multilib ${BWHITE}repo already exists${NC} -- skipping"
+# Install dotfiles
+if [[ -d "$DOTFILES" && "$(git -C $DOTFILES ls-remote --get-url)" == "$REPO"* ]]; then
+	echo "${YELLOW}:: ${BLUE}dotfiles${BWHITE} are already installed${NC} -- updating"
+	git --git-dir="$DOTFILES" --work-tree="$HOME" fetch --all
+	git --git-dir="$DOTFILES" --work-tree="$HOME" pull --all
 else
-	echo "${BLUE}:: ${BWHITE}Adding ${BLUE}multilib ${BWHITE}repository${NC}"
-	sudo tee -a /etc/pacman.conf >/dev/null <<EOT
-[multilib]
-Include = /etc/pacman.d/mirrorlist
-EOT
+	echo "${YELLOW}:: ${BWHITE}Cloning ${BLUE}dotfiles${NC} from ${BLUE}${REPO#*//*/}${NC}"
+	git clone --bare $REPO $DOTFILES
+	git --git-dir="$DOTFILES" --work-tree="$HOME" fetch --all
+	git --git-dir="$DOTFILES" --work-tree="$HOME" config --local status.showUntrackedFiles no
+	git --git-dir="$DOTFILES" --work-tree="$HOME" checkout --force
 fi
+
+source $HOME/scripts/repos.sh
+
+multilib
 
 sudo $HELPER -Sy
 
@@ -160,23 +170,11 @@ if [ ! "$(basename -- "$SHELL")" = "fish" ]; then
 	sudo chsh -s /bin/fish $USER
 fi
 
-# Install dotfiles
-if [[ -d "$DOTFILES" && "$(git -C $DOTFILES ls-remote --get-url)" == "$REPO"* ]]; then
-	echo "${YELLOW}:: ${BLUE}dotfiles${BWHITE} are already installed${NC} -- updating"
-	git --git-dir="$DOTFILES" --work-tree="$HOME" fetch --all
-	git --git-dir="$DOTFILES" --work-tree="$HOME" pull --all
-else
-	echo "${YELLOW}:: ${BWHITE}Cloning ${BLUE}dotfiles${NC} from ${BLUE}${REPO#*//*/}${NC}"
-	git clone --bare $REPO $DOTFILES
-	git --git-dir="$DOTFILES" --work-tree="$HOME" fetch --all
-	git --git-dir="$DOTFILES" --work-tree="$HOME" config --local status.showUntrackedFiles no
-	git --git-dir="$DOTFILES" --work-tree="$HOME" checkout --force
-fi
-
 # Update submodules
 echo "${BLUE}:: ${BWHITE}Updating ${BLUE}submodules${NC}"
 git --git-dir="$DOTFILES" --work-tree="$HOME" submodule update --remote
 
+# Additional tools
 echo "${BLUE}:: ${BWHITE}Which DE do you want to install?${NC}"
 echo "	1) None 2) KDE 3) xfce"
 read -rp "Enter a number (default=1): " de_script
@@ -204,11 +202,12 @@ if [[ $fonts_setup != n* ]]; then
 	bash $HOME/scripts/fonts.sh
 fi
 
-read -rp "${BLUE}:: ${BWHITE}Do you want to add additional pacman repositories (chaotic-aur, blackarch, multilib, archcraft)? [y/N]${NC}: " repos_script
+read -rp "${BLUE}:: ${BWHITE}Do you want to add additional pacman repositories (chaotic-aur, blackarch, archcraft)? [y/N]${NC}: " repos_script
 
 if [[ $repos_script == y* ]]; then
-	echo "Running repos script..."
-	bash $HOME/scripts/repos.sh
+	archcraft
+	chaotic_aur
+	blackarch
 fi
 
 read -rp "${BLUE}:: ${BWHITE}Do you want to run script for asus laptops? [y/N]${NC}: " asus_script
