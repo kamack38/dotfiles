@@ -1,9 +1,17 @@
 #!/bin/bash
 
+# Colours
+BWHITE=$'\e[1;37m'
+BLUE=$'\e[0;34m'
+GREEN=$'\e[0;32m'
+YELLOW=$'\e[0;33m'
+NC=$'\e[0m' # No Colour
+
 # Add archcraft repo
 if grep -Fxq "[archcraft]" /etc/pacman.conf; then
-	echo "Archcraft repo already exists"
+	echo "${YELLOW}:: ${BLUE}archcraft ${BWHITE}repo already exists${NC} -- skipping"
 else
+	echo "${BLUE}:: ${BWHITE}Adding ${BLUE}archcraft ${BWHITE}repository${NC}"
 	sudo wget 'https://raw.githubusercontent.com/archcraft-os/core-packages/main/archcraft-mirrorlist/archcraft-mirrorlist' -O /etc/pacman.d/archcraft-mirrorlist
 	sudo tee -a /etc/pacman.conf >/dev/null <<EOT
 [archcraft]
@@ -14,8 +22,9 @@ fi
 
 # Add chaotic aur
 if grep -Fxq "[chaotic-aur]" /etc/pacman.conf; then
-	echo "Chaotic-aur repo already exists"
+	echo "${YELLOW}:: ${BLUE}chaotic-aur ${BWHITE}repo already exists${NC} -- skipping"
 else
+	echo "${BLUE}:: ${BWHITE}Adding ${BLUE}chaotic-aur ${BWHITE}repository${NC}"
 	sudo pacman-key --recv-key FBA220DFC880C036 --keyserver keyserver.ubuntu.com
 	sudo pacman-key --lsign-key FBA220DFC880C036
 	sudo pacman -U 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-keyring.pkg.tar.zst' 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-mirrorlist.pkg.tar.zst'
@@ -27,8 +36,9 @@ fi
 
 # Add multilib repo
 if grep -Fxq "[multilib]" /etc/pacman.conf; then
-	echo "Multilib repo already exists"
+	echo "${YELLOW}:: ${BLUE}multilib ${BWHITE}repo already exists${NC} -- skipping"
 else
+	echo "${BLUE}:: ${BWHITE}Adding ${BLUE}multilib ${BWHITE}repository${NC}"
 	sudo tee -a /etc/pacman.conf >/dev/null <<EOT
 [multilib]
 Include = /etc/pacman.d/mirrorlist

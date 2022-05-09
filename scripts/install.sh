@@ -50,7 +50,7 @@ fi
 if grep -Fxq "[multilib]" /etc/pacman.conf; then
 	echo "${YELLOW}:: ${BLUE}multilib ${BWHITE}repo already exists${NC} -- skipping"
 else
-	echo "${BLUE}:: ${BWHITE}Adding ${BLUE}multilib ${BWHITE}repo${NC}"
+	echo "${BLUE}:: ${BWHITE}Adding ${BLUE}multilib ${BWHITE}repository${NC}"
 	sudo tee -a /etc/pacman.conf >/dev/null <<EOT
 [multilib]
 Include = /etc/pacman.d/mirrorlist
