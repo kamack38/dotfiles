@@ -155,7 +155,9 @@ fish -c 'npm i --prefix $HOME/.quokka dotenv-quokka-plugin \
 
 # Install NvChad
 if [[ -d "$NEOVIM_CONFIG_DIR/.git" && $(git -C $NEOVIM_CONFIG_DIR ls-remote --get-url) == "$NVCHAD_URL"* ]]; then
-	echo "${YELLOW}:: ${BLUE}NvChad${BWHITE} is already installed${NC} -- skipping"
+	echo "${YELLOW}:: ${BLUE}NvChad${BWHITE} is already installed${NC} -- updating"
+	git -C $NEOVIM_CONFIG_DIR fetch --all
+	git -C $NEOVIM_CONFIG_DIR pull
 else
 	echo "${BLUE}:: ${BWHITE}Installing ${BLUE}NvChad${NC}"
 	mv $NEOVIM_CONFIG_DIR $HOME/.config/NVIM.BAK
