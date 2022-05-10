@@ -92,7 +92,6 @@ $HELPER -S --noconfirm --needed --quiet ripgrep \
 	github-cli \
 	caprine \
 	libqalculate \
-	qalculate-qt \
 	visual-studio-code-bin \
 	ff2mpv-native-messaging-host-git \
 	oh-my-posh-bin \
@@ -202,7 +201,7 @@ esac
 read -rp "${BLUE}:: ${BWHITE}Do you want to setup additional programming fonts? [Y/n]${NC}: " fonts_setup
 
 if [[ $fonts_setup != n* ]]; then
-	echo "Running font script..."
+	echo "${BLUE}:: ${BWHITE}Installing fonts...${NC}"
 	bash $HOME/scripts/fonts.sh
 fi
 
@@ -217,20 +216,20 @@ fi
 read -rp "${BLUE}:: ${BWHITE}Do you want to run script for asus laptops? [y/N]${NC}: " asus_script
 
 if [[ $asus_script == y* ]]; then
-	echo "Running asus script..."
+	echo "${BLUE}:: ${BWHITE}Running asus script...${NC}"
 	bash $HOME/scripts/asus.sh
 fi
 
 read -rp "${BLUE}:: ${BWHITE}Do you want to run script for razer hardware? [y/N]${NC}: " razer_script
 
 if [[ $razer_script == y* ]]; then
-	echo "Running razer script..."
+	echo "${BLUE}:: ${BWHITE}Running razer script...${NC}"
 	bash $HOME/scripts/razer.sh
 fi
 
 read -rp "${RED}:: ${BWHITE}Do you want to reboot? [y/N]${NC}: " reboot_prompt
 
 if [[ $reboot_prompt == y* ]]; then
-	echo "Rebooting..."
+	echo "${YELLOW}:: ${BWHITE}Rebooting...${NC}"
 	systemctl reboot
 fi
