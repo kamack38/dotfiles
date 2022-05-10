@@ -85,7 +85,13 @@ GAMING_PROFILE=(
 	"wine"
 )
 
+SOUND_PROFILE=(
+	'chaotic-aur/alsa-support'
+)
+
 BLUETOOTH_PROFILE=("bluetooth-support")
+
+NETWORK_PROFILE=("")
 
 NVIDIA_DRIVERS=(
 	"nvidia-dkms"
@@ -200,7 +206,7 @@ $HELPER -S --noconfirm --needed --quiet "${NORMAL_PROFILE[@]}"
 
 # Additional packages
 echo "${BLUE}:: ${BWHITE}Which packages do you want to install?${NC}"
-echo "	1) Gaming 2) Virtual Machine 3) Sound 4) Bluetooth"
+echo "	1) Gaming 2) Virtual Machine 3) Sound 4) Bluetooth 5) Network"
 read -rp "${BLUE}:: ${BWHITE}Packages to install (eg: 1 2 3): " additional_packages
 
 if [[ $additional_packages == *"1"* ]]; then
@@ -213,11 +219,17 @@ if [[ $additional_packages == *"2"* ]]; then
 fi
 if [[ $additional_packages == *"3"* ]]; then
 	echo "${RED}:: ${BWHITE}This feature has not been implemented yet${NC}"
-	# $HELPER -S --noconfirm --needed --quiet "${GAMING_PROFILE[@]}"
+	# echo "${BLUE}:: ${BWHITE}Adding ${BLUE}sound${BWHITE} support?${NC}"
+	# $HELPER -S --noconfirm --needed --quiet "${SOUND_PROFILE[@]}"
 fi
 if [[ $additional_packages == *"4"* ]]; then
 	echo "${BLUE}:: ${BWHITE}Adding ${BLUE}bluetooth${BWHITE} support?${NC}"
 	$HELPER -S --noconfirm --needed --quiet "${BLUETOOTH_PROFILE[@]}"
+fi
+if [[ $additional_packages == *"5"* ]]; then
+	echo "${RED}:: ${BWHITE}This feature has not been implemented yet${NC}"
+	# echo "${BLUE}:: ${BWHITE}Adding ${BLUE}network${BWHITE} support?${NC}"
+	# $HELPER -S --noconfirm --needed --quiet "${NETWORK_PROFILE[@]}"
 fi
 
 # Install pip packages
