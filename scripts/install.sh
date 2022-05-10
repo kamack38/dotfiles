@@ -124,6 +124,9 @@ DOTFILES="$HOME/.dotfiles"
 REPO="https://github.com/kamack38/linux-dotfiles"
 NEOVIM_CONFIG_DIR="$HOME/.config/nvim"
 NVCHAD_URL="https://github.com/NvChad/NvChad"
+TIME_ZONE="Europe/Warsaw"
+MAIN_LOCALE="en_GB.UTF-8"
+SECONDARY_LOCALE="pl_PL.UTF-8"
 
 # Show greetings
 echo "   ___  __    _____ ______  _________  ________"
@@ -147,6 +150,42 @@ echo "${BLUE}:: ${BWHITE}Creating directories...${NC}"
 mkdir -p $HOME/.local/share/fonts
 mkdir -p $NEOVIM_CONFIG_DIR
 mkdir -p $HOME/.srcs
+
+# Set time zone
+ln -sf "/usr/share/zoneinfo/${TIME_ZONE}" /etc/localtime
+hwclock --systohc
+
+# Generate locale
+echo "${BLUE}:: ${BWHITE}Generating locales${NC}"
+sudo wget 'https://raw.githubusercontent.com/archcraft-os/core-packages/main/archcraft-mirrorlist/archcraft-mirrorlist' -O /etc/pacman.d/archcraft-mirrorlist
+sudo tee -a /etc/locale.gen >/dev/null <<EOT
+#
+# Locales enabled by dotfiles install script
+en_US.UTF-8 UTF-8
+${MAIN_LOCALE} UTF-8
+${SECONDARY_LOCALE} UTF-8
+EOT
+sudo locale-gen
+
+# Set locale
+echo "${BLUE}:: ${BWHITE}Setting locales${NC}"
+sudo tee /etc/locale.conf >/dev/null <<EOT
+LANG=${MAIN_LOCALE}
+LC_ADDRESS=${SECONDARY_LOCALE}
+LC_IDENTIFICATION=${SECONDARY_LOCALE}
+LC_MEASUREMENT=${SECONDARY_LOCALE}
+LC_MONETARY=${SECONDARY_LOCALE}
+LC_NAME=${SECONDARY_LOCALE}
+LC_NUMERIC=${SECONDARY_LOCALE}
+LC_PAPER=${SECONDARY_LOCALE}
+LC_TELEPHONE=${SECONDARY_LOCALE}
+LC_TIME=${SECONDARY_LOCALE}
+EOT
+
+# Reload locale
+echo "${BLUE}:: ${BWHITE}Reloading locales${NC}"
+unset LANG
+source /etc/profile.d/locale.sh
 
 # Install helper
 if ! command -v $HELPER &>/dev/null; then

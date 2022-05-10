@@ -87,7 +87,7 @@ immutability=1
 plugin=org.kde.plasma.systemtray
 
 [Containments][50][Applets][52][Configuration]
-PreloadWeight=76
+PreloadWeight=96
 SystrayContainmentId=53
 
 [Containments][50][ConfigDialog]
@@ -142,7 +142,7 @@ immutability=1
 plugin=org.kde.plasma.notifications
 
 [Containments][53][Applets][58][Configuration]
-PreloadWeight=10
+PreloadWeight=15
 
 [Containments][53][Applets][59]
 immutability=1
@@ -186,12 +186,15 @@ PreloadWeight=33
 immutability=1
 plugin=org.kde.plasma.battery
 
+[Containments][53][Applets][64][Configuration]
+PreloadWeight=55
+
 [Containments][53][Applets][65]
 immutability=1
 plugin=org.kde.plasma.mediacontroller
 
 [Containments][53][Applets][65][Configuration]
-PreloadWeight=42
+PreloadWeight=44
 
 [Containments][53][Configuration]
 PreloadWeight=0
