@@ -193,7 +193,7 @@ $HELPER -S --noconfirm --needed --quiet "${NORMAL_PROFILE[@]}"
 # Additional packages
 echo "${BLUE}:: ${BWHITE}Which packages do you want to install?${NC}"
 echo "	1) Gaming 2) Virtual Machine 3) Sound"
-read -rp "${BLUE}:: ${BWHITE}Packages to install (eg: 1 2 3)" additional_packages
+read -rp "${BLUE}:: ${BWHITE}Packages to install (eg: 1 2 3): " additional_packages
 
 if [[ $additional_packages == *"1"* ]]; then
 	echo "${BLUE}:: ${BWHITE}Installing ${BLUE}gaming${BWHITE} packages?${NC}"
