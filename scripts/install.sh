@@ -11,6 +11,99 @@ GREEN=$'\e[0;32m'
 YELLOW=$'\e[0;33m'
 NC=$'\e[0m' # No Colour
 
+# Packages
+DEV_PROFILE=(
+	"jre-openjdk"
+	"git-delta"
+	"onefetch"
+	"neofetch-git"
+	"github-cli"
+	"visual-studio-code-bin"
+	"dust"
+	"bottom"
+	"shfmt-bin"
+	"ngrok"
+	"jq"
+	"gnupg"
+	"unrar"
+	"gdb"
+	"wakatime"
+	"ueberzug"
+	"bash-completion"
+	"bash-language-server"
+	"typescript-language-server"
+	"prettierd"
+	"ccls"
+)
+
+VM_PROFILE=("virt-manager-meta")
+
+NORMAL_PROFILE=(
+	"ripgrep"
+	"python"
+	"python-pip"
+	"python-gobject"
+	"flatpak"
+	"bat"
+	"exa"
+	"croc"
+	"mpv"
+	"ffmpeg"
+	"yt-dlp"
+	"neovim"
+	"fish"
+	"fisher"
+	"discord"
+	"firefox-developer-edition"
+	"caprine"
+	"spotify"
+	"spicetify-cli"
+	"libqalculate"
+	"cava"
+	"ttf-font-awesome"
+	"rofi"
+	"playerctl"
+	"mpv-mpris"
+	"update-grub"
+	"alacritty"
+	"polybar-git"
+	"${DEV_PROFILE[@]}")
+
+GAMING_PROFILE=(
+	"mangohud"
+	"input-devices-support"
+	"piper"
+	"steam"
+	"proton-ge-custom"
+	"lutris-git"
+	"wine"
+)
+
+NVIDIA_DRIVERS=(
+	"nvidia-dkms"
+	"nvidia-utils"
+	"lib32-nvidia-utils"
+	"nvidia-settings"
+	"vulkan-icd-loader"
+	"lib32-vulkan-icd-loader"
+)
+
+AMD_DRIVERS=(
+	"lib32-mesa"
+	"vulkan-radeon"
+	"lib32-vulkan-radeon"
+	"vulkan-icd-loader"
+	"lib32-vulkan-icd-loader"
+)
+
+INTEL_DRIVERS=(
+	"lib32-mesa"
+	"vulkan-intel"
+	"lib32-vulkan-intel"
+	"vulkan-icd-loader"
+	"lib32-vulkan-icd-loader"
+)
+
 # Default vars
 HELPER="paru"
 DOTFILES="$HOME/.dotfiles"
@@ -63,70 +156,57 @@ else
 	git --git-dir="$DOTFILES" --work-tree="$HOME" checkout --force
 fi
 
-source $HOME/scripts/repos.sh
-
+# Add additional repositories
+source "$HOME/scripts/repos.sh"
 multilib
-
+chaotic_aur
 sudo $HELPER -Sy
 
-echo "${GREEN}:: ${BWHITE}Installing packages using ${BLUE}${HELPER}${NC}"
-$HELPER -S --noconfirm --needed --quiet ripgrep \
-	python \
-	python-pip \
-	python-gobject \
-	flatpak \
-	bat \
-	exa \
-	croc \
-	yt-dlp \
-	ffmpeg \
-	mpv \
-	firefox-developer-edition \
-	jre-openjdk \
-	git-delta \
-	onefetch \
-	neofetch-git \
-	neovim \
-	fish \
-	fisher \
-	github-cli \
-	caprine \
-	libqalculate \
-	visual-studio-code-bin \
-	ff2mpv-native-messaging-host-git \
-	oh-my-posh-bin \
-	fzf \
-	gnome-keyring \
-	libsecret \
-	tldr \
-	procs \
-	dust \
-	bottom \
-	shfmt-bin \
-	cava \
-	ngrok \
-	ttf-font-awesome \
-	rofi \
-	jq \
-	playerctl \
-	mpv-mpris \
-	spotify \
-	spicetify-cli \
-	update-grub \
-	gnupg \
-	unrar \
-	gdb \
-	mangohud \
-	wakatime \
-	ueberzug \
-	bash-language-server \
-	typescript-language-server \
-	prettierd \
-	ccls \
-	alacritty \
-	discord \
-	bash-completion \
-	polybar-git
+# Install drivers
+VGA_INFO=$(lspci -vnn | grep VGA)
+if [[ $VGA_INFO == *"NVIDIA"* ]]; then
+	echo "${GREEN}:: ${BWHITE}Installing ${BLUE}NVIDIA${BWHITE} drivers${NC}"
+	$HELPER -S --noconfirm --needed --quiet "${NVIDIA_DRIVERS[@]}"
+else
+	echo "${YELLOW}:: ${BLUE}NVIDIA${BWHITE} hardware not detected${NC} -- skipping"
+fi
+
+if [[ $VGA_INFO == *"AMD"* ]]; then
+	echo "${GREEN}:: ${BWHITE}Installing ${BLUE}AMD${BWHITE} drivers${NC}"
+	$HELPER -S --noconfirm --needed --quiet "${AMD_DRIVERS[@]}"
+else
+	echo "${YELLOW}:: ${BLUE}AMD${BWHITE} hardware not detected${NC} -- skipping"
+
+fi
+
+if [[ $VGA_INFO == *"INTEL"* ]]; then
+	echo "${GREEN}:: ${BWHITE}Installing ${BLUE}INTEL${BWHITE} drivers${NC}"
+	$HELPER -S --noconfirm --needed --quiet "${INTEL_DRIVERS[@]}"
+else
+	echo "${YELLOW}:: ${BLUE}INTEL${BWHITE} hardware not detected${NC} -- skipping"
+fi
+
+# Install packages
+echo "${GREEN}:: ${BWHITE}Installing ${BLUE}default${BWHITE} packages using ${BLUE}${HELPER}${NC}"
+$HELPER -S --noconfirm --needed --quiet "${NORMAL_PROFILE[@]}"
+
+# Additional packages
+echo "${BLUE}:: ${BWHITE}Which packages do you want to install?${NC}"
+echo "	1) Gaming 2) Virtual Machine 3) Sound"
+read -rp "${BLUE}:: ${BWHITE}Packages to install (eg: 1 2 3)" additional_packages
+
+if [[ $additional_packages == *"1"* ]]; then
+	echo "${BLUE}:: ${BWHITE}Installing ${BLUE}gaming${BWHITE} packages?${NC}"
+	$HELPER -S --noconfirm --needed --quiet "${GAMING_PROFILE[@]}"
+fi
+if [[ $additional_packages == *"2"* ]]; then
+	echo "${BLUE}:: ${BWHITE}Adding ${BLUE}virtual machine${BWHITE} support?${NC}"
+	$HELPER -S --noconfirm --needed --quiet "${VM_PROFILE[@]}"
+fi
+if [[ $additional_packages == *"3"* ]]; then
+	echo "${RED}:: ${BWHITE}This feature has not been implemented yet${NC}"
+	# $HELPER -S --noconfirm --needed --quiet "${GAMING_PROFILE[@]}"
+fi
 
 # Install pip packages
 echo -e "${GREEN}:: ${BWHITE}Installing ${BLUE}pip${BWHITE} packages${NC}"
@@ -207,7 +287,7 @@ if [[ $fonts_setup != n* ]]; then
 	bash $HOME/scripts/fonts.sh
 fi
 
-read -rp "${BLUE}:: ${BWHITE}Do you want to add additional pacman repositories (chaotic-aur, blackarch, archcraft)? [y/N]${NC}: " repos_script
+read -rp "${BLUE}:: ${BWHITE}Do you want to add additional pacman repositories (blackarch, archcraft)? [y/N]${NC}: " repos_script
 
 if [[ $repos_script == y* ]]; then
 	archcraft
