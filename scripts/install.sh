@@ -255,6 +255,12 @@ else
 	cat $HOME/.packer.sync.result | grep -v 'Press'
 fi
 
+# Enable spicetify
+if [[ ! -f "$HOME/.config/spicetify/Backup/xpui.spa" ]]; then
+	echo "${BLUE}:: ${BWHITE}Enabling ${BLUE}spicetify${BWHITE}...${NC}"
+	spicetify backup apply
+fi
+
 # Set default shell to fish
 if [ ! "$(basename -- "$SHELL")" = "fish" ]; then
 	echo "${YELLOW}:: ${BWHITE}Setting default shell to ${BLUE}fish${NC}"
