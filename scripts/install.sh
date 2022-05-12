@@ -37,6 +37,7 @@ DEV_PROFILE=(
 	"typescript-language-server"
 	"prettierd"
 	"ccls"
+	"typos"
 )
 
 VM_PROFILE=("virt-manager-meta")
@@ -73,6 +74,7 @@ NORMAL_PROFILE=(
 	"update-grub"
 	"alacritty"
 	"polybar-git"
+	"reflector"
 	"${DEV_PROFILE[@]}")
 
 GAMING_PROFILE=(
@@ -241,7 +243,7 @@ fi
 
 # Install packages
 echo "${GREEN}:: ${BWHITE}Installing ${BLUE}default${BWHITE} packages using ${BLUE}${HELPER}${NC}"
-$HELPER -S --noconfirm --needed --quiet "${NORMAL_PROFILE[@]}"
+$HELPER -S --noconfirm --needed --quiet --mflags='-j$(nproc)' "${NORMAL_PROFILE[@]}"
 
 # Additional packages
 echo "${BLUE}:: ${BWHITE}Which packages do you want to install?${NC}"

@@ -1,4 +1,4 @@
-local map = require("core.utils").map
+local map = nvchad.map
 
 map("n", "<leader>zz", ":TZAtaraxis <CR>")
 map("n", "<leader>zm", ":TZMinimalist <CR>")

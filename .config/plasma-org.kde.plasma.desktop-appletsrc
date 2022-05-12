@@ -30,7 +30,7 @@ PreloadWeight=0
 [Containments][1][General]
 ToolBoxButtonState=topcenter
 ToolBoxButtonX=879
-positions={"2560x1440":[]\\,"1920x1080":[""]}
+positions={"2560x1440":[]\\,"1920x1080":[]}
 sortMode=-1
 
 [Containments][1][Wallpaper][com.github.casout.wallpaperEngineKde][General]
@@ -87,7 +87,7 @@ immutability=1
 plugin=org.kde.plasma.systemtray
 
 [Containments][50][Applets][52][Configuration]
-PreloadWeight=96
+PreloadWeight=97
 SystrayContainmentId=53
 
 [Containments][50][ConfigDialog]
@@ -121,7 +121,7 @@ immutability=1
 plugin=org.kde.plasma.devicenotifier
 
 [Containments][53][Applets][55][Configuration]
-PreloadWeight=20
+PreloadWeight=12
 
 [Containments][53][Applets][56]
 immutability=1
@@ -142,14 +142,14 @@ immutability=1
 plugin=org.kde.plasma.notifications
 
 [Containments][53][Applets][58][Configuration]
-PreloadWeight=15
+PreloadWeight=12
 
 [Containments][53][Applets][59]
 immutability=1
 plugin=org.kde.plasma.volume
 
 [Containments][53][Applets][59][Configuration]
-PreloadWeight=0
+PreloadWeight=17
 
 [Containments][53][Applets][59][Configuration][General]
 volumeStep=2
@@ -173,28 +173,28 @@ immutability=1
 plugin=org.kde.plasma.networkmanagement
 
 [Containments][53][Applets][62][Configuration]
-PreloadWeight=52
+PreloadWeight=44
 
 [Containments][53][Applets][63]
 immutability=1
 plugin=org.kde.plasma.bluetooth
 
 [Containments][53][Applets][63][Configuration]
-PreloadWeight=33
+PreloadWeight=30
 
 [Containments][53][Applets][64]
 immutability=1
 plugin=org.kde.plasma.battery
 
 [Containments][53][Applets][64][Configuration]
-PreloadWeight=55
+PreloadWeight=47
 
 [Containments][53][Applets][65]
 immutability=1
 plugin=org.kde.plasma.mediacontroller
 
 [Containments][53][Applets][65][Configuration]
-PreloadWeight=44
+PreloadWeight=0
 
 [Containments][53][Configuration]
 PreloadWeight=0
@@ -215,7 +215,7 @@ plugin=org.kde.plasma.folder
 wallpaperplugin=org.kde.image
 
 [Containments][60][Configuration]
-PreloadWeight=2
+PreloadWeight=0
 
 [Containments][60][Wallpaper][org.kde.image][General]
 Image=file:///opt/dwall-git/firewatch/20.png
