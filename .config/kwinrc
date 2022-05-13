@@ -23,9 +23,6 @@ Meta=org.kde.lattedock,/Latte,org.kde.LatteDock,activateLauncherMenu
 [Plugins]
 zoomEnabled=false
 
-[TabBox]
-LayoutName=thumbnail_grid
-
 [Windows]
 ElectricBorderCornerRatio=0.01
 

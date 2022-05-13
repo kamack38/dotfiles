@@ -75,7 +75,8 @@ NORMAL_PROFILE=(
 	"alacritty"
 	"polybar-git"
 	"reflector"
-	"${DEV_PROFILE[@]}")
+	"${DEV_PROFILE[@]}"
+)
 
 GAMING_PROFILE=(
 	"mangohud"

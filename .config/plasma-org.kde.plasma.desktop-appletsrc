@@ -7,8 +7,8 @@ RightButton;NoModifier=org.kde.contextmenu
 
 [Containments][1]
 ItemGeometries-1920x1080=
-ItemGeometries-2560x1440=
-ItemGeometriesHorizontal=
+ItemGeometries-2560x1440=Applet-66:992.003,79.9942,576,176,0;
+ItemGeometriesHorizontal=Applet-66:992.003,79.9942,576,176,0;
 activityId=70236a50-2422-44b5-bcb3-9d8c342fc3e7
 formfactor=0
 immutability=1
@@ -19,6 +19,18 @@ wallpaperplugin=org.kde.image
 
 [Containments][1][Applets][23][Configuration][SensorColors]
 memory/physical/used=61,174,233
+
+[Containments][1][Applets][66]
+immutability=1
+plugin=com.github.prayag2.modernclock
+
+[Containments][1][Applets][66][Configuration][Appearance]
+font_color=239,239,239
+use_24_hour_format=true
+
+[Containments][1][Applets][66][Configuration][ConfigDialog]
+DialogHeight=540
+DialogWidth=720
 
 [Containments][1][ConfigDialog]
 DialogHeight=935
@@ -38,9 +50,9 @@ DisplayMode=1
 PauseMode=2
 SteamLibraryPath[$e]=file:$HOME/.local/share/Steam
 VideoBackend=1
-WallpaperFilePath[$e]=file:$HOME/.local/share/Steam/steamapps/workshop/content/431960/2229371846/scene.json
+WallpaperFilePath[$e]=file:$HOME/.local/share/Steam/steamapps/workshop/content/431960/2266752467/scene.json
 WallpaperType=scene
-WallpaperWorkShopId=2229371846
+WallpaperWorkShopId=2266752467
 
 [Containments][1][Wallpaper][org.kde.image][General]
 Image=file:///usr/share/backgrounds/archcraft/onedark.png
@@ -87,7 +99,7 @@ immutability=1
 plugin=org.kde.plasma.systemtray
 
 [Containments][50][Applets][52][Configuration]
-PreloadWeight=97
+PreloadWeight=100
 SystrayContainmentId=53
 
 [Containments][50][ConfigDialog]
@@ -114,14 +126,14 @@ immutability=1
 plugin=org.kde.plasma.clipboard
 
 [Containments][53][Applets][54][Configuration]
-PreloadWeight=0
+PreloadWeight=5
 
 [Containments][53][Applets][55]
 immutability=1
 plugin=org.kde.plasma.devicenotifier
 
 [Containments][53][Applets][55][Configuration]
-PreloadWeight=12
+PreloadWeight=22
 
 [Containments][53][Applets][56]
 immutability=1
@@ -142,14 +154,18 @@ immutability=1
 plugin=org.kde.plasma.notifications
 
 [Containments][53][Applets][58][Configuration]
-PreloadWeight=12
+PreloadWeight=17
 
 [Containments][53][Applets][59]
 immutability=1
 plugin=org.kde.plasma.volume
 
 [Containments][53][Applets][59][Configuration]
-PreloadWeight=17
+PreloadWeight=77
+
+[Containments][53][Applets][59][Configuration][ConfigDialog]
+DialogHeight=540
+DialogWidth=720
 
 [Containments][53][Applets][59][Configuration][General]
 volumeStep=2
