@@ -108,7 +108,7 @@ function nps --description 'Search and install a local npm package' -a pkg
 end
 
 # Visual Studio Code
-function vsr -d "List recently opened files with vscode"
+function vsr -d "List recently opened files with vscode" -a serach
     set -l vscode_path "$HOME/.config/Code"
     set -l grep
 
@@ -122,7 +122,7 @@ function vsr -d "List recently opened files with vscode"
           $grep '"path": "/.*[^/]"' "$vscode_path/User/globalStorage/storage.json" \
           | string replace -a '"path": ' '' \
           | string trim -c '"'\
-          | fzf --exit-0 --height 50% --layout=reverse --preview 'if test -f {}; if begin [ $(string split -r -m1 . $(basename -- {}))[2] = "code-workspace" ]; and type -q as-tree; and type -q jq; end; cat {} | jq \'.folders[] .path\' | as-tree; else; bat --paging=never --color=always --style=plain {}; end; else; if test -d {}; exa {}; else; echo -e \'\033[0;31mDELETED\033[0m\'; end; end' )
+          | fzf --exit-0 --height 50% --layout=reverse -q$serach --preview 'if test -f {}; if begin [ $(string split -r -m1 . $(basename -- {}))[2] = "code-workspace" ]; and type -q as-tree; and type -q jq; end; cat {} | jq \'.folders[] .path\' | as-tree; else; bat --paging=never --color=always --style=plain {}; end; else; if test -d {}; exa {}; else; echo -e \'\033[0;31mDELETED\033[0m\'; end; end' )
 
     [ -n "$selected" ]; and code "$selected"
 end
