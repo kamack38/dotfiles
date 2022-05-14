@@ -97,6 +97,8 @@ BLUETOOTH_PROFILE=("bluetooth-support")
 NETWORK_PROFILE=("")
 
 NVIDIA_DRIVERS=(
+	"garuda-nvidia-config"
+	"garuda-video-linux-config"
 	"nvidia-dkms"
 	"nvidia-utils"
 	"lib32-nvidia-utils"
@@ -106,6 +108,7 @@ NVIDIA_DRIVERS=(
 )
 
 AMD_DRIVERS=(
+	"garuda-video-linux-config"
 	"lib32-mesa"
 	"vulkan-radeon"
 	"lib32-vulkan-radeon"
@@ -114,6 +117,7 @@ AMD_DRIVERS=(
 )
 
 INTEL_DRIVERS=(
+	"garuda-video-linux-config"
 	"lib32-mesa"
 	"vulkan-intel"
 	"lib32-vulkan-intel"

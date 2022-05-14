@@ -11,6 +11,7 @@
 # ------------
 # Set default node version
 set --universal nvm_default_version lts
+set -gx EDITOR nvim
 fish_add_path -aP $HOME/.local/bin
 
 # Set gpg tty
@@ -90,6 +91,23 @@ if ! command -v bottles-cli
     end
 end
 
+# Npm
+function npg --description 'Search and install a global npm package' -a pkg
+    if type -q all-the-package-names
+        command all-the-package-names | fzf --multi --preview 'npm info {1}' --preview-window wrap -q$pkg | xargs -ro npm install -g
+    else
+        echo "This command requires npm package 'all-the-package-names' to be installed/"
+    end
+end
+function nps --description 'Search and install a local npm package' -a pkg
+    if type -q all-the-package-names
+        command all-the-package-names | fzf --multi --preview 'npm info {1}' --preview-window wrap -q$pkg | xargs -ro npm install
+    else
+        echo "This command requires npm package 'all-the-package-names' to be installed/"
+    end
+end
+
+# Visual Studio Code
 function vsr -d "List recently opened files with vscode"
     set -l vscode_path "$HOME/.config/Code"
     set -l grep

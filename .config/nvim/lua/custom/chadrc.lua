@@ -1,7 +1,7 @@
 local M = {}
 local opt = vim.opt
 
-local plugin_conf = require "custom.plugins.configs"
+local override = require "custom.plugins.override"
 local userPlugins = require "custom.plugins"
 
 if vim.fn.has('win32') == 1 then
@@ -26,13 +26,15 @@ M.plugins = {
    },
 
    override = {
-      ["kyazdani42/nvim-tree.lua"] = plugin_conf.nvimtree,
-      ["nvim-treesitter/nvim-treesitter"] = plugin_conf.treesitter,
+      ["kyazdani42/nvim-tree.lua"] = override.nvimtree,
+      ["nvim-treesitter/nvim-treesitter"] = override.treesitter,
    },
 
    default_plugin_config_replace = {},
 
    user = userPlugins,
 }
+
+M.mappings = require "custom.mappings"
 
 return M
