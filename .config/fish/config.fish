@@ -31,6 +31,7 @@ export WAKATIME_HOME="$XDG_CONFIG_HOME/wakatime"
 export KDEHOME="$XDG_CONFIG_HOME/kde"
 export LESSHISTFILE="$XDG_CACHE_HOME/less/history"
 export CUDA_CACHE_PATH="$XDG_CACHE_HOME/nv"
+export HISTFILE="$XDG_CACHE_HOME/bash/history"
 
 export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 
