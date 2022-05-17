@@ -16,6 +16,23 @@ fish_add_path -aP $HOME/.local/bin
 
 # Set gpg tty
 export GPG_TTY=(tty)
+export XDG_CACHE_HOME="$HOME/.cache"
+export XDG_STATE_HOME="$HOME/.local/state"
+export XDG_CONFIG_HOME="$HOME/.config"
+#export XDG_DATA_HOME="$HOME"
+
+# export CARGO_HOME="$XDG_DATA_HOME"/cargo
+# export GNUPGHOME="$XDG_DATA_HOME"/gnupg
+# export NODE_REPL_HISTORY="$XDG_DATA_HOME"/node_repl_history
+# export NVM_DIR="$XDG_DATA_HOME"/nvm
+# export WINEPREFIX="$XDG_DATA_HOME"/wine
+
+export WAKATIME_HOME="$XDG_CONFIG_HOME/wakatime"
+export KDEHOME="$XDG_CONFIG_HOME/kde"
+export LESSHISTFILE="$XDG_CACHE_HOME/less/history"
+export CUDA_CACHE_PATH="$XDG_CACHE_HOME/nv"
+
+export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 
 # ------------
 # Keybindings
@@ -56,12 +73,14 @@ alias makesrcinfo="makepkg --printsrcinfo > .SRCINFO"
 
 # Cleanup orphaned packages
 alias cleanup='sudo pacman -Rns (pacman -Qtdq)'
+alias docker-clean-all='sudo docker system prune -af'
 
 # Get the error messages from journalctl
 alias jctl="journalctl -p 3 -xb"
 
 # Python
 alias pip-upgrade="pip install --upgrade pip"
+
 # Paru
 function pas --description 'Search and install a package' -a pkg
     command paru -Sl | fzf --with-nth=2 --multi --preview 'paru -Si {1}/{2}' --preview-window wrap -q$pkg | awk '{print $1"/"$2}' | xargs -ro paru -S --review
