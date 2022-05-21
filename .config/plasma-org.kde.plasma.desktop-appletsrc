@@ -6,9 +6,9 @@ wheel:Vertical;NoModifier=org.kde.switchdesktop
 RightButton;NoModifier=org.kde.contextmenu
 
 [Containments][1]
-ItemGeometries-1920x1080=
-ItemGeometries-2560x1440=Applet-66:992.003,79.9942,576,176,0;
-ItemGeometriesHorizontal=Applet-66:992.003,79.9942,576,176,0;
+ItemGeometries-1920x1080=Applet-66:992,80,576,176,0;
+ItemGeometries-2560x1440=Applet-66:992,80,576,176,0;
+ItemGeometriesHorizontal=Applet-66:992,80,576,176,0;
 activityId=70236a50-2422-44b5-bcb3-9d8c342fc3e7
 formfactor=0
 immutability=1
@@ -133,7 +133,7 @@ immutability=1
 plugin=org.kde.plasma.devicenotifier
 
 [Containments][53][Applets][55][Configuration]
-PreloadWeight=22
+PreloadWeight=32
 
 [Containments][53][Applets][56]
 immutability=1
@@ -154,14 +154,14 @@ immutability=1
 plugin=org.kde.plasma.notifications
 
 [Containments][53][Applets][58][Configuration]
-PreloadWeight=17
+PreloadWeight=27
 
 [Containments][53][Applets][59]
 immutability=1
 plugin=org.kde.plasma.volume
 
 [Containments][53][Applets][59][Configuration]
-PreloadWeight=77
+PreloadWeight=100
 
 [Containments][53][Applets][59][Configuration][ConfigDialog]
 DialogHeight=540
@@ -189,21 +189,21 @@ immutability=1
 plugin=org.kde.plasma.networkmanagement
 
 [Containments][53][Applets][62][Configuration]
-PreloadWeight=44
+PreloadWeight=100
 
 [Containments][53][Applets][63]
 immutability=1
 plugin=org.kde.plasma.bluetooth
 
 [Containments][53][Applets][63][Configuration]
-PreloadWeight=30
+PreloadWeight=35
 
 [Containments][53][Applets][64]
 immutability=1
 plugin=org.kde.plasma.battery
 
 [Containments][53][Applets][64][Configuration]
-PreloadWeight=47
+PreloadWeight=57
 
 [Containments][53][Applets][65]
 immutability=1
@@ -211,6 +211,10 @@ plugin=org.kde.plasma.mediacontroller
 
 [Containments][53][Applets][65][Configuration]
 PreloadWeight=0
+
+[Containments][53][ConfigDialog]
+DialogHeight=540
+DialogWidth=720
 
 [Containments][53][Configuration]
 PreloadWeight=0
