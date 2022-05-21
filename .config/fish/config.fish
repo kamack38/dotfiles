@@ -82,6 +82,9 @@ alias jctl="journalctl -p 3 -xb"
 # Python
 alias pip-upgrade="pip install --upgrade pip"
 
+# Sudo edit
+alias esudo="sudoedit"
+
 # Paru
 function pas --description 'Search and install a package' -a pkg
     command paru -Sl | fzf --with-nth=2 --multi --preview 'paru -Si {1}/{2}' --preview-window wrap -q$pkg | awk '{print $1"/"$2}' | xargs -ro paru -S --review

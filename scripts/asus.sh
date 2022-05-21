@@ -14,8 +14,9 @@ EOT
 fi
 
 # Refresh repositories
-sudo pacman -Sy
+sudo pacman -Syy
 
+# Install packages
 $HELPER -S --noconfirm --needed --quiet asusctl-git \
 	alsa-tools \
 	optimus-manager \
@@ -24,6 +25,14 @@ $HELPER -S --noconfirm --needed --quiet asusctl-git \
 
 # Set keyboard light
 asusctl led-mode rainbow -d right -s low
+
+# Install custom kernel
+$HELPER -S --noconfirm --needed --quiet linux-g14 \
+	linux-g14-headers
+
+# Enable daemons
+systemctl --user enable asus-notify
+systemctl --user start asus-notify
 
 # slow internet
 # sudo sysctl net.ipv4.tcp_ecn=0

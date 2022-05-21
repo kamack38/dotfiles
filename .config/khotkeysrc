@@ -1041,7 +1041,7 @@ Type=SIMPLE_ACTION_DATA
 ActionsCount=1
 
 [Data_4_1Actions0]
-CommandURL=asusctl profile -n && notify-send -t 2000 "$(asusctl profile -p)"
+CommandURL=asusctl profile -n
 Type=COMMAND_URL
 
 [Data_4_1Conditions]
