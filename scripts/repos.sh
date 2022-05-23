@@ -14,6 +14,7 @@ function archcraft {
 		echo "${BLUE}:: ${BWHITE}Adding ${BLUE}archcraft ${BWHITE}repository${NC}"
 		sudo wget 'https://raw.githubusercontent.com/archcraft-os/core-packages/main/archcraft-mirrorlist/archcraft-mirrorlist' -O /etc/pacman.d/archcraft-mirrorlist
 		sudo tee -a /etc/pacman.conf >/dev/null <<EOT
+
 [archcraft]
 SigLevel = Optional TrustAll
 Include = /etc/pacman.d/archcraft-mirrorlist
@@ -30,6 +31,7 @@ function chaotic_aur {
 		sudo pacman-key --lsign-key FBA220DFC880C036
 		sudo pacman -U 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-keyring.pkg.tar.zst' 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-mirrorlist.pkg.tar.zst' --noconfirm
 		sudo tee -a /etc/pacman.conf >/dev/null <<EOT
+
 [chaotic-aur]
 Include = /etc/pacman.d/chaotic-mirrorlist
 EOT
@@ -42,6 +44,7 @@ function multilib {
 	else
 		echo "${BLUE}:: ${BWHITE}Adding ${BLUE}multilib ${BWHITE}repository${NC}"
 		sudo tee -a /etc/pacman.conf >/dev/null <<EOT
+
 [multilib]
 Include = /etc/pacman.d/mirrorlist
 EOT
@@ -54,5 +57,22 @@ function blackarch {
 	else
 		echo "${BLUE}:: ${BWHITE}Adding ${BLUE}blackarch ${BWHITE}repository${NC}"
 		curl -s https://blackarch.org/strap.sh | sudo bash
+	fi
+}
+
+function archstrike {
+	if grep -Fxq "[archstrike]" /etc/pacman.conf; then
+		echo "${YELLOW}:: ${BLUE}archstrike ${BWHITE}repo already exists${NC} -- skipping"
+	else
+		echo "${BLUE}:: ${BWHITE}Adding ${BLUE}archstrike ${BWHITE}repository${NC}"
+		sudo tee -a /etc/pacman.conf >/dev/null <<'EOT'
+
+[archstrike]
+Server = https://mirror.archstrike.org/$arch/$repo
+EOT
+		sudo pacman-key -r 9D5F1C051D146843CDA4858BDE64825E7CBC0D51
+		sudo pacman-key --lsign-key 9D5F1C051D146843CDA4858BDE64825E7CBC0D51
+		sudo pacman -Sy archstrike-keyring archstrike-mirrorlist --noconfirm
+		sudo sed -i 's#Server = https://mirror.archstrike.org/$arch/$repo#Include = /etc/pacman.d/archstrike-mirrorlist#' /etc/pacman.conf
 	fi
 }

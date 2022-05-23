@@ -363,12 +363,13 @@ if [[ $fonts_setup != n* ]]; then
 	bash $HOME/scripts/fonts.sh
 fi
 
-read -rp "${BLUE}:: ${BWHITE}Do you want to add additional pacman repositories (blackarch, archcraft)? [y/N]${NC}: " repos_script
+read -rp "${BLUE}:: ${BWHITE}Do you want to add additional pacman repositories (archstrike, blackarch, archcraft)? [y/N]${NC}: " repos_script
 
 if [[ $repos_script == y* ]]; then
 	archcraft
 	chaotic_aur
 	blackarch
+	archstrike
 fi
 
 read -rp "${BLUE}:: ${BWHITE}Do you want to run script for asus laptops? [y/N]${NC}: " asus_script

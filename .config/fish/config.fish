@@ -33,6 +33,11 @@ export LESSHISTFILE="$XDG_CACHE_HOME/less/history"
 export CUDA_CACHE_PATH="$XDG_CACHE_HOME/nv"
 export HISTFILE="$XDG_CACHE_HOME/bash/history"
 
+# NPM
+export NPM_CONFIG_USERCONFIG="$XDG_CONFIG_HOME/npm/config"
+export NPM_CONFIG_CACHE="$XDG_CACHE_HOME/npm"
+export NPM_CONFIG_TMP="/tmp"
+
 export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 
 # ------------
