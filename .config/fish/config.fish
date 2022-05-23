@@ -72,6 +72,7 @@ alias systemctl-reload="systemctl daemon-reload"
 
 alias tarnow='tar -acf '
 alias untar='tar -xvf '
+alias gzipnow='tar czf'
 
 alias of="onefetch"
 
