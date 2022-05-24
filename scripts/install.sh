@@ -159,8 +159,8 @@ mkdir -p $NEOVIM_CONFIG_DIR
 mkdir -p $HOME/.srcs
 
 # Set time zone
-ln -sf "/usr/share/zoneinfo/${TIME_ZONE}" /etc/localtime
-hwclock --systohc
+sudo ln -sf "/usr/share/zoneinfo/${TIME_ZONE}" /etc/localtime
+sudo hwclock --systohc
 
 # Generate locale
 echo "${BLUE}:: ${BWHITE}Generating locales${NC}"
