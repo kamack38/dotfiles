@@ -19,22 +19,24 @@ export GPG_TTY=(tty)
 export XDG_CACHE_HOME="$HOME/.cache"
 export XDG_STATE_HOME="$HOME/.local/state"
 export XDG_CONFIG_HOME="$HOME/.config"
-#export XDG_DATA_HOME="$HOME"
+export XDG_DATA_HOME="$HOME/.local/share"
 
-# export CARGO_HOME="$XDG_DATA_HOME"/cargo
-# export GNUPGHOME="$XDG_DATA_HOME"/gnupg
-# export NODE_REPL_HISTORY="$XDG_DATA_HOME"/node_repl_history
-# export NVM_DIR="$XDG_DATA_HOME"/nvm
-# export WINEPREFIX="$XDG_DATA_HOME"/wine
+export CARGO_HOME="$XDG_DATA_HOME/cargo"
+# export GNUPGHOME="$XDG_DATA_HOME/gnupg"
+export NODE_REPL_HISTORY="$XDG_DATA_HOME/node_repl_history"
+# export NVM_DIR="$XDG_DATA_HOME/nvm"
+export WINEPREFIX="$XDG_DATA_HOME/wine"
 
 export WAKATIME_HOME="$XDG_CONFIG_HOME/wakatime"
 export KDEHOME="$XDG_CONFIG_HOME/kde"
+export GTK2_RC_FILES="$XDG_CONFIG_HOME/gtk-2.0/gtkrc"
+
 export LESSHISTFILE="$XDG_CACHE_HOME/less/history"
 export CUDA_CACHE_PATH="$XDG_CACHE_HOME/nv"
 export HISTFILE="$XDG_CACHE_HOME/bash/history"
 
 # NPM
-export NPM_CONFIG_USERCONFIG="$XDG_CONFIG_HOME/npm/config"
+export NPM_CONFIG_USERCONFIG="$XDG_CONFIG_HOME/npm/.npmrc"
 export NPM_CONFIG_CACHE="$XDG_CACHE_HOME/npm"
 export NPM_CONFIG_TMP="/tmp"
 

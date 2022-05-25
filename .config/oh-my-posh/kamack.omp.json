@@ -218,11 +218,9 @@
                 {
                     "background": "#99908a",
                     "foreground": "#193549",
-                    "powerline_symbol": "\ue0b2",
-                    "properties": {
-                        "fetch_version": true
-                    },
+                    "powerline_symbol": "\uE0B2",
                     "style": "powerline",
+                    "template": " \uE7a8 {{ .Full }} ",
                     "type": "rust"
                 },
                 {

@@ -134,6 +134,7 @@ NVCHAD_URL="https://github.com/NvChad/NvChad"
 TIME_ZONE="Europe/Warsaw"
 MAIN_LOCALE="en_GB.UTF-8"
 SECONDARY_LOCALE="pl_PL.UTF-8"
+KB_LAYOUT="pl"
 
 # Show greetings
 echo "   ___  __    _____ ______  _________  ________"
@@ -194,10 +195,13 @@ echo "${BLUE}:: ${BWHITE}Reloading locales${NC}"
 unset LANG
 source /etc/profile.d/locale.sh
 
+# Set keyboard layout
+sudo localectl set-keymap $KB_LAYOUT
+
 # Install helper
 if ! command -v $HELPER &>/dev/null; then
 	echo "${YELLOW}:: ${BWHITE}It seems that you don't have ${BLUE}$HELPER${BWHITE} installed${NC} -- installing"
-	git clone https://aur.archlinux.org/$HELPER.git $HOME/.srcs/$HELPER
+	git clone https://aur.archlinux.org/$HELPER.git /tmp/$HELPER
 	(cd $HOME/.srcs/$HELPER/ && makepkg --noconfirm -si)
 else
 	echo "${GREEN}:: ${BLUE}${HELPER}${BWHITE} is already installedR installed${NC} -- skipping"

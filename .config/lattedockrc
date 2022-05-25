@@ -6,8 +6,8 @@ DP-1-0 eDP-1 Width 2560x1440=1300
 detailViewIconSize=16
 
 [KPropertiesDialog]
-DP-1-0 eDP-1 Height 2560x1440=458
-DP-1-0 eDP-1 Width 2560x1440=410
+DP-1-0 eDP-1 Height 2560x1440=453
+DP-1-0 eDP-1 Width 2560x1440=404
 
 [LatteSettingsDialog]
 downloadWindowSize=980,600
