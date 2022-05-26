@@ -19,8 +19,9 @@ DEV_PROFILE=(
 	"neofetch-git"
 	"github-cli"
 	"visual-studio-code-bin"
-	"gnome-keyring"
-	"libsecret"
+	"gnome-keyring" # Fix vscode
+	"libsecret"     # Fix vscode
+	"icu69-bin"     # Fix live share
 	"tldr"
 	"dust"
 	"bottom"
@@ -203,7 +204,7 @@ sudo localectl set-keymap $KB_LAYOUT
 if ! command -v $HELPER &>/dev/null; then
 	echo "${YELLOW}:: ${BWHITE}It seems that you don't have ${BLUE}$HELPER${BWHITE} installed${NC} -- installing"
 	git clone https://aur.archlinux.org/$HELPER.git /tmp/$HELPER
-	(cd $HOME/.srcs/$HELPER/ && makepkg --noconfirm -si)
+	(cd /tmp/$HELPER/ && makepkg --noconfirm -si)
 else
 	echo "${GREEN}:: ${BLUE}${HELPER}${BWHITE} is already installedR installed${NC} -- skipping"
 fi

@@ -80,6 +80,8 @@ alias of="onefetch"
 
 alias makesrcinfo="makepkg --printsrcinfo > .SRCINFO"
 
+alias passwdgen="date +%s | sha256sum | base64 | head -c 64 ; echo"
+
 # Cleanup orphaned packages
 alias cleanup='sudo pacman -Rns (pacman -Qtdq)'
 alias docker-clean-all='sudo docker system prune -af'
