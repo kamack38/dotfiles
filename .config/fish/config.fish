@@ -22,7 +22,7 @@ export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_DATA_HOME="$HOME/.local/share"
 
 export CARGO_HOME="$XDG_DATA_HOME/cargo"
-# export GNUPGHOME="$XDG_DATA_HOME/gnupg"
+export GNUPGHOME="$XDG_DATA_HOME/gnupg"
 export NODE_REPL_HISTORY="$XDG_DATA_HOME/node_repl_history"
 # export NVM_DIR="$XDG_DATA_HOME/nvm"
 export WINEPREFIX="$XDG_DATA_HOME/wine"
@@ -56,6 +56,7 @@ alias ll='exa -alF'
 alias ls='exa'
 alias la='exa -a'
 alias lt='exa -T'
+alias le='exa -alTL 2'
 
 # Easier navigation: .., ..., ...., ....., ~ and -
 alias ..="cd .."
