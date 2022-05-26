@@ -196,6 +196,7 @@ unset LANG
 source /etc/profile.d/locale.sh
 
 # Set keyboard layout
+echo "${BLUE}:: ${BWHITE}Setting keyboard layout to ${GREEN}${KB_LAYOUT}${BWHITE} ...${NC}"
 sudo localectl set-keymap $KB_LAYOUT
 
 # Install helper
