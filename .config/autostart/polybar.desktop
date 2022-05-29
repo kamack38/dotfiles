@@ -3,3 +3,4 @@ Type=Application
 Exec=bash $HOME/.config/polybar/launch.sh
 Hidden=false
 Name=Polybar
+Comment=Run polybar start script
