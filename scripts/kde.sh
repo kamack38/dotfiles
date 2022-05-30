@@ -16,7 +16,8 @@ $HELPER -S --noconfirm --needed --quiet xorg \
 	ark \
 	desktop-file-utils \
 	partitionmanager \
-	kcron
+	kcron \
+	lightly
 
 # Enable services
 sudo systemctl enable sddm
