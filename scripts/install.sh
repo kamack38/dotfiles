@@ -41,6 +41,17 @@ DEV_PROFILE=(
 	"typos"
 )
 
+RUST_TOOLS=(
+	"rustup"
+)
+
+rust_setup() {
+	echo "${BLUE}:: ${BWHITE}Installing rust & its tools...${NC}"
+	rustup install stable
+	rustup component add clippy
+	cargo install cargo-edit
+}
+
 VM_PROFILE=("virt-manager-meta")
 
 NORMAL_PROFILE=(

@@ -13,25 +13,33 @@
 set --universal nvm_default_version lts
 set -gx EDITOR nvim
 fish_add_path -aP $HOME/.local/bin
+fish_add_path -aP $HOME/.local/share/cargo/bin
+export DIFFPROG="delta"
 
 # Set gpg tty
 export GPG_TTY=(tty)
+
+# XDG paths
 export XDG_CACHE_HOME="$HOME/.cache"
 export XDG_STATE_HOME="$HOME/.local/state"
 export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_DATA_HOME="$HOME/.local/share"
 
+# Data
 export CARGO_HOME="$XDG_DATA_HOME/cargo"
 export GNUPGHOME="$XDG_DATA_HOME/gnupg"
 export NODE_REPL_HISTORY="$XDG_DATA_HOME/node_repl_history"
 export NVM_DIR="$XDG_DATA_HOME/nvm"
+export RUSTUP_HOME="$XDG_DATA_HOME/rustup"
 export WINEPREFIX="$XDG_DATA_HOME/wine"
 
+# Config
 export WAKATIME_HOME="$XDG_CONFIG_HOME/wakatime"
 export KDEHOME="$XDG_CONFIG_HOME/kde"
 export GTK2_RC_FILES="$XDG_CONFIG_HOME/gtk-2.0/gtkrc"
 export XINITRC="$XDG_CONFIG_HOME/X11/xinitrc"
 
+# Cache
 export LESSHISTFILE="$XDG_CACHE_HOME/less/history"
 export CUDA_CACHE_PATH="$XDG_CACHE_HOME/nv"
 export HISTFILE="$XDG_CACHE_HOME/bash/history"
@@ -41,6 +49,7 @@ export NPM_CONFIG_USERCONFIG="$XDG_CONFIG_HOME/npm/.npmrc"
 export NPM_CONFIG_CACHE="$XDG_CACHE_HOME/npm"
 export NPM_CONFIG_TMP="/tmp"
 
+# Enable colored output
 export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 
 # ------------
@@ -79,6 +88,10 @@ alias untar='tar -xvf '
 alias gzipnow='tar czf'
 
 alias of="onefetch"
+
+if command -v firefox-developer-edition &>/dev/null
+    alias firefox="firefox-developer-edition"
+end
 
 alias makesrcinfo="makepkg --printsrcinfo > .SRCINFO"
 
@@ -140,6 +153,15 @@ function nps --description 'Search and install a local npm package' -a pkg
     else
         echo "This command requires npm package 'all-the-package-names' to be installed/"
     end
+end
+
+# Nerd fonts
+# converted from https://code.envrm.info/src/nerdfonts
+function nfs --description 'Search nerdfonts gylphs' -a search_term
+    set URL "https://nerdfonts.com/cheat-sheet"
+    set ICONS 1
+    set PAGE "$(curl -s -q -L $URL | grep '<div class="codepoint">[^<]*</div>')"
+    echo "$PAGE" | sed 's/^.*<div class="class-name">//g; s/<\/div><div class="codepoint">/ /; s/<\/div>//' | fzf --with-nth=1 --preview "printf '\u{2}'"
 end
 
 # Visual Studio Code

@@ -94,11 +94,22 @@
                         "fetch_package_manager": true
                     },
                     "style": "powerline",
-                    "type": "node"
+                    "type": "node",
+                    "template": "{{ if .PackageManagerIcon }}{{ .PackageManagerIcon }} {{ end }}{{ .Full }}"
+                },
+                {
+                    "type": "nx",
+                    "style": "powerline",
+                    "powerline_symbol": "\ue0b2",
+                    "invert_powerline": true,
+                    "foreground": "#ffffff",
+                    "background": "#002e53",
+                    "template": " 🌊 {{ .Full }} "
                 },
                 {
                     "background": "#2bb1ee",
                     "foreground": "#03589c",
+                    "invert_powerline": true,
                     "powerline_symbol": "\ue0b2",
                     "style": "powerline",
                     "type": "dart"
@@ -106,6 +117,7 @@
                 {
                     "background": "#4063D8",
                     "foreground": "#ffffff",
+                    "invert_powerline": true,
                     "powerline_symbol": "\ue0b2",
                     "style": "powerline",
                     "type": "php"
@@ -113,6 +125,7 @@
                 {
                     "background": "lightWhite",
                     "foreground": "blue",
+                    "invert_powerline": true,
                     "powerline_symbol": "\ue0b2",
                     "style": "powerline",
                     "type": "r"
@@ -208,6 +221,7 @@
                 {
                     "background": "#4E2BCD",
                     "foreground": "#ffffff",
+                    "invert_powerline": true,
                     "powerline_symbol": "\ue0b2",
                     "properties": {
                         "fetch_version": true
@@ -218,6 +232,7 @@
                 {
                     "background": "#99908a",
                     "foreground": "#193549",
+                    "invert_powerline": true,
                     "powerline_symbol": "\uE0B2",
                     "style": "powerline",
                     "template": " \uE7a8 {{ .Full }} ",
@@ -249,6 +264,7 @@
                 {
                     "background": "#5c41e2",
                     "foreground": "#fefefe",
+                    "invert_powerline": true,
                     "powerline_symbol": "\ue0b2",
                     "style": "powerline",
                     "type": "terraform"
