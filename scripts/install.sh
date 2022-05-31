@@ -142,6 +142,7 @@ HELPER="paru"
 DOTFILES="$HOME/.dotfiles"
 REPO="https://github.com/kamack38/linux-dotfiles"
 NEOVIM_CONFIG_DIR="$HOME/.config/nvim"
+SPOTIFY_PREFS="$HOME/.config/spotify/prefs"
 NVCHAD_URL="https://github.com/NvChad/NvChad"
 NODE_VERSION="lts"
 TIME_ZONE="Europe/Warsaw"
@@ -309,13 +310,12 @@ export PATH="$HOME/.local/bin:$PATH"
 
 # Install node & npm packages
 echo -e "${GREEN}:: ${BWHITE}Installing ${BLUE}node${BWHITE} & ${BLUE}npm${BWHITE} packages${NC}"
-fish -c "fisher install jorgebucaran/nvm.fish && nvm install ${NODE_VERSION} && nvm use ${NODE_VERSION} && set --universal nvm_default_version lts"
-fish -c 'nvm use lts && npm i -g carbon-now-cli \
+fish -c "fisher install jorgebucaran/nvm.fish && nvm install ${NODE_VERSION} && npm i -g carbon-now-cli \
 	yarn \
 	pm2 \
 	neovim \
 	npm-check-updates \
-	git-cz'
+	git-cz"
 
 echo "${GREEN}:: ${BWHITE}Installing ${BLUE}quokka.js plugins${NC}"
 fish -c 'npm i --prefix $HOME/.quokka dotenv-quokka-plugin \
@@ -340,6 +340,8 @@ fi
 # Enable spicetify
 if [[ ! -f "$HOME/.config/spicetify/Backup/xpui.spa" ]]; then
 	echo "${BLUE}:: ${BWHITE}Enabling ${BLUE}spicetify${BWHITE}...${NC}"
+	mkdir -p $SPOTIFY_PREFS
+	sed -i "s,\(prefs_path.*=\).*,\1 $SPOTIFY_PREFS," "$HOME/.config/spicetify/config-xpui.ini"
 	spicetify backup apply
 fi
 
