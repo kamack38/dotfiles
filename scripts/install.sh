@@ -143,6 +143,7 @@ DOTFILES="$HOME/.dotfiles"
 REPO="https://github.com/kamack38/linux-dotfiles"
 NEOVIM_CONFIG_DIR="$HOME/.config/nvim"
 NVCHAD_URL="https://github.com/NvChad/NvChad"
+NODE_VERSION="lts"
 TIME_ZONE="Europe/Warsaw"
 MAIN_LOCALE="en_GB.UTF-8"
 SECONDARY_LOCALE="pl_PL.UTF-8"
@@ -308,7 +309,7 @@ export PATH="$HOME/.local/bin:$PATH"
 
 # Install node & npm packages
 echo -e "${GREEN}:: ${BWHITE}Installing ${BLUE}node${BWHITE} & ${BLUE}npm${BWHITE} packages${NC}"
-fish -c 'fisher install jorgebucaran/nvm.fish && nvm install lts && nvm use lts && set --universal nvm_default_version lts'
+fish -c "fisher install jorgebucaran/nvm.fish && nvm install ${NODE_VERSION} && nvm use ${NODE_VERSION} && set --universal nvm_default_version lts"
 fish -c 'nvm use lts && npm i -g carbon-now-cli \
 	yarn \
 	pm2 \
