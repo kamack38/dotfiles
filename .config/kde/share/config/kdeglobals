@@ -135,7 +135,7 @@ ColorScheme=BreezeDark
 Name[en_GB]=Breeze Dark
 Name=Breeze Dark
 shadeSortColumn=true
-widgetStyle=Breeze
+widgetStyle=Lightly
 
 [Icons]
 Theme=breeze-dark

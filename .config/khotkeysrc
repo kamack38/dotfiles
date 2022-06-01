@@ -1065,8 +1065,11 @@ History Items[$d]
 BrowserApplication[$d]
 ColorScheme[$d]
 ColorSchemeHash[$d]
+Name[$d]
 TerminalApplication[$d]
 TerminalService[$d]
+shadeSortColumn[$d]
+widgetStyle[$d]
 
 [Gestures]
 Disabled=true
@@ -1081,8 +1084,10 @@ WindowsCount=0
 Theme[$d]
 
 [KDE]
+ColorScheme[$d]
 LookAndFeelPackage[$d]
 SingleClick[$d]
+contrast[$d]
 widgetStyle[$d]
 
 [KFileDialog Settings]
@@ -1103,6 +1108,9 @@ Sort directories first[$d]
 Sort reversed[$d]
 Speedbar Width[$d]
 View Style[$d]
+
+[KShortcutsDialog Settings]
+Dialog Size[$d]
 
 [Main]
 AlreadyImported=defaults,kde32b1,konqueror_gestures_kde321,konsole

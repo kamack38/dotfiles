@@ -2,8 +2,20 @@
 
 set -e
 
+# Colours
+BLACK=$'\e[0;30m'
+WHITE=$'\e[0;37m'
+BWHITE=$'\e[1;37m'
+RED=$'\e[0;31m'
+BLUE=$'\e[0;34m'
+GREEN=$'\e[0;32m'
+YELLOW=$'\e[0;33m'
+NC=$'\e[0m' # No Colour
+
 #Default vars
 HELPER="paru"
+
+echo "${GREEN}:: ${BWHITE}Installing KDE and its components...${NC}"
 $HELPER -S --noconfirm --needed --quiet xorg \
 	plasma-meta \
 	networkmanager \
@@ -16,8 +28,7 @@ $HELPER -S --noconfirm --needed --quiet xorg \
 	ark \
 	desktop-file-utils \
 	partitionmanager \
-	kcron \
-	lightly
+	kcron
 
 # Enable services
 sudo systemctl enable sddm
@@ -25,6 +36,15 @@ sudo systemctl enable NetworkManager
 
 sudo systemctl enable touchegg.service
 sudo systemctl start touchegg
+
+# Add archcraft repository
+source "$HOME/scripts/repos.sh"
+archcraft
+
+# Install styles/themes
+echo "${BLUE}:: ${BWHITE}Installing KDE themes...${NC}"
+$HELPER -S --noconfirm --needed --quiet lightly-qt \
+	archcraft-backgrounds
 
 function installKDEPackage {
 	# $1 - package id

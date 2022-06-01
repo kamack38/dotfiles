@@ -39,6 +39,7 @@ DEV_PROFILE=(
 	"prettierd"
 	"ccls"
 	"typos"
+	"rustcat"
 )
 
 RUST_TOOLS=(
@@ -363,7 +364,6 @@ read -rp "Enter a number (default=1): " de_script
 case $de_script in
 
 2)
-	echo "${GREEN}:: ${BWHITE}Installing KDE..."
 	bash "$HOME/scripts/kde.sh"
 	;;
 
