@@ -95,7 +95,7 @@
                     },
                     "style": "powerline",
                     "type": "node",
-                    "template": "{{ if .PackageManagerIcon }}{{ .PackageManagerIcon }} {{ end }}{{ .Full }}"
+                    "template": "{{ if .PackageManagerIcon }}{{ .PackageManagerIcon }} {{else}}  {{ end }}{{ .Full }}"
                 },
                 {
                     "type": "nx",

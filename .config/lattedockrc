@@ -11,7 +11,7 @@ DP-1-0 eDP-1 Width 2560x1440=404
 
 [LatteSettingsDialog]
 downloadWindowSize=980,600
-windowSize=1100,750
+windowSize=2560,1333
 
 [LatteSettingsDialog][DetailsDialog]
 windowSize=560,640
@@ -29,9 +29,6 @@ windowSize=980,630
 
 [PlasmaThemeExtended]
 outlineWidth=1
-
-[PlasmaTransientsConfig]
-PreloadWeight=92
 
 [ScreenConnectors]
 10=DP-1-0:::1920,0 2560x1440

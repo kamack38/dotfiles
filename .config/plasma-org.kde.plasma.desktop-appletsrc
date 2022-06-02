@@ -25,6 +25,7 @@ immutability=1
 plugin=com.github.prayag2.modernclock
 
 [Containments][1][Applets][66][Configuration]
+PreloadWeight=42
 UserBackgroundHints=
 
 [Containments][1][Applets][66][Configuration][Appearance]
@@ -36,7 +37,7 @@ DialogHeight=540
 DialogWidth=720
 
 [Containments][1][ConfigDialog]
-DialogHeight=935
+DialogHeight=911
 DialogWidth=1527
 
 [Containments][1][Configuration]
@@ -53,9 +54,9 @@ DisplayMode=1
 PauseMode=2
 SteamLibraryPath[$e]=file:$HOME/.local/share/Steam
 VideoBackend=1
-WallpaperFilePath[$e]=file:$HOME/.local/share/Steam/steamapps/workshop/content/431960/2266752467/scene.json
+WallpaperFilePath[$e]=file:$HOME/.local/share/Steam/steamapps/workshop/content/431960/1245604951/scene.json
 WallpaperType=scene
-WallpaperWorkShopId=2266752467
+WallpaperWorkShopId=1245604951
 
 [Containments][1][Wallpaper][org.kde.image][General]
 Image=file:///usr/share/backgrounds/forest.jpg
@@ -102,7 +103,7 @@ immutability=1
 plugin=org.kde.plasma.systemtray
 
 [Containments][50][Applets][52][Configuration]
-PreloadWeight=100
+PreloadWeight=92
 SystrayContainmentId=53
 
 [Containments][50][ConfigDialog]
@@ -129,14 +130,14 @@ immutability=1
 plugin=org.kde.plasma.clipboard
 
 [Containments][53][Applets][54][Configuration]
-PreloadWeight=5
+PreloadWeight=0
 
 [Containments][53][Applets][55]
 immutability=1
 plugin=org.kde.plasma.devicenotifier
 
 [Containments][53][Applets][55][Configuration]
-PreloadWeight=37
+PreloadWeight=29
 
 [Containments][53][Applets][56]
 immutability=1
@@ -157,14 +158,14 @@ immutability=1
 plugin=org.kde.plasma.notifications
 
 [Containments][53][Applets][58][Configuration]
-PreloadWeight=57
+PreloadWeight=64
 
 [Containments][53][Applets][59]
 immutability=1
 plugin=org.kde.plasma.volume
 
 [Containments][53][Applets][59][Configuration]
-PreloadWeight=100
+PreloadWeight=92
 
 [Containments][53][Applets][59][Configuration][ConfigDialog]
 DialogHeight=540
@@ -178,7 +179,7 @@ immutability=1
 plugin=org.kde.plasma.keyboardindicator
 
 [Containments][53][Applets][60][Configuration]
-PreloadWeight=5
+PreloadWeight=0
 
 [Containments][53][Applets][60][Configuration][ConfigDialog]
 DialogHeight=540
@@ -199,21 +200,21 @@ immutability=1
 plugin=org.kde.plasma.networkmanagement
 
 [Containments][53][Applets][62][Configuration]
-PreloadWeight=100
+PreloadWeight=92
 
 [Containments][53][Applets][63]
 immutability=1
 plugin=org.kde.plasma.bluetooth
 
 [Containments][53][Applets][63][Configuration]
-PreloadWeight=40
+PreloadWeight=32
 
 [Containments][53][Applets][64]
 immutability=1
 plugin=org.kde.plasma.battery
 
 [Containments][53][Applets][64][Configuration]
-PreloadWeight=57
+PreloadWeight=49
 
 [Containments][53][Applets][65]
 immutability=1
