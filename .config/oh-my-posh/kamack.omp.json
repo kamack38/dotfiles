@@ -337,7 +337,7 @@
     ],
     "console_title_template": "{{if .Root}}\u26a1 {{end}}{{ .Shell }} in {{ .Folder }}",
     "final_space": true,
-    "osc99": true,
+    "osc99": false,
     "tooltips": [
         {
             "background": "#689f63",

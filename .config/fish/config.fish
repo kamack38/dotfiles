@@ -88,6 +88,7 @@ alias untar='tar -xvf '
 alias gzipnow='tar czf'
 
 alias of="onefetch"
+alias icat="kitty +kitten icat"
 
 if command -v firefox-developer-edition &>/dev/null
     alias firefox="firefox-developer-edition"
