@@ -177,7 +177,7 @@ Type=SHORTCUT
 Uuid={d03619b6-9b3c-48cc-9d9c-a2aadb485550}
 
 [Data_1_2]
-Comment=Global keyboard shortcut to launch Konsole
+Comment=Global keyboard shortcut to launch Terminal
 Enabled=true
 Name=Launch Konsole
 Type=MENUENTRY_SHORTCUT_ACTION_DATA
