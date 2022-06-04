@@ -186,7 +186,7 @@ Type=MENUENTRY_SHORTCUT_ACTION_DATA
 ActionsCount=1
 
 [Data_1_2Actions0]
-CommandURL=Alacritty.desktop
+CommandURL=kitty.desktop
 Type=MENUENTRY
 
 [Data_1_2Conditions]
