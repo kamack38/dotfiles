@@ -56,47 +56,48 @@ rust_setup() {
 VM_PROFILE=("virt-manager-meta")
 
 NORMAL_PROFILE=(
-	"ripgrep"
-	"python"
-	"python-pip"
-	"python-gobject"
-	"flatpak"
-	"bat"
-	"exa"
-	"croc"
-	"mpv"
-	"ffmpeg"
-	"yt-dlp"
-	"neovim"
-	"fish"
-	"fisher"
-	"discord"
-	"firefox-developer-edition"
-	"ff2mpv-native-messaging-host-git"
-	"oh-my-posh-bin"
-	"fzf"
-	"caprine"
-	"spotify"
-	"spicetify-cli"
-	"libqalculate"
-	"cava"
-	"ttf-font-awesome"
-	"rofi"
-	"playerctl"
-	"mpv-mpris"
-	"update-grub"
-	"alacritty"
-	"polybar-git"
-	"reflector"
+	"ripgrep"                          # Better grep
+	"python"                           # Programming language
+	"python-pip"                       # Python package manager
+	"python-gobject"                   # Ui creation (polybar mpris support)
+	"flatpak"                          # Flatpak package manager
+	"bat"                              # Better cat
+	"exa"                              # Better ls
+	"croc"                             # File transfer utility
+	"mpv"                              # Image/Video player
+	"ffmpeg"                           # Audio/Image/Video file converter
+	"yt-dlp"                           # Better YouTube downloader
+	"neovim"                           # Vim-like text editor
+	"fish"                             # New shell
+	"fisher"                           # Fish plugin manager
+	"discord"                          # VoIP and instant messaging social platform
+	"firefox-developer-edition"        # Web browser for developers
+	"ff2mpv-native-messaging-host-git" # Open video in mpv
+	"oh-my-posh-bin"                   # Shell prompt
+	"fzf"                              # Fuzzy finder
+	"caprine"                          # Messenger app for Linux
+	"spotify"                          # Music client
+	"spicetify-cli"                    # Cli for extending spotify
+	"libqalculate"                     # Calculator (qalc)
+	"cava"                             # Audio visualizer
+	"ttf-font-awesome"                 # Font Awesome font
+	"rofi"                             # Better dmenu, menu
+	"playerctl"                        # Command-line utility and library for controlling media players
+	"mpv-mpris"                        # mpv mpris support
+	"update-grub"                      # Utility for updating grup config
+	# "alacritty"   # Terminal
+	"kitty-git"   # GPU accelerated terminal
+	"polybar-git" # Bar
+	"reflector"   # Pacman mirror sorter
 	"${DEV_PROFILE[@]}"
 )
 
 GAMING_PROFILE=(
-	"mangohud"
+	"mangohud" # Hud for showing performance metrics
 	"input-devices-support"
-	"piper"
-	"steam"
-	"proton-ge-custom"
+	"piper"            # Mouse button configurer
+	"steam"            # Game library
+	"proton-ge-custom" # Custom layer for running Windows games on Linux
 	"lutris-git"
 	"wine"
 )

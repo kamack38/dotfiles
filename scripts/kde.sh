@@ -15,20 +15,26 @@ NC=$'\e[0m' # No Colour
 #Default vars
 HELPER="paru"
 
+KDE_PACKAGES=(
+	"xorg"                                # Display server
+	"plasma-meta"                         # Plasma meta package
+	"networkmanager"                      # Network Manager
+	"kdeplasma-addons"                    # Plasma addons
+	"plasma5-wallpapers-wallpaper-engine" # Support for wallpaper engine wallpapers
+	"spectacle"                           # Screenshot tool
+	"latte-dock"                          # KDE dock
+	"touchegg"                            # Touchpad gestures support
+	"dolphin"                             # File Manager
+	"ark"                                 # Archive Manager
+	"desktop-file-utils"                  # Command line utilities for working with desktop entries
+	"partitionmanager"                    # Partition Manager
+	"kcron"                               # Task scheduler
+	"gwenview"                            # Image viewer
+	"qt5-imageformats"                    # Add more image formats (webp)
+)
+
 echo "${GREEN}:: ${BWHITE}Installing KDE and its components...${NC}"
-$HELPER -S --noconfirm --needed --quiet xorg \
-	plasma-meta \
-	networkmanager \
-	kdeplasma-addons \
-	plasma5-wallpapers-wallpaper-engine \
-	spectacle \
-	latte-dock \
-	touchegg \
-	dolphin \
-	ark \
-	desktop-file-utils \
-	partitionmanager \
-	kcron
+$HELPER -S --noconfirm --needed --quiet "${KDE_PACKAGES[@]}"
 
 # Enable services
 sudo systemctl enable sddm
