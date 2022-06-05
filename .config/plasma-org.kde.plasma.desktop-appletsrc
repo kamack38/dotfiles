@@ -8,7 +8,7 @@ RightButton;NoModifier=org.kde.contextmenu
 [Containments][1]
 ItemGeometries-1920x1080=Applet-66:0,80,1920,176,0;
 ItemGeometries-2560x1440=Applet-66:912,64,736,176,0;
-ItemGeometriesHorizontal=Applet-66:0,80,1920,176,0;
+ItemGeometriesHorizontal=Applet-66:912,64,736,176,0;
 activityId=70236a50-2422-44b5-bcb3-9d8c342fc3e7
 formfactor=0
 immutability=1
@@ -64,8 +64,10 @@ SlidePaths=/usr/share/wallpapers
 
 [Containments][17]
 ItemGeometries-1920x1080=
+ItemGeometries-2160x3840=
 ItemGeometries-2560x1440=
 ItemGeometriesHorizontal=
+ItemGeometriesVertical=
 activityId=70236a50-2422-44b5-bcb3-9d8c342fc3e7
 formfactor=0
 immutability=1
@@ -158,7 +160,7 @@ immutability=1
 plugin=org.kde.plasma.notifications
 
 [Containments][53][Applets][58][Configuration]
-PreloadWeight=69
+PreloadWeight=74
 
 [Containments][53][Applets][59]
 immutability=1
@@ -200,7 +202,7 @@ immutability=1
 plugin=org.kde.plasma.networkmanagement
 
 [Containments][53][Applets][62][Configuration]
-PreloadWeight=97
+PreloadWeight=100
 
 [Containments][53][Applets][63]
 immutability=1

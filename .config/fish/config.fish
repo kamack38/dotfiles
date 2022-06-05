@@ -38,6 +38,7 @@ export WAKATIME_HOME="$XDG_CONFIG_HOME/wakatime"
 export KDEHOME="$XDG_CONFIG_HOME/kde"
 export GTK2_RC_FILES="$XDG_CONFIG_HOME/gtk-2.0/gtkrc"
 export XINITRC="$XDG_CONFIG_HOME/X11/xinitrc"
+export _JAVA_OPTIONS=-Djava.util.prefs.userRoot="$XDG_CONFIG_HOME/java"
 
 # Cache
 export LESSHISTFILE="$XDG_CACHE_HOME/less/history"
