@@ -21,7 +21,8 @@
     clean-branches = remote prune origin
     s = status -s
     u = add -u
-    b = branch -a
+    b = branch
+    ba = branch -a
     co = checkout
     cm = !git cz && git push
     cdf = diff --cached
