@@ -25,7 +25,7 @@ immutability=1
 plugin=com.github.prayag2.modernclock
 
 [Containments][1][Applets][66][Configuration]
-PreloadWeight=42
+PreloadWeight=18
 UserBackgroundHints=
 
 [Containments][1][Applets][66][Configuration][Appearance]
@@ -105,7 +105,7 @@ immutability=1
 plugin=org.kde.plasma.systemtray
 
 [Containments][50][Applets][52][Configuration]
-PreloadWeight=100
+PreloadWeight=91
 SystrayContainmentId=53
 
 [Containments][50][ConfigDialog]
@@ -139,7 +139,7 @@ immutability=1
 plugin=org.kde.plasma.devicenotifier
 
 [Containments][53][Applets][55][Configuration]
-PreloadWeight=29
+PreloadWeight=5
 
 [Containments][53][Applets][56]
 immutability=1
@@ -160,14 +160,14 @@ immutability=1
 plugin=org.kde.plasma.notifications
 
 [Containments][53][Applets][58][Configuration]
-PreloadWeight=74
+PreloadWeight=50
 
 [Containments][53][Applets][59]
 immutability=1
 plugin=org.kde.plasma.volume
 
 [Containments][53][Applets][59][Configuration]
-PreloadWeight=92
+PreloadWeight=68
 
 [Containments][53][Applets][59][Configuration][ConfigDialog]
 DialogHeight=540
@@ -202,21 +202,21 @@ immutability=1
 plugin=org.kde.plasma.networkmanagement
 
 [Containments][53][Applets][62][Configuration]
-PreloadWeight=100
+PreloadWeight=76
 
 [Containments][53][Applets][63]
 immutability=1
 plugin=org.kde.plasma.bluetooth
 
 [Containments][53][Applets][63][Configuration]
-PreloadWeight=32
+PreloadWeight=23
 
 [Containments][53][Applets][64]
 immutability=1
 plugin=org.kde.plasma.battery
 
 [Containments][53][Applets][64][Configuration]
-PreloadWeight=49
+PreloadWeight=25
 
 [Containments][53][Applets][65]
 immutability=1
@@ -252,6 +252,28 @@ PreloadWeight=0
 
 [Containments][60][Wallpaper][org.kde.image][General]
 Image=file:///opt/dwall-git/firewatch/20.png
+
+[Containments][67]
+ItemGeometries-1920x1080=
+ItemGeometriesHorizontal=
+activityId=70236a50-2422-44b5-bcb3-9d8c342fc3e7
+formfactor=0
+immutability=1
+lastScreen=3
+location=0
+plugin=org.kde.plasma.folder
+wallpaperplugin=org.kde.image
+
+[Containments][67][ConfigDialog]
+DialogHeight=864
+DialogWidth=1568
+
+[Containments][67][Configuration]
+PreloadWeight=26
+
+[Containments][67][Wallpaper][org.kde.image][General]
+Image=file:///usr/share/wallpapers/mywall/Lake surrounded by trees - pablo-suzarte.jpg
+SlidePaths=/home/kamack38/.local/share/wallpapers,/usr/share/wallpapers
 
 [Containments32Appletsts][35][Configuration][General]
 launchers=preferred://browser,preferred://filemanager

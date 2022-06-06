@@ -146,12 +146,21 @@ function npg --description 'Search and install a global npm package' -a pkg
     if type -q all-the-package-names
         command all-the-package-names | fzf --multi --preview 'npm info {1}' --preview-window wrap -q$pkg | xargs -ro npm install -g
     else
-        echo "This command requires npm package 'all-the-package-names' to be installed/"
+        echo "This command requires a global npm package 'all-the-package-names' to be installed"
     end
 end
 function nps --description 'Search and install a local npm package' -a pkg
     if type -q all-the-package-names
         command all-the-package-names | fzf --multi --preview 'npm info {1}' --preview-window wrap -q$pkg | xargs -ro npm install
+    else
+        echo "This command requires a global npm package 'all-the-package-names' to be installed"
+    end
+end
+
+# Yarn
+function yas --description 'Search and install a local yarn package'
+    if type -q all-the-package-names
+        command all-the-package-names | fzf --multi --preview 'npm info {1}' --preview-window wrap -q$pkg | xargs -ro yarn add $argv
     else
         echo "This command requires npm package 'all-the-package-names' to be installed/"
     end
