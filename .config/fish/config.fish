@@ -51,7 +51,7 @@ export NPM_CONFIG_CACHE="$XDG_CACHE_HOME/npm"
 export NPM_CONFIG_TMP="/tmp"
 
 # XDG fix
-alias svn="svn --config-dir $XDG_CONFIG_HOME/subversion"
+alias svn="svn --config-dir \"$XDG_CONFIG_HOME/subversion\""
 alias wget="wget --hsts-file=$XDG_DATA_HOME/wget-hsts"
 
 # Enable colored output
