@@ -48,6 +48,10 @@
     "webdev",
     "webp"
   ],
+  "editor.codeActionsOnSave": {
+    "source.fixAll": true,
+    "source.organizeImports": true
+  },
   "code-runner.executorMap": {
     "FortranFreeForm": "cd $dir && gfortran $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
     "ahk": "autohotkey",
@@ -167,7 +171,8 @@
     },
     "scminput": true,
     "git-commit": true,
-    "yaml": true
+    "yaml": true,
+    "ts": true
   },
   "explorer.compactFolders": false,
   "explorer.confirmDelete": false,
