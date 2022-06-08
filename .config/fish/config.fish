@@ -138,6 +138,7 @@ end
 alias paru-clean-cache="paru -Sc --noconfirm"
 alias pan="paru --noconfirm"
 alias yay="paru"
+alias refresh-mirrorlist="sudo reflector --latest 200 --sort rate --save /etc/pacman.d/mirrorlist --threads 10 -p https"
 
 # Flatpak
 function flat --description 'Search for flatpak packages' -a pkg
