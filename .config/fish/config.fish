@@ -118,6 +118,7 @@ alias jctl="journalctl -p 3 -xb"
 
 # Python
 alias pip-upgrade="pip install --upgrade pip"
+alias python-gen-deps="pipreqs"
 
 # Sudo edit
 alias esudo="sudoedit"
