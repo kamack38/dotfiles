@@ -36,6 +36,7 @@
     "Fira",
     "kamack",
     "minmax",
+    "multiset",
     "nametag",
     "norestart",
     "numlock",
@@ -44,6 +45,7 @@
     "preconnect",
     "quokka",
     "signin",
+    "stdc",
     "webclient",
     "webdev",
     "webp"
@@ -348,6 +350,7 @@
   "typescript.autoClosingTags": true,
   "typescript.suggest.paths": false,
   "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
+  "window.experimental.commandCenter": true,
   "window.titleBarStyle": "custom",
   "workbench.colorCustomizations": {
     // Brackets
