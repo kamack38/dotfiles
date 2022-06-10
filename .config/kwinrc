@@ -20,6 +20,9 @@ MoveResize=90
 [ModifierOnlyShortcuts]
 Meta=org.kde.lattedock,/Latte,org.kde.LatteDock,activateLauncherMenu
 
+[MouseBindings]
+CommandAllWheel=Change Opacity
+
 [Plugins]
 zoomEnabled=false
 

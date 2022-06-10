@@ -59,7 +59,7 @@ WallpaperType=scene
 WallpaperWorkShopId=1245604951
 
 [Containments][1][Wallpaper][org.kde.image][General]
-Image=file:///usr/share/backgrounds/forest.jpg
+Image=/usr/share/backgrounds/forest.jpg
 SlidePaths=/usr/share/wallpapers
 
 [Containments][17]
