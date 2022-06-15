@@ -31,6 +31,7 @@ KDE_PACKAGES=(
 	"kcron"                               # Task scheduler
 	"gwenview"                            # Image viewer
 	"qt5-imageformats"                    # Add more image formats (webp)
+	"plasma-browser-integration"          # Integrate browser and plasma
 )
 
 echo "${GREEN}:: ${BWHITE}Installing KDE and its components...${NC}"

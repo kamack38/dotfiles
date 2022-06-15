@@ -150,7 +150,9 @@ NODE_VERSION="lts"
 TIME_ZONE="Europe/Warsaw"
 MAIN_LOCALE="en_GB.UTF-8"
 SECONDARY_LOCALE="pl_PL.UTF-8"
+SPELLCHECK_LOCALES=("${MAIN_LOCALE/_*/}" "${SECONDARY_LOCALE/_*/}")
 KB_LAYOUT="pl"
+MAKEFLAGS="-j$(nproc)"
 
 # Show greetings
 echo "   ___  __    _____ ______  _________  ________"
@@ -247,14 +249,14 @@ sudo $HELPER -Sy
 VGA_INFO=$(lspci -vnn | grep VGA)
 if [[ $VGA_INFO == *"NVIDIA"* ]]; then
 	echo "${GREEN}:: ${BWHITE}Installing ${BLUE}NVIDIA${BWHITE} drivers${NC}"
-	MAKEFLAGS="-j$(nproc)" $HELPER -S --noconfirm --needed --quiet "${NVIDIA_DRIVERS[@]}"
+	$HELPER -S --noconfirm --needed --quiet "${NVIDIA_DRIVERS[@]}"
 else
 	echo "${YELLOW}:: ${BLUE}NVIDIA${BWHITE} hardware not detected${NC} -- skipping"
 fi
 
 if [[ $VGA_INFO == *"AMD"* ]]; then
 	echo "${GREEN}:: ${BWHITE}Installing ${BLUE}AMD${BWHITE} drivers${NC}"
-	MAKEFLAGS="-j$(nproc)" $HELPER -S --noconfirm --needed --quiet "${AMD_DRIVERS[@]}"
+	$HELPER -S --noconfirm --needed --quiet "${AMD_DRIVERS[@]}"
 else
 	echo "${YELLOW}:: ${BLUE}AMD${BWHITE} hardware not detected${NC} -- skipping"
 
@@ -262,14 +264,14 @@ fi
 
 if [[ $VGA_INFO == *"INTEL"* ]]; then
 	echo "${GREEN}:: ${BWHITE}Installing ${BLUE}INTEL${BWHITE} drivers${NC}"
-	MAKEFLAGS="-j$(nproc)" $HELPER -S --noconfirm --needed --quiet "${INTEL_DRIVERS[@]}"
+	$HELPER -S --noconfirm --needed --quiet "${INTEL_DRIVERS[@]}"
 else
 	echo "${YELLOW}:: ${BLUE}INTEL${BWHITE} hardware not detected${NC} -- skipping"
 fi
 
 # Install packages
 echo "${GREEN}:: ${BWHITE}Installing ${BLUE}default${BWHITE} packages using ${BLUE}${HELPER}${NC}"
-MAKEFLAGS="-j$(nproc)" $HELPER -S --noconfirm --needed --quiet "${NORMAL_PROFILE[@]}"
+$HELPER -S --noconfirm --needed --quiet "${NORMAL_PROFILE[@]}"
 
 # Additional packages
 echo "${BLUE}:: ${BWHITE}Which packages do you want to install?${NC}"
@@ -278,26 +280,32 @@ read -rp "${BLUE}:: ${BWHITE}Packages to install (eg: 1 2 3): " additional_packa
 
 if [[ $additional_packages == *"1"* ]]; then
 	echo "${BLUE}:: ${BWHITE}Installing ${BLUE}gaming${BWHITE} packages?${NC}"
-	MAKEFLAGS="-j$(nproc)" $HELPER -S --noconfirm --needed --quiet "${GAMING_PROFILE[@]}"
+	$HELPER -S --noconfirm --needed --quiet "${GAMING_PROFILE[@]}"
 fi
 if [[ $additional_packages == *"2"* ]]; then
 	echo "${BLUE}:: ${BWHITE}Adding ${BLUE}virtual machine${BWHITE} support?${NC}"
-	MAKEFLAGS="-j$(nproc)" $HELPER -S --noconfirm --needed --quiet "${VM_PROFILE[@]}"
+	$HELPER -S --noconfirm --needed --quiet "${VM_PROFILE[@]}"
 fi
 if [[ $additional_packages == *"3"* ]]; then
 	echo "${RED}:: ${BWHITE}This feature has not been implemented yet${NC}"
 	# echo "${BLUE}:: ${BWHITE}Adding ${BLUE}sound${BWHITE} support?${NC}"
-	# MAKEFLAGS="-j$(nproc)" $HELPER -S --noconfirm --needed --quiet  "${SOUND_PROFILE[@]}"
+	# $HELPER -S --noconfirm --needed --quiet  "${SOUND_PROFILE[@]}"
 fi
 if [[ $additional_packages == *"4"* ]]; then
 	echo "${BLUE}:: ${BWHITE}Adding ${BLUE}bluetooth${BWHITE} support?${NC}"
-	MAKEFLAGS="-j$(nproc)" $HELPER -S --noconfirm --needed --quiet "${BLUETOOTH_PROFILE[@]}"
+	$HELPER -S --noconfirm --needed --quiet "${BLUETOOTH_PROFILE[@]}"
 fi
 if [[ $additional_packages == *"5"* ]]; then
 	echo "${RED}:: ${BWHITE}This feature has not been implemented yet${NC}"
 	# echo "${BLUE}:: ${BWHITE}Adding ${BLUE}network${BWHITE} support?${NC}"
-	# MAKEFLAGS="-j$(nproc)" $HELPER -S --noconfirm --needed --quiet  "${NETWORK_PROFILE[@]}"
+	# $HELPER -S --noconfirm --needed --quiet  "${NETWORK_PROFILE[@]}"
 fi
+
+# Install spellchecking
+echo "${GREEN}:: ${BWHITE}Installing ${BLUE}spellchecking${BWHITE} and ${BLUE}thesaurus${BWHITE} for ${BLUE}${SPELLCHECK_LOCALES[@]}${BWHITE}...${NC}"
+for LOCALE in "${SPELLCHECK_LOCALES[@]}"; do
+	$HELPER -S --noconfirm --needed --quiet "aspell-${LOCALE}" "mythes-${LOCALE}"
+done
 
 # Install pip packages
 echo -e "${GREEN}:: ${BWHITE}Installing ${BLUE}pip${BWHITE} packages${NC}"
