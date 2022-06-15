@@ -54,7 +54,6 @@ export HISTFILE="$XDG_CACHE_HOME/bash/history"
 # NPM
 export NPM_CONFIG_USERCONFIG="$XDG_CONFIG_HOME/npm/.npmrc"
 export NPM_CONFIG_CACHE="$XDG_CACHE_HOME/npm"
-export NPM_CONFIG_TMP="/tmp"
 
 # XDG fix
 alias svn="svn --config-dir \"$XDG_CONFIG_HOME/subversion\""
