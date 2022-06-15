@@ -156,7 +156,7 @@
   // Simple snippets
   "Normal for loop": {
     "prefix": "!for",
-    "body": ["for (int i = 0; i < ${1:n}; i++) {", "    $2", "}$0"],
+    "body": ["for (int ${1:i} = ${2:0}; ${1:i} < ${3:n}; ${1:i}++) {", "    $4", "}$0"],
     "description": "Simple for loop"
   },
 
@@ -226,6 +226,12 @@
     "description": "Helpful for printing debug information"
   },
 
+  "gcd": {
+    "prefix": ["!gcd", "!nwd"],
+    "body": ["__gcd($1, $2)$0"],
+    "description": "Greatest common divisor function"
+  },
+
   // Algorithms
   "fastPowMod": {
     "prefix": "!fastPowMod",
@@ -246,7 +252,7 @@
 
   "pow": {
     "prefix": "!pow",
-    "body": ["long long powi(int y, int x) {", "    if (x == 0) return 1;", "    return y * powi(y, x - 1);", "}"],
+    "body": ["long long Pow(int y, int x) {", "    if (x == 0) return 1;", "    return y * Pow(y, x - 1);", "}"],
     "description": "Quickly calculate a^b mod c"
   },
 
@@ -272,6 +278,64 @@
       "}"
     ],
     "description": "Binary search function"
+  },
+
+  "breadth-first search": {
+    "prefix": "!bfs",
+    "body": [
+      "void BFS(int s) {",
+      "  queue<int> Q;",
+      "  vector<int> visited;",
+      "  Q.push(s);",
+      "  visited[s] = true;",
+      "  while (!Q.empty()) {",
+      "    int x = Q.front();",
+      "    Q.pop();",
+      "    for (auto i : vec[x]) {",
+      "      if (!visited[i]) {",
+      "        Q.push(i);",
+      "        visited[i] = true;",
+      "      }",
+      "    }",
+      "  }",
+      "}"
+    ],
+    "description": "Breadth-first search algorithm"
+  },
+
+  "depth-first search": {
+    "prefix": "!dfs",
+    "body": ["void DFS(int x) {", "  if (visited[x]) return;", "  visited[x] = true;", "  for (auto i : graph[x]) {", "    DFS(i);", "  }", "}"],
+    "description": "Depth-first search algorithm"
+  },
+
+  "minimum spanning tree": {
+    "prefix": "!mst",
+    "body": ["void"],
+    "description": "Minimum spanning tree algorithm"
+  },
+
+  "dijkstra": {
+    "prefix": "!dijkstra",
+    "body": [
+      "void DIJ(int start) {",
+      "  priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> Q;",
+      "  Q.push({0, start});",
+      "  while (!Q.empty()) {",
+      "    int distance = Q.top().first, vertex_number = Q.top().second;",
+      "    Q.pop();",
+      "    if (visited[vertex_number]) continue;",
+      "    visited[vertex_number] = true;",
+      "    distances[vertex_number] = distance;",
+      "    for (const auto vertex : graph[vertex_number]) {",
+      "      if (!visited[vertex.first]) {",
+      "        Q.push({vertex.second + distance, vertex.first});",
+      "      }",
+      "    }",
+      "  }",
+      "}"
+    ],
+    "description": "Dijkstra's algorithm"
   },
 
   "interval tree - update": {
@@ -307,11 +371,11 @@
       "}"
     ],
     "description": "Sum function on interval tree"
-  },
-
-  "nwd": {
-    "prefix": "!nwd",
-    "body": ["long long nwd(long long a, long long b) {", "  for (; b != 0;) {", "      long long c = a % b;", "      a = b;", "      b = c;", "  }", "  return a;", "}"],
-    "description": "Sum function on interval tree"
   }
+
+  // "nwd": {
+  //   "prefix": "!nwd",
+  //   "body": ["long long nwd(long long a, long long b) {", "  for (; b != 0;) {", "      long long c = a % b;", "      a = b;", "      b = c;", "  }", "  return a;", "}"],
+  //   "description": "Sum function on interval tree"
+  // }
 }

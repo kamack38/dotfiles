@@ -5,6 +5,27 @@
   "tasks": [
     {
       "type": "shell",
+      "label": "C++: build active file (sanitize)",
+      "command": "g++",
+      "options": {
+        "cwd": "${fileDirname}"
+      },
+      "problemMatcher": ["$gcc"],
+      "group": {
+        "kind": "build",
+        "isDefault": false
+      },
+      "windows": {
+        "command": "g++.exe",
+        "args": ["-fdiagnostics-color=always", "-g", "-Wall", "${file}", "-o", "${fileDirname}\\bin\\${fileBasenameNoExtension}.exe"]
+      },
+      "linux": {
+        "args": ["-fdiagnostics-color=always", "-g", "-Wall", "-fsanitize=address", "${file}", "-o", "${fileDirname}/bin/${fileBasenameNoExtension}"]
+      },
+      "detail": "Task created by Kamack38."
+    },
+    {
+      "type": "shell",
       "label": "C++: build active file",
       "command": "g++",
       "options": {
@@ -20,7 +41,7 @@
         "args": ["-fdiagnostics-color=always", "-g", "${file}", "-o", "${fileDirname}\\bin\\${fileBasenameNoExtension}.exe"]
       },
       "linux": {
-        "args": ["-fdiagnostics-color=always", "-Wall", "${file}", "-fsanitize=address", "-o", "${fileDirname}/bin/${fileBasenameNoExtension}"]
+        "args": ["-fdiagnostics-color=always", "-g", "-Wall", "${file}", "-o", "${fileDirname}/bin/${fileBasenameNoExtension}"]
       },
       "detail": "Task created by Kamack38."
     },
@@ -36,7 +57,7 @@
         "isDefault": true
       },
       "detail": "Task created by Kamack38.",
-      "dependsOn": ["C++: build active file"]
+      "dependsOn": ["C++: build active file (sanitize)"]
     }
   ]
 }

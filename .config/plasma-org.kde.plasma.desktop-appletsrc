@@ -28,7 +28,7 @@ immutability=1
 plugin=com.github.prayag2.modernclock
 
 [Containments][1][Applets][66][Configuration]
-PreloadWeight=2
+PreloadWeight=0
 UserBackgroundHints=
 
 [Containments][1][Applets][66][Configuration][Appearance]
@@ -108,7 +108,7 @@ immutability=1
 plugin=org.kde.plasma.systemtray
 
 [Containments][50][Applets][52][Configuration]
-PreloadWeight=92
+PreloadWeight=84
 SystrayContainmentId=53
 
 [Containments][50][ConfigDialog]
@@ -142,7 +142,7 @@ immutability=1
 plugin=org.kde.plasma.devicenotifier
 
 [Containments][53][Applets][55][Configuration]
-PreloadWeight=89
+PreloadWeight=81
 
 [Containments][53][Applets][56]
 immutability=1
@@ -163,14 +163,14 @@ immutability=1
 plugin=org.kde.plasma.notifications
 
 [Containments][53][Applets][58][Configuration]
-PreloadWeight=44
+PreloadWeight=36
 
 [Containments][53][Applets][59]
 immutability=1
 plugin=org.kde.plasma.volume
 
 [Containments][53][Applets][59][Configuration]
-PreloadWeight=57
+PreloadWeight=49
 
 [Containments][53][Applets][59][Configuration][ConfigDialog]
 DialogHeight=540
@@ -205,21 +205,21 @@ immutability=1
 plugin=org.kde.plasma.networkmanagement
 
 [Containments][53][Applets][62][Configuration]
-PreloadWeight=70
+PreloadWeight=62
 
 [Containments][53][Applets][63]
 immutability=1
 plugin=org.kde.plasma.bluetooth
 
 [Containments][53][Applets][63][Configuration]
-PreloadWeight=22
+PreloadWeight=14
 
 [Containments][53][Applets][64]
 immutability=1
 plugin=org.kde.plasma.battery
 
 [Containments][53][Applets][64][Configuration]
-PreloadWeight=9
+PreloadWeight=1
 
 [Containments][53][Applets][65]
 immutability=1
@@ -233,7 +233,7 @@ immutability=1
 plugin=org.kde.kdeconnect
 
 [Containments][53][Applets][67][Configuration]
-PreloadWeight=34
+PreloadWeight=26
 
 [Containments][53][ConfigDialog]
 DialogHeight=540
@@ -279,7 +279,7 @@ DialogHeight=864
 DialogWidth=1568
 
 [Containments][67][Configuration]
-PreloadWeight=10
+PreloadWeight=2
 
 [Containments][67][Wallpaper][org.kde.image][General]
 Image=file:///usr/share/wallpapers/mywall/Lake surrounded by trees - pablo-suzarte.jpg
