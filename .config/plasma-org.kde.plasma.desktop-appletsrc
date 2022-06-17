@@ -226,7 +226,7 @@ immutability=1
 plugin=org.kde.plasma.mediacontroller
 
 [Containments][53][Applets][65][Configuration]
-PreloadWeight=10
+PreloadWeight=0
 
 [Containments][53][Applets][67]
 immutability=1
@@ -290,4 +290,4 @@ launchers=preferred://browser,preferred://filemanager
 
 [ScreenMapping]
 itemsOnDisabledScreens=
-screenMapping=desktop:/ascii.txt,0
+screenMapping=desktop:/ascii.txt,0,70236a50-2422-44b5-bcb3-9d8c342fc3e7
