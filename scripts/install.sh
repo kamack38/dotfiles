@@ -319,13 +319,12 @@ export PATH="$HOME/.local/bin:$PATH"
 
 # Install node & npm packages
 echo -e "${GREEN}:: ${BWHITE}Installing ${BLUE}node${BWHITE} & ${BLUE}npm${BWHITE} packages${NC}"
-fish -c "fisher install jorgebucaran/nvm.fish && nvm install ${NODE_VERSION} && npm i -g carbon-now-cli \
+fish -c "fisher install jorgebucaran/nvm.fish && nvm install ${NODE_VERSION} && npm i -g npm \
 	yarn \
 	pm2 \
 	neovim \
 	npm-check-updates \
-	git-cz \
-	npm"
+	git-cz"
 
 echo "${GREEN}:: ${BWHITE}Installing ${BLUE}quokka.js plugins${NC}"
 fish -c 'npm i --prefix $HOME/.quokka dotenv-quokka-plugin \
