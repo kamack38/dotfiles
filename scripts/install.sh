@@ -379,7 +379,6 @@ case $de_script in
 	;;
 
 3)
-	echo "${GREEN}:: ${BWHITE}Installing xfce..."
 	bash "$HOME/scripts/xfce.sh"
 	;;
 *)

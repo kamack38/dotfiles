@@ -48,6 +48,7 @@ sudo systemctl start touchegg
 source "$HOME/scripts/repos.sh"
 archcraft
 
+# Refresh databases
 sudo $HELPER -Sy
 
 # Install styles/themes
