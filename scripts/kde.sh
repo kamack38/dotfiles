@@ -12,7 +12,7 @@ GREEN=$'\e[0;32m'
 YELLOW=$'\e[0;33m'
 NC=$'\e[0m' # No Colour
 
-#Default vars
+# Default vars
 HELPER="paru"
 
 KDE_PACKAGES=(
