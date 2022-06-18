@@ -13,33 +13,32 @@ NC=$'\e[0m' # No Colour
 
 # Packages
 DEV_PROFILE=(
-	"jre-openjdk"
-	"git-delta"
-	"onefetch"
-	"neofetch-git"
-	"github-cli"
-	"visual-studio-code-bin"
-	"gnome-keyring" # Fix vscode
-	"libsecret"     # Fix vscode
-	"icu69-bin"     # Fix live share
-	"tldr"
-	"dust"
-	"bottom"
-	"shfmt-bin"
-	"ngrok"
-	"jq"
-	"gnupg"
-	"unrar"
-	"gdb"
-	"wakatime"
-	"ueberzug"
-	"bash-completion"
-	"bash-language-server"
-	"typescript-language-server"
-	"prettierd"
-	"ccls"
-	"typos"
-	"rustcat"
+	"jre-openjdk"                # Java Runtime Environment
+	"git-delta"                  # A syntax-highlighting pager for git, diff, and grep output
+	"onefetch"                   # Git repository summary cli
+	"neofetch-git"               # A command-line system information tool
+	"github-cli"                 # CLI for GitHub
+	"visual-studio-code-bin"     # IDE
+	"gnome-keyring"              # Fix vscode
+	"libsecret"                  # Fix vscode
+	"icu69-bin"                  # Fix live share
+	"tldr"                       # Collaborative cheatsheets for console commands
+	"dust"                       # A more intuitive version of du in rust
+	"shfmt-bin"                  # A shell parser, formatter, and interpreter for bash
+	"ngrok"                      # A tunneling, reverse proxy for developing and understanding networked, HTTP services
+	"jq"                         # Command-line JSON processor
+	"gnupg"                      # Complete and free implementation of the OpenPGP standard
+	"unrar"                      # The RAR uncompression program
+	"gdb"                        # The GNU Debugger
+	"wakatime"                   # Command line interface used by all WakaTime text editor plugins
+	"ueberzug"                   # Command line util which allows to display images in combination with X11
+	"bash-completion"            # Programmable completion for the bash shell
+	"bash-language-server"       # Bash language server implementation based on Tree Sitter and its grammar for Bash
+	"typescript-language-server" # Language Server Protocol (LSP) implementation for TypeScript using tsserver
+	"prettierd"                  # prettier, as a daemon, for ludicrous formatting speed
+	"ccls"                       # C/C++/ObjC language server supporting cross references, hierarchies, completion and semantic highlighting
+	"typos"                      # Source code spell checker
+	"rustcat"                    # A modern port listener and reverse shell
 )
 
 RUST_TOOLS=(
@@ -85,21 +84,21 @@ NORMAL_PROFILE=(
 	"playerctl"                        # Command-line utility and library for controlling media players
 	"mpv-mpris"                        # mpv mpris support
 	"update-grub"                      # Utility for updating grup config
-	# "alacritty"   # Terminal
-	"kitty-git"   # GPU accelerated terminal
-	"polybar-git" # Bar
-	"reflector"   # Pacman mirror sorter
+	"btop"                             # System monitor tool
+	"kitty-git"                        # GPU accelerated terminal
+	"polybar-git"                      # Bar
+	"reflector"                        # Pacman mirror sorter
 	"${DEV_PROFILE[@]}"
 )
 
 GAMING_PROFILE=(
-	"mangohud" # Hud for showing performance metrics
-	"input-devices-support"
-	"piper"            # Mouse button configurer
-	"steam"            # Game library
-	"proton-ge-custom" # Custom layer for running Windows games on Linux
-	"lutris-git"
-	"wine"
+	"mangohud"              # Hud for showing performance metrics
+	"input-devices-support" # Meta package for input devices support
+	"piper"                 # Mouse button configurer
+	"steam"                 # Game library
+	"proton-ge-custom"      # Custom layer for running Windows games on Linux
+	"lutris-git"            # Open Gaming Platform
+	"wine"                  # A compatibility layer for running Windows programs
 )
 
 SOUND_PROFILE=(
