@@ -349,7 +349,10 @@ fi
 # Enable spicetify
 if [[ ! -f "$HOME/.config/spicetify/Backup/xpui.spa" ]]; then
 	echo "${BLUE}:: ${BWHITE}Enabling ${BLUE}spicetify${BWHITE}...${NC}"
-	mkdir -p $SPOTIFY_PREFS
+	spotify &
+	PID=$!
+	sleep 5 && kill $PID 2>/dev/null &
+	wait $PID
 	sed -i "s,\(prefs_path.*=\).*,\1 $SPOTIFY_PREFS," "$HOME/.config/spicetify/config-xpui.ini"
 	spicetify backup apply
 fi
