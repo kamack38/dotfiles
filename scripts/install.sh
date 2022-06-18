@@ -24,7 +24,7 @@ DEV_PROFILE=(
 	"icu69-bin"                  # Fix live share
 	"tldr"                       # Collaborative cheatsheets for console commands
 	"dust"                       # A more intuitive version of du in rust
-	"shfmt-bin"                  # A shell parser, formatter, and interpreter for bash
+	"shfmt"                      # A shell parser, formatter, and interpreter for bash
 	"ngrok"                      # A tunneling, reverse proxy for developing and understanding networked, HTTP services
 	"jq"                         # Command-line JSON processor
 	"gnupg"                      # Complete and free implementation of the OpenPGP standard
