@@ -34,11 +34,6 @@ return {
       config = function()
          require("neoscroll").setup()
       end,
-
-      -- lazy loading
-      setup = function()
-         nvchad.packer_lazy_load "neoscroll.nvim"
-      end,
    },
    ["jose-elias-alvarez/null-ls.nvim"] = {
       after = "nvim-lspconfig",
