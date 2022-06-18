@@ -48,6 +48,8 @@ sudo systemctl start touchegg
 source "$HOME/scripts/repos.sh"
 archcraft
 
+sudo $HELPER -Sy
+
 # Install styles/themes
 echo "${BLUE}:: ${BWHITE}Installing KDE themes...${NC}"
 $HELPER -S --noconfirm --needed --quiet lightly-qt \
