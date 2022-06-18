@@ -324,7 +324,8 @@ fish -c "fisher install jorgebucaran/nvm.fish && nvm install ${NODE_VERSION} && 
 	pm2 \
 	neovim \
 	npm-check-updates \
-	git-cz"
+	git-cz \
+	npm"
 
 echo "${GREEN}:: ${BWHITE}Installing ${BLUE}quokka.js plugins${NC}"
 fish -c 'npm i --prefix $HOME/.quokka dotenv-quokka-plugin \
