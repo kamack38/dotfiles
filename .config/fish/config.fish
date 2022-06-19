@@ -35,7 +35,8 @@ export RUSTUP_HOME="$XDG_DATA_HOME/rustup"
 export WINEPREFIX="$XDG_DATA_HOME/wine"
 export WORKON_HOME="$XDG_DATA_HOME/virtualenvs"
 export VAGRANT_HOME="$XDG_DATA_HOME"/vagrant
-export VAGRANT_ALIAS_FILE="$XDG_DATA_HOME"/vagrant/aliases
+export VAGRANT_ALIAS_FILE="$XDG_DATA_HOME/vagrant/aliases"
+export GOPATH="$XDG_DATA_HOME/go"
 
 # Config
 export WAKATIME_HOME="$XDG_CONFIG_HOME/wakatime"
