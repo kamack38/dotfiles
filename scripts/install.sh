@@ -239,6 +239,10 @@ else
 	git --git-dir="$DOTFILES" --work-tree="$HOME" checkout --force
 fi
 
+# Load XDG variables
+echo "${GREEN}:: ${BWHITE}Loading ${BLUE}XDG${BWHITE} paths...${NC}"
+eval "$(sed -n '/^# XDG/,${p;/^# Keybindings/q}' .config/fish/config.fish)"
+
 # Add additional repositories
 source "$HOME/scripts/repos.sh"
 multilib

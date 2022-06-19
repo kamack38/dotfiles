@@ -19,6 +19,11 @@ export DIFFPROG="delta"
 # Set gpg tty
 export GPG_TTY=(tty)
 
+# Enable colored output
+export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
+# ------------
+# XDG
+# ------------
 # XDG paths
 export XDG_CACHE_HOME="$HOME/.cache"
 export XDG_STATE_HOME="$HOME/.local/state"
@@ -59,9 +64,6 @@ export NPM_CONFIG_CACHE="$XDG_CACHE_HOME/npm"
 # XDG fix
 alias svn="svn --config-dir \"$XDG_CONFIG_HOME/subversion\""
 alias wget="wget --hsts-file=$XDG_DATA_HOME/wget-hsts"
-
-# Enable colored output
-export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 
 # ------------
 # Keybindings
