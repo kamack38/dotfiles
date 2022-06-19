@@ -66,8 +66,10 @@ function installKDEPackage {
 
 # Download themes
 
+# MMcK Launcher: https://store.kde.org/p/1720532/
+installKDEPackage 1720532
 # OnzeMenu 11: https://store.kde.org/p/1545530
-installKDEPackage 1545530
+# installKDEPackage 1545530
 # QuarksSplashDarkMaterial: https://store.kde.org/p/1401872/
 installKDEPackage 1401872
 # Desert plasma: https://store.kde.org/p/1733294/

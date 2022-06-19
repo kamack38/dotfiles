@@ -182,7 +182,7 @@ sudo hwclock --systohc
 
 # Generate locale
 echo "${BLUE}:: ${BWHITE}Generating locales${NC}"
-sudo wget 'https://raw.githubusercontent.com/archcraft-os/core-packages/main/archcraft-mirrorlist/archcraft-mirrorlist' -O /etc/pacman.d/archcraft-mirrorlist
+sudo sed -i '/# Locales enabled by dotfiles install script/,$d' locale.gen
 sudo tee -a /etc/locale.gen >/dev/null <<EOT
 #
 # Locales enabled by dotfiles install script
