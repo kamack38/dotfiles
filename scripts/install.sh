@@ -351,7 +351,7 @@ fi
 if [[ ! -f "$HOME/.config/spicetify/Backup/xpui.spa" ]]; then
 	echo "${YELLOW}:: ${BWHITE}Fixing ${BLUE}spicetify${BWHITE}...${NC}"
 	sed -i "s,\(prefs_path.*=\).*,\1 $SPOTIFY_PREFS," "$HOME/.config/spicetify/config-xpui.ini"
-	echo "${YELLOW}:: ${BWHITE} Run ${BLUE}spicetify backup apply${BWHITE} to apply spicetify...${NC}"
+	echo "${YELLOW}:: ${BWHITE}Run ${BLUE}spicetify backup apply${BWHITE} to apply spicetify...${NC}"
 fi
 
 # Set default shell to fish
