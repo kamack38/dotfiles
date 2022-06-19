@@ -182,7 +182,7 @@ sudo hwclock --systohc
 
 # Generate locale
 echo "${BLUE}:: ${BWHITE}Generating locales${NC}"
-sudo sed -i '/# Locales enabled by dotfiles install script/,$d' locale.gen
+sudo sed -i '/# Locales enabled by dotfiles install script/,$d' /etc/locale.gen
 sudo tee -a /etc/locale.gen >/dev/null <<EOT
 #
 # Locales enabled by dotfiles install script
