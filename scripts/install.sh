@@ -177,11 +177,12 @@ mkdir -p $NEOVIM_CONFIG_DIR
 mkdir -p $HOME/.srcs
 
 # Set time zone
+echo "${BLUE}:: ${BWHITE}Setting time zone to ${BLUE}${TIME_ZONE}${BWHITE}...${NC}"
 sudo ln -sf "/usr/share/zoneinfo/${TIME_ZONE}" /etc/localtime
 sudo hwclock --systohc
 
 # Generate locale
-echo "${BLUE}:: ${BWHITE}Generating locales${NC}"
+echo "${BLUE}:: ${BWHITE}Generating locales...${NC}"
 sudo sed -i '/# Locales enabled by dotfiles install script/,$d' /etc/locale.gen
 sudo tee -a /etc/locale.gen >/dev/null <<EOT
 #
@@ -193,7 +194,7 @@ EOT
 sudo locale-gen
 
 # Set locale
-echo "${BLUE}:: ${BWHITE}Setting locales${NC}"
+echo "${BLUE}:: ${BWHITE}Setting locales...${NC}"
 sudo tee /etc/locale.conf >/dev/null <<EOT
 LANG=${MAIN_LOCALE}
 LC_ADDRESS=${SECONDARY_LOCALE}
@@ -213,7 +214,7 @@ unset LANG
 source /etc/profile.d/locale.sh
 
 # Set keyboard layout
-echo "${BLUE}:: ${BWHITE}Setting keyboard layout to ${GREEN}${KB_LAYOUT}${BWHITE} ...${NC}"
+echo "${BLUE}:: ${BWHITE}Setting keyboard layout to ${GREEN}${KB_LAYOUT}${BWHITE}...${NC}"
 sudo localectl set-keymap $KB_LAYOUT
 
 # Install helper
