@@ -342,20 +342,16 @@ else
 	git clone https://github.com/NvChad/NvChad $NEOVIM_CONFIG_DIR --depth 1
 
 	nvim \
-		+'autocmd User PackerComplete sleep 100m | write $HOME/.packer.sync.result | qall' \
+		+'autocmd User PackerComplete sleep 1000m | write $HOME/.packer.sync.result | qall' \
 		+PackerSync
 	cat $HOME/.packer.sync.result | grep -v 'Press'
 fi
 
 # Enable spicetify
 if [[ ! -f "$HOME/.config/spicetify/Backup/xpui.spa" ]]; then
-	echo "${BLUE}:: ${BWHITE}Enabling ${BLUE}spicetify${BWHITE}...${NC}"
-	spotify &
-	PID=$!
-	sleep 5 && kill $PID 2>/dev/null &
-	wait $PID
+	echo "${YELLOW}:: ${BWHITE}Fixing ${BLUE}spicetify${BWHITE}...${NC}"
 	sed -i "s,\(prefs_path.*=\).*,\1 $SPOTIFY_PREFS," "$HOME/.config/spicetify/config-xpui.ini"
-	spicetify backup apply
+	echo "${YELLOW}:: ${BWHITE} Run ${BLUE}spicetify backup apply${BWHITE} to apply spicetify...${NC}"
 fi
 
 # Set default shell to fish
