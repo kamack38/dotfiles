@@ -32,4 +32,4 @@ ElectricBorderCornerRatio=0.01
 
 [org.kde.kdecoration2]
 library=org.kde.kwin.aurorae
-theme=__aurorae__svg__MoeDark
+theme=__aurorae__svg__Venture
