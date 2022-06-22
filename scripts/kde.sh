@@ -100,6 +100,8 @@ installKDEPackage 1720532
 installKDEPackage 1401872
 # Desert plasma: https://store.kde.org/p/1733294/
 installKDEPackage 1733294
+# Venture: https://store.kde.org/p/1719504
+installKDEPackage 1719504
 # Mega-Plasma: https://store.kde.org/p/1669395
 # installKDEPackage 1669395
 # Fluent round dark plasma: https://store.kde.org/p/1544466
