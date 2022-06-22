@@ -65,6 +65,9 @@ $HELPER -S --noconfirm --needed --quiet "${CUSTOMIZATION_PACKAGES[@]}"
 # Set default plymouth theme
 sudo plymouth-set-default-theme -R archcraft
 
+# Add plymouth hook
+sudo sed -i "s,\(HOOKS=\".*\)udev\(.*\"\),\1udev plymouth\2," "/etc/mkinitcpio.conf"
+
 function installKDEPackage {
 	# $1 - package id
 	pkgUrl=$(curl -sL "https://store.kde.org/p/$1/loadFiles" | jq -r '.files[0].url' | sed 's#%3A#:#g' | sed 's#%2F#/#g')
