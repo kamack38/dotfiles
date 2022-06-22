@@ -45,7 +45,6 @@ echo "${GREEN}:: ${BWHITE}Installing KDE and its components...${NC}"
 $HELPER -S --noconfirm --needed --quiet "${KDE_PACKAGES[@]}"
 
 # Enable services
-sudo systemctl enable sddm
 sudo systemctl enable NetworkManager
 
 sudo systemctl enable touchegg.service
@@ -66,7 +65,22 @@ $HELPER -S --noconfirm --needed --quiet "${CUSTOMIZATION_PACKAGES[@]}"
 sudo plymouth-set-default-theme -R archcraft
 
 # Add plymouth hook
-sudo sed -i "s,\(HOOKS=\".*\)udev\(.*\"\),\1udev plymouth\2," "/etc/mkinitcpio.conf"
+if [[ ! $(grep "^HOOKS=\".*plymouth.*\"" /etc/mkinitcpio.conf) ]]; then
+	echo "${YELLOW}:: ${BWHITE}Adding plymouth hook...${NC}"
+	sudo sed -i "s,\(HOOKS=\".*\)udev\(.*\"\),\1udev plymouth\2," "/etc/mkinitcpio.conf"
+	# Create initial ramdisk
+	sudo mkinitcpio -P
+else
+	echo "${YELLOW}:: ${BWHITE}Plymouth hook is already added${NC} -- skipping"
+fi
+
+# Update grub config
+sudo sed -i "s,\(GRUB_CMDLINE_LINUX_DEFAULT=\".*\)\(\"\),\1 quiet splash\2," "/etc/default/grub"
+sudo grub-mkconfig -o /boot/grub/grub.cfg
+
+# Change display manager
+sudo systemctl disable sddm
+sudo systemctl enable sddm-plymouth
 
 function installKDEPackage {
 	# $1 - package id
