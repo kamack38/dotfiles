@@ -32,6 +32,13 @@ KDE_PACKAGES=(
 	"gwenview"                            # Image viewer
 	"qt5-imageformats"                    # Add more image formats (webp)
 	"plasma-browser-integration"          # Integrate browser and plasma
+	"plymouth"                            # Startup screen
+)
+
+CUSTOMIZATION_PACKAGES=(
+	"lightly-qt"               # A modern style for qt applications
+	"archcraft-backgrounds"    # Desktop backgrounds
+	"archcraft-plymouth-theme" # Plymouth theme
 )
 
 echo "${GREEN}:: ${BWHITE}Installing KDE and its components...${NC}"
@@ -53,8 +60,10 @@ sudo $HELPER -Sy
 
 # Install styles/themes
 echo "${BLUE}:: ${BWHITE}Installing KDE themes...${NC}"
-$HELPER -S --noconfirm --needed --quiet lightly-qt \
-	archcraft-backgrounds
+$HELPER -S --noconfirm --needed --quiet "${CUSTOMIZATION_PACKAGES[@]}"
+
+# Set default plymouth theme
+sudo plymouth-set-default-theme -R archcraft
 
 function installKDEPackage {
 	# $1 - package id
