@@ -142,7 +142,7 @@ immutability=1
 plugin=org.kde.plasma.devicenotifier
 
 [Containments][53][Applets][55][Configuration]
-PreloadWeight=78
+PreloadWeight=93
 
 [Containments][53][Applets][56]
 immutability=1

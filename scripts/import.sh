@@ -14,6 +14,11 @@ firefoxProfilePath=$(sed -nr "/^\[$firefoxProfileName\]/ { :l /^Path[ ]*=/ { s/[
 cp -rf "$backupDir/firefox/$firefoxProfilePath" "$firefoxConfigPath/$firefoxProfilePath"
 cp -rf "$backupDir/firefox/profiles.ini" "$firefoxConfigPath/profiles.ini"
 
+# Copy documents
+cp -rf "$backupDir/Pictures" "$HOME/Pictures"
+cp -rf "$backupDir/Videos" "$HOME/Videos"
+cp -rf "$backupDir/Documents" "$HOME/Documents"
+
 # Copy ngrok settings
 cp -rf "$backupDir/.config/ngrok" "$HOME/.config/ngrok"
 
