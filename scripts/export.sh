@@ -17,7 +17,7 @@ cp -rf "$firefoxConfigPath/profiles.ini" "$backupDir/firefox/profiles.ini"
 # Copy documents
 cp -rf "$HOME/Pictures" "$backupDir/Pictures"
 cp -rf "$HOME/Videos" "$backupDir/Videos"
-cp -rf "$HOME/Documents" "$backupDir/Documents"
+cp -rfL "$HOME/Documents" "$backupDir/Documents"
 
 # Copy ngrok settings
 cp -rf "$HOME/.config/ngrok" "$backupDir/.config/ngrok"
