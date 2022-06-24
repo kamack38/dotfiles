@@ -142,7 +142,7 @@ immutability=1
 plugin=org.kde.plasma.devicenotifier
 
 [Containments][53][Applets][55][Configuration]
-PreloadWeight=93
+PreloadWeight=98
 
 [Containments][53][Applets][56]
 immutability=1
@@ -205,14 +205,14 @@ immutability=1
 plugin=org.kde.plasma.networkmanagement
 
 [Containments][53][Applets][62][Configuration]
-PreloadWeight=59
+PreloadWeight=64
 
 [Containments][53][Applets][63]
 immutability=1
 plugin=org.kde.plasma.bluetooth
 
 [Containments][53][Applets][63][Configuration]
-PreloadWeight=6
+PreloadWeight=3
 
 [Containments][53][Applets][64]
 immutability=1

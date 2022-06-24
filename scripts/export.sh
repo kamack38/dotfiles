@@ -1,44 +1,54 @@
 #!/bin/bash
 
+# Colours
+BLACK=$'\e[0;30m'
+WHITE=$'\e[0;37m'
+BWHITE=$'\e[1;37m'
+RED=$'\e[0;31m'
+BLUE=$'\e[0;34m'
+GREEN=$'\e[0;32m'
+YELLOW=$'\e[0;33m'
+NC=$'\e[0m' # No Colour
+
 # Vars
 firefoxConfigPath="$HOME/.mozilla/firefox"
 firefoxProfileName="Profile0"
-backupDir="$HOME/.backup"
-
-# Create backup directory
-mkdir -p "$backupDir/firefox"
 
 # Copy firefox settings
+echo "${BLUE}:: ${BWHITE}Finding default firefox profile path...${NC}"
 firefoxProfilePath=$(sed -nr "/^\[$firefoxProfileName\]/ { :l /^Path[ ]*=/ { s/[^=]*=[ ]*//; p; q;}; n; b l;}" "$firefoxConfigPath/profiles.ini")
-
-cp -rf "$firefoxConfigPath/$firefoxProfilePath" "$backupDir/firefox/$firefoxProfilePath"
-cp -rf "$firefoxConfigPath/profiles.ini" "$backupDir/firefox/profiles.ini"
-
-# Copy documents
-cp -rf "$HOME/Pictures" "$backupDir/Pictures"
-cp -rf "$HOME/Videos" "$backupDir/Videos"
-cp -rfL "$HOME/Documents" "$backupDir/Documents"
-
-# Copy ngrok settings
-cp -rf "$HOME/.config/ngrok" "$backupDir/.config/ngrok"
-
-# Copy tokens/keys
-cp -rf "$HOME/.keys" "$backupDir/.keys"
-
-# Copy wakatime settings
-cp -f "$HOME/.wakatime.cfg" "$backupDir/.wakatime.cfg"
-
-# Copy ssh settings
-cp -rf "$HOME/.ssh" "$backupDir/.ssh"
-
-# Copy gmail key
-cp -rf "$HOME/.config/polybar/scripts/gmail/credentials.json" "$backupDir/.config/polybar/scripts/gmail/credentials.json"
+echo "${GREEN}:: ${BWHITE}Path found! ($firefoxProfilePath)${NC}"
 
 # Backup gpg keys
-gpg --output "$backupDir/.keys/backupkeys.pgp" --armor --export-secret-keys --export-options export-backup
+echo "${BLUE}:: ${BWHITE}Backing up GPG keys...${NC}"
+gpg --output "$HOME/.keys/backupkeys.pgp" --armor --export-secret-keys --export-options export-backup
+
+DIR_TO_BACKUP=(
+    ".config/ngrok"
+    ".config/wakatime/.wakatime.cfg"
+    ".ssh"
+    ".config/polybar/scripts/gmail/credentials.json"
+    ".keys"
+    "Pictures"
+    "Videos"
+    "Documents"
+    ".mozilla/firefox/$firefoxProfilePath"
+    ".mozilla/firefox/profiles.ini"
+    ".keys/backupkeys.pgp"
+)
 
 # Create a tar archive
-tar -czvf backup.tar.gz --directory="$backupDir" .
+if ! command -v pigz &>/dev/null; then
+    echo "${YELLOW}:: ${BWHITE}It seems that you don't have ${BLUE}pigz${BWHITE} installed.${NC}"
+    echo "${YELLOW}:: ${BWHITE}Compression will be performed using only one core.${NC}"
+    tar -C $HOME -czvf "$HOME/backup.tar.gz" "${DIR_TO_BACKUP[@]}"
+else
+    echo "${BLUE}:: ${BWHITE}Compressing with multiple cores using ${BLUE}pigz${BWHITE}.${NC}"
+    tar --totals=USR1 -C $HOME -c --use-compress-program=pigz --exclude='**node_modules' -f "$HOME/backup.tar.gz" "${DIR_TO_BACKUP[@]}"
+fi
 
-# Remove .backup directory
-rm -rf "$backupDir"
+# Clean up
+echo "${YELLOW}:: ${BWHITE}Cleaning up...${NC}"
+rm -f "backupkeys.pgp"
+
+echo "${GREEN}:: ${BWHITE}Your backup is in ${BLUE}${HOME}/backup.tar.gz${NC}"

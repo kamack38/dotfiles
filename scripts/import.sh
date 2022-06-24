@@ -6,33 +6,40 @@ firefoxProfileName="Profile0"
 backupDir="$HOME/.backup"
 
 # Extract tar archive
-tar -xvf "$HOME/backup.tar.gz" --directory=$backupDir
+if ! command -v pigz &>/dev/null; then
+    echo "${YELLOW}:: ${BWHITE}It seems that you don't have ${BLUE}pigz${BWHITE} installed.${NC}"
+    echo "${YELLOW}:: ${BWHITE}Extraction will be performed using only one core.${NC}"
+    tar -xf "$HOME/backup.tar.gz" -C=$backupDir
+else
+    echo "${BLUE}:: ${BWHITE}Compressing with multiple cores using ${BLUE}pigz${BWHITE}.${NC}"
+    tar --totals=USR1 -xf --use-compress-program=pigz "$HOME/backup.tar.gz" -C=$backupDir
+fi
 
 # Copy firefox settings
 firefoxProfilePath=$(sed -nr "/^\[$firefoxProfileName\]/ { :l /^Path[ ]*=/ { s/[^=]*=[ ]*//; p; q;}; n; b l;}" "$backupDir/firefox/profiles.ini")
 
-cp -rf "$backupDir/firefox/$firefoxProfilePath" "$firefoxConfigPath/$firefoxProfilePath"
-cp -rf "$backupDir/firefox/profiles.ini" "$firefoxConfigPath/profiles.ini"
+mv -f "$backupDir/firefox/$firefoxProfilePath" "$firefoxConfigPath/$firefoxProfilePath"
+mv -f "$backupDir/firefox/profiles.ini" "$firefoxConfigPath/profiles.ini"
 
 # Copy documents
-cp -rf "$backupDir/Pictures" "$HOME/Pictures"
-cp -rf "$backupDir/Videos" "$HOME/Videos"
-cp -rf "$backupDir/Documents" "$HOME/Documents"
+mv -f "$backupDir/Pictures" "$HOME/Pictures"
+mv -f "$backupDir/Videos" "$HOME/Videos"
+mv -f "$backupDir/Documents" "$HOME/Documents"
 
 # Copy ngrok settings
-cp -rf "$backupDir/.config/ngrok" "$HOME/.config/ngrok"
+mv -f "$backupDir/.config/ngrok" "$HOME/.config/ngrok"
 
 # Copy tokens/keys
-cp -rf "$backupDir/.keys" "$HOME/.keys"
+mv -f "$backupDir/.keys" "$HOME/.keys"
 
 # Copy wakatime settings
-cp -f "$backupDir/.wakatime.cfg" "$HOME/.wakatime.cfg"
+mv - "$backupDir/.config/wakatime/.wakatime.cfg" "$HOME/.config/wakatime/.wakatime.cfg"
 
 # Copy ssh settings
-cp -rf "$backupDir/.ssh" "$HOME/.ssh"
+mv -f "$backupDir/.ssh" "$HOME/.ssh"
 
 # Copy gmail key
-cp -rf "$backupDir/.config/polybar/scripts/gmail/credentials.json" "$HOME/.config/polybar/scripts/gmail/credentials.json"
+mv -f "$backupDir/.config/polybar/scripts/gmail/credentials.json" "$HOME/.config/polybar/scripts/gmail/credentials.json"
 
 # Import gpg keys
 gpg --import "$HOME/.keys/backupkeys.pgp"
