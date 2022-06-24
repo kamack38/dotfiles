@@ -66,8 +66,24 @@ sudo plymouth-set-default-theme -R archcraft
 
 # Add plymouth hook
 if [[ ! $(grep "^HOOKS=\".*plymouth.*\"" /etc/mkinitcpio.conf) ]]; then
-	echo "${YELLOW}:: ${BWHITE}Adding plymouth hook...${NC}"
-	sudo sed -i "s,\(HOOKS=\".*\)udev\(.*\"\),\1udev plymouth\2," "/etc/mkinitcpio.conf"
+	if [[ $(grep "^HOOKS=\".*systemd.*\"" /etc/mkinitcpio.conf) ]]; then
+		if [[ $(grep "^HOOKS=\".*sd-plymouth.*\"" /etc/mkinitcpio.conf) ]]; then
+			echo "${YELLOW}:: ${BWHITE}Sd-plymouth hook already exists${NC} -- skipping"
+		else
+			echo "${YELLOW}:: ${BWHITE}Adding sd-plymouth hook...${NC}"
+			sudo sed -i "s,\(HOOKS=\".*\)systemd\(.*\"\),\1systemd sd-plymouth\2," "/etc/mkinitcpio.conf"
+		fi
+	else
+		echo "${YELLOW}:: ${BWHITE}Adding plymouth hook...${NC}"
+		sudo sed -i "s,\(HOOKS=\".*\)udev\(.*\"\),\1udev plymouth\2," "/etc/mkinitcpio.conf"
+	fi
+	if [[ $(grep "^HOOKS=\".*sd-encrypt.*\"" /etc/mkinitcpio.conf) ]]; then
+		echo "${YELLOW}:: ${BWHITE}Sd-encrypt hook already exists${NC} -- skipping"
+	else
+		echo "${YELLOW}:: ${BWHITE}Adding sd-encrypt hook...${NC}"
+		sudo sed -i "s,\(HOOKS=\".*\)encrypt\(.*\"\),\1sd-encrypt\2," "/etc/mkinitcpio.conf"
+		sudo sed -i "s,\(HOOKS=\".*\)plymouth-encrypt\(.*\"\),\1sd-encrypt\2," "/etc/mkinitcpio.conf"
+	fi
 	# Create initial ramdisk
 	sudo mkinitcpio -P
 else
@@ -75,7 +91,7 @@ else
 fi
 
 # Update grub config
-sudo sed -i "s,\(GRUB_CMDLINE_LINUX_DEFAULT=\".*\)\(\"\),\1 quiet splash\2," "/etc/default/grub"
+sudo sed -i "s,\(GRUB_CMDLINE_LINUX_DEFAULT=\".*\)\(\"\),\1 quiet splash vt.global_cursor_default=0\2," "/etc/default/grub"
 sudo grub-mkconfig -o /boot/grub/grub.cfg
 
 # Change display manager
