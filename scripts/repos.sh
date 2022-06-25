@@ -38,6 +38,19 @@ EOT
 	fi
 }
 
+function garuda {
+	if grep -Fxq "[garuda]" /etc/pacman.conf; then
+		echo "${YELLOW}:: ${BLUE}garuda ${BWHITE}repo already exists${NC} -- skipping"
+	else
+		echo "${BLUE}:: ${BWHITE}Adding ${BLUE}garuda ${BWHITE}repository${NC}"
+		sudo tee -a /etc/pacman.conf >/dev/null <<EOT
+
+[garuda]
+Include = /etc/pacman.d/chaotic-mirrorlist
+EOT
+	fi
+}
+
 function multilib {
 	if grep -Fxq "[multilib]" /etc/pacman.conf; then
 		echo "${YELLOW}:: ${BLUE}multilib ${BWHITE}repo already exists${NC} -- skipping"

@@ -247,6 +247,7 @@ eval "$(sed -n '/^# XDG/,${p;/^# Keybindings/q}' .config/fish/config.fish)"
 source "$HOME/scripts/repos.sh"
 multilib
 chaotic_aur
+garuda
 sudo $HELPER -Sy
 
 # Install drivers
