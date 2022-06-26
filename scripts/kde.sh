@@ -46,9 +46,7 @@ $HELPER -S --noconfirm --needed --quiet "${KDE_PACKAGES[@]}"
 
 # Enable services
 sudo systemctl enable NetworkManager
-
 sudo systemctl enable touchegg.service
-sudo systemctl start touchegg
 
 # Add archcraft repository
 source "$HOME/scripts/repos.sh"

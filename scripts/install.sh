@@ -178,7 +178,8 @@ mkdir -p $HOME/.srcs
 
 # Set time zone
 echo "${BLUE}:: ${BWHITE}Setting time zone to ${BLUE}${TIME_ZONE}${BWHITE}...${NC}"
-sudo ln -sf "/usr/share/zoneinfo/${TIME_ZONE}" /etc/localtime
+sudo timedatectl set-timezone "${TIME_ZONE}"
+sudo timedatectl set-ntp 1
 sudo hwclock --systohc
 
 # Generate locale
@@ -226,6 +227,9 @@ sed -i 's/^%wheel ALL=(ALL:ALL) NOPASSWD: ALL/# %wheel ALL=(ALL:ALL) NOPASSWD: A
 echo "${BLUE}:: ${BWHITE}Adding ${BLUE}wheel${BWHITE} group sudo rights...${NC}"
 sed -i 's/^# %wheel ALL=(ALL) ALL/%wheel ALL=(ALL) ALL/' /etc/sudoers
 sed -i 's/^# %wheel ALL=(ALL:ALL) ALL/%wheel ALL=(ALL:ALL) ALL/' /etc/sudoers
+
+# Add parallel downloading
+sudo sed -i 's/^#ParallelDownloads/ParallelDownloads/' /etc/pacman.conf
 
 # Install helper
 if ! command -v $HELPER &>/dev/null; then
