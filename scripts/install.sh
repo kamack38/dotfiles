@@ -77,6 +77,7 @@ NORMAL_PROFILE=(
 	"kitty-git"                        # GPU accelerated terminal
 	"polybar-git"                      # Bar
 	"reflector"                        # Pacman mirror sorter
+	"garuda/garuda-hooks"              # Garuda pacman hooks
 	"${DEV_PROFILE[@]}"
 )
 
