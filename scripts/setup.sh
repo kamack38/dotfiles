@@ -12,6 +12,17 @@ GREEN=$'\e[0;32m'
 YELLOW=$'\e[0;33m'
 NC=$'\e[0m' # No Colour
 
+# Show greeting
+echo "   ___  __    _____ ______  _________  ________"
+echo "  |\  \|\  \ |\   _ \  __ \|\_____   \|\   __  \ "
+echo "  \ \  \/  /|\ \  \\\\\__\ \  \|_____\  \ \  \|\  \    Kamack38"
+echo "   \ \   ___  \ \  \\\\|__| \  \|______  \ \   __  \   ${BLUE}https://twitter.com/kamack38${NC}"
+echo "    \ \  \\\\ \  \ \  \    \ \  \| ____\  \ \  \|\  \  https://github.com/kamack38"
+echo "     \ \__\\\\ \__\ \__\    \ \__\|\_______\ \_______\ "
+echo "      \|__| \|__|\|__|     \|__|\|_______|\|_______|"
+echo ""
+echo "		${RED}Thank you for using my script! ${NC}"
+
 # Enable parallel downloads
 sed -i 's/^#ParallelDownloads/ParallelDownloads/' /etc/pacman.conf
 
@@ -20,6 +31,8 @@ pacman -Sy --noconfirm archlinux-keyring
 pacman -S --noconfirm --needed pacman-contrib fzf reflector rsync grub
 
 # Select disk to install on
+echo -n "${BLUE}:: ${BWHITE}Select disk to install system on.${NC}"
+echo -n "${YELLOW}:: ${BWHITE}All data will be ${RED}ERASED${BWHITE}!${NC}"
 DISK=$(lsblk -n --output TYPE,KNAME,SIZE | awk '$1=="disk"{print "/dev/"$2"|"$3}' | fzf --height=20% --layout=reverse)
 DISK=${DISK%|*}
 

@@ -151,7 +151,7 @@ SPELLCHECK_LOCALES=("${MAIN_LOCALE/_*/}" "${SECONDARY_LOCALE/_*/}")
 KB_LAYOUT="pl"
 MAKEFLAGS="-j$(nproc)"
 
-# Show greetings
+# Show greeting
 echo "   ___  __    _____ ______  _________  ________"
 echo "  |\  \|\  \ |\   _ \  __ \|\_____   \|\   __  \ "
 echo "  \ \  \/  /|\ \  \\\\\__\ \  \|_____\  \ \  \|\  \    Kamack38"
@@ -160,7 +160,7 @@ echo "    \ \  \\\\ \  \ \  \    \ \  \| ____\  \ \  \|\  \  https://github.com/
 echo "     \ \__\\\\ \__\ \__\    \ \__\|\_______\ \_______\ "
 echo "      \|__| \|__|\|__|     \|__|\|_______|\|_______|"
 echo ""
-echo -e "		${RED}Thank you for using my script! ${NC}"
+echo "		${RED}Thank you for using my script! ${NC}"
 
 echo "${BLUE}:: ${BWHITE}Doing a system update, cause stuff may break if it's not the latest version...${NC}"
 sudo pacman --noconfirm -Syu
