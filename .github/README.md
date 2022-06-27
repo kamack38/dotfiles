@@ -2,6 +2,19 @@
 
 ## Installation
 
+If you're looking for [Arch Linux Installation](#arch-linux-installation) go to the section below
+
 ```bash
 bash <(curl -sL https://github.com/kamack38/linux-dotfiles/raw/main/scripts/install.sh)
+```
+
+## Arch Linux Installation
+
+To setup a brand new version of Arch Linux you can use the command bellow in an [ISO](https://archlinux.org/download/)
+
+> **Warning**
+> This script will delete all files from the selected disk
+
+```bash
+bash <(curl -sL https://github.com/kamack38/linux-dotfiles/raw/main/scripts/setup.sh)
 ```
