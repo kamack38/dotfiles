@@ -72,9 +72,11 @@ done
 read -rep "${YELLOW}:: ${BWHITE}Please enter your hostname: ${NC}" MACHINE_NAME
 
 # Enable time sync
+echo "${BLUE}:: ${BWHITE}Enabling time sync...${NC}"
 timedatectl set-ntp true
 
 # Setup faster mirrors
+echo "${BLUE}:: ${BWHITE}Setting up faster mirrors using ${BLUE}reflector${BWHITE}...${NC}"
 reflector -a 48 -f 10 -l 20 --sort rate --save /etc/pacman.d/mirrorlist
 
 # Create mount directory
@@ -98,10 +100,10 @@ sgdisk -n 3::-0 --typecode=3:8300 --change-name=3:'ROOT' ${DISK}       # partiti
 if [[ ! -d "/sys/firmware/efi" ]]; then
     sgdisk -A 1:set:2 ${DISK}
 fi
+echo "${BLUE}:: ${BWHITE}Partition table: ${NC}"
 partprobe ${DISK} # reread partition table to ensure it is correct
 
-echo "${BLUE}:: ${BWHITE}Creating filesystems (BTRFS)...${NC}"
-
+echo "${BLUE}:: ${BWHITE}Naming partitions...${NC}"
 if [[ "${DISK}" =~ "nvme" ]]; then
     partition2=${DISK}p2
     partition3=${DISK}p3
@@ -110,6 +112,7 @@ else
     partition3=${DISK}3
 fi
 
+echo "${BLUE}:: ${BWHITE}Creating partitions...${NC}"
 # Create boot partition
 mkfs.vfat -F32 -n "EFIBOOT" ${partition2}
 
@@ -138,6 +141,7 @@ umount /mnt
 mkdir -p /mnt/{home,var,tmp,.snapshots}
 
 # Mount all btrfs subvolumes
+echo "${BLUE}:: ${BWHITE}Mounting btrfs subvolumes...${NC}"
 mount -o ${MOUNT_OPTIONS},subvol=@home ${partition3} /mnt/home
 mount -o ${MOUNT_OPTIONS},subvol=@tmp ${partition3} /mnt/tmp
 mount -o ${MOUNT_OPTIONS},subvol=@var ${partition3} /mnt/var
@@ -148,6 +152,8 @@ mount -o ${MOUNT_OPTIONS},subvol=@ ${partition3} /mnt
 mountallsubvol
 
 ENCRYPTED_PARTITION_UUID=$(blkid -s UUID -o value ${partition3})
+
+echo "${BLUE}:: ${BWHITE}Encrypted partition UUID is: ${BLUE}${ENCRYPTED_PARTITION_UUID}${NC}"
 
 # Mount target
 mkdir -p /mnt/boot/efi
