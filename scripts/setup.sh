@@ -31,8 +31,8 @@ pacman -Sy --noconfirm archlinux-keyring
 pacman -S --noconfirm --needed pacman-contrib fzf reflector rsync grub
 
 # Select disk to install on
-echo -n "${BLUE}:: ${BWHITE}Select disk to install system on.${NC}"
-echo -n "${YELLOW}:: ${BWHITE}All data will be ${RED}ERASED${BWHITE}!${NC}"
+echo "${BLUE}:: ${BWHITE}Select disk to install system on.${NC}"
+echo "${YELLOW}:: ${BWHITE}All data will be ${RED}ERASED${BWHITE}!${NC}"
 DISK=$(lsblk -n --output TYPE,KNAME,SIZE | awk '$1=="disk"{print "/dev/"$2"|"$3}' | fzf --height=20% --layout=reverse)
 DISK=${DISK%|*}
 
