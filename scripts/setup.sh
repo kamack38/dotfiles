@@ -93,7 +93,7 @@ echo "${BLUE}:: ${BWHITE}Setting up faster mirrors using ${BLUE}reflector${BWHIT
 reflector -a 48 -f 10 -l 20 --sort rate --save /etc/pacman.d/mirrorlist
 
 # Create mount directory
-mkdir /mnt
+mkdir -p /mnt
 
 # Install Prerequisites
 echo "${BLUE}:: ${BWHITE}Installing prerequisites...${NC}"
