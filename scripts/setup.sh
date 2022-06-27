@@ -99,7 +99,6 @@ mkdir -p /mnt
 echo "${BLUE}:: ${BWHITE}Installing prerequisites...${NC}"
 pacman -S --noconfirm --needed gptfdisk btrfs-progs glibc
 
-echo "${BLUE}:: ${BWHITE}Formatting disk...${NC}"
 # Make sure everything is unmounted starting
 if grep -qs '/mnt' /proc/mounts; then
     echo "${YELLOW}:: ${BLUE}/mnt${BWHITE} is mounted${NC} -- unmounting"
@@ -108,6 +107,7 @@ else
     echo "${BLUE}:: ${BLUE}/mnt${BWHITE} is not mounted${NC} -- skipping"
 fi
 
+echo "${BLUE}:: ${BWHITE}Formatting disk...${NC}"
 sgdisk -Z ${DISK}
 sgdisk -a 2048 -o ${DISK}
 sgdisk -n 1::+1M --typecode=1:ef02 --change-name=1:'BIOSBOOT' ${DISK}  # partition 1 (BIOS Boot Partition)
