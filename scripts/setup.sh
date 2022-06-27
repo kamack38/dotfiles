@@ -37,15 +37,15 @@ while true; do
     echo -n "${YELLOW}:: ${BWHITE}Please enter your luks password: ${NC}"
     read -s luks_password # read password without echo
 
-    echo -n "\n${YELLOW}:: ${BWHITE}Please repeat your luks password: ${NC}"
+    echo -ne "\n${YELLOW}:: ${BWHITE}Please repeat your luks password: ${NC}"
     read -s luks_password2 # read password without echo
 
     if [ "$luks_password" = "$luks_password2" ]; then
-        echo "\n${GREEN}:: ${BWHITE}Passwords match.${NC}"
+        echo -e "\n${GREEN}:: ${BWHITE}Passwords match.${NC}"
         LUKS_PASSWORD="$luks_password"
         break
     else
-        echo "\n${RED}:: ${BWHITE}Passwords do not match. Please try again.${NC}"
+        echo -e "\n${RED}:: ${BWHITE}Passwords do not match. Please try again.${NC}"
     fi
 done
 
@@ -57,15 +57,15 @@ while true; do
     echo -n "${YELLOW}:: ${BWHITE}Please enter your password: ${NC}"
     read -s password # read password without echo
 
-    echo "\n${YELLOW}:: ${BWHITE}Please repeat your password: ${NC}"
+    echo -e "\n${YELLOW}:: ${BWHITE}Please repeat your password: ${NC}"
     read -s password2 # read password without echo
 
     if [ "$password" = "$password2" ]; then
-        echo "\n${GREEN}:: ${BWHITE}Passwords match.${NC}"
+        echo -e "\n${GREEN}:: ${BWHITE}Passwords match.${NC}"
         PASSWORD="$password"
         break
     else
-        echo "\n${RED}:: ${BWHITE}Passwords do not match. Please try again.${NC}"
+        echo -e "\n${RED}:: ${BWHITE}Passwords do not match. Please try again.${NC}"
     fi
 done
 
