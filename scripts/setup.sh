@@ -35,6 +35,7 @@ echo "${BLUE}:: ${BWHITE}Select disk to install system on.${NC}"
 echo "${YELLOW}:: ${BWHITE}All data will be ${RED}ERASED${BWHITE}!${NC}"
 DISK=$(lsblk -n --output TYPE,KNAME,SIZE | awk '$1=="disk"{print "/dev/"$2"|"$3}' | fzf --height=20% --layout=reverse)
 DISK=${DISK%|*}
+echo "${BLUE}:: ${BWHITE}Selected disk is: ${BLUE}${DISK}${NC}"
 
 # Check if drive is a ssd
 if [[ "$(cat /sys/block/${DISK#/*/}/queue/rotational)" == "0" ]]; then
