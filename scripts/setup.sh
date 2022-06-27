@@ -118,7 +118,7 @@ sgdisk -n 3::-0 --typecode=3:8300 --change-name=3:'ROOT' ${DISK}       # partiti
 if [[ ! -d "/sys/firmware/efi" ]]; then
     sgdisk -A 1:set:2 ${DISK}
 fi
-echo "${BLUE}:: ${BWHITE}Partition table: ${NC}"
+echo "${BLUE}:: ${BWHITE}Rereading partition table: ${NC}"
 partprobe ${DISK} # reread partition table to ensure it is correct
 
 echo "${BLUE}:: ${BWHITE}Naming partitions...${NC}"
