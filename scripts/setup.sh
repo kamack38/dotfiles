@@ -57,7 +57,7 @@ while true; do
     echo -n "${YELLOW}:: ${BWHITE}Please enter your password: ${NC}"
     read -s password # read password without echo
 
-    echo -e "\n${YELLOW}:: ${BWHITE}Please repeat your password: ${NC}"
+    echo -ne "\n${YELLOW}:: ${BWHITE}Please repeat your password: ${NC}"
     read -s password2 # read password without echo
 
     if [ "$password" = "$password2" ]; then
