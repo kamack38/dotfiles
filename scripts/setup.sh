@@ -101,7 +101,12 @@ pacman -S --noconfirm --needed gptfdisk btrfs-progs glibc
 
 echo "${BLUE}:: ${BWHITE}Formatting disk...${NC}"
 # Make sure everything is unmounted starting
-umount -A --recursive /mnt
+if grep -qs '/mnt' /proc/mounts; then
+    echo "${YELLOW}:: ${BLUE}/mnt${BWHITE} is mounted${NC} -- unmounting"
+    umount -A --recursive /mnt || /bin/true
+else
+    echo "${BLUE}:: ${BLUE}/mnt${BWHITE} is not mounted${NC} -- skipping"
+fi
 
 sgdisk -Z ${DISK}
 sgdisk -a 2048 -o ${DISK}
