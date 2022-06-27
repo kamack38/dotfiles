@@ -91,7 +91,7 @@ GAMING_PROFILE=(
 )
 
 SOUND_PROFILE=(
-	'chaotic-aur/alsa-support'
+	'garuda/alsa-support'
 )
 
 BLUETOOTH_PROFILE=("bluetooth-support")
@@ -173,10 +173,16 @@ mkdir -p $HOME/.local/share/fonts
 mkdir -p $NEOVIM_CONFIG_DIR
 mkdir -p $HOME/.srcs
 
-# Set time zone
+# Setup NetworkManager
+echo "${BLUE}:: ${BWHITE}Setting up NetworkManager...${NC}"
+$HELPER -S --noconfirm --needed --quiet "${NETWORK_PROFILE[@]}"
+systemctl enable --now NetworkManager.service
+systemctl enable --now ModemManager.service
+
+# Set time zone and enable time sync
 echo "${BLUE}:: ${BWHITE}Setting time zone to ${BLUE}${TIME_ZONE}${BWHITE}...${NC}"
 sudo timedatectl set-timezone "${TIME_ZONE}"
-sudo timedatectl set-ntp 1
+sudo timedatectl set-ntp true
 sudo hwclock --systohc
 
 # Generate locale
@@ -225,12 +231,6 @@ echo "${BLUE}:: ${BWHITE}Adding ${BLUE}wheel${BWHITE} group sudo rights...${NC}"
 sed -i 's/^# %wheel ALL=(ALL) ALL/%wheel ALL=(ALL) ALL/' /etc/sudoers
 sed -i 's/^# %wheel ALL=(ALL:ALL) ALL/%wheel ALL=(ALL:ALL) ALL/' /etc/sudoers
 
-# Setup NetworkManager
-echo "${BLUE}:: ${BWHITE}Setting up NetworkManager...${NC}"
-$HELPER -S --noconfirm --needed --quiet "${NETWORK_PROFILE[@]}"
-systemctl enable --now NetworkManager.service
-systemctl enable --now ModemManager.service
-
 # Add parallel downloading
 sudo sed -i 's/^#ParallelDownloads/ParallelDownloads/' /etc/pacman.conf
 
@@ -267,7 +267,20 @@ chaotic_aur
 garuda
 sudo $HELPER -Sy
 
-# Install drivers
+# Install CPU drivers
+proc_type=$(lscpu)
+if grep -E "GenuineIntel" <<<${proc_type}; then
+	echo "${BLUE}:: ${BWHITE}Installing ${BLUE}Intel${BWHITE} microcode...${NC}"
+	echo "Installing Intel microcode"
+	sudo pacman -S --noconfirm --needed intel-ucode
+	proc_ucode=intel-ucode.img
+elif grep -E "AuthenticAMD" <<<${proc_type}; then
+	echo "${BLUE}:: ${BWHITE}Installing ${BLUE}AMD${BWHITE} microcode...${NC}"
+	sudo pacman -S --noconfirm --needed amd-ucode
+	proc_ucode=amd-ucode.img
+fi
+
+# Install GPU drivers
 VGA_INFO=$(lspci -vnn | grep VGA)
 if [[ $VGA_INFO == *"NVIDIA"* ]]; then
 	echo "${GREEN}:: ${BWHITE}Installing ${BLUE}NVIDIA${BWHITE} drivers${NC}"
