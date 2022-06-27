@@ -24,7 +24,7 @@ DISK=$(lsblk -n --output TYPE,KNAME,SIZE | awk '$1=="disk"{print "/dev/"$2"|"$3}
 DISK=${DISK%|*}
 
 # Check if drive is a ssd
-if [[ "$(cat /sys/block/${disk#/*/}/queue/rotational)" == "0" ]]; then
+if [[ "$(cat /sys/block/${DISK#/*/}/queue/rotational)" == "0" ]]; then
     echo "${YELLOW}:: ${BWHITE}Selected drive is a ssd...${NC}"
     MOUNT_OPTIONS="noatime,compress=zstd,ssd,commit=120"
 else
