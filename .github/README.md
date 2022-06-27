@@ -13,6 +13,7 @@ bash <(curl -sL https://github.com/kamack38/linux-dotfiles/raw/main/scripts/inst
 To setup a brand new version of Arch Linux you can use the command below in an [ISO](https://archlinux.org/download/)
 
 > **Warning**
+>
 > This script will delete all files from the selected disk
 
 ```bash
