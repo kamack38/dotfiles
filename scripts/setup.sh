@@ -136,7 +136,7 @@ echo "${BLUE}:: ${BWHITE}Creating partitions...${NC}"
 mkfs.vfat -F32 -n "EFIBOOT" ${partition2}
 
 # Enter luks password to cryptsetup and format root partition
-echo -n "${LUKS_PASSWORD}" | cryptsetup -y -v luksFormat ${partition3} -
+echo -n "${LUKS_PASSWORD}" | cryptsetup -v luksFormat ${partition3} -
 
 # Open luks container and ROOT will be place holder
 echo -n "${LUKS_PASSWORD}" | cryptsetup open ${partition3} ROOT -
@@ -213,7 +213,7 @@ NC=$'\e[0m'
 
 # Create user
 groupadd libvirt
-useradd -m -G wheel,libvirt -s /bin/bash $USERNAME
+useradd -mG wheel,libvirt -s /bin/bash $USERNAME
 echo "${BLUE}:: ${BWHITE}$USERNAME created, home directory created, added to wheel and libvirt group, default shell set to ${BlUE}/bin/bash${NC}"
 echo "$USERNAME:$PASSWORD" | chpasswd
 echo "$USERNAME password set"
