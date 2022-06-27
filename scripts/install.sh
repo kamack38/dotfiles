@@ -41,17 +41,6 @@ DEV_PROFILE=(
 	"rustcat"                    # A modern port listener and reverse shell
 )
 
-RUST_TOOLS=(
-	"rustup"
-)
-
-rust_setup() {
-	echo "${BLUE}:: ${BWHITE}Installing rust & its tools...${NC}"
-	rustup install stable
-	rustup component add clippy
-	cargo install cargo-edit
-}
-
 VM_PROFILE=("virt-manager-meta")
 
 NORMAL_PROFILE=(
@@ -108,6 +97,10 @@ SOUND_PROFILE=(
 BLUETOOTH_PROFILE=("bluetooth-support")
 
 NETWORK_PROFILE=("")
+
+RUST_DEV=(
+	"rustup"
+)
 
 NVIDIA_DRIVERS=(
 	"garuda-nvidia-config"
@@ -294,30 +287,36 @@ $HELPER -S --noconfirm --needed --quiet "${NORMAL_PROFILE[@]}"
 
 # Additional packages
 echo "${BLUE}:: ${BWHITE}Which packages do you want to install?${NC}"
-echo "	1) Gaming 2) Virtual Machine 3) Sound 4) Bluetooth 5) Network"
+echo "	1) Gaming 2) Virtual Machine 3) Sound 4) Bluetooth 5) Network 6) Rust-DEV"
 read -rp "${BLUE}:: ${BWHITE}Packages to install (eg: 1 2 3): " additional_packages
 
 if [[ $additional_packages == *"1"* ]]; then
-	echo "${BLUE}:: ${BWHITE}Installing ${BLUE}gaming${BWHITE} packages?${NC}"
+	echo "${BLUE}:: ${BWHITE}Installing ${BLUE}gaming${BWHITE} packages...${NC}"
 	$HELPER -S --noconfirm --needed --quiet "${GAMING_PROFILE[@]}"
 fi
 if [[ $additional_packages == *"2"* ]]; then
-	echo "${BLUE}:: ${BWHITE}Adding ${BLUE}virtual machine${BWHITE} support?${NC}"
+	echo "${BLUE}:: ${BWHITE}Adding ${BLUE}virtual machine${BWHITE} support...${NC}"
 	$HELPER -S --noconfirm --needed --quiet "${VM_PROFILE[@]}"
 fi
 if [[ $additional_packages == *"3"* ]]; then
 	echo "${RED}:: ${BWHITE}This feature has not been implemented yet${NC}"
-	# echo "${BLUE}:: ${BWHITE}Adding ${BLUE}sound${BWHITE} support?${NC}"
+	# echo "${BLUE}:: ${BWHITE}Adding ${BLUE}sound${BWHITE} support...${NC}"
 	# $HELPER -S --noconfirm --needed --quiet  "${SOUND_PROFILE[@]}"
 fi
 if [[ $additional_packages == *"4"* ]]; then
-	echo "${BLUE}:: ${BWHITE}Adding ${BLUE}bluetooth${BWHITE} support?${NC}"
+	echo "${BLUE}:: ${BWHITE}Adding ${BLUE}bluetooth${BWHITE} support...${NC}"
 	$HELPER -S --noconfirm --needed --quiet "${BLUETOOTH_PROFILE[@]}"
 fi
 if [[ $additional_packages == *"5"* ]]; then
 	echo "${RED}:: ${BWHITE}This feature has not been implemented yet${NC}"
-	# echo "${BLUE}:: ${BWHITE}Adding ${BLUE}network${BWHITE} support?${NC}"
-	# $HELPER -S --noconfirm --needed --quiet  "${NETWORK_PROFILE[@]}"
+	# echo "${BLUE}:: ${BWHITE}Adding ${BLUE}network${BWHITE} support...${NC}"
+fi
+if [[ $additional_packages == *"6"* ]]; then
+	echo "${BLUE}:: ${BWHITE}Installing rust profile...${NC}"
+	$HELPER -S --noconfirm --needed --quiet "${RUST_DEV[@]}"
+	rustup install stable
+	rustup component add clippy
+	cargo install cargo-edit
 fi
 
 # Install spellchecking
