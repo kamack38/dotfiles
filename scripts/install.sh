@@ -97,12 +97,6 @@ SOUND_PROFILE=(
 
 BLUETOOTH_PROFILE=("bluetooth-support")
 
-NETWORK_PROFILE=(
-	"modemmanager"
-	"dhclient"
-	"networkmanager"
-)
-
 RUST_DEV=(
 	"rustup"
 )
@@ -173,12 +167,6 @@ echo "${BLUE}:: ${BWHITE}Creating directories...${NC}"
 mkdir -p $HOME/.local/share/fonts
 mkdir -p $NEOVIM_CONFIG_DIR
 mkdir -p $HOME/.srcs
-
-# Setup NetworkManager
-echo "${BLUE}:: ${BWHITE}Setting up NetworkManager...${NC}"
-$HELPER -S --noconfirm --needed --quiet "${NETWORK_PROFILE[@]}"
-systemctl enable --now NetworkManager.service
-systemctl enable --now ModemManager.service
 
 # Set time zone and enable time sync
 echo "${BLUE}:: ${BWHITE}Setting time zone to ${BLUE}${TIME_ZONE}${BWHITE}...${NC}"

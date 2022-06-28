@@ -194,7 +194,7 @@ fi
 
 # Start arch installation
 echo "${BLUE}:: ${BWHITE}Installing prerequisites to ${BLUE}/mnt${BWHITE}...${NC}"
-pacstrap /mnt base btrfs-progs linux linux-firmware sudo grub grub-btrfs archlinux-keyring libnewt --noconfirm --needed 1>/dev/null
+pacstrap /mnt base btrfs-progs linux linux-firmware sudo grub grub-btrfs archlinux-keyring libnewt modemmanager networkmanager dhclient --noconfirm --needed 1>/dev/null
 echo "keyserver hkp://keyserver.ubuntu.com" >>/mnt/etc/pacman.d/gnupg/gpg.conf
 cp /etc/pacman.d/mirrorlist /mnt/etc/pacman.d/mirrorlist
 
@@ -223,6 +223,10 @@ function chroot {
     echo "${BLUE}:: ${BWHITE}$USERNAME added to wheel and libvirt group, default shell set to ${BlUE}/bin/bash${NC}"
     echo "$USERNAME:$PASSWORD" | chpasswd
     echo "${BLUE}:: ${BWHITE}${USERNAME} password set${NC}"
+
+    echo "${BLUE}:: ${BWHITE}Setting up NetworkManager...${NC}"
+    systemctl enable NetworkManager.service
+    systemctl enable ModemManager.service
 
     # enter $NAME_OF_MACHINE to /etc/hostname
     echo "${BLUE}:: ${BWHITE}Hostname is set to ${BLUE}${MACHINE_NAME}${NC}"
