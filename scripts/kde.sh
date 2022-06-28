@@ -36,9 +36,10 @@ KDE_PACKAGES=(
 )
 
 CUSTOMIZATION_PACKAGES=(
-	"lightly-qt"               # A modern style for qt applications
-	"archcraft-backgrounds"    # Desktop backgrounds
-	"archcraft-plymouth-theme" # Plymouth theme
+	"lightly-qt"                   # A modern style for qt applications
+	"archcraft-backgrounds"        # Desktop backgrounds
+	"archcraft-plymouth-theme"     # Plymouth theme
+	"archcraft-sddm-theme-default" # Default archcraft sddm theme
 )
 
 echo "${GREEN}:: ${BWHITE}Installing KDE and its components...${NC}"
@@ -63,31 +64,43 @@ if [[ $(pacman -Q grub) ]]; then
 	# Set default plymouth theme
 	sudo plymouth-set-default-theme -R archcraft
 
-	# Add plymouth hook
-	if [[ ! $(grep "^HOOKS=\".*plymouth.*\"" /etc/mkinitcpio.conf) ]]; then
-		if [[ $(grep "^HOOKS=\".*systemd.*\"" /etc/mkinitcpio.conf) ]]; then
-			if [[ $(grep "^HOOKS=\".*sd-plymouth.*\"" /etc/mkinitcpio.conf) ]]; then
-				echo "${YELLOW}:: ${BWHITE}Sd-plymouth hook already exists${NC} -- skipping"
-			else
-				echo "${YELLOW}:: ${BWHITE}Adding sd-plymouth hook...${NC}"
-				sudo sed -i "s,\(HOOKS=\".*\)systemd\(.*\"\),\1systemd sd-plymouth\2," "/etc/mkinitcpio.conf"
-			fi
-		else
-			echo "${YELLOW}:: ${BWHITE}Adding plymouth hook...${NC}"
-			sudo sed -i "s,\(HOOKS=\".*\)udev\(.*\"\),\1udev plymouth\2," "/etc/mkinitcpio.conf"
-		fi
-		if [[ $(grep "^HOOKS=\".*sd-encrypt.*\"" /etc/mkinitcpio.conf) ]]; then
-			echo "${YELLOW}:: ${BWHITE}Sd-encrypt hook already exists${NC} -- skipping"
-		else
-			echo "${YELLOW}:: ${BWHITE}Adding sd-encrypt hook...${NC}"
-			sudo sed -i "s,\(HOOKS=\".*\)encrypt\(.*\"\),\1sd-encrypt\2," "/etc/mkinitcpio.conf"
-			sudo sed -i "s,\(HOOKS=\".*\)plymouth-encrypt\(.*\"\),\1sd-encrypt\2," "/etc/mkinitcpio.conf"
-		fi
-		# Create initial ramdisk
+	# Correct hooks
+	if [[ $(grep "^HOOKS=\".*systemd.*\"" /etc/mkinitcpio.conf) ]]; then
+		echo "${BLUE}:: ${BWHITE}You're using ${BLUE} systemd hook${NC} -- correcting hooks"
+		PLYMOUTH_HOOK_PARENT="systemd"
+		PLYMOUTH_HOOK="sd-plymouth"
+		ENCRYPT_PLYMOUTH_HOOK="sd-encrypt"
+	else
+		PLYMOUTH_HOOK_PARENT="udev"
+		PLYMOUTH_HOOK="plymouth"
+		ENCRYPT_PLYMOUTH_HOOK="plymouth-encrypt"
+	fi
+
+	CHANGED="false"
+
+	if [[ ! $(grep "^HOOKS=\".*${PLYMOUTH_HOOK}.*\"" /etc/mkinitcpio.conf) ]]; then
+		echo "${YELLOW}:: ${BWHITE}Adding ${PLYMOUTH_HOOK} hook...${NC}"
+		sudo sed -i "s,\(HOOKS=\".*\)${PLYMOUTH_HOOK_PARENT}\(.*\"\),\1${PLYMOUTH_HOOK_PARENT} ${PLYMOUTH_HOOK}\2," "/etc/mkinitcpio.conf"
+		CHANGED="true"
+
+	else
+		echo "${YELLOW}:: ${BWHITE}${PLYMOUTH_HOOK} hook already exists${NC} -- skipping"
+	fi
+	if [[ ! $(grep "^HOOKS=\".*${ENCRYPT_PLYMOUTH_HOOK}.*\"" /etc/mkinitcpio.conf) ]]; then
+		echo "${YELLOW}:: ${BWHITE}Adding ${ENCRYPT_PLYMOUTH_HOOK} hook...${NC}"
+		sudo sed -i "s,\(HOOKS=\".*\)encrypt\(.*\"\),\1${ENCRYPT_PLYMOUTH_HOOK}\2," "/etc/mkinitcpio.conf"
+		CHANGED="true"
+	else
+		echo "${YELLOW}:: ${BWHITE}${ENCRYPT_PLYMOUTH_HOOK} hook already exists${NC} -- skipping"
+	fi
+
+	# Create initial ramdisk
+	if "${CHANGED}" == "true"; then
 		sudo mkinitcpio -P
 	else
 		echo "${YELLOW}:: ${BWHITE}Plymouth hook is already added${NC} -- skipping"
 	fi
+
 	# Update grub config
 	sudo sed -i "s,\(GRUB_CMDLINE_LINUX_DEFAULT=\".*\)\(\"\),\1 quiet splash vt.global_cursor_default=0\2," "/etc/default/grub"
 	sudo grub-mkconfig -o /boot/grub/grub.cfg
