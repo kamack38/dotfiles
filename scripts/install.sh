@@ -213,6 +213,9 @@ sudo localectl set-keymap $KB_LAYOUT
 # Add parallel downloading
 sudo sed -i 's/^#ParallelDownloads/ParallelDownloads/' /etc/pacman.conf
 
+# Enable color
+sudo sed -i 's/^#Color/Color/' /etc/pacman.conf
+
 # Install helper
 if ! command -v $HELPER &>/dev/null; then
 	echo "${YELLOW}:: ${BWHITE}It seems that you don't have ${BLUE}$HELPER${BWHITE} installed${NC} -- installing"
