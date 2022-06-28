@@ -64,7 +64,6 @@ while true; do
 done
 
 # Create user credentials
-echo "${BLUE}:: ${BWHITE}Creating user...${NC}"
 read -rp "${BLUE}:: ${BWHITE}Enter your username: ${NC}" USERNAME
 
 while true; do
@@ -217,12 +216,12 @@ function chroot {
     sed -i "s%GRUB_CMDLINE_LINUX_DEFAULT=\"%GRUB_CMDLINE_LINUX_DEFAULT=\"cryptdevice=UUID=${ENCRYPTED_PARTITION_UUID}:root root=/dev/mapper/root %g" /etc/default/grub
     grub-mkconfig -o /boot/grub/grub.cfg
 
-    # Create user
+    echo "${BLUE}:: ${BWHITE}Creating user...${NC}"
     groupadd libvirt
     useradd -mG wheel,libvirt -s /bin/bash $USERNAME
-    echo "${BLUE}:: ${BWHITE}$USERNAME created, home directory created, added to wheel and libvirt group, default shell set to ${BlUE}/bin/bash${NC}"
+    echo "${BLUE}:: ${BWHITE}$USERNAME added to wheel and libvirt group, default shell set to ${BlUE}/bin/bash${NC}"
     echo "$USERNAME:$PASSWORD" | chpasswd
-    echo "$USERNAME password set"
+    echo "${BLUE}:: ${BWHITE}${USERNAME} password set${NC}"
 
     # enter $NAME_OF_MACHINE to /etc/hostname
     echo "${BLUE}:: ${BWHITE}Hostname is set to ${BLUE}${MACHINE_NAME}${NC}"
