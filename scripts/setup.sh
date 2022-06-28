@@ -141,7 +141,7 @@ echo -n "${LUKS_PASSWORD}" | cryptsetup -v luksFormat ${partition3} -
 
 # Open luks container and ROOT will be place holder
 echo "${BLUE}:: ${BWHITE}Opening partition...${NC}"
-echo -n "${LUKS_PASSWORD}" | cryptsetup open ${partition3} root -
+echo -n "${LUKS_PASSWORD}" | cryptsetup luksOpen ${partition3} root -
 
 # Format luks container
 mkfs.btrfs /dev/mapper/root
