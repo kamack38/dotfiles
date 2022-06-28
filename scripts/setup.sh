@@ -195,7 +195,7 @@ fi
 
 # Start arch installation
 echo "${BLUE}:: ${BWHITE}Installing prerequisites to ${BLUE}/mnt${BWHITE}...${NC}"
-pacstrap /mnt base btrfs-progs linux linux-firmware sudo archlinux-keyring libnewt --noconfirm --needed 1>/dev/null
+pacstrap /mnt base btrfs-progs linux linux-firmware sudo grub archlinux-keyring libnewt --noconfirm --needed 1>/dev/null
 echo "keyserver hkp://keyserver.ubuntu.com" >>/mnt/etc/pacman.d/gnupg/gpg.conf
 cp /etc/pacman.d/mirrorlist /mnt/etc/pacman.d/mirrorlist
 
@@ -208,32 +208,31 @@ if [[ ! -d "/sys/firmware/efi" ]]; then
     grub-install --boot-directory=/mnt/boot ${DISK}
 else
     pacstrap /mnt efibootmgr --noconfirm --needed
-    grub-install --efi-directory=/boot ${DISK}
 fi
 
-# Setup GRUB
-echo "${BLUE}:: ${BWHITE}Setting up ${BlUE}GRUB${BWHITE}...${NC}"
-sed -i "s%GRUB_CMDLINE_LINUX_DEFAULT=\"%GRUB_CMDLINE_LINUX_DEFAULT=\"cryptdevice=UUID=${ENCRYPTED_PARTITION_UUID}:root root=/dev/mapper/root %g" /mnt/etc/default/grub
+function chroot {
+    # Setup GRUB
+    echo "${BLUE}:: ${BWHITE}Setting up ${BlUE}GRUB${BWHITE}...${NC}"
+    grub-install --efi-directory=/boot ${DISK}
+    sed -i "s%GRUB_CMDLINE_LINUX_DEFAULT=\"%GRUB_CMDLINE_LINUX_DEFAULT=\"cryptdevice=UUID=${ENCRYPTED_PARTITION_UUID}:root root=/dev/mapper/root %g" /etc/default/grub
+
+    # Create user
+    groupadd libvirt
+    useradd -mG wheel,libvirt -s /bin/bash $USERNAME
+    echo "${BLUE}:: ${BWHITE}$USERNAME created, home directory created, added to wheel and libvirt group, default shell set to ${BlUE}/bin/bash${NC}"
+    echo "$USERNAME:$PASSWORD" | chpasswd
+    echo "$USERNAME password set"
+
+    # enter $NAME_OF_MACHINE to /etc/hostname
+    echo "${BLUE}:: ${BWHITE}Hostname is set to ${BLUE}${MACHINE_NAME}${NC}"
+    echo $MACHINE_NAME >/etc/hostname
+    sed -i 's/filesystems/encrypt filesystems/g' /etc/mkinitcpio.conf
+    mkinitcpio -P
+}
+export -f chroot
 
 # Chroot into new OS
-arch-chroot /mnt <<EOF
-BWHITE=$'\e[1;37m'
-BLUE=$'\e[0;34m'
-NC=$'\e[0m'
-
-# Create user
-groupadd libvirt
-useradd -mG wheel,libvirt -s /bin/bash $USERNAME
-echo "${BLUE}:: ${BWHITE}$USERNAME created, home directory created, added to wheel and libvirt group, default shell set to ${BlUE}/bin/bash${NC}"
-echo "$USERNAME:$PASSWORD" | chpasswd
-echo "$USERNAME password set"
-
-# enter $NAME_OF_MACHINE to /etc/hostname
-echo "${BLUE}:: ${BWHITE}Hostname is set to ${BLUE}${MACHINE_NAME}${NC}"
-echo $MACHINE_NAME >/etc/hostname
-sed -i 's/filesystems/encrypt filesystems/g' /etc/mkinitcpio.conf
-mkinitcpio -P
-EOF
+arch-chroot /mnt /bin/bash -c "chroot"
 
 echo "${GREEN}:: ${BWHITE}Setup completed!${NC}"
 
