@@ -212,7 +212,7 @@ fi
 
 function chroot {
     # Setup GRUB
-    echo "${BLUE}:: ${BWHITE}Setting up ${BlUE}GRUB${BWHITE}...${NC}"
+    echo "${BLUE}:: ${BWHITE}Setting up ${BLUE}GRUB${BWHITE}...${NC}"
     grub-install --efi-directory=/boot ${DISK}
     sed -i "s%GRUB_CMDLINE_LINUX_DEFAULT=\"%GRUB_CMDLINE_LINUX_DEFAULT=\"cryptdevice=UUID=${ENCRYPTED_PARTITION_UUID}:root root=/dev/mapper/root %g" /etc/default/grub
 
@@ -230,6 +230,16 @@ function chroot {
     mkinitcpio -P
 }
 export -f chroot
+
+# Export vars
+export BLUE
+export BWHITE
+export NC
+export DISK
+export USERNAME
+export PASSWORD
+export MACHINE_NAME
+export ENCRYPTED_PARTITION_UUID
 
 # Chroot into new OS
 arch-chroot /mnt /bin/bash -c "chroot"
