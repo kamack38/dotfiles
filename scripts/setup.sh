@@ -215,6 +215,7 @@ function chroot {
         grub-install --efi-directory=/boot ${DISK}
     fi
     sed -i "s%GRUB_CMDLINE_LINUX_DEFAULT=\"%GRUB_CMDLINE_LINUX_DEFAULT=\"cryptdevice=UUID=${ENCRYPTED_PARTITION_UUID}:root root=/dev/mapper/root %g" /etc/default/grub
+    sed -i "s/^#GRUB_ENABLE_CRYPTODISK=y/GRUB_ENABLE_CRYPTODISK=y/" /etc/default/grub
     grub-mkconfig -o /boot/grub/grub.cfg
 
     echo "${BLUE}:: ${BWHITE}Creating user...${NC}"
