@@ -195,9 +195,8 @@ fi
 
 # Start arch installation
 echo "${BLUE}:: ${BWHITE}Installing prerequisites to ${BlUE}/mnt${BWHITE}...${NC}"
-pacstrap /mnt base linux linux-firmware sudo archlinux-keyring libnewt --noconfirm --needed
+pacstrap /mnt base linux linux-firmware sudo archlinux-keyring libnewt --noconfirm --needed 1>/dev/null
 echo "keyserver hkp://keyserver.ubuntu.com" >>/mnt/etc/pacman.d/gnupg/gpg.conf
-cp -R ${SCRIPT_DIR} /mnt/root/ArchTitus
 cp /etc/pacman.d/mirrorlist /mnt/etc/pacman.d/mirrorlist
 
 genfstab -L /mnt >>/mnt/etc/fstab
