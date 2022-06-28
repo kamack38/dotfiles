@@ -325,7 +325,7 @@ done
 
 # Install pip packages
 echo -e "${GREEN}:: ${BWHITE}Installing ${BLUE}pip${BWHITE} packages${NC}"
-pip install --upgrade dbus-python \
+pip install --no-warn-script-location --upgrade dbus-python \
 	google-api-python-client \
 	google-auth-httplib2 \
 	google-auth-oauthlib \
