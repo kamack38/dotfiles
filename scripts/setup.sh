@@ -148,7 +148,7 @@ echo -n "${LUKS_PASSWORD}" | cryptsetup open ${partition3} root -
 
 # Format luks container
 mapper=/dev/mapper/root
-mkfs.btrfs -L ROOT ${mapper}
+mkfs.btrfs -L root ${mapper}
 
 # Create subvolumes for btrfs
 echo "${BLUE}:: ${BWHITE}Creating BTRFS subvolumes...${NC}"
@@ -208,7 +208,12 @@ if [[ ! -d "/sys/firmware/efi" ]]; then
     grub-install --boot-directory=/mnt/boot ${DISK}
 else
     pacstrap /mnt efibootmgr --noconfirm --needed
+    grub-install --efi-directory=/boot ${DISK}
 fi
+
+# Setup GRUB
+echo "${BLUE}:: ${BWHITE}Setting up ${BlUE}GRUB${BWHITE}...${NC}"
+sed -i "s%GRUB_CMDLINE_LINUX_DEFAULT=\"%GRUB_CMDLINE_LINUX_DEFAULT=\"cryptdevice=UUID=${ENCRYPTED_PARTITION_UUID}:root root=/dev/mapper/root %g" /mnt/etc/default/grub
 
 # Chroot into new OS
 arch-chroot /mnt <<EOF
