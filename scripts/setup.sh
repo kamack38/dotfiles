@@ -195,7 +195,7 @@ fi
 
 # Start arch installation
 echo "${BLUE}:: ${BWHITE}Installing prerequisites to ${BlUE}/mnt${BWHITE}...${NC}"
-pacstrap /mnt base linux linux-firmware sudo archlinux-keyring libnewt --noconfirm --needed 1>/dev/null
+pacstrap /mnt base btrfs-progs linux linux-firmware sudo archlinux-keyring libnewt --noconfirm --needed 1>/dev/null
 echo "keyserver hkp://keyserver.ubuntu.com" >>/mnt/etc/pacman.d/gnupg/gpg.conf
 cp /etc/pacman.d/mirrorlist /mnt/etc/pacman.d/mirrorlist
 
@@ -228,7 +228,6 @@ echo "${BLUE}:: ${BWHITE}Hostname is set to ${BLUE}${MACHINE_NAME}${NC}"
 echo $MACHINE_NAME >/etc/hostname
 sed -i 's/filesystems/encrypt filesystems/g' /etc/mkinitcpio.conf
 mkinitcpio -P
-exit
 EOF
 
 echo "${GREEN}:: ${BWHITE}Setup completed!${NC}"
