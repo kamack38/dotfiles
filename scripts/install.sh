@@ -77,7 +77,7 @@ NORMAL_PROFILE=(
 	"kitty-git"                        # GPU accelerated terminal
 	"polybar-git"                      # Bar
 	"reflector"                        # Pacman mirror sorter
-	"garuda/garuda-hooks"              # Garuda pacman hooks
+	"chaotic-aur/garuda-hooks"         # Garuda pacman hooks
 	"${DEV_PROFILE[@]}"
 )
 
@@ -265,14 +265,14 @@ if [[ $VGA_INFO == *"NVIDIA"* ]]; then
 	echo "${GREEN}:: ${BWHITE}Installing ${BLUE}NVIDIA${BWHITE} drivers${NC}"
 	$HELPER -S --noconfirm --needed --quiet "${NVIDIA_DRIVERS[@]}"
 else
-	echo "${YELLOW}:: ${BLUE}NVIDIA${BWHITE} hardware not detected${NC} -- skipping"
+	echo "${YELLOW}:: ${BLUE}NVIDIA${BWHITE} GPU not detected${NC} -- skipping"
 fi
 
 if [[ $VGA_INFO == *"AMD"* ]]; then
 	echo "${GREEN}:: ${BWHITE}Installing ${BLUE}AMD${BWHITE} drivers${NC}"
 	$HELPER -S --noconfirm --needed --quiet "${AMD_DRIVERS[@]}"
 else
-	echo "${YELLOW}:: ${BLUE}AMD${BWHITE} hardware not detected${NC} -- skipping"
+	echo "${YELLOW}:: ${BLUE}AMD${BWHITE} GPU not detected${NC} -- skipping"
 
 fi
 
@@ -280,7 +280,7 @@ if [[ $VGA_INFO == *"INTEL"* ]]; then
 	echo "${GREEN}:: ${BWHITE}Installing ${BLUE}INTEL${BWHITE} drivers${NC}"
 	$HELPER -S --noconfirm --needed --quiet "${INTEL_DRIVERS[@]}"
 else
-	echo "${YELLOW}:: ${BLUE}INTEL${BWHITE} hardware not detected${NC} -- skipping"
+	echo "${YELLOW}:: ${BLUE}INTEL${BWHITE} GPU not detected${NC} -- skipping"
 fi
 
 # Install packages
