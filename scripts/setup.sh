@@ -40,10 +40,10 @@ echo "${BLUE}:: ${BWHITE}Selected disk is: ${BLUE}${DISK}${NC}"
 # Check if drive is a ssd
 if [[ "$(cat /sys/block/${DISK#/*/}/queue/rotational)" == "0" ]]; then
     echo "${YELLOW}:: ${BWHITE}Selected drive is a ssd...${NC}"
-    MOUNT_OPTIONS="noatime,compress=zstd,ssd,commit=120"
+    MOUNT_OPTIONS="noatime,space_cache=v2,compress=zstd,ssd,commit=120"
 else
     echo "${YELLOW}:: ${BWHITE}Selected drive is NOT a ssd...${NC}"
-    MOUNT_OPTIONS="noatime,compress=zstd,commit=120"
+    MOUNT_OPTIONS="noatime,space_cache=v2,compress=zstd,commit=120"
 fi
 
 # Create luks password (encryption)
