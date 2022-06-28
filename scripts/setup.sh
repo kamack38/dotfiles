@@ -141,14 +141,15 @@ echo -n "${LUKS_PASSWORD}" | cryptsetup -v luksFormat ${partition3} -
 
 # Open luks container and ROOT will be place holder
 echo "${BLUE}:: ${BWHITE}Opening root partition...${NC}"
-echo -n "${LUKS_PASSWORD}" | cryptsetup open ${partition3} ROOT -
+echo -n "${LUKS_PASSWORD}" | cryptsetup open ${partition3} root -
 
 # Format luks container
-mkfs.btrfs -L ROOT /dev/mapper/root
+mapper=/dev/mapper/root
+mkfs.btrfs -L ROOT ${mapper}
 
 # Create subvolumes for btrfs
 echo "${BLUE}:: ${BWHITE}Creating BTRFS subvolumes...${NC}"
-mount /dev/mapper/root /mnt
+mount ${mapper} /mnt
 
 btrfs subvolume create /mnt/@
 btrfs subvolume create /mnt/@home
@@ -159,16 +160,18 @@ btrfs subvolume create /mnt/@.snapshots
 # unmount root to remount with subvolume
 umount /mnt
 
+echo "${BLUE}:: ${BWHITE}Mounting @ subvolume...${NC}"
+mount -o ${MOUNT_OPTIONS},subvol=@ ${mapper} /mnt
+
 echo "${BLUE}:: ${BWHITE}Creating directories (home, var, tmp, .snapshots)...${NC}"
 mkdir -p /mnt/{home,var,tmp,.snapshots}
 
 # Mount all btrfs subvolumes
-echo "${BLUE}:: ${BWHITE}Mounting btrfs subvolumes...${NC}"
-mount -o ${MOUNT_OPTIONS},subvol=@ ${partition3} /mnt
-mount -o ${MOUNT_OPTIONS},subvol=@home ${partition3} /mnt/home
-mount -o ${MOUNT_OPTIONS},subvol=@tmp ${partition3} /mnt/tmp
-mount -o ${MOUNT_OPTIONS},subvol=@var ${partition3} /mnt/var
-mount -o ${MOUNT_OPTIONS},subvol=@.snapshots ${partition3} /mnt/.snapshots
+echo "${BLUE}:: ${BWHITE}Mounting other btrfs subvolumes...${NC}"
+mount -o ${MOUNT_OPTIONS},subvol=@home ${mapper} /mnt/home
+mount -o ${MOUNT_OPTIONS},subvol=@tmp ${mapper} /mnt/tmp
+mount -o ${MOUNT_OPTIONS},subvol=@var ${mapper} /mnt/var
+mount -o ${MOUNT_OPTIONS},subvol=@.snapshots ${mapper} /mnt/.snapshots
 
 ENCRYPTED_PARTITION_UUID=$(blkid -s UUID -o value ${partition3})
 
