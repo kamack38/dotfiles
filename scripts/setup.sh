@@ -131,17 +131,17 @@ else
     partition3=${DISK}3
 fi
 
-echo "${BLUE}:: ${BWHITE}Creating partitions...${NC}"
 # Create boot partition
+echo "${BLUE}:: ${BWHITE}Creating EFI partition...${NC}"
 mkfs.vfat -F32 -n "EFIBOOT" ${partition2}
 
 # Enter luks password to cryptsetup and format root partition
-echo "${BLUE}:: ${BWHITE}Encrypting partition...${NC}"
+echo "${BLUE}:: ${BWHITE}Encrypting root partition...${NC}"
 echo -n "${LUKS_PASSWORD}" | cryptsetup -v luksFormat ${partition3} -
 
 # Open luks container and ROOT will be place holder
-echo "${BLUE}:: ${BWHITE}Opening partition...${NC}"
-echo -n "${LUKS_PASSWORD}" | cryptsetup luksOpen ${partition3} root -
+echo "${BLUE}:: ${BWHITE}Opening root partition...${NC}"
+echo -n "${LUKS_PASSWORD}" | cryptsetup open ${partition3} root -
 
 # Format luks container
 mkfs.btrfs /dev/mapper/root
@@ -158,7 +158,8 @@ btrfs subvolume create /mnt/@.snapshots
 
 # unmount root to remount with subvolume
 umount /mnt
-# make directories home, .snapshots, var, tmp
+
+echo "${BLUE}:: ${BWHITE}Creating directories (home, var, tmp, .snapshots)...${NC}"
 mkdir -p /mnt/{home,var,tmp,.snapshots}
 
 # Mount all btrfs subvolumes
