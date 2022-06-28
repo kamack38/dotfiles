@@ -103,7 +103,7 @@ pacman -S --noconfirm --needed gptfdisk btrfs-progs glibc
 # Make sure everything is unmounted when starting
 if grep -qs '/mnt' /proc/mounts; then
     echo "${YELLOW}:: ${BLUE}/mnt${BWHITE} is mounted${NC} -- unmounting"
-    umount -A --recursive /mnt
+    umount -AR /mnt
 else
     echo "${BLUE}:: ${BLUE}/mnt${BWHITE} is not mounted${NC} -- skipping"
 fi
@@ -141,14 +141,14 @@ echo -n "${LUKS_PASSWORD}" | cryptsetup -v luksFormat ${partition3} -
 
 # Open luks container and ROOT will be place holder
 echo "${BLUE}:: ${BWHITE}Opening root partition...${NC}"
-echo -n "${LUKS_PASSWORD}" | cryptsetup open ${partition3} root -
+echo -n "${LUKS_PASSWORD}" | cryptsetup open ${partition3} ROOT -
 
 # Format luks container
-mkfs.btrfs /dev/mapper/root
+mkfs.btrfs -L ROOT /dev/mapper/root
 
 # Create subvolumes for btrfs
 echo "${BLUE}:: ${BWHITE}Creating BTRFS subvolumes...${NC}"
-mount -t btrfs ${partition3} /mnt
+mount /dev/mapper/root /mnt
 
 btrfs subvolume create /mnt/@
 btrfs subvolume create /mnt/@home
@@ -164,14 +164,11 @@ mkdir -p /mnt/{home,var,tmp,.snapshots}
 
 # Mount all btrfs subvolumes
 echo "${BLUE}:: ${BWHITE}Mounting btrfs subvolumes...${NC}"
+mount -o ${MOUNT_OPTIONS},subvol=@ ${partition3} /mnt
 mount -o ${MOUNT_OPTIONS},subvol=@home ${partition3} /mnt/home
 mount -o ${MOUNT_OPTIONS},subvol=@tmp ${partition3} /mnt/tmp
 mount -o ${MOUNT_OPTIONS},subvol=@var ${partition3} /mnt/var
 mount -o ${MOUNT_OPTIONS},subvol=@.snapshots ${partition3} /mnt/.snapshots
-
-# Mount @ subvolume
-mount -o ${MOUNT_OPTIONS},subvol=@ ${partition3} /mnt
-mountallsubvol
 
 ENCRYPTED_PARTITION_UUID=$(blkid -s UUID -o value ${partition3})
 
