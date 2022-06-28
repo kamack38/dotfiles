@@ -90,8 +90,11 @@ echo "${BLUE}:: ${BWHITE}Enabling time sync...${NC}"
 timedatectl set-ntp true
 
 # Setup faster mirrors
-echo "${BLUE}:: ${BWHITE}Setting up faster mirrors using ${BLUE}reflector${BWHITE}...${NC}"
-reflector -a 48 -f 10 -l 20 --sort rate --save /etc/pacman.d/mirrorlist
+read -rp "${BLUE}:: ${BWHITE}Do you want to setup faster mirrors? [Y/n]${NC}: " fonts_setup
+if [[ $fonts_setup != n* ]]; then
+    echo "${BLUE}:: ${BWHITE}Setting up faster mirrors using ${BLUE}reflector${BWHITE}...${NC}"
+    reflector -a 48 -f 10 -l 20 --sort rate --save /etc/pacman.d/mirrorlist
+fi
 
 # Create mount directory
 mkdir -p /mnt
