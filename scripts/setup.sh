@@ -228,6 +228,11 @@ function chroot {
     systemctl enable NetworkManager.service
     systemctl enable ModemManager.service
 
+    # Add sudo rights
+    echo "${BLUE}:: ${BWHITE}Adding ${BLUE}wheel${BWHITE} group sudo rights...${NC}"
+    sed -i 's/^# %wheel ALL=(ALL) ALL/%wheel ALL=(ALL) ALL/' /etc/sudoers
+    sed -i 's/^# %wheel ALL=(ALL:ALL) ALL/%wheel ALL=(ALL:ALL) ALL/' /etc/sudoers
+
     # enter $NAME_OF_MACHINE to /etc/hostname
     echo "${BLUE}:: ${BWHITE}Hostname is set to ${BLUE}${MACHINE_NAME}${NC}"
     echo $MACHINE_NAME >/etc/hostname
