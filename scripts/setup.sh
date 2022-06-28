@@ -100,10 +100,10 @@ mkdir -p /mnt
 echo "${BLUE}:: ${BWHITE}Installing prerequisites...${NC}"
 pacman -S --noconfirm --needed gptfdisk btrfs-progs glibc
 
-# Make sure everything is unmounted starting
+# Make sure everything is unmounted when starting
 if grep -qs '/mnt' /proc/mounts; then
     echo "${YELLOW}:: ${BLUE}/mnt${BWHITE} is mounted${NC} -- unmounting"
-    umount -A --recursive /mnt || /bin/true
+    umount -A --recursive /mnt
 else
     echo "${BLUE}:: ${BLUE}/mnt${BWHITE} is not mounted${NC} -- skipping"
 fi
@@ -120,7 +120,7 @@ if [[ ! -d "/sys/firmware/efi" ]]; then
     sgdisk -A 1:set:2 ${DISK}
 fi
 echo "${BLUE}:: ${BWHITE}Rereading partition table: ${NC}"
-partprobe ${DISK} # reread partition table to ensure it is correct
+partprobe ${DISK}
 
 echo "${BLUE}:: ${BWHITE}Naming partitions...${NC}"
 if [[ "${DISK}" =~ "nvme" ]]; then
@@ -139,7 +139,7 @@ mkfs.vfat -F32 -n "EFIBOOT" ${partition2}
 echo -n "${LUKS_PASSWORD}" | cryptsetup -v luksFormat ${partition3} -
 
 # Open luks container and ROOT will be place holder
-echo -n "${LUKS_PASSWORD}" | cryptsetup open ${partition3} ROOT -
+echo -n "${LUKS_PASSWORD}" | cryptsetup luksOpen ${partition3} ROOT -
 
 # Format luks container
 mkfs.btrfs -L ROOT ${partition3}
