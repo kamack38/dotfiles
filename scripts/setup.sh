@@ -84,6 +84,11 @@ done
 
 read -rep "${YELLOW}:: ${BWHITE}Please enter your hostname: ${NC}" MACHINE_NAME
 
+# Swap
+TOTAL_RAM=$(echo "scale=1; $(cat /proc/meminfo | grep -i 'memtotal' | grep -o '[[:digit:]]*')/1000000" | bc)
+echo "${YELLOW}:: ${BWHITE}You have ${TOTAL_RAM}GB of RAM${NC}"
+read -rep "${YELLOW}:: ${BWHITE}Do you wish do create 8GB swap? [Y/n]${NC}" SWAP
+
 # Enable time sync
 echo "${BLUE}:: ${BWHITE}Enabling time sync...${NC}"
 timedatectl set-ntp true
@@ -209,6 +214,20 @@ else
     pacstrap /mnt efibootmgr --noconfirm --needed
 fi
 
+# Swap
+if [[ $SWAP != n* ]]; then
+    echo "${BLUE}:: ${BWHITE}Creating swap...${NC}"
+    mkdir -p /mnt/opt/swap  # make a dir that we can apply NOCOW to to make it btrfs-friendly.
+    chattr +C /mnt/opt/swap # apply NOCOW, btrfs needs that.
+    dd if=/dev/zero of=/mnt/opt/swap/swapfile bs=1M count=8000 status=progress
+    chmod 600 /mnt/opt/swap/swapfile
+    chown root /mnt/opt/swap/swapfile
+    mkswap /mnt/opt/swap/swapfile
+    swapon /mnt/opt/swap/swapfile
+    echo "/opt/swap/swapfile	none	swap	sw	0	0" >>/mnt/etc/fstab
+
+fi
+
 function chroot {
     echo "${BLUE}:: ${BWHITE}Setting up ${BLUE}GRUB${BWHITE}...${NC}"
     if [[ -d "/sys/firmware/efi" ]]; then
@@ -216,6 +235,13 @@ function chroot {
     fi
     sed -i "s%GRUB_CMDLINE_LINUX_DEFAULT=\"%GRUB_CMDLINE_LINUX_DEFAULT=\"cryptdevice=UUID=${ENCRYPTED_PARTITION_UUID}:root root=/dev/mapper/root %g" /etc/default/grub
     sed -i "s/^#GRUB_ENABLE_CRYPTODISK=y/GRUB_ENABLE_CRYPTODISK=y/" /etc/default/grub
+
+    if [[ $SWAP != n* ]]; then
+        echo "${BLUE}:: ${BWHITE}Adding hibernation...${NC}"
+        sed -i "s,\(^HOOKS=\".*\)filesystems\(.*\"\),\1filesystems resume\2," /etc/mkinitcpio.conf
+        sed -i "s,\(GRUB_CMDLINE_LINUX_DEFAULT=\".*\)\(.*\"),\1resume=/dev/mapper/root\2" /etc/default/grub
+    fi
+
     grub-mkconfig -o /boot/grub/grub.cfg
 
     echo "${BLUE}:: ${BWHITE}Creating user...${NC}"
