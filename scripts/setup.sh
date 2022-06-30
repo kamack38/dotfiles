@@ -35,6 +35,7 @@ echo "${BLUE}:: ${BWHITE}Select disk to install system on.${NC}"
 echo "${YELLOW}:: ${BWHITE}All data will be ${RED}ERASED${BWHITE}!${NC}"
 DISK=$(lsblk -n --output TYPE,KNAME,SIZE | awk '$1=="disk"{print "/dev/"$2"|"$3}' | fzf --height=20% --layout=reverse)
 DISK=${DISK%|*}
+DISK_SIZE=$(lsblk -n --output SIZE ${DISK} | head -n1)
 echo "${BLUE}:: ${BWHITE}Selected disk is: ${BLUE}${DISK}${NC}"
 
 # Check if drive is a ssd
@@ -45,6 +46,14 @@ else
     echo "${YELLOW}:: ${BWHITE}Selected drive is NOT a ssd...${NC}"
     MOUNT_OPTIONS="noatime,space_cache=v2,compress=zstd,commit=120"
 fi
+
+# Partition size
+echo "${YELLOW}:: ${BWHITE}Selected disk has size of ${DISK_SIZE}GB${NC}"
+
+# Swap
+TOTAL_RAM=$(echo "scale=1; $(cat /proc/meminfo | grep -i 'memtotal' | grep -o '[[:digit:]]*')/1000000" | bc)
+echo "${YELLOW}:: ${BWHITE}You have ${TOTAL_RAM}GB of RAM${NC}"
+read -rep "${YELLOW}:: ${BWHITE}Do you wish to create 8GB swap? [Y/n]${NC}" SWAP
 
 # Create luks password (encryption)
 while true; do
@@ -83,11 +92,6 @@ while true; do
 done
 
 read -rep "${YELLOW}:: ${BWHITE}Please enter your hostname: ${NC}" MACHINE_NAME
-
-# Swap
-TOTAL_RAM=$(echo "scale=1; $(cat /proc/meminfo | grep -i 'memtotal' | grep -o '[[:digit:]]*')/1000000" | bc)
-echo "${YELLOW}:: ${BWHITE}You have ${TOTAL_RAM}GB of RAM${NC}"
-read -rep "${YELLOW}:: ${BWHITE}Do you wish do create 8GB swap? [Y/n]${NC}" SWAP
 
 # Enable time sync
 echo "${BLUE}:: ${BWHITE}Enabling time sync...${NC}"
