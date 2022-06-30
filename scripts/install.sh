@@ -92,7 +92,13 @@ GAMING_PROFILE=(
 )
 
 SOUND_PROFILE=(
-	'garuda/alsa-support'
+	"pipewire"
+	"pipewire-alsa"
+	"pipewire-jack"
+	"pipewire-pulse"
+	"gst-plugin-pipewire"
+	"libpulse"
+	"wireplumber"
 )
 
 BLUETOOTH_PROFILE=("bluetooth-support")
@@ -305,8 +311,9 @@ if [[ $additional_packages == *"2"* ]]; then
 fi
 if [[ $additional_packages == *"3"* ]]; then
 	echo "${RED}:: ${BWHITE}This feature has not been implemented yet${NC}"
-	# echo "${BLUE}:: ${BWHITE}Adding ${BLUE}sound${BWHITE} support...${NC}"
-	# $HELPER -S --noconfirm --needed --quiet  "${SOUND_PROFILE[@]}"
+	echo "${BLUE}:: ${BWHITE}Adding ${BLUE}sound${BWHITE} support...${NC}"
+	$HELPER -S --noconfirm --needed --quiet "${SOUND_PROFILE[@]}"
+	systemctl enable --user pipewire-pulse.service
 fi
 if [[ $additional_packages == *"4"* ]]; then
 	echo "${BLUE}:: ${BWHITE}Adding ${BLUE}bluetooth${BWHITE} support...${NC}"

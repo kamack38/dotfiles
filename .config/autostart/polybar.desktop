@@ -1,6 +1,6 @@
 [Desktop Entry]
 Type=Application
-Exec=bash $HOME/.config/polybar/launch.sh
+Exec=$HOME/.config/polybar/launch.sh
 Icon=dialog-scripts
 Hidden=false
 Name=Polybar
