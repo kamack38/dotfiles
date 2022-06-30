@@ -92,13 +92,17 @@ GAMING_PROFILE=(
 )
 
 SOUND_PROFILE=(
-	"pipewire"
-	"pipewire-alsa"
-	"pipewire-jack"
-	"pipewire-pulse"
-	"gst-plugin-pipewire"
-	"libpulse"
-	"wireplumber"
+	"pipewire"            # Low-latency audio/video router and processor
+	"pipewire-alsa"       # Low-latency audio/video router and processor - ALSA configuration
+	"pipewire-jack"       # Low-latency audio/video router and processor - JACK support
+	"pipewire-pulse"      # Low-latency audio/video router and processor - PulseAudio replacement
+	"pipewire-v4l2"       # Low-latency audio/video router and processor - V4L2 interceptor
+	"pipewire-zeroconf"   # Low-latency audio/video router and processor - Zeroconf support
+	"gst-plugin-pipewire" # Multimedia graph framework - pipewire plugin
+	"libpulse"            # A featureful, general-purpose sound server (client library)
+	"wireplumber"         # Session / policy manager implementation for PipeWire
+	"sof-firmware"        # Sound Open Firmware
+	"realtime-privileges" # Realtime privileges for users
 )
 
 BLUETOOTH_PROFILE=("bluetooth-support")
@@ -314,6 +318,15 @@ if [[ $additional_packages == *"3"* ]]; then
 	echo "${BLUE}:: ${BWHITE}Adding ${BLUE}sound${BWHITE} support...${NC}"
 	$HELPER -S --noconfirm --needed --quiet "${SOUND_PROFILE[@]}"
 	systemctl enable --user pipewire-pulse.service
+
+	# Create realtime group
+	getent group "realtime" &>/dev/null || groupadd -r realtime
+
+	# Add all users to group realtime
+	echo "${BLUE}:: ${BWHITE}Adding users to realtime group...${NC}"
+	for ID in $(cat /etc/passwd | grep /home | cut -d ':' -f1); do
+		(sudo usermod -aG realtime $ID)
+	done
 fi
 if [[ $additional_packages == *"4"* ]]; then
 	echo "${BLUE}:: ${BWHITE}Adding ${BLUE}bluetooth${BWHITE} support...${NC}"
