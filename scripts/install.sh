@@ -77,6 +77,7 @@ NORMAL_PROFILE=(
 	"kitty-git"                        # GPU accelerated terminal
 	"polybar-git"                      # Bar
 	"reflector"                        # Pacman mirror sorter
+	"pigz"                             # Parallel implementation of the gzip file compressor
 	"chaotic-aur/garuda-hooks"         # Garuda pacman hooks
 	"${DEV_PROFILE[@]}"
 )
