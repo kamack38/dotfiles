@@ -7,7 +7,7 @@ GREEN=$'\e[0;32m'
 YELLOW=$'\e[0;33m'
 NC=$'\e[0m' # No Colour
 
-function archcraft {
+archcraft() {
 	if grep -Fxq "[archcraft]" /etc/pacman.conf; then
 		echo "${YELLOW}:: ${BLUE}archcraft ${BWHITE}repo already exists${NC} -- skipping"
 	else
@@ -22,7 +22,7 @@ EOT
 	fi
 }
 
-function chaotic_aur {
+chaotic_aur() {
 	if grep -Fxq "[chaotic-aur]" /etc/pacman.conf; then
 		echo "${YELLOW}:: ${BLUE}chaotic-aur ${BWHITE}repo already exists${NC} -- skipping"
 	else
@@ -38,7 +38,7 @@ EOT
 	fi
 }
 
-function garuda {
+garuda() {
 	if grep -Fxq "[garuda]" /etc/pacman.conf; then
 		echo "${YELLOW}:: ${BLUE}garuda ${BWHITE}repo already exists${NC} -- skipping"
 	else
@@ -51,7 +51,7 @@ EOT
 	fi
 }
 
-function multilib {
+multilib() {
 	if grep -Fxq "[multilib]" /etc/pacman.conf; then
 		echo "${YELLOW}:: ${BLUE}multilib ${BWHITE}repo already exists${NC} -- skipping"
 	else
@@ -64,7 +64,7 @@ EOT
 	fi
 }
 
-function blackarch {
+blackarch() {
 	if grep -Fxq "[blackarch]" /etc/pacman.conf; then
 		echo "${YELLOW}:: ${BLUE}blackarch ${BWHITE}repo already exists${NC} -- skipping"
 	else
@@ -73,7 +73,7 @@ function blackarch {
 	fi
 }
 
-function archstrike {
+archstrike() {
 	if grep -Fxq "[archstrike]" /etc/pacman.conf; then
 		echo "${YELLOW}:: ${BLUE}archstrike ${BWHITE}repo already exists${NC} -- skipping"
 	else
@@ -87,5 +87,17 @@ EOT
 		sudo pacman-key --lsign-key 9D5F1C051D146843CDA4858BDE64825E7CBC0D51
 		sudo pacman -Sy archstrike-keyring archstrike-mirrorlist --noconfirm
 		sudo sed -i 's#Server = https://mirror.archstrike.org/$arch/$repo#Include = /etc/pacman.d/archstrike-mirrorlist#' /etc/pacman.conf
+	fi
+}
+
+asusctl() {
+	if grep -Fxq "[g14]" /etc/pacman.conf; then
+		echo "g14 repo already exists"
+	else
+		sudo tee -a /etc/pacman.conf >/dev/null <<EOT
+[g14]
+SigLevel = DatabaseNever Optional TrustAll
+Server = https://arch.asus-linux.org
+EOT
 	fi
 }
