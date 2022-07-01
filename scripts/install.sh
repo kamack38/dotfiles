@@ -233,7 +233,7 @@ if ! command -v $HELPER &>/dev/null; then
 	git clone https://aur.archlinux.org/$HELPER.git /tmp/$HELPER
 	(cd /tmp/$HELPER/ && makepkg --noconfirm -si)
 else
-	echo "${GREEN}:: ${BLUE}${HELPER}${BWHITE} is already installedR installed${NC} -- skipping"
+	echo "${GREEN}:: ${BLUE}${HELPER}${BWHITE} is already installed${NC} -- skipping"
 fi
 
 # Install dotfiles
@@ -468,9 +468,22 @@ if [[ $razer_script == y* ]]; then
 	sudo gpasswd -a $CURRENT_USER plugdev
 fi
 
-read -rp "${RED}:: ${BWHITE}Do you want to reboot? [y/N]${NC}: " reboot_prompt
+read -rp "${BLUE}:: ${BWHITE}Do you want to harden your system? [y/N]${NC}: " harden
 
-if [[ $reboot_prompt == y* ]]; then
+if [[ $harden == y* ]]; then
+	echo "${BLUE}:: ${BWHITE}Installing security packages...${NC}"
+	$HELPER -S --noconfirm --needed --quiet lynis rkhunter
+
+	SSH_PATH="/etc/ssh/sshd_config"
+	if [[ -f "$SSH_PATH" ]]; then
+		echo "${BLUE}:: ${BWHITE}Securing ${BLUE}${SSH_PATH}${BWHITE} permissions...${NC}"
+		sudo chmod 600 $SSH_PATH
+	fi
+fi
+
+read -rp "${RED}:: ${BWHITE}Do you want to reboot? [Y/n]${NC}: " reboot_prompt
+
+if [[ $reboot_prompt == n* ]]; then
 	echo "${YELLOW}:: ${BWHITE}Rebooting...${NC}"
 	systemctl reboot
 fi
