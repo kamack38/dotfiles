@@ -1,8 +1,8 @@
 [Desktop Entry]
 Type=Application
-Exec=$HOME/.config/polybar/launch.sh
+Exec=polybar km38-top
 Icon=dialog-scripts
 Hidden=false
-Name=Polybar
-Comment=Run polybar start script
+Name=Polybar Top Bar
+Comment=Run polybar top bar
 X-KDE-AutostartScript=true

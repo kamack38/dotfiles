@@ -333,11 +333,11 @@ toggle do not disturb=none,,Toggle do not disturb
 [plasmawindowed]
 _k_friendly_name=plasmawindowed
 clear-history=none,none,Clear Clipboard History
-clipboard_action=none,Ctrl+Alt+X,Enable Clipboard Actions
+clipboard_action=none,Meta+Ctrl+X,Automatic Action Popup Menu
 cycleNextAction=none,none,Next History Item
 cyclePrevAction=none,none,Previous History Item
 edit_clipboard=none,none,Edit Contents…
-repeat_action=none,Ctrl+Alt+R,Manually Invoke Action on Current Clipboard
+repeat_action=none,Meta+Ctrl+R,Manually Invoke Action on Current Clipboard
 show-barcode=none,none,Show Barcode…
 show-on-mouse-pos=none,Meta+V,Open Klipper at Mouse Position
 

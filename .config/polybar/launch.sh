@@ -13,7 +13,7 @@ while getopts 'rd:' OPTION; do
         echo "Reload is enabled!"
         ;;
     ?)
-        echo "script usage: $(basename \$0) [-r] [-d <error|warning|notice|info|trace>]" >&2
+        echo "script usage: $(basename $0) [-r] [-d <error|warning|notice|info|trace>]" >&2
         exit 1
         ;;
     esac

@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Exec=polybar km38-btm
+Icon=dialog-scripts
+Hidden=false
+Name=Polybar Bottom Bar
+Comment=Run polybar bottom bar
+X-KDE-AutostartScript=true
