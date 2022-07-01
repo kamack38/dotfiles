@@ -452,11 +452,20 @@ if [[ $asus_script == y* ]]; then
 	bash $HOME/scripts/asus.sh
 fi
 
-read -rp "${BLUE}:: ${BWHITE}Do you want to run script for razer hardware? [y/N]${NC}: " razer_script
+read -rp "${BLUE}:: ${BWHITE}Do you want to add support for razer hardware? [y/N]${NC}: " razer_script
+
+RAZER_PACKAGES=(
+	"polychromatic-git"
+	"openrazer-meta-git"
+)
 
 if [[ $razer_script == y* ]]; then
-	echo "${BLUE}:: ${BWHITE}Running razer script...${NC}"
-	bash $HOME/scripts/razer.sh
+	echo "${BLUE}:: ${BWHITE}Installing razer drivers & RGB software...${NC}"
+	$HELPER -S --noconfirm --needed --quiet "${RAZER_PACKAGES[@]}"
+
+	# Add current user to plugdev group
+	CURRENT_USER="$USER"
+	sudo gpasswd -a $CURRENT_USER plugdev
 fi
 
 read -rp "${RED}:: ${BWHITE}Do you want to reboot? [y/N]${NC}: " reboot_prompt
