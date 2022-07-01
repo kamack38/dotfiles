@@ -313,6 +313,13 @@ fi
 if [[ $additional_packages == *"2"* ]]; then
 	echo "${BLUE}:: ${BWHITE}Adding ${BLUE}virtual machine${BWHITE} support...${NC}"
 	$HELPER -S --noconfirm --needed --quiet "${VM_PROFILE[@]}"
+
+	# Enable services
+	sudo systemctl enable --now libvirtd.service
+
+	# Autostart bridge
+	sudo virsh net-autostart default
+	sudo virsh net-start default
 fi
 if [[ $additional_packages == *"3"* ]]; then
 	echo "${BLUE}:: ${BWHITE}Adding ${BLUE}sound${BWHITE} support...${NC}"
