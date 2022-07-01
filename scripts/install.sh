@@ -315,13 +315,8 @@ if [[ $additional_packages == *"2"* ]]; then
 	$HELPER -S --noconfirm --needed --quiet "${VM_PROFILE[@]}"
 fi
 if [[ $additional_packages == *"3"* ]]; then
-	echo "${RED}:: ${BWHITE}This feature has not been implemented yet${NC}"
 	echo "${BLUE}:: ${BWHITE}Adding ${BLUE}sound${BWHITE} support...${NC}"
-	if [[ $($HELPER -Qi jack | grep 'Name' | awk '{print $3}') == "jack" ]]; then
-		echo "${YELLOW}:: ${BWHITE}Removing conflicts...${NC}"
-		$HELPER -Rns jack
-	fi
-	$HELPER -S --noconfirm --needed --quiet "${SOUND_PROFILE[@]}"
+	yes | $HELPER -S --needed --quiet "${SOUND_PROFILE[@]}"
 	systemctl enable --user pipewire-pulse.service
 
 	# Create realtime group
