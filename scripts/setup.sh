@@ -180,7 +180,7 @@ mkdir -p /mnt/{home,var,tmp,.snapshots}
 # Mount all btrfs subvolumes
 echo "${BLUE}:: ${BWHITE}Mounting other btrfs subvolumes...${NC}"
 mount -o ${MOUNT_OPTIONS},subvol=@home ${mapper} /mnt/home
-mount -o ${MOUNT_OPTIONS},subvol=@tmp ${mapper} /mnt/tmp
+mount -o ${MOUNT_OPTIONS},nodev,nosuid,noexec,subvol=@tmp ${mapper} /mnt/tmp
 mount -o ${MOUNT_OPTIONS},subvol=@var ${mapper} /mnt/var
 mount -o ${MOUNT_OPTIONS},subvol=@.snapshots ${mapper} /mnt/.snapshots
 
