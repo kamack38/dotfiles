@@ -470,9 +470,15 @@ fi
 
 read -rp "${BLUE}:: ${BWHITE}Do you want to harden your system? [y/N]${NC}: " harden
 
+SECURITY_PACKAGES=(
+	"lynis"
+	"rkhunter"
+	"libpwquality"
+)
+
 if [[ $harden == y* ]]; then
 	echo "${BLUE}:: ${BWHITE}Installing security packages...${NC}"
-	$HELPER -S --noconfirm --needed --quiet lynis rkhunter
+	$HELPER -S --noconfirm --needed --quiet "${SECURITY_PACKAGES[@]}"
 
 	SSH_PATH="/etc/ssh/sshd_config"
 	if [[ -f "$SSH_PATH" ]]; then
