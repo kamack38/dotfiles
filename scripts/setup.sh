@@ -201,9 +201,24 @@ if ! grep -qs '/mnt' /proc/mounts; then
     reboot now
 fi
 
+PREREQUISITES=(
+    "base"
+    "btrfs-progs"
+    "linux"
+    "linux-firmware"
+    "sudo"
+    "grub"
+    "grub-btrfs"
+    "archlinux-keyring"
+    "libnewt"
+    "modemmanager"
+    "networkmanager"
+    "dhclient"
+)
+
 # Start arch installation
 echo "${BLUE}:: ${BWHITE}Installing prerequisites to ${BLUE}/mnt${BWHITE}...${NC}"
-pacstrap /mnt base btrfs-progs linux linux-firmware sudo grub grub-btrfs archlinux-keyring libnewt modemmanager networkmanager dhclient --noconfirm --needed 1>/dev/null
+pacstrap /mnt "${PREREQUISITES[@]}" --noconfirm --needed 1>/dev/null
 echo "keyserver hkp://keyserver.ubuntu.com" >>/mnt/etc/pacman.d/gnupg/gpg.conf
 cp /etc/pacman.d/mirrorlist /mnt/etc/pacman.d/mirrorlist
 
