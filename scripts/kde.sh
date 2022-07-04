@@ -57,18 +57,6 @@ sudo $HELPER -Sy
 echo "${BLUE}:: ${BWHITE}Installing KDE themes...${NC}"
 $HELPER -S --noconfirm --needed --quiet "${CUSTOMIZATION_PACKAGES[@]}"
 
-echo "${BLUE}:: ${BWHITE}Disabling mouse acceleration...${NC}"
-sudo touch /etc/X11/xorg.conf.d/50-mouse-acceleration.conf
-sudo tee /etc/X11/xorg.conf.d/50-mouse-acceleration.conf >/dev/null <<EOT
-Section "InputClass"
-    Identifier "My Mouse"
-    MatchIsPointer "yes"
-    Option "AccelerationProfile" "-1"
-    Option "AccelerationScheme" "none"
-    Option "AccelSpeed" "-1"
-EndSection
-EOT
-
 function installKDEPackage {
 	# $1 - package id
 	pkgUrl=$(curl -sL "https://store.kde.org/p/$1/loadFiles" | jq -r '.files[0].url' | sed 's#%3A#:#g' | sed 's#%2F#/#g')

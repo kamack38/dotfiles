@@ -521,6 +521,21 @@ if [[ $(pacman -Q grub) ]]; then
 	fi
 fi
 
+if [[ $(pacman -Q xorg-server) ]]; then
+	echo "${YELLOW}:: ${BWHITE}Xorg server detected${NC}"
+	echo "${BLUE}:: ${BWHITE}Disabling mouse acceleration...${NC}"
+	sudo touch /etc/X11/xorg.conf.d/50-mouse-acceleration.conf
+	sudo tee /etc/X11/xorg.conf.d/50-mouse-acceleration.conf >/dev/null <<EOT
+Section "InputClass"
+    Identifier "My Mouse"
+    MatchIsPointer "yes"
+    Option "AccelerationProfile" "-1"
+    Option "AccelerationScheme" "none"
+    Option "AccelSpeed" "-1"
+EndSection
+EOT
+fi
+
 read -rp "${BLUE}:: ${BWHITE}Do you want to setup additional programming fonts? [Y/n]${NC}: " fonts_setup
 
 if [[ $fonts_setup != n* ]]; then
