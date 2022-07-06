@@ -51,6 +51,7 @@ export GTK2_RC_FILES="$XDG_CONFIG_HOME/gtk-2.0/gtkrc"
 export XINITRC="$XDG_CONFIG_HOME/X11/xinitrc"
 export _JAVA_OPTIONS=-Djava.util.prefs.userRoot="$XDG_CONFIG_HOME/java"
 export FFMPEG_DATADIR="$XDG_CONFIG_HOME/ffmpeg"
+export PYTHONSTARTUP="$XDG_CONFIG_HOME/python/pythonrc"
 
 # Cache
 export LESSHISTFILE="$XDG_CACHE_HOME/less/history"

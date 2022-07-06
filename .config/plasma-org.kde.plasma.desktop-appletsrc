@@ -163,7 +163,7 @@ immutability=1
 plugin=org.kde.plasma.notifications
 
 [Containments][53][Applets][58][Configuration]
-PreloadWeight=48
+PreloadWeight=53
 
 [Containments][53][Applets][59]
 immutability=1
@@ -205,7 +205,7 @@ immutability=1
 plugin=org.kde.plasma.networkmanagement
 
 [Containments][53][Applets][62][Configuration]
-PreloadWeight=64
+PreloadWeight=74
 
 [Containments][53][Applets][63]
 immutability=1

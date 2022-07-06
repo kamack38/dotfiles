@@ -18,7 +18,7 @@
     gconfig = !git config --global
     commits = !git log --all --graph --pretty=format:'%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
     unstage = restore --staged
-    clean-branches = remote prune origin
+    clean-remotes = remote prune origin
     s = status -s
     u = add -u
     b = branch
