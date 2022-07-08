@@ -10,6 +10,9 @@
   "[cpp]": {
     "editor.defaultFormatter": "ms-vscode.cpptools"
   },
+  "[dockerfile]": {
+    "editor.defaultFormatter": "ms-azuretools.vscode-docker"
+  },
   "[javascript][typescript][typescriptreact][react][json][html][css][scss][jsx][markdown][yaml][json][jsonc][dockercompose]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
@@ -23,6 +26,7 @@
   "[lua]": {
     "editor.defaultFormatter": "sumneko.lua"
   },
+  "cSpell.enableFiletypes": ["ini"],
   "cSpell.language": "en-GB,pl",
   "cSpell.userWords": [
     "alacritty",
@@ -50,10 +54,6 @@
     "webdev",
     "webp"
   ],
-  "editor.codeActionsOnSave": {
-    "source.fixAll": true,
-    "source.organizeImports": true
-  },
   "code-runner.executorMap": {
     "FortranFreeForm": "cd $dir && gfortran $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
     "ahk": "autohotkey",
@@ -116,6 +116,10 @@
   "diffEditor.wordWrap": "on",
   "discord.idleTimeout": 1200,
   "editor.bracketPairColorization.enabled": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll": true,
+    "source.organizeImports": true
+  },
   "editor.cursorBlinking": "smooth",
   "editor.cursorSmoothCaretAnimation": true,
   "editor.cursorStyle": "line",
@@ -202,12 +206,14 @@
   "git.confirmSync": false,
   "git.enableCommitSigning": true,
   "git.enableSmartCommit": true,
+  "git.mergeEditor": true,
   "githubPullRequests.createOnPublishBranch": "never",
   "gitlens.hovers.currentLine.over": "line",
   "html.autoClosingTags": true,
   "javascript.autoClosingTags": true,
   "javascript.preferences.jsxAttributeCompletionStyle": "auto",
   "javascript.suggest.paths": false,
+  "Lua.telemetry.enable": false,
   "typescript.preferences.jsxAttributeCompletionStyle": "auto",
   "typescript.updateImportsOnFileMove.enabled": "never",
   "launch": {
@@ -350,7 +356,7 @@
   "typescript.autoClosingTags": true,
   "typescript.suggest.paths": false,
   "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
-  "window.experimental.commandCenter": true,
+  "window.commandCenter": true,
   "window.titleBarStyle": "custom",
   "workbench.colorCustomizations": {
     // Brackets
@@ -380,10 +386,5 @@
   "workbench.startupEditor": "welcomePage",
   "zenMode.hideLineNumbers": false,
   "errorLens.fontWeight": "500",
-  "keyboard.layout": "00000415",
-  "cSpell.enableFiletypes": ["ini"],
-  "[dockerfile]": {
-    "editor.defaultFormatter": "ms-azuretools.vscode-docker"
-  },
-  "Lua.telemetry.enable": false
+  "keyboard.layout": "00000415"
 }
