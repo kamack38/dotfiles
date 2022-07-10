@@ -9,9 +9,9 @@ RightButton;NoModifier=org.kde.contextmenu
 lastUpdate=2022,6,11,21,21,21.296
 
 [Containments][1]
-ItemGeometries-1920x1080=Applet-66:0,80,1920,176,0;
+ItemGeometries-1920x1080=Applet-66:0,80,1856,176,0;
 ItemGeometries-2560x1440=Applet-66:912,64,736,176,0;
-ItemGeometriesHorizontal=Applet-66:0,80,1920,176,0;
+ItemGeometriesHorizontal=Applet-66:0,80,1856,176,0;
 activityId=70236a50-2422-44b5-bcb3-9d8c342fc3e7
 formfactor=0
 immutability=1
@@ -111,15 +111,23 @@ plugin=org.kde.plasma.systemtray
 PreloadWeight=100
 SystrayContainmentId=53
 
+[Containments][50][Applets][69]
+immutability=1
+plugin=org.kde.plasma.systemtray
+
+[Containments][50][Applets][69][Configuration]
+PreloadWeight=85
+SystrayContainmentId=70
+
 [Containments][50][ConfigDialog]
-DialogHeight=1440
+DialogHeight=1080
 DialogWidth=166
 
 [Containments][50][Configuration]
 PreloadWeight=0
 
 [Containments][50][General]
-AppletOrder=52
+AppletOrder=69
 
 [Containments][53]
 activityId=
@@ -226,7 +234,7 @@ immutability=1
 plugin=org.kde.plasma.mediacontroller
 
 [Containments][53][Applets][65][Configuration]
-PreloadWeight=12
+PreloadWeight=0
 
 [Containments][53][Applets][67]
 immutability=1
@@ -284,6 +292,73 @@ PreloadWeight=0
 [Containments][67][Wallpaper][org.kde.image][General]
 Image=file:///usr/share/wallpapers/mywall/Lake surrounded by trees - pablo-suzarte.jpg
 SlidePaths=/home/kamack38/.local/share/wallpapers,/usr/share/wallpapers
+
+[Containments][70]
+activityId=
+formfactor=3
+immutability=1
+lastScreen=-1
+location=6
+plugin=org.kde.plasma.private.systemtray
+wallpaperplugin=org.kde.image
+
+[Containments][70][Applets][71]
+immutability=1
+plugin=org.kde.plasma.clipboard
+
+[Containments][70][Applets][71][Configuration]
+PreloadWeight=55
+
+[Containments][70][Applets][72]
+immutability=1
+plugin=org.kde.plasma.devicenotifier
+
+[Containments][70][Applets][73]
+immutability=1
+plugin=org.kde.plasma.keyboardlayout
+
+[Containments][70][Applets][74]
+immutability=1
+plugin=org.kde.plasma.manage-inputmethod
+
+[Containments][70][Applets][75]
+immutability=1
+plugin=org.kde.plasma.notifications
+
+[Containments][70][Applets][76]
+immutability=1
+plugin=org.kde.plasma.volume
+
+[Containments][70][Applets][76][Configuration]
+PreloadWeight=85
+
+[Containments][70][Applets][77]
+immutability=1
+plugin=org.kde.plasma.keyboardindicator
+
+[Containments][70][Applets][78]
+immutability=1
+plugin=org.kde.plasma.nightcolorcontrol
+
+[Containments][70][Applets][79]
+immutability=1
+plugin=org.kde.plasma.mediacontroller
+
+[Containments][70][Applets][80]
+immutability=1
+plugin=org.kde.plasma.battery
+
+[Containments][70][Applets][81]
+immutability=1
+plugin=org.kde.plasma.networkmanagement
+
+[Containments][70][Applets][82]
+immutability=1
+plugin=org.kde.plasma.bluetooth
+
+[Containments][70][General]
+extraItems=org.kde.plasma.battery,org.kde.plasma.clipboard,org.kde.plasma.devicenotifier,org.kde.plasma.keyboardlayout,org.kde.plasma.manage-inputmethod,org.kde.plasma.mediacontroller,org.kde.plasma.networkmanagement,org.kde.plasma.notifications,org.kde.plasma.volume,org.kde.plasma.bluetooth,org.kde.plasma.keyboardindicator,org.kde.plasma.nightcolorcontrol
+knownItems=org.kde.plasma.battery,org.kde.plasma.clipboard,org.kde.plasma.devicenotifier,org.kde.plasma.keyboardlayout,org.kde.plasma.manage-inputmethod,org.kde.plasma.mediacontroller,org.kde.plasma.networkmanagement,org.kde.plasma.notifications,org.kde.plasma.volume,org.kde.plasma.bluetooth,org.kde.plasma.keyboardindicator,org.kde.plasma.nightcolorcontrol
 
 [Containments32Appletsts][35][Configuration][General]
 launchers=preferred://browser,preferred://filemanager

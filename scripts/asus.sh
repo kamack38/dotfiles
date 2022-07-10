@@ -44,6 +44,12 @@ echo "${BLUE}:: ${BWHITE}Enabling daemons...${NC}"
 systemctl --user enable asus-notify
 systemctl --user start asus-notify
 
+echo "${BLUE}:: ${BWHITE}Blacklisting ${BLUE}nouveau${BWHITE}...${NC}"
+sudo tee /etc/modprobe.d/blacklist-nvidia-nouveau.conf >/dev/null <<EOT
+blacklist nouveau
+options nouveau modeset=0
+EOT
+
 echo "${BLUE}:: ${BWHITE}Running mkinitcpio...${NC}"
 sudo mkinitcpio -P
 

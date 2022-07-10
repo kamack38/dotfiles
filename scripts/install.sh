@@ -452,6 +452,10 @@ if [[ $(pacman -Q grub) ]]; then
 	else
 		echo "${BLUE}:: ${BWHITE}You're using ${BLUE}${LOGIN_MANAGER}${NC}"
 		echo "${BLUE}:: ${BWHITE}Installing plymouth...${NC}"
+
+		# Add archcraft repository
+		archcraft
+		sudo pacman -Sy
 		$HELPER -S --noconfirm --needed --quiet "${PLYMOUTH_PACKAGES[@]}"
 
 		# Set default plymouth theme
@@ -507,15 +511,13 @@ if [[ $(pacman -Q grub) ]]; then
 		# Create initial ramdisk
 		if "${CHANGED}" == "true"; then
 			sudo mkinitcpio -P
-		else
-			echo "${YELLOW}:: ${BWHITE}Plymouth hook is already added${NC} -- skipping"
 		fi
 
 		# Update grub config
 		sudo sed -i "s,\(GRUB_CMDLINE_LINUX_DEFAULT=\".*\)\(\"\),\1 quiet splash vt.global_cursor_default=0\2," "/etc/default/grub"
 		sudo grub-mkconfig -o /boot/grub/grub.cfg
 
-		# Change display manager
+		# Change login manager
 		sudo systemctl disable "${LOGIN_MANAGER}.service"
 		sudo systemctl enable "${LOGIN_MANAGER}-plymouth.service"
 	fi
