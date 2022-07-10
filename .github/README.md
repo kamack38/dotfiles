@@ -19,3 +19,7 @@ To setup a brand new version of Arch Linux you can use the command below in an [
 ```bash
 bash <(curl -sL https://github.com/kamack38/linux-dotfiles/raw/main/scripts/setup.sh)
 ```
+
+## Screenshots
+
+![Apps screenshot](./../Pictures/Screenshots/Apps.png)

@@ -212,21 +212,21 @@ immutability=1
 plugin=org.kde.plasma.bluetooth
 
 [Containments][53][Applets][63][Configuration]
-PreloadWeight=23
+PreloadWeight=28
 
 [Containments][53][Applets][64]
 immutability=1
 plugin=org.kde.plasma.battery
 
 [Containments][53][Applets][64][Configuration]
-PreloadWeight=0
+PreloadWeight=5
 
 [Containments][53][Applets][65]
 immutability=1
 plugin=org.kde.plasma.mediacontroller
 
 [Containments][53][Applets][65][Configuration]
-PreloadWeight=10
+PreloadWeight=12
 
 [Containments][53][Applets][67]
 immutability=1
