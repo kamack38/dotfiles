@@ -41,8 +41,7 @@ $HELPER -S --noconfirm --needed --quiet linux-g14 \
 
 # Enable daemons
 echo "${BLUE}:: ${BWHITE}Enabling daemons...${NC}"
-systemctl --user enable asus-notify
-systemctl --user start asus-notify
+systemctl --user enable --now asus-notify
 
 echo "${BLUE}:: ${BWHITE}Blacklisting ${BLUE}nouveau${BWHITE}...${NC}"
 sudo tee /etc/modprobe.d/blacklist-nvidia-nouveau.conf >/dev/null <<EOT

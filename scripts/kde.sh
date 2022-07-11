@@ -46,6 +46,19 @@ $HELPER -S --noconfirm --needed --quiet "${KDE_PACKAGES[@]}"
 sudo systemctl enable touchegg.service
 sudo systemctl enable sddm.service
 
+# Autologin
+read -rp "${YELLOW}:: ${BWHITE}Do you want to enable automatic login? [y/N]${NC}: " auto_login
+
+if [[ $auto_login == y* ]]; then
+	echo "${BLUE}:: ${BWHITE}Enabling automatic login...${NC}"
+	CURRENT_USER="$USER"
+	sudo tee /etc/sddm.conf.d/autologin.conf >/dev/null <<EOT
+[Autologin]
+User=${CURRENT_USER}
+Session=plasma
+EOT
+fi
+
 # Add archcraft repository
 source "$HOME/scripts/repos.sh"
 archcraft
