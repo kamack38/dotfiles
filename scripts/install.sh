@@ -462,7 +462,7 @@ if [[ $(pacman -Q grub) ]]; then
 		sudo plymouth-set-default-theme -R archcraft
 
 		# Correct hooks
-		if [[ $(grep "^HOOKS=\".*systemd.*\"" /etc/mkinitcpio.conf) ]]; then
+		if [[ $(grep "^HOOKS=.*systemd.*" /etc/mkinitcpio.conf) ]]; then
 			echo "${BLUE}:: ${BWHITE}You're using ${BLUE} systemd hook${NC} -- correcting hooks"
 			PLYMOUTH_HOOK_PARENT="systemd"
 			PLYMOUTH_HOOK="sd-plymouth"
@@ -476,9 +476,9 @@ if [[ $(pacman -Q grub) ]]; then
 		CHANGED="false"
 
 		# Plymouth hook
-		if [[ ! $(grep "^HOOKS=\".*${PLYMOUTH_HOOK}.*\"" /etc/mkinitcpio.conf) ]]; then
+		if [[ ! $(grep "^HOOKS=.*${PLYMOUTH_HOOK}.*" /etc/mkinitcpio.conf) ]]; then
 			echo "${YELLOW}:: ${BWHITE}Adding ${PLYMOUTH_HOOK} hook...${NC}"
-			sudo sed -i "s,\(^HOOKS=\".*\)${PLYMOUTH_HOOK_PARENT}\(.*\"\),\1${PLYMOUTH_HOOK_PARENT} ${PLYMOUTH_HOOK}\2," "/etc/mkinitcpio.conf"
+			sudo sed -i "s,\(^HOOKS=.*\)${PLYMOUTH_HOOK_PARENT}\(.*\),\1${PLYMOUTH_HOOK_PARENT} ${PLYMOUTH_HOOK}\2," "/etc/mkinitcpio.conf"
 			CHANGED="true"
 
 		else
@@ -486,20 +486,20 @@ if [[ $(pacman -Q grub) ]]; then
 		fi
 
 		# Encrypt hook
-		if [[ ! $(grep "^HOOKS=\".*${ENCRYPT_PLYMOUTH_HOOK}.*\"" /etc/mkinitcpio.conf) ]]; then
+		if [[ ! $(grep "^HOOKS=.*${ENCRYPT_PLYMOUTH_HOOK}.*" /etc/mkinitcpio.conf) ]]; then
 			echo "${YELLOW}:: ${BWHITE}Adding ${ENCRYPT_PLYMOUTH_HOOK} hook...${NC}"
-			sudo sed -i "s,\(^HOOKS=\".*\)encrypt\(.*\"\),\1${ENCRYPT_PLYMOUTH_HOOK}\2," "/etc/mkinitcpio.conf"
+			sudo sed -i "s,\(^HOOKS=.*\)encrypt\(.*\),\1${ENCRYPT_PLYMOUTH_HOOK}\2," "/etc/mkinitcpio.conf"
 			CHANGED="true"
 		else
 			echo "${YELLOW}:: ${BWHITE}${ENCRYPT_PLYMOUTH_HOOK} hook already exists${NC} -- skipping"
 		fi
 
 		# Zfs hook
-		if [[ ! $(grep "^HOOKS=\".*plymouth-zfs.*\"" /etc/mkinitcpio.conf) ]]; then
-			if [[ $(grep "^HOOKS=\".*zfs.*\"" /etc/mkinitcpio.conf) ]]; then
+		if [[ ! $(grep "^HOOKS=.*plymouth-zfs.*" /etc/mkinitcpio.conf) ]]; then
+			if [[ $(grep "^HOOKS=.*zfs.*" /etc/mkinitcpio.conf) ]]; then
 				echo "${YELLOW}:: ${BWHITE}Adding plymouth-zfs hook...${NC}"
 				$HELPER -S --noconfirm --needed --quiet plymouth-zfs
-				sudo sed -i "s,\(^HOOKS=\".*\)zfs\(.*\"\),\1plymouth-zfs\2," "/etc/mkinitcpio.conf"
+				sudo sed -i "s,\(^HOOKS=.*\)zfs\(.*\),\1plymouth-zfs\2," "/etc/mkinitcpio.conf"
 				CHANGED="true"
 			else
 				echo "${YELLOW}:: ${BWHITE}Zfs hook not detected${NC} -- skipping"
