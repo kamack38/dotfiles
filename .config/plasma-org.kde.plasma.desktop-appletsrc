@@ -108,7 +108,7 @@ immutability=1
 plugin=org.kde.plasma.systemtray
 
 [Containments][50][Applets][69][Configuration]
-PreloadWeight=90
+PreloadWeight=100
 SystrayContainmentId=70
 
 [Containments][50][ConfigDialog]
@@ -180,6 +180,9 @@ PreloadWeight=55
 immutability=1
 plugin=org.kde.plasma.devicenotifier
 
+[Containments][70][Applets][72][Configuration]
+PreloadWeight=60
+
 [Containments][70][Applets][73]
 immutability=1
 plugin=org.kde.plasma.keyboardlayout
@@ -197,7 +200,7 @@ immutability=1
 plugin=org.kde.plasma.volume
 
 [Containments][70][Applets][76][Configuration]
-PreloadWeight=85
+PreloadWeight=90
 
 [Containments][70][Applets][77]
 immutability=1
@@ -212,7 +215,7 @@ immutability=1
 plugin=org.kde.plasma.mediacontroller
 
 [Containments][70][Applets][79][Configuration]
-PreloadWeight=10
+PreloadWeight=0
 
 [Containments][70][Applets][80]
 immutability=1

@@ -30,13 +30,36 @@ sed -i 's/^#ParallelDownloads/ParallelDownloads/' /etc/pacman.conf
 pacman -Sy --noconfirm archlinux-keyring
 pacman -S --noconfirm --needed pacman-contrib fzf reflector rsync grub
 
-# Select disk to install on
+# Select disk
 echo "${BLUE}:: ${BWHITE}Select disk to install system on.${NC}"
-echo "${YELLOW}:: ${BWHITE}All data will be ${RED}ERASED${BWHITE}!${NC}"
 DISK=$(lsblk -n --output TYPE,KNAME,SIZE | awk '$1=="disk"{print "/dev/"$2"|"$3}' | fzf --height=20% --layout=reverse)
 DISK=${DISK%|*}
 DISK_SIZE=$(lsblk -n --output SIZE ${DISK} | head -n1)
 echo "${BLUE}:: ${BWHITE}Selected disk is: ${BLUE}${DISK}${NC}"
+
+# Select install type
+echo "${BLUE}:: ${BWHITE}Do you wish to create partitions in empty space or replace disk partitions?${NC}"
+echo "	1) Replace partitions 2) Create in empty 3) Quit"
+read -rp "Enter a number: " install_type
+
+case $install_type in
+
+1)
+    echo "${YELLOW}:: ${BWHITE}All data from disk ${DISK} will be ${RED}ERASED${BWHITE}!${NC}"
+    echo "${YELLOW}:: ${BWHITE}Selected disk has size of ${DISK_SIZE}GB${NC}"
+    ;;
+2)
+    # read -rp "${BLUE}:: ${BWHITE}Do you wish to create UEFI partition? [Y/n]${NC}: " uefi_partition
+
+    # if [[ $uefi_partition != n* ]]; then
+    #     echo "Skipping efi partition"
+    # fi
+    ;;
+*)
+    echo "${RED}:: ${BWHITE}Exiting...${NC}"
+    exit 0
+    ;;
+esac
 
 # Check if drive is a ssd
 if [[ "$(cat /sys/block/${DISK#/*/}/queue/rotational)" == "0" ]]; then
@@ -46,9 +69,6 @@ else
     echo "${YELLOW}:: ${BWHITE}Selected drive is NOT a ssd...${NC}"
     MOUNT_OPTIONS="noatime,space_cache=v2,compress=zstd,commit=120"
 fi
-
-# Partition size
-echo "${YELLOW}:: ${BWHITE}Selected disk has size of ${DISK_SIZE}GB${NC}"
 
 # Swap
 TOTAL_RAM=$(echo "scale=1; $(cat /proc/meminfo | grep -i 'memtotal' | grep -o '[[:digit:]]*')/1000000" | bc)
@@ -119,40 +139,60 @@ else
     echo "${BLUE}:: ${BLUE}/mnt${BWHITE} is not mounted${NC} -- skipping"
 fi
 
+# Get partition numbers
+echo "${YELLOW}:: ${BWHITE}Looking for free partition numbers...${NC}"
+j=0
+i=1
+PART_NUMBERS=()
+if [[ "${DISK}" =~ "nvme" ]]; then
+    TMP_DISK="${DISK}p"
+else
+    TMP_DISK="${DISK}"
+fi
+while [ $j -lt 3 ]; do
+    if [[ ! -e "${TMP_DISK}${i}" ]]; then
+        echo "${BLUE}:: ${BLUE}${i}${BWHITE} is free! ${NC}"
+        ((j = j + 1))
+        PART_NUMBERS+=("$i")
+    fi
+    ((i = i + 1))
+done
+
 echo "${BLUE}:: ${BWHITE}Formatting disk...${NC}"
 sgdisk -Z ${DISK}
 sgdisk -a 2048 -o ${DISK}
-sgdisk -n 1::+1M --typecode=1:ef02 --change-name=1:'BIOSBOOT' ${DISK}  # partition 1 (BIOS Boot Partition)
-sgdisk -n 2::+300M --typecode=2:ef00 --change-name=2:'EFIBOOT' ${DISK} # partition 2 (UEFI Boot Partition)
-sgdisk -n 3::-0 --typecode=3:8300 --change-name=3:'ROOT' ${DISK}       # partition 3 (Root), default start, remaining
+sgdisk -n "${PART_NUMBERS[0]}"::+1M --typecode="${PART_NUMBERS[0]}":ef02 --change-name="${PART_NUMBERS[0]}":'BIOSBOOT' ${DISK}  # partition 1 (BIOS Boot Partition)
+sgdisk -n "${PART_NUMBERS[1]}"::+300M --typecode="${PART_NUMBERS[1]}":ef00 --change-name="${PART_NUMBERS[1]}":'EFIBOOT' ${DISK} # partition 2 (UEFI Boot Partition)
+sgdisk -N "${PART_NUMBERS[2]}" --typecode="${PART_NUMBERS[2]}":8300 --change-name="${PART_NUMBERS[2]}":'ROOT' ${DISK}           # partition 3 (Root), default start, remaining
 
 # Check for bios system
 if [[ ! -d "/sys/firmware/efi" ]]; then
-    sgdisk -A 1:set:2 ${DISK}
+    sgdisk -A "${PART_NUMBERS[0]}":set:"${PART_NUMBERS[1]}" ${DISK}
 fi
+
 echo "${BLUE}:: ${BWHITE}Rereading partition table...${NC}"
 partprobe ${DISK}
 
 echo "${BLUE}:: ${BWHITE}Naming partitions...${NC}"
 if [[ "${DISK}" =~ "nvme" ]]; then
-    partition2=${DISK}p2
-    partition3=${DISK}p3
+    EFI_PART="${DISK}p${PART_NUMBERS[1]}"
+    ROOT_PART="${DISK}p${PART_NUMBERS[2]}"
 else
-    partition2=${DISK}2
-    partition3=${DISK}3
+    EFI_PART="${DISK}${PART_NUMBERS[1]}"
+    ROOT_PART="${DISK}${PART_NUMBERS[2]}"
 fi
 
 # Create boot partition
 echo "${BLUE}:: ${BWHITE}Creating EFI partition...${NC}"
-mkfs.vfat -F32 -n "EFIBOOT" ${partition2}
+mkfs.vfat -F32 -n "EFIBOOT" ${EFI_PART}
 
 # Enter luks password to cryptsetup and format root partition
 echo "${BLUE}:: ${BWHITE}Encrypting root partition...${NC}"
-echo -n "${LUKS_PASSWORD}" | cryptsetup -v luksFormat ${partition3} -
+echo -n "${LUKS_PASSWORD}" | cryptsetup -v luksFormat ${ROOT_PART} -
 
 # Open luks container and ROOT will be place holder
 echo "${BLUE}:: ${BWHITE}Opening root partition...${NC}"
-echo -n "${LUKS_PASSWORD}" | cryptsetup open ${partition3} root -
+echo -n "${LUKS_PASSWORD}" | cryptsetup open ${ROOT_PART} root -
 
 # Format luks container
 mapper=/dev/mapper/root
@@ -184,7 +224,7 @@ mount -o ${MOUNT_OPTIONS},nodev,nosuid,noexec,subvol=@tmp ${mapper} /mnt/tmp
 mount -o ${MOUNT_OPTIONS},subvol=@var ${mapper} /mnt/var
 mount -o ${MOUNT_OPTIONS},subvol=@.snapshots ${mapper} /mnt/.snapshots
 
-ENCRYPTED_PARTITION_UUID=$(blkid -s UUID -o value ${partition3})
+ENCRYPTED_PARTITION_UUID=$(blkid -s UUID -o value ${ROOT_PART})
 
 echo "${BLUE}:: ${BWHITE}Encrypted partition UUID is: ${BLUE}${ENCRYPTED_PARTITION_UUID}${NC}"
 
@@ -394,7 +434,6 @@ EOF
     sed -i 's/^# %wheel ALL=(ALL) ALL/%wheel ALL=(ALL) ALL/' /etc/sudoers
     sed -i 's/^# %wheel ALL=(ALL:ALL) ALL/%wheel ALL=(ALL:ALL) ALL/' /etc/sudoers
 
-    # enter $NAME_OF_MACHINE to /etc/hostname
     echo "${BLUE}:: ${BWHITE}Hostname is set to ${BLUE}${MACHINE_NAME}${NC}"
     echo $MACHINE_NAME >/etc/hostname
     sed -i 's/filesystems/encrypt filesystems/g' /etc/mkinitcpio.conf
