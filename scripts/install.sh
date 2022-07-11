@@ -437,11 +437,11 @@ PLYMOUTH_PACKAGES=(
 if [[ $(pacman -Q grub) ]]; then
 	# Detect login manager
 	ALL_SERVICES=$(systemctl list-unit-files)
-	if [[ $(echo ALL_SERVICES | grep 'sddm.service' | awk '{ print $2 }') == enabled ]]; then
+	if [[ $(echo $ALL_SERVICES | grep 'sddm.service' | awk '{ print $2 }') == enabled ]]; then
 		LOGIN_MANAGER="sddm"
-	elif [[ $(echo ALL_SERVICES | grep 'lightdm.service' | awk '{ print $2 }') == enabled ]]; then
+	elif [[ $(echo $ALL_SERVICES | grep 'lightdm.service' | awk '{ print $2 }') == enabled ]]; then
 		LOGIN_MANAGER="lightdm"
-	elif [[ $(echo ALL_SERVICES | grep 'lxdm.service' | awk '{ print $2 }') == enabled ]]; then
+	elif [[ $(echo $ALL_SERVICES | grep 'lxdm.service' | awk '{ print $2 }') == enabled ]]; then
 		LOGIN_MANAGER="lxdm"
 	else
 		LOGIN_MANAGER="none"
