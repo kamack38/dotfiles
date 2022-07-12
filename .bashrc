@@ -42,23 +42,31 @@ export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || pr
 
 # enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
-    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
-    alias ls='ls --color=auto'
-    #alias dir='dir --color=auto'
-    #alias vdir='vdir --color=auto'
+	test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+	alias ls='ls --color=auto'
+	#alias dir='dir --color=auto'
+	#alias vdir='vdir --color=auto'
 
-    alias grep='grep --color=auto'
-    alias fgrep='fgrep --color=auto'
-    alias egrep='egrep --color=auto'
+	alias grep='grep --color=auto'
+	alias fgrep='fgrep --color=auto'
+	alias egrep='egrep --color=auto'
 fi
 
 # colored GCC warnings and errors
 #export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 
-# some more ls aliases
-alias ll='ls -alF'
-alias la='ls -A'
-alias l='ls -CF'
+# ls aliases
+if command -v exa &>/dev/null; then
+	alias ll='exa -alF'
+	alias ls='exa'
+	alias la='exa -a'
+	alias lt='exa -T'
+	alias le='exa -alTL 2'
+else
+	alias ll='ls -alF'
+	alias la='ls -A'
+	alias l='ls -CF'
+fi
 
 # Easier navigation: .., ..., ...., ....., ~ and -
 alias ..="cd .."
@@ -80,17 +88,24 @@ alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
 # sources /etc/bash.bashrc).
 if ! shopt -oq posix; then
-    if [ -f /usr/share/bash-completion/bash_completion ]; then
-        . /usr/share/bash-completion/bash_completion
-    elif [ -f /etc/bash_completion ]; then
-        . /etc/bash_completion
-    fi
+	if [ -f /usr/share/bash-completion/bash_completion ]; then
+		. /usr/share/bash-completion/bash_completion
+	elif [ -f /etc/bash_completion ]; then
+		. /etc/bash_completion
+	fi
 fi
 
 # Load ohmyposh
-eval "$(oh-my-posh --init --shell bash --config ~/.config/oh-my-posh/kamack.omp.json)"
+if ! command -v oh-my-posh &>/dev/null; then
+	eval "$(oh-my-posh --init --shell bash --config ~/.config/oh-my-posh/kamack.omp.json)"
+else
+	GREEN="\e[1;92m"
+	CYAN="\e[1;36m"
+	NC='\033[0m'
+	export PS1="${CYAN}[\W]${GREEN} ❱❱❱${NC} "
+fi
 
 # Add neofetch
 if command -v neofetch &>/dev/null; then
-    neofetch
+	neofetch
 fi
