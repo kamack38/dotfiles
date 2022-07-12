@@ -79,6 +79,9 @@ NORMAL_PROFILE=(
 	"reflector"                        # Pacman mirror sorter
 	"pigz"                             # Parallel implementation of the gzip file compressor
 	"chaotic-aur/garuda-hooks"         # Garuda pacman hooks
+	"mpdris2"                          # MPRIS2 support for MPD
+	"mpd"                              # Flexible, powerful, server-side application for playing music
+	"ncmpcpp"                          # Almost exact clone of ncmpc with some new features
 	"${DEV_PROFILE[@]}"
 )
 

@@ -1,0 +1,13 @@
+[Unit]
+Description=MPRIS V2.1 support for mpd 
+Documentation=man:picom(1)
+After=network.target sound.target mpd.service
+
+[Service]
+ExecStart=/usr/bin/mpDris2
+Restart=always
+RestartSec=5
+BusName=org.mpris.MediaPlayer2.mpd
+
+[Install]
+WantedBy=default.target
