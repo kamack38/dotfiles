@@ -418,6 +418,11 @@ echo "${BLUE}:: ${BWHITE}Which DE do you want to install?${NC}"
 echo "	1) None 2) KDE 3) xfce"
 read -rp "Enter a number (default=1): " de_script
 
+# Enable services
+echo "${BLUE}:: ${BWHITE}Enabling services...${NC}"
+systemctl --user enable mpd.service
+systemctl --user enable mpDris2.service
+
 case $de_script in
 
 2)
