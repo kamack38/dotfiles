@@ -82,6 +82,10 @@ NORMAL_PROFILE=(
 	"mpdris2"                          # MPRIS2 support for MPD
 	"mpd"                              # Flexible, powerful, server-side application for playing music
 	"ncmpcpp"                          # Almost exact clone of ncmpc with some new features
+	"dbus-python"                      # Python bindings for DBUS (Polybar ...)
+	"python-google-api-python-client"  # Google API Client Library for Python (Polybar Gmail)
+	"python-google-auth-httplib2"      # Google Authentication Library: httplib2 transport (Polybar Gmail)
+	"python-google-auth-oauthlib"      # oauthlib integration for Google auth (Polybar Gmail)
 	"${DEV_PROFILE[@]}"
 )
 
@@ -358,11 +362,7 @@ done
 
 # Install pip packages
 echo -e "${GREEN}:: ${BWHITE}Installing ${BLUE}pip${BWHITE} packages${NC}"
-pip install --no-warn-script-location --upgrade dbus-python \
-	google-api-python-client \
-	google-auth-httplib2 \
-	google-auth-oauthlib \
-	neovim
+pip install --no-warn-script-location --upgrade neovim
 
 # Add .local/bin to PATH
 export PATH="$HOME/.local/bin:$PATH"
