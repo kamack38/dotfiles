@@ -96,7 +96,7 @@ if ! shopt -oq posix; then
 fi
 
 # Load ohmyposh
-if ! command -v oh-my-posh &>/dev/null; then
+if command -v oh-my-posh &>/dev/null; then
 	eval "$(oh-my-posh --init --shell bash --config ~/.config/oh-my-posh/kamack.omp.json)"
 else
 	GREEN="\e[1;92m"
