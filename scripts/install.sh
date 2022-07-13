@@ -163,6 +163,18 @@ SPELLCHECK_LOCALES=("${MAIN_LOCALE/_*/}" "${SECONDARY_LOCALE/_*/}")
 KB_LAYOUT="pl"
 MAKEFLAGS="-j$(nproc)"
 
+# Root notice
+if [ "$(id -u)" = 0 ]; then
+	echo "##################################################################"
+	echo "This script MUST NOT be run as root user since it makes changes"
+	echo "to the \$HOME directory of the \$USER executing this script."
+	echo "The \$HOME directory of the root user is, of course, '/root'."
+	echo "We don't want to mess around in there. So run this script as a"
+	echo "normal user. You will be asked for a sudo password when necessary."
+	echo "##################################################################"
+	exit 1
+fi
+
 # Show greeting
 echo "   ___  __    _____ ______  _________  ________"
 echo "  |\  \|\  \ |\   _ \  __ \|\_____   \|\   __  \ "
