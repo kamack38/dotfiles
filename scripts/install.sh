@@ -572,6 +572,7 @@ if [[ $repos_script == y* ]]; then
 	chaotic_aur
 	blackarch
 	archstrike
+	dtos
 fi
 
 read -rp "${BLUE}:: ${BWHITE}Do you want to run script for asus laptops? [y/N]${NC}: " asus_script

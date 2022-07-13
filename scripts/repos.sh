@@ -9,9 +9,9 @@ NC=$'\e[0m' # No Colour
 
 archcraft() {
 	if grep -Fxq "[archcraft]" /etc/pacman.conf; then
-		echo "${YELLOW}:: ${BLUE}archcraft ${BWHITE}repo already exists${NC} -- skipping"
+		echo "${YELLOW}:: ${BLUE}archcraft${BWHITE} repo already exists${NC} -- skipping"
 	else
-		echo "${BLUE}:: ${BWHITE}Adding ${BLUE}archcraft ${BWHITE}repository${NC}"
+		echo "${BLUE}:: ${BWHITE}Adding ${BLUE}archcraft${BWHITE} repository${NC}"
 		sudo wget 'https://raw.githubusercontent.com/archcraft-os/core-packages/main/archcraft-mirrorlist/archcraft-mirrorlist' -O /etc/pacman.d/archcraft-mirrorlist
 		sudo tee -a /etc/pacman.conf >/dev/null <<EOT
 
@@ -24,9 +24,9 @@ EOT
 
 chaotic_aur() {
 	if grep -Fxq "[chaotic-aur]" /etc/pacman.conf; then
-		echo "${YELLOW}:: ${BLUE}chaotic-aur ${BWHITE}repo already exists${NC} -- skipping"
+		echo "${YELLOW}:: ${BLUE}chaotic-aur${BWHITE} repo already exists${NC} -- skipping"
 	else
-		echo "${BLUE}:: ${BWHITE}Adding ${BLUE}chaotic-aur ${BWHITE}repository${NC}"
+		echo "${BLUE}:: ${BWHITE}Adding ${BLUE}chaotic-aur${BWHITE} repository${NC}"
 		sudo pacman-key --recv-key FBA220DFC880C036 --keyserver keyserver.ubuntu.com
 		sudo pacman-key --lsign-key FBA220DFC880C036
 		sudo pacman -U 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-keyring.pkg.tar.zst' 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-mirrorlist.pkg.tar.zst' --noconfirm
@@ -40,9 +40,9 @@ EOT
 
 garuda() {
 	if grep -Fxq "[garuda]" /etc/pacman.conf; then
-		echo "${YELLOW}:: ${BLUE}garuda ${BWHITE}repo already exists${NC} -- skipping"
+		echo "${YELLOW}:: ${BLUE}garuda${BWHITE} repo already exists${NC} -- skipping"
 	else
-		echo "${BLUE}:: ${BWHITE}Adding ${BLUE}garuda ${BWHITE}repository${NC}"
+		echo "${BLUE}:: ${BWHITE}Adding ${BLUE}garuda${BWHITE} repository${NC}"
 		sudo tee -a /etc/pacman.conf >/dev/null <<EOT
 
 [garuda]
@@ -53,9 +53,9 @@ EOT
 
 multilib() {
 	if grep -Fxq "[multilib]" /etc/pacman.conf; then
-		echo "${YELLOW}:: ${BLUE}multilib ${BWHITE}repo already exists${NC} -- skipping"
+		echo "${YELLOW}:: ${BLUE}multilib${BWHITE} repo already exists${NC} -- skipping"
 	else
-		echo "${BLUE}:: ${BWHITE}Adding ${BLUE}multilib ${BWHITE}repository${NC}"
+		echo "${BLUE}:: ${BWHITE}Adding ${BLUE}multilib${BWHITE} repository${NC}"
 		sudo tee -a /etc/pacman.conf >/dev/null <<EOT
 
 [multilib]
@@ -66,18 +66,18 @@ EOT
 
 blackarch() {
 	if grep -Fxq "[blackarch]" /etc/pacman.conf; then
-		echo "${YELLOW}:: ${BLUE}blackarch ${BWHITE}repo already exists${NC} -- skipping"
+		echo "${YELLOW}:: ${BLUE}blackarch${BWHITE} repo already exists${NC} -- skipping"
 	else
-		echo "${BLUE}:: ${BWHITE}Adding ${BLUE}blackarch ${BWHITE}repository${NC}"
+		echo "${BLUE}:: ${BWHITE}Adding ${BLUE}blackarch${BWHITE} repository${NC}"
 		curl -s https://blackarch.org/strap.sh | sudo bash
 	fi
 }
 
 archstrike() {
 	if grep -Fxq "[archstrike]" /etc/pacman.conf; then
-		echo "${YELLOW}:: ${BLUE}archstrike ${BWHITE}repo already exists${NC} -- skipping"
+		echo "${YELLOW}:: ${BLUE}archstrike${BWHITE} repo already exists${NC} -- skipping"
 	else
-		echo "${BLUE}:: ${BWHITE}Adding ${BLUE}archstrike ${BWHITE}repository${NC}"
+		echo "${BLUE}:: ${BWHITE}Adding ${BLUE}archstrike${BWHITE} repository${NC}"
 		sudo tee -a /etc/pacman.conf >/dev/null <<'EOT'
 
 [archstrike]
@@ -92,12 +92,31 @@ EOT
 
 asusctl() {
 	if grep -Fxq "[g14]" /etc/pacman.conf; then
-		echo "g14 repo already exists"
+		echo "${YELLOW}:: ${BLUE}g14${BWHITE} repo already exists"
 	else
+		echo "${BLUE}:: ${BWHITE}Adding ${BLUE}g14${BWHITE} repository${NC}"
 		sudo tee -a /etc/pacman.conf >/dev/null <<EOT
 [g14]
 SigLevel = DatabaseNever Optional TrustAll
 Server = https://arch.asus-linux.org
 EOT
+	fi
+}
+
+dtos() {
+	if grep -Fxq "[dtos-core-repo]" /etc/pacman.conf; then
+		echo "${YELLOW}:: ${BLUE}dtos-core-repo${BWHITE} repo already exists${NC} -- skipping"
+	else
+		echo "${BLUE}:: ${BWHITE}Adding ${BLUE}dtos-core-repo${BWHITE} repository${NC}"
+		sudo tee -a /etc/pacman.conf >/dev/null <<EOT
+[dtos-core-repo]
+SigLevel = Required DatabaseOptional
+Server = https://gitlab.com/dtos/\$repo/-/raw/main/\$arch
+EOT
+		grep -qxF "keyserver.ubuntu.com:80" /etc/pacman.d/gnupg/gpg.conf || echo "keyserver hkp://keyserver.ubuntu.com:80" | sudo tee -a /etc/pacman.d/gnupg/gpg.conf
+		grep -qxF "keyserver.ubuntu.com:443" /etc/pacman.d/gnupg/gpg.conf || echo "keyserver hkps://keyserver.ubuntu.com:443" | sudo tee -a /etc/pacman.d/gnupg/gpg.conf
+		local _pgpkey="C71486C31555B12E"
+		sudo pacman-key --recv-key $_pgpkey
+		sudo pacman-key --lsign-key $_pgpkey
 	fi
 }
