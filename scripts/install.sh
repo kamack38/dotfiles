@@ -647,6 +647,7 @@ EOT
 		sudo lynis update info
 		sudo lynis audit system
 		echo "${BLUE}:: ${BWHITE}Checking for ${BLUE}root kits${BWHITE}...${NC}"
+		sudo rkhunter --propupd
 		sudo rkhunter --check --sk
 	fi
 fi
