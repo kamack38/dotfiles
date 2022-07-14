@@ -1,0 +1,23 @@
+{
+    "com.github.lighttigerxiv.ulauncher-session-manager": {
+        "id": "com.github.lighttigerxiv.ulauncher-session-manager",
+        "url": "https://github.com/lighttigerXIV/ulauncher-session-manager",
+        "updated_at": "2022-07-14T14:00:33.808993",
+        "last_commit": "5bc45f64cd667a7b92b00c7bf6fb78ee76910c48",
+        "last_commit_time": "2022-06-24T12:21:43"
+    },
+    "com.github.carlosmape.ulauncher-calendar": {
+        "id": "com.github.carlosmape.ulauncher-calendar",
+        "url": "https://github.com/Carlosmape/ulauncher-calendar",
+        "updated_at": "2022-07-14T14:02:47.165878",
+        "last_commit": "2bb374f43a80fcc8be83f2a9cd3fc98f75e1e916",
+        "last_commit_time": "2022-05-11T18:41:46"
+    },
+    "com.github.brpaz.ulauncher-vscode-projects": {
+        "id": "com.github.brpaz.ulauncher-vscode-projects",
+        "url": "https://github.com/brpaz/ulauncher-vscode-projects",
+        "updated_at": "2022-07-14T14:12:39.393363",
+        "last_commit": "6ba448b240af19568a3750dc5b7e550cdb1e954d",
+        "last_commit_time": "2022-06-15T14:19:48"
+    }
+}
