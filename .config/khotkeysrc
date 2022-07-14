@@ -1087,6 +1087,7 @@ Theme[$d]
 [KDE]
 ColorScheme[$d]
 LookAndFeelPackage[$d]
+ShowDeleteCommand[$d]
 SingleClick[$d]
 contrast[$d]
 widgetStyle[$d]
@@ -1118,6 +1119,9 @@ Dialog Size[$d]
 AlreadyImported=defaults,kde32b1,konqueror_gestures_kde321,konsole
 Disabled=false
 Version=2
+
+[PreviewSettings]
+MaximumRemoteSize[$d]
 
 [Voice]
 Shortcut=
