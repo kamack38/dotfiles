@@ -141,8 +141,7 @@ History Items[$e]=file:$HOME/Downloads/vista_proba_free,file:///run/media/kamack
 
 [General]
 BrowserApplication=firefox-developer-edition.desktop
-ColorScheme=BreezeDark
-ColorSchemeHash=d0b3d2da363261958945ede41bfed4e1744dd286
+ColorSchemeHash=bcce7c1c6181c5e14e633cd8301e7a9036b67ac6
 Name[en_GB]=Breeze Dark
 Name=Breeze Dark
 TerminalApplication=kitty
@@ -152,11 +151,12 @@ shadeSortColumn=true
 widgetStyle=Breeze
 
 [Icons]
-Theme=breeze-dark
+Theme=Fluent
 
 [KDE]
 ColorScheme=BreezeDark
 LookAndFeelPackage=org.kde.breezedark.desktop
+ShowDeleteCommand=false
 SingleClick=false
 contrast=4
 widgetStyle=Lightly
@@ -183,6 +183,9 @@ View Style=DetailTree
 
 [KShortcutsDialog Settings]
 Dialog Size=600,480
+
+[PreviewSettings]
+MaximumRemoteSize=0
 
 [WM]
 activeBackground=49,54,59

@@ -31,5 +31,6 @@ zoomEnabled=false
 ElectricBorderCornerRatio=0.01
 
 [org.kde.kdecoration2]
+ButtonsOnLeft=S
 library=org.kde.kwin.aurorae
 theme=__aurorae__svg__Venture
