@@ -36,30 +36,10 @@ DISK=$(lsblk -n --output TYPE,KNAME,SIZE | awk '$1=="disk"{print "/dev/"$2"|"$3}
 DISK=${DISK%|*}
 DISK_SIZE=$(lsblk -n --output SIZE ${DISK} | head -n1)
 echo "${BLUE}:: ${BWHITE}Selected disk is: ${BLUE}${DISK}${NC}"
+echo "${BLUE}:: ${BWHITE}Selected disk has a size of ${DISK_SIZE}GB${NC}"
 
 # Select install type
-echo "${BLUE}:: ${BWHITE}Do you wish to create partitions in empty space or replace disk partitions?${NC}"
-echo "	1) Replace partitions 2) Create in empty 3) Quit"
-read -rp "Enter a number: " install_type
-
-case $install_type in
-
-1)
-    echo "${YELLOW}:: ${BWHITE}All data from disk ${DISK} will be ${RED}ERASED${BWHITE}!${NC}"
-    echo "${YELLOW}:: ${BWHITE}Selected disk has size of ${DISK_SIZE}GB${NC}"
-    ;;
-2)
-    # read -rp "${BLUE}:: ${BWHITE}Do you wish to create UEFI partition? [Y/n]${NC}: " uefi_partition
-
-    # if [[ $uefi_partition != n* ]]; then
-    #     echo "Skipping efi partition"
-    # fi
-    ;;
-*)
-    echo "${RED}:: ${BWHITE}Exiting...${NC}"
-    exit 0
-    ;;
-esac
+read -rp "${BLUE}:: ${BWHITE}Do you wish to ${RED}ERASE${BWHITE} the disk before partitioning [Y/n]?${NC}" erase_disk
 
 # Check if drive is a ssd
 if [[ "$(cat /sys/block/${DISK#/*/}/queue/rotational)" == "0" ]]; then
@@ -70,7 +50,7 @@ else
     MOUNT_OPTIONS="noatime,space_cache=v2,compress=zstd,commit=120"
 fi
 
-# Swap
+# Swaperase_disk
 TOTAL_RAM=$(echo "scale=1; $(cat /proc/meminfo | grep -i 'memtotal' | grep -o '[[:digit:]]*')/1000000" | bc)
 echo "${YELLOW}:: ${BWHITE}You have ${TOTAL_RAM}GB of RAM${NC}"
 read -rep "${YELLOW}:: ${BWHITE}Do you wish to create 8GB swap? [Y/n]${NC}" SWAP
@@ -159,8 +139,11 @@ while [ $j -lt 3 ]; do
 done
 
 echo "${BLUE}:: ${BWHITE}Formatting disk...${NC}"
-sgdisk -Z ${DISK}
-sgdisk -a 2048 -o ${DISK}
+if [[ $erase_disk != n* ]]; then
+    echo "${YELLOW}:: ${BWHITE}All data from disk ${DISK} is being ${RED}ERASED${BWHITE}!${NC}"
+    sgdisk -Z ${DISK}
+    sgdisk -a 2048 -o ${DISK}
+fi
 sgdisk -n "${PART_NUMBERS[0]}"::+1M --typecode="${PART_NUMBERS[0]}":ef02 --change-name="${PART_NUMBERS[0]}":'BIOSBOOT' ${DISK}  # partition 1 (BIOS Boot Partition)
 sgdisk -n "${PART_NUMBERS[1]}"::+300M --typecode="${PART_NUMBERS[1]}":ef00 --change-name="${PART_NUMBERS[1]}":'EFIBOOT' ${DISK} # partition 2 (UEFI Boot Partition)
 sgdisk -N "${PART_NUMBERS[2]}" --typecode="${PART_NUMBERS[2]}":8300 --change-name="${PART_NUMBERS[2]}":'ROOT' ${DISK}           # partition 3 (Root), default start, remaining
