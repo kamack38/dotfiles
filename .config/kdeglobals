@@ -146,6 +146,7 @@ Name[en_GB]=Breeze Dark
 Name=Breeze Dark
 TerminalApplication=kitty
 TerminalService=kitty.desktop
+UseSystemBell=true
 accentColorFromWallpaper=false
 shadeSortColumn=true
 widgetStyle=Breeze
