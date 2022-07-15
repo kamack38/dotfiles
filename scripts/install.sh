@@ -628,6 +628,9 @@ EOT
 		fi
 	fi
 
+	echo "${BLUE}:: ${BWHITE}Securing ${BLUE}/boot${BWHITE} permissions...${NC}"
+	sudo chmod 700 /boot
+
 	echo "${BLUE}:: ${BWHITE}Setting up ${BLUE}iptables${BWHITE}...${NC}"
 	sudo iptables -N TCP
 	sudo iptables -N UDP
