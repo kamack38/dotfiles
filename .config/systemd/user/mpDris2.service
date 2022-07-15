@@ -8,6 +8,29 @@ ExecStart=/usr/bin/mpDris2
 Restart=always
 RestartSec=5
 BusName=org.mpris.MediaPlayer2.mpd
+UMask=0077
+
+# Sandboxing features
+PrivateTmp=yes
+NoNewPrivileges=true
+RestrictNamespaces=uts ipc pid user cgroup
+RestrictNamespaces=yes
+RestrictRealtime=yes
+RestrictSUIDSGID=true
+ProtectSystem=strict
+ProtectKernelTunables=yes
+ProtectControlGroups=yes
+ProtectHome=true
+ProtectHostname=yes
+ProtectProc=invisible
+DevicePolicy=closed
+LockPersonality=yes
+MemoryDenyWriteExecute=yes
+SystemCallArchitectures=native
+SystemCallFilter=@system-service
+ProcSubset=pid
+RemoveIPC=yes
+
 
 [Install]
 WantedBy=default.target
