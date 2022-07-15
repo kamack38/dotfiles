@@ -654,6 +654,16 @@ EOT
 	sudo iptables-save >/etc/iptables/iptables.rules
 	sudo systemctl enable --now iptables.service
 
+	echo "${BLUE}:: ${BWHITE}Setting ${BLUE}umask${BWHITE} to 0077...${NC}"
+	sudo sed -i 's/umask 022/umask 077/' /etc/profile
+
+	if [[ ! $(grep "^auth optional pam_faildelay.so" /etc/pam.d/system-login) ]]; then
+		echo "${BLUE}:: ${BWHITE}Setting ${BLUE}login delay${BWHITE} to 4 seconds...${NC}"
+		sudo tee -a /etc/pam.d/system-login >/dev/null <<EOT
+auth optional pam_faildelay.so delay=4000000
+EOT
+	fi
+
 	read -rp "${BLUE}:: ${BWHITE}Do you want to scan your device now? [y/N]${NC}: " SCAN
 	if [[ $SCAN == y* ]]; then
 		echo "${BLUE}:: ${BWHITE}Running ${BLUE}lynis${BWHITE}...${NC}"
