@@ -631,6 +631,15 @@ EOT
 	echo "${BLUE}:: ${BWHITE}Securing ${BLUE}/boot${BWHITE} permissions...${NC}"
 	sudo chmod 700 /boot
 
+	if sudo test -f /boot/grub/grub.cfg; then
+		echo "${BLUE}:: ${BWHITE}Securing ${BLUE}/boot/grub/grub.cfg${BWHITE} permissions...${NC}"
+		sudo chmod 600 /boot/grub/grub.cfg
+	fi
+
+	echo "${BLUE}:: ${BWHITE}Securing ${BLUE}cron${BWHITE} permissions...${NC}"
+	sudo chmod 700 -R /etc/cron.d /etc/cron.daily /etc/cron.hourly /etc/cron.weekly /etc/cron.monthly
+	sudo chmod 600 /etc/cron.deny
+
 	echo "${BLUE}:: ${BWHITE}Setting up ${BLUE}iptables${BWHITE}...${NC}"
 	sudo iptables -N TCP
 	sudo iptables -N UDP
