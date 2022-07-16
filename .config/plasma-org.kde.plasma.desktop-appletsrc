@@ -247,20 +247,6 @@ DialogWidth=720
 extraItems=org.kde.plasma.battery,org.kde.plasma.clipboard,org.kde.plasma.devicenotifier,org.kde.plasma.keyboardlayout,org.kde.plasma.manage-inputmethod,org.kde.plasma.mediacontroller,org.kde.plasma.networkmanagement,org.kde.plasma.notifications,org.kde.plasma.volume,org.kde.plasma.bluetooth,org.kde.plasma.keyboardindicator,org.kde.plasma.nightcolorcontrol
 knownItems=org.kde.plasma.battery,org.kde.plasma.clipboard,org.kde.plasma.devicenotifier,org.kde.plasma.keyboardlayout,org.kde.plasma.manage-inputmethod,org.kde.plasma.mediacontroller,org.kde.plasma.networkmanagement,org.kde.plasma.notifications,org.kde.plasma.volume,org.kde.plasma.bluetooth,org.kde.plasma.keyboardindicator,org.kde.plasma.nightcolorcontrol
 
-[Containments][79]
-ItemGeometries-1920x1080=
-ItemGeometriesHorizontal=
-activityId=00000000-0000-0000-0000-000000000000
-formfactor=0
-immutability=1
-lastScreen=0
-location=0
-plugin=org.kde.plasma.folder
-wallpaperplugin=org.kde.image
-
-[Containments][79][Wallpaper][org.kde.image][General]
-Image=file:///usr/share/wallpapers/Next/contents/images/1920x1080.jpg
-
 [Containments32Appletsts][35][Configuration][General]
 launchers=preferred://browser,preferred://filemanager
 
