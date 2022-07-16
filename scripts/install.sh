@@ -366,6 +366,14 @@ if [[ $additional_packages == *"5"* ]]; then
 	cargo install cargo-edit
 fi
 
+# Install tweaks
+TWEAKS=$(echo -e "performance-tweaks\npowersave-tweaks" | fzf --height=20% --layout=reverse)
+
+if [[ $TWEAKS != "" ]]; then
+	echo "${BLUE}:: ${BWHITE}Installing ${TWEAKS/-/ }...${NC}"
+	$HELPER -S --noconfirm --needed --quiet "$TWEAKS"
+fi
+
 # Install spellchecking
 echo "${GREEN}:: ${BWHITE}Installing ${BLUE}spellchecking${BWHITE} and ${BLUE}thesaurus${BWHITE} for ${BLUE}${SPELLCHECK_LOCALES[@]}${BWHITE}...${NC}"
 for LOCALE in "${SPELLCHECK_LOCALES[@]}"; do
