@@ -50,7 +50,7 @@ else
     MOUNT_OPTIONS="noatime,space_cache=v2,compress=zstd,commit=120"
 fi
 
-# Swaperase_disk
+# Swap
 TOTAL_RAM=$(echo "scale=1; $(cat /proc/meminfo | grep -i 'memtotal' | grep -o '[[:digit:]]*')/1000000" | bc)
 echo "${YELLOW}:: ${BWHITE}You have ${TOTAL_RAM}GB of RAM${NC}"
 read -rep "${YELLOW}:: ${BWHITE}Do you wish to create 8GB swap? [Y/n]${NC}" SWAP
@@ -439,8 +439,8 @@ arch-chroot /mnt /bin/bash -c "chroot"
 
 echo "${GREEN}:: ${BWHITE}Setup completed!${NC}"
 
-read -rp "${RED}:: ${BWHITE}Do you want to reboot? [y/N]${NC}: " reboot_prompt
-if [[ $reboot_prompt == y* ]]; then
+read -rp "${RED}:: ${BWHITE}Do you want to reboot? [Y/n]${NC}: " reboot_prompt
+if [[ $reboot_prompt != n* ]]; then
     echo "${YELLOW}:: ${BWHITE}Rebooting...${NC}"
     systemctl reboot
 fi
