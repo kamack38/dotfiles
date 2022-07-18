@@ -11,10 +11,10 @@
 # ------------
 # Set default node version
 set --universal nvm_default_version lts
-set -gx EDITOR nvim
-fish_add_path -aP $HOME/.local/bin
-fish_add_path -aP $HOME/.local/share/cargo/bin
+export PATH=$PATH:$HOME/.local/bin/:$HOME/.local/share/cargo/bin
 export DIFFPROG="delta"
+export EDITOR="nvim"
+export VISUAL="code"
 
 # Set gpg tty
 export GPG_TTY=(tty)
