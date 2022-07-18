@@ -212,7 +212,7 @@ function vsr -d "List recently opened files with vscode" -a serach
 end
 
 function fcd -d "cd into favourite your dir"
-    cd $(z -l | fzf --with-nth=2.. --preview 'exa -alF {2..}' --height 50% --layout=reverse | awk '{print substr($2, 1)}')
+    cd $(z -l | sed "s#/home/$USER#~#" | fzf --with-nth=2.. --preview 'exa -alF {2..}' --height 50% --layout=reverse | awk '{print substr($2, 1)}')
 end
 
 # ffmpeg
