@@ -17,6 +17,9 @@ local naughty = require("naughty")
 local menubar = require("menubar")
 local hotkeys_popup = require("awful.hotkeys_popup")
 
+-- Expose all windows
+local revelation = require("revelation")
+
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
 -- another config (This code will only ever execute for the fallback config)
@@ -47,6 +50,7 @@ end
 local chosen_theme = "kamack38"
 local theme_path = string.format("%s/.config/awesome/themes/%s/theme.lua", os.getenv("HOME"), chosen_theme)
 beautiful.init(theme_path)
+revelation.init()
 
 local terminal    = "kitty"
 local editor      = os.getenv("EDITOR") or "nano"
@@ -61,7 +65,7 @@ awful.util.terminal = terminal
 
 -- Table of layouts to cover with awful.layout.inc, order matters.
 awful.layout.layouts = {
-    awful.layout.suit.floating,
+    -- awful.layout.suit.floating,
     awful.layout.suit.tile,
     -- awful.layout.suit.tile.left,
     -- awful.layout.suit.tile.bottom,
@@ -70,9 +74,9 @@ awful.layout.layouts = {
     -- awful.layout.suit.fair.horizontal,
     -- awful.layout.suit.spiral,
     -- awful.layout.suit.spiral.dwindle,
-    awful.layout.suit.max,
+    -- awful.layout.suit.max,
     -- awful.layout.suit.max.fullscreen,
-    awful.layout.suit.magnifier,
+    -- awful.layout.suit.magnifier,
     -- awful.layout.suit.corner.nw,
     -- awful.layout.suit.corner.ne,
     -- awful.layout.suit.corner.sw,
@@ -137,15 +141,30 @@ root.buttons(gears.table.join(
 globalkeys = gears.table.join(
     awful.key({ modkey, }, "s", hotkeys_popup.show_help,
         { description = "show help", group = "awesome" }),
-    awful.key({ modkey, }, "Left", awful.tag.viewprev,
-        { description = "view previous", group = "tag" }),
-    awful.key({ modkey, }, "Right", awful.tag.viewnext,
+    awful.key({ modkey, }, "Tab", awful.tag.viewnext,
         { description = "view next", group = "tag" }),
+    awful.key({ modkey, "Shift" }, "Tab", awful.tag.viewprev,
+        { description = "view previous", group = "tag" }),
     awful.key({ modkey, }, "Escape", awful.tag.history.restore,
         { description = "go back", group = "tag" }),
 
-    awful.key({ modkey, }, "w", function() mymainmenu:show() end,
-        { description = "show main menu", group = "awesome" }),
+    -- Change focus
+    awful.key({ modkey, }, "Up", function() awful.client.focus.bydirection('up') end,
+        { description = "focus to the up", group = "layout" }),
+    awful.key({ modkey, }, "Down", function() awful.client.focus.bydirection('down') end,
+        { description = "focus to the down", group = "layout" }),
+    awful.key({ modkey, }, "Left", function() awful.client.focus.bydirection('left') end,
+        { description = "focus to the left", group = "layout" }),
+    awful.key({ modkey, }, "Right", function() awful.client.focus.bydirection('right') end,
+        { description = "focus to the right", group = "layout" }),
+
+    -- awful.key({ modkey, }, "w", function() mymainmenu:show() end,
+    --     { description = "show main menu", group = "awesome" }),
+
+    awful.key({ modkey, }, "w", function()
+        revelation({ rule = { class = "Polybar" }, is_excluded = true })
+    end,
+        { description = "expose all widnows", group = "client" }),
 
     -- Layout manipulation
     awful.key({ modkey, "Shift" }, "j", function() awful.client.swap.byidx(1) end,
@@ -483,6 +502,6 @@ client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_n
 
 -- Autostart
 awful.spawn.with_shell("picom --experimental-backends")
-awful.spawn.with_shell("feh --bg-fill ~/Pictures/Wallpapers/Branch-pine-needles-prickly-green-4k.jpg")
+-- awful.spawn.with_shell("feh --bg-fill ~/Pictures/Wallpapers/Branch-pine-needles-prickly-green-4k.jpg")
 awful.spawn.with_shell("~/.config/polybar/launch.sh")
 awful.spawn.with_shell("env GDK_BACKEND=x11 /usr/bin/ulauncher --hide-window --no-window-shadow")

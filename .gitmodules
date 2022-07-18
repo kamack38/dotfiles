@@ -6,3 +6,6 @@
 	path = .config/spicetify/Themes
 	url = https://github.com/spicetify/spicetify-themes
 	update = rebase
+[submodule ".config/awesome/revelation"]
+	path = .config/awesome/revelation
+	url = https://github.com/guotsuan/awesome-revelation
