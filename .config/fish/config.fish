@@ -11,7 +11,7 @@
 # ------------
 # Set default node version
 set --universal nvm_default_version lts
-export PATH=$PATH:$HOME/.local/bin/:$HOME/.local/share/cargo/bin
+export PATH="$PATH:$HOME/.local/bin/:$HOME/.local/share/cargo/bin"
 export DIFFPROG="delta"
 export EDITOR="nvim"
 export VISUAL="code"
