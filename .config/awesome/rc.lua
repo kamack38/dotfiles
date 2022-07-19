@@ -209,9 +209,11 @@ globalkeys = gears.table.join(
     awful.key({}, "XF86AudioStop", function() awful.util.spawn("playerctl stop") end),
     awful.key({}, "XF86AudioNext", function() awful.util.spawn("playerctl next") end),
     awful.key({}, "XF86AudioPrev", function() awful.util.spawn("playerctl previous") end),
+    awful.key({}, "XF86AudioMute", function() awful.util.spawn("pamixer -t") end),
     awful.key({}, "XF86AudioRaiseVolume", function() awful.util.spawn("pamixer -i 2") end),
     awful.key({}, "XF86AudioLowerVolume", function() awful.util.spawn("pamixer -d 2") end),
-    awful.key({}, "XF86AudioMute", function() awful.util.spawn("pamixer -t") end),
+    awful.key({ "Shift" }, "XF86AudioNext", function() awful.util.spawn("playerctl position 5+") end),
+    awful.key({ "Shift" }, "XF86AudioPrev", function() awful.util.spawn("playerctl position 5-") end),
 
     -- Standard program
     awful.key({ modkey, }, "`", function() awful.spawn(terminal) end,
