@@ -81,6 +81,7 @@ NORMAL_PROFILE=(
 	"chaotic-aur/garuda-hooks"         # Garuda pacman hooks
 	"mpdris2"                          # MPRIS2 support for MPD
 	"mpd"                              # Flexible, powerful, server-side application for playing music
+	"mpc"                              # Minimalist command line interface to MPD
 	"ncmpcpp"                          # Almost exact clone of ncmpc with some new features
 	"dbus-python"                      # Python bindings for DBUS (Polybar ...)
 	"python-google-api-python-client"  # Google API Client Library for Python (Polybar Gmail)
