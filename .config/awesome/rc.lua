@@ -256,7 +256,20 @@ globalkeys = gears.table.join(
 
     --- Menubar
     awful.key({ modkey }, "p", function() menubar.show() end,
-        { description = "show the menubar", group = "launcher" })
+        { description = "show the menubar", group = "launcher" }),
+
+    --- Un-minimize windows
+    awful.key({ modkey, ctrl }, "n",
+        function()
+            local c = awful.client.restore()
+            -- Focus restored client
+            if c then
+                c:emit_signal(
+                    "request::activate", "key.unminimize", { raise = true }
+                )
+            end
+        end,
+        { description = "restore minimized", group = "client" })
 )
 
 --- Client key bindings
@@ -290,19 +303,6 @@ clientkeys = gears.table.join(
             c.minimized = true
         end,
         { description = "minimize", group = "client" }),
-
-    --- Un-minimize windows
-    awful.key({ modkey, ctrl }, "n",
-        function()
-            local c = awful.client.restore()
-            -- Focus restored client
-            if c then
-                c:emit_signal(
-                    "request::activate", "key.unminimize", { raise = true }
-                )
-            end
-        end,
-        { description = "restore minimized", group = "client" }),
 
     --- Maximize windows
     awful.key({ modkey, }, "m",
