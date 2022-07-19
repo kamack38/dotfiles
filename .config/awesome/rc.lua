@@ -161,6 +161,11 @@ globalkeys = gears.table.join(
     awful.key({ modkey, }, "Right", function() awful.client.focus.bydirection('right') end,
         { description = "focus to the right", group = "layout" }),
 
+    -- awful.key({ modkey }, "Down", function(c) c:relative_move(0, 20, 0, 0) end),
+    -- awful.key({ modkey }, "Up", function(c) c:relative_move(0, -20, 0, 0) end),
+    -- awful.key({ modkey }, "Left", function(c) c:relative_move(-20, 0, 0, 0) end),
+    -- awful.key({ modkey }, "Right", function(c) c:relative_move(20, 0, 0, 0) end),
+
     -- awful.key({ modkey, }, "w", function() mymainmenu:show() end,
     --     { description = "show main menu", group = "awesome" }),
 
@@ -505,6 +510,6 @@ client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_n
 
 -- Autostart
 awful.spawn.with_shell("picom --experimental-backends")
--- awful.spawn.with_shell("feh --bg-fill ~/Pictures/Wallpapers/Branch-pine-needles-prickly-green-4k.jpg")
+awful.spawn.with_shell("feh --bg-fill ~/Pictures/Wallpapers/Branch-pine-needles-prickly-green-4k.jpg")
 awful.spawn.with_shell("~/.config/polybar/launch.sh")
 awful.spawn.with_shell("env GDK_BACKEND=x11 /usr/bin/ulauncher --hide-window --no-window-shadow")

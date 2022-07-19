@@ -31,7 +31,7 @@ theme.font = "sans 8"
 -- theme.border_marked = "#91231c"
 
 theme.dir                      = os.getenv("HOME") .. "/.config/awesome/themes/kamack38"
-theme.wallpaper                = os.getenv("HOME") .. "Pictures/Wallpapers/Branch-pine-needles-prickly-green-4k.jpg"
+-- theme.wallpaper                = os.getenv("HOME") .. "Pictures/Wallpapers/Branch-pine-needles-prickly-green-4k.jpg"
 theme.fg_normal                = "#ffffff"
 theme.fg_focus                 = "#A77AC4"
 theme.fg_urgent                = "#b74822"
