@@ -147,12 +147,19 @@ root.buttons(gears.table.join(
 --- Global key bindings
 --- ~~~~~~~~~~~~~~~~~~~
 globalkeys = gears.table.join(
+--- Show key bindings
     awful.key({ modkey, }, "s", hotkeys_popup.show_help,
         { description = "show help", group = "awesome" }),
+
+    --- Switch to next tag
     awful.key({ modkey, }, "Tab", awful.tag.viewnext,
         { description = "view next", group = "tag" }),
+
+    --- Switch to previous tag
     awful.key({ modkey, shift }, "Tab", awful.tag.viewprev,
         { description = "view previous", group = "tag" }),
+
+    --- Switch to previously selected tag
     awful.key({ modkey, }, "Escape", awful.tag.history.restore,
         { description = "go back", group = "tag" }),
 
@@ -169,6 +176,7 @@ globalkeys = gears.table.join(
     -- awful.key({ modkey, }, "w", function() mymainmenu:show() end,
     --     { description = "show main menu", group = "awesome" }),
 
+    --- Expose all windows
     awful.key({ modkey, }, "w", function()
         revelation({ rule = { class = "Polybar" }, is_excluded = true })
     end,
@@ -188,19 +196,11 @@ globalkeys = gears.table.join(
     awful.key({ alt, }, "Tab",
         function()
             awful.client.focus.byidx(1)
-            -- awful.client.focus.history.previous()
-            -- if client.focus then
-            --     client.focus:raise()
-            -- end
         end,
         { description = "focus next by index", group = "client" }),
     awful.key({ alt, shift }, "Tab",
         function()
             awful.client.focus.byidx(-1)
-            -- awful.client.focus.history.previous()
-            -- if client.focus then
-            --     client.focus:raise()
-            -- end
         end,
         { description = "focus previous by index", group = "client" }),
 
@@ -208,6 +208,14 @@ globalkeys = gears.table.join(
     awful.key({ modkey }, "c", function()
         awful.placement.centered(c, { honor_workarea = true, honor_padding = true })
     end),
+
+    --- Brightness Control
+    awful.key({}, "XF86MonBrightnessUp", function()
+        awful.spawn("brightnessctl set 5%+ -q", false)
+    end, { description = "increase brightness", group = "hotkeys" }),
+    awful.key({}, "XF86MonBrightnessDown", function()
+        awful.spawn("brightnessctl set 5%- -q", false)
+    end, { description = "decrease brightness", group = "hotkeys" }),
 
     --- Media keys
     awful.key({}, "XF86AudioPlay", function() awful.util.spawn("playerctl play-pause") end),
@@ -562,6 +570,6 @@ client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_n
 
 -- Autostart
 awful.spawn.with_shell("picom --experimental-backends")
-awful.spawn.with_shell("feh --bg-fill ~/Pictures/Wallpapers/Branch-pine-needles-prickly-green-4k.jpg")
+-- awful.spawn.with_shell("feh --bg-fill ~/Pictures/Wallpapers/Branch-pine-needles-prickly-green-4k.jpg")
 awful.spawn.with_shell("~/.config/polybar/launch.sh")
 awful.spawn.with_shell("env GDK_BACKEND=x11 /usr/bin/ulauncher --hide-window --no-window-shadow")

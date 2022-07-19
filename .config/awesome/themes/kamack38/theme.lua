@@ -1,37 +1,13 @@
 ---------------------------
 -- Default awesome theme --
 ---------------------------
-
-local theme_assets = require("beautiful.theme_assets")
-local xresources = require("beautiful.xresources")
-local dpi = xresources.apply_dpi
-
 local gfs = require("gears.filesystem")
 local themes_path = gfs.get_themes_dir()
 
 local theme = {}
 
-theme.font = "sans 8"
-
--- theme.bg_normal   = "#222222"
--- theme.bg_focus    = "#535d6c"
--- theme.bg_urgent   = "#ff0000"
--- theme.bg_minimize = "#444444"
--- theme.bg_systray  = theme.bg_normal
-
--- theme.fg_normal   = "#aaaaaa"
--- theme.fg_focus    = "#ffffff"
--- theme.fg_urgent   = "#ffffff"
--- theme.fg_minimize = "#ffffff"
-
--- theme.useless_gap   = dpi(0)
--- theme.border_width  = dpi(1)
--- theme.border_normal = "#000000"
--- theme.border_focus  = "#535d6c"
--- theme.border_marked = "#91231c"
-
 theme.dir                      = os.getenv("HOME") .. "/.config/awesome/themes/kamack38"
--- theme.wallpaper                = os.getenv("HOME") .. "Pictures/Wallpapers/Branch-pine-needles-prickly-green-4k.jpg"
+theme.wallpaper                = os.getenv("HOME") .. "/Pictures/Wallpapers/Branch-pine-needles-prickly-green-4k.jpg"
 theme.fg_normal                = "#ffffff"
 theme.fg_focus                 = "#A77AC4"
 theme.fg_urgent                = "#b74822"
@@ -56,7 +32,31 @@ theme.tasklist_plain_task_name = true
 theme.tasklist_disable_icon    = true
 theme.useless_gap              = 4
 
--- Icons
+--- Bling window switcher
+theme.window_switcher_widget_bg = theme.bg_normal
+theme.window_switcher_widget_border_width = theme.border_width
+theme.window_switcher_widget_border_radius = 10
+theme.window_switcher_widget_border_color = "#F0F0F0AA"
+theme.window_switcher_clients_spacing = 20
+theme.window_switcher_client_icon_horizontal_spacing = 5
+theme.window_switcher_client_width = 150
+theme.window_switcher_client_height = 250
+theme.window_switcher_client_margins = 10
+theme.window_switcher_thumbnail_margins = 5
+theme.thumbnail_scale = false
+theme.window_switcher_name_margins = 10
+theme.window_switcher_name_valign = "center"
+theme.window_switcher_name_forced_width = 200
+theme.window_switcher_name_font = "sans 11"
+theme.window_switcher_name_normal_color = theme.fg_normal
+theme.window_switcher_name_focus_color = theme.fg_focus
+theme.window_switcher_icon_valign = "center"
+theme.window_switcher_icon_width = 40
+
+--- Fonts
+theme.font = "sans 8"
+
+--- Icons
 theme.menu_submenu_icon                         = theme.dir .. "/icons/submenu.png"
 theme.awesome_icon                              = theme.dir .. "/icons/awesome.png"
 theme.taglist_squares_sel                       = theme.dir .. "/icons/square_sel.png"
