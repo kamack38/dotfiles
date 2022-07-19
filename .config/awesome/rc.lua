@@ -61,6 +61,9 @@ local ctrlkey     = "Control"
 local mediaplayer = "mpv"
 local filemanager = "dolphin"
 
+awful.util.tagnames = { " Main ", " Secondary ", " DEV ", " Social ", " Gaming ", " Misc " }
+local tag_count = 6
+
 awful.util.terminal = terminal
 
 -- Table of layouts to cover with awful.layout.inc, order matters.
@@ -89,15 +92,15 @@ awful.layout.layouts = {
 -- {{{ Menu
 -- Create a launcher widget and a main menu
 myawesomemenu = {
-    { "hotkeys", function() hotkeys_popup.show_help(nil, awful.screen.focused()) end },
-    { "manual", terminal .. " -e man awesome" },
-    { "edit config", editor_cmd .. " " .. awesome.conffile },
-    { "restart", awesome.restart },
-    { "quit", function() awesome.quit() end },
+    { "Hotkeys", function() hotkeys_popup.show_help(nil, awful.screen.focused()) end },
+    { "Manual", terminal .. " -e man awesome" },
+    { "Edit config", editor_cmd .. " " .. awesome.conffile },
+    { "Restart", awesome.restart },
+    { "Quit", function() awesome.quit() end },
 }
 
 mymainmenu = awful.menu({ items = { { "awesome", myawesomemenu, beautiful.awesome_icon },
-    { "open terminal", terminal }
+    { "Open terminal", terminal }
 }
 })
 
@@ -125,7 +128,7 @@ awful.screen.connect_for_each_screen(function(s)
     set_wallpaper(s)
 
     -- Each screen has its own tag table.
-    awful.tag({ "1", "2", "3", "4", "5", "6", "7", "8", "9" }, s, awful.layout.layouts[1])
+    awful.tag({ "1", "2", "3", "4", "5", "6" }, s, awful.layout.layouts[1])
 end)
 -- }}}
 
@@ -291,7 +294,7 @@ clientkeys = gears.table.join(
 -- Bind all key numbers to tags.
 -- Be careful: we use keycodes to make it work on any keyboard layout.
 -- This should map on the top row of your keyboard, usually 1 to 9.
-for i = 1, 9 do
+for i = 1, tag_count do
     globalkeys = gears.table.join(globalkeys,
         -- View tag only.
         awful.key({ modkey }, "#" .. i + 9,
