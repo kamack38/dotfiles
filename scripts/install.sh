@@ -69,7 +69,7 @@ NORMAL_PROFILE=(
 	"libqalculate"                     # Calculator (qalc)
 	"cava"                             # Audio visualizer
 	"ttf-font-awesome"                 # Font Awesome font
-	"rofi"                             # Better dmenu, menu
+	"ulauncher"                        # Application launcher for Linux
 	"playerctl"                        # Command-line utility and library for controlling media players
 	"mpv-mpris"                        # mpv mpris support
 	"update-grub"                      # Utility for updating grup config
