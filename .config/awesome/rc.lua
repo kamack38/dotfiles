@@ -204,6 +204,15 @@ globalkeys = gears.table.join(
         end,
         { description = "focus previous by index", group = "client" }),
 
+    -- Media keys
+    awful.key({}, "XF86AudioPlay", function() awful.util.spawn("playerctl play-pause") end),
+    awful.key({}, "XF86AudioStop", function() awful.util.spawn("playerctl stop") end),
+    awful.key({}, "XF86AudioNext", function() awful.util.spawn("playerctl next") end),
+    awful.key({}, "XF86AudioPrev", function() awful.util.spawn("playerctl previous") end),
+    awful.key({}, "XF86AudioRaiseVolume", function() awful.util.spawn("pamixer -i 2") end),
+    awful.key({}, "XF86AudioLowerVolume", function() awful.util.spawn("pamixer -d 2") end),
+    awful.key({}, "XF86AudioMute", function() awful.util.spawn("pamixer -t") end),
+
     -- Standard program
     awful.key({ modkey, }, "`", function() awful.spawn(terminal) end,
         { description = "open a terminal", group = "launcher" }),
@@ -440,6 +449,9 @@ client.connect_signal("manage", function(c)
     -- Set the windows at the slave,
     -- i.e. put it at the end of others instead of setting it master.
     -- if not awesome.startup then awful.client.setslave(c) end
+    -- c.shape = function(cr, w, h)
+    --     gears.shape.rounded_rect(cr, w, h, 10)
+    -- end
 
     if awesome.startup
         and not c.size_hints.user_position
