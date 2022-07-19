@@ -6,4 +6,3 @@ return {
 	-- run = require(... .. ".run"),
 	-- ui = require(... .. ".ui"),
 }
--- Source: https://github.com/rxyhn/dotfiles/
