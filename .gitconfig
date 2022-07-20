@@ -1,35 +1,36 @@
 [core]
-    editor = code --wait
-	
+editor = code --wait
+
 [user]
-    name = kamack38
-    email = 64226248+kamack38@users.noreply.github.com
-    signingkey = C4583B304CDA4CA0
+name = kamack38
+email = 64226248+kamack38@users.noreply.github.com
+signingkey = C4583B304CDA4CA0
 
 [commit]
-    gpgsign = true
+gpgsign = true
 
 [tag]
-    gpgSign = true
+gpgSign = true
 
 [alias]
-    dtf = !git --git-dir=$HOME/.dotfiles --work-tree=$HOME
-    alias = !git config --list | grep ^alias\\. | cut -c 7- | grep -Ei --color \"$1\" "#"
-    gconfig = !git config --global
-    commits = !git log --all --graph --pretty=format:'%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
-    unstage = restore --staged
-    clean-remotes = remote prune origin
-    s = status -s
-    u = add -u
-    b = branch
-    ba = branch -a
-    co = checkout
-    cm = !git cz && git push
-    cdf = diff --cached
-    can = commit --amend --no-edit
-    pon = !git push -u origin $(git rev-parse --abbrev-ref HEAD)
-    pr = pull --rebase
-    quickhelp = "!{ \
+dtf = !git --git-dir=$HOME/.dotfiles --work-tree=$HOME
+alias = !git config --list | grep ^alias\\. | cut -c 7- | grep -Ei --color \"$1\" "#"
+gconfig = !git config --global
+commits = !git log --all --graph --pretty=format:'%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+unstage = restore --staged
+clean-remotes = remote prune origin
+repo-size = count-objects -vH
+s = status -s
+u = add -u
+b = branch
+ba = branch -a
+co = checkout
+cm = !git cz && git push
+cdf = diff --cached
+can = commit --amend --no-edit
+pon = !git push -u origin $(git rev-parse --abbrev-ref HEAD)
+pr = pull --rebase
+quickhelp = "!{ \
             echo stash - create stash; \
             echo clean - revert file to current commit; \
           };"
@@ -38,64 +39,64 @@
 
 # Github
 [url "git@github.com:"]
-    insteadOf = "gh:"
-    pushInsteadOf = "github:"
-    pushInsteadOf = "git://github.com/"
+insteadOf = "gh:"
+pushInsteadOf = "github:"
+pushInsteadOf = "git://github.com/"
 
 [url "git://github.com/"]
-    insteadOf = "github:"
+insteadOf = "github:"
 
 # Gist
 [url "git@gist.github.com:"]
-    insteadOf = "gst:"
-    pushInsteadOf = "gist:"
-    pushInsteadOf = "git://gist.github.com/"
+insteadOf = "gst:"
+pushInsteadOf = "gist:"
+pushInsteadOf = "git://gist.github.com/"
 
 [url "git://gist.github.com/"]
-    insteadOf = "gist:"
+insteadOf = "gist:"
 
 # Gitlab
 [url "git@gitlab.com:"]
-    insteadOf = "gl:"
-    pushInsteadOf = "gitlab:"
-    pushInsteadOf = "git://gitlab.com/"
+insteadOf = "gl:"
+pushInsteadOf = "gitlab:"
+pushInsteadOf = "git://gitlab.com/"
 
 [url "git://gitlab.com/"]
-    insteadOf = "gitlab:"
+insteadOf = "gitlab:"
 
 # AUR
 [url "aur@aur.archlinux.org:"]
-    insteadOf = "aur:"
-    pushInsteadOf = "git://aur@aur.archlinux.org"
-
+insteadOf = "aur:"
+pushInsteadOf = "git://aur@aur.archlinux.org"
 
 [color]
-    ui = true
+ui = true
 
 [help]
-    autocorrect = 1
+autocorrect = 1
 
 [pager]
-    diff = delta
-    log = delta
-    reflog = delta
-    show = delta
+diff = delta
+log = delta
+reflog = delta
+show = delta
 
 [delta]
-    plus-style = "syntax #012800"
-    minus-style = "syntax #340001"
-    syntax-theme = OneHalfDark
-    navigate = true
-    line-numbers = true
-    side-by-side = true
+plus-style = "syntax #012800"
+minus-style = "syntax #340001"
+syntax-theme = OneHalfDark
+navigate = true
+line-numbers = true
+side-by-side = true
 
 [interactive]
-    diffFilter = delta --color-only
+diffFilter = delta --color-only
+
 [init]
-    defaultBranch = main
+defaultBranch = main
+
 [credential "https://github.com"]
-	helper = 
-	helper = !/usr/bin/gh auth git-credential
+helper = !/usr/bin/gh auth git-credential
+
 [credential "https://gist.github.com"]
-	helper = 
-	helper = !/usr/bin/gh auth git-credential
+helper = !/usr/bin/gh auth git-credential
