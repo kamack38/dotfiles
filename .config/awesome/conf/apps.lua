@@ -1,0 +1,25 @@
+local term = "kitty"
+
+return {
+	--- Default Applications
+	default = {
+		--- Default terminal emulator
+		terminal = term,
+		--- Default music client
+		music_player = term .. " -e ncmpcpp",
+		--- Default text editor
+		text_editor = term .. "-e nvim",
+		--- Default code editor
+		code_editor = "code",
+		--- Default web browser
+		web_browser = "firefox",
+		--- Default file manager
+		file_manager = "dolpin",
+		--- Default network manager
+		network_manager = term .. " -e nmtui",
+		--- Default bluetooth manager
+		-- bluetooth_manager = "blueman-manager",
+		--- Default power manager
+		-- power_manager = "xfce4-power-manager",
+	}
+}
