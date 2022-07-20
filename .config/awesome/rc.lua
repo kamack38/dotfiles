@@ -108,9 +108,9 @@ mymainmenu = awful.menu({ items = { { "awesome", myawesomemenu, beautiful.awesom
 }
 })
 
--- Menubar configuration
+
 menubar.utils.terminal = terminal -- Set the terminal for applications that require it
--- }}}
+
 
 local function set_wallpaper(s)
     -- Wallpaper
@@ -134,7 +134,6 @@ awful.screen.connect_for_each_screen(function(s)
     -- Each screen has its own tag table.
     awful.tag({ "1", "2", "3", "4", "5", "6" }, s, awful.layout.layouts[1])
 end)
--- }}}
 
 -- {{{ Mouse bindings
 root.buttons(gears.table.join(
@@ -491,15 +490,15 @@ awful.rules.rules = {
 }
 -- }}}
 
--- {{{ Signals
+--- Signals
 -- Signal function to execute when a new client appears.
 client.connect_signal("manage", function(c)
     -- Set the windows at the slave,
     -- i.e. put it at the end of others instead of setting it master.
-    -- if not awesome.startup then awful.client.setslave(c) end
-    -- c.shape = function(cr, w, h)
-    --     gears.shape.rounded_rect(cr, w, h, 10)
-    -- end
+    if not awesome.startup then awful.client.setslave(c) end
+    c.shape = function(cr, w, h)
+        gears.shape.rounded_rect(cr, w, h, beautiful.corner_radious)
+    end
 
     if awesome.startup
         and not c.size_hints.user_position

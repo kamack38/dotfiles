@@ -6,6 +6,10 @@ local themes_path = gfs.get_themes_dir()
 
 local theme = {}
 
+--- Special
+theme.transparent = "#00000000"
+
+--- Theme
 theme.dir                      = os.getenv("HOME") .. "/.config/awesome/themes/kamack38"
 theme.wallpaper                = os.getenv("HOME") .. "/Pictures/Wallpapers/Branch-pine-needles-prickly-green-4k.jpg"
 theme.fg_normal                = "#ffffff"
@@ -31,6 +35,7 @@ theme.menu_width               = 140
 theme.tasklist_plain_task_name = true
 theme.tasklist_disable_icon    = true
 theme.useless_gap              = 4
+theme.corner_radious           = 10
 
 --- Bling window switcher
 theme.window_switcher_widget_bg = theme.bg_normal
