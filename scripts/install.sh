@@ -153,7 +153,7 @@ INTEL_DRIVERS=(
 # Default vars
 HELPER="paru"
 DOTFILES="$HOME/.dotfiles"
-REPO="https://github.com/kamack38/linux-dotfiles"
+REPO="https://github.com/kamack38/dotfiles"
 NEOVIM_CONFIG_DIR="$HOME/.config/nvim"
 SPOTIFY_PREFS="$HOME/.config/spotify/prefs"
 NVCHAD_URL="https://github.com/NvChad/NvChad"
