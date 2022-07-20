@@ -368,15 +368,15 @@ for i = 1, tag_count do
             end,
             { description = "view tag #" .. i, group = "tag" }),
         -- Toggle tag display.
-        awful.key({ modkey, ctrl }, "#" .. i + 9,
-            function()
-                local screen = awful.screen.focused()
-                local tag = screen.tags[i]
-                if tag then
-                    awful.tag.viewtoggle(tag)
-                end
-            end,
-            { description = "toggle tag #" .. i, group = "tag" }),
+        -- awful.key({ modkey, ctrl }, "#" .. i + 9,
+        --     function()
+        --         local screen = awful.screen.focused()
+        --         local tag = screen.tags[i]
+        --         if tag then
+        --             awful.tag.viewtoggle(tag)
+        --         end
+        --     end,
+        --     { description = "toggle tag #" .. i, group = "tag" }),
         -- Move client to tag.
         awful.key({ modkey, shift }, "#" .. i + 9,
             function()
@@ -570,6 +570,5 @@ client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_n
 
 -- Autostart
 awful.spawn.with_shell("picom --experimental-backends")
--- awful.spawn.with_shell("feh --bg-fill ~/Pictures/Wallpapers/Branch-pine-needles-prickly-green-4k.jpg")
 awful.spawn.with_shell("~/.config/polybar/launch.sh")
 awful.spawn.with_shell("env GDK_BACKEND=x11 /usr/bin/ulauncher --hide-window --no-window-shadow")
