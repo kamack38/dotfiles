@@ -31,6 +31,7 @@ KDE_PACKAGES=(
 	"gwenview"                            # Image viewer
 	"qt5-imageformats"                    # Add more image formats (webp)
 	"plasma-browser-integration"          # Integrate browser and plasma
+	"sddm"                                # QML based X11 and Wayland display manager
 )
 
 CUSTOMIZATION_PACKAGES=(
