@@ -2,7 +2,6 @@
 -- @author https://github.com/rxyhn
 -- @copyright 2007 Free Software Foundation, Inc.
 -------------------------------------------
-
 local awful = require("awful")
 local gears = require("gears")
 local beautiful = require("beautiful")
