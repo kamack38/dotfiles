@@ -14,7 +14,7 @@ set --universal nvm_default_version lts
 export PATH="$PATH:$HOME/.local/bin/:$HOME/.local/share/cargo/bin"
 export DIFFPROG="delta"
 export EDITOR="nvim"
-export VISUAL="code"
+# export VISUAL="code"
 
 # Set gpg tty
 export GPG_TTY=(tty)
@@ -22,12 +22,12 @@ export GPG_TTY=(tty)
 # Enable colored output
 export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 
-# Qt theme
+# Qt theme 
 export QT_QPA_PLATFORMTHEME="kde"
+
 # ------------
 # XDG
 # ------------
-# XDG paths
 export XDG_CACHE_HOME="$HOME/.cache"
 export XDG_STATE_HOME="$HOME/.local/state"
 export XDG_CONFIG_HOME="$HOME/.config"
