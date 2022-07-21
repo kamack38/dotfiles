@@ -28,6 +28,7 @@ AWESOMEWM_PACKAGES=(
 	"sddm"               # QML based X11 and Wayland display manager
 	"clipster"           # Python clipboard manager
 	"brightnessctl"      # Lightweight brightness control tool
+	"picom-jonaburg-git" # jonaburg's picom fork with tryone144's dual_kawase blur and ibhagwan's rounded corners, an X compositor (compton's fork)
 )
 
 echo "${GREEN}:: ${BWHITE}Installing awesomeWM and its components...${NC}"
