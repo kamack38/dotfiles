@@ -67,7 +67,8 @@ ruled.client.connect_signal("request::rules", function()
 		},
 		properties = {
 			border_width = 0,
-			focusable = false
+			focusable = false,
+			below = true
 		}
 	})
 
