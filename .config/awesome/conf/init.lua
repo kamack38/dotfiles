@@ -1,3 +1,4 @@
+require(... .. ".autostart")
 require(... .. ".desktop")
 require(... .. ".keys")
 require(... .. ".layout")

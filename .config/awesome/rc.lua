@@ -122,8 +122,3 @@ end
 client.connect_signal("focus", border_adjust)
 client.connect_signal("property::maximized", border_adjust)
 client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
-
--- Autostart
-awful.spawn.with_shell("picom --experimental-backends")
-awful.spawn.with_shell("~/.config/polybar/launch.sh")
-awful.spawn.with_shell("env GDK_BACKEND=x11 /usr/bin/ulauncher --hide-window --no-window-shadow")
