@@ -59,7 +59,16 @@ theme.window_switcher_icon_valign = "center"
 theme.window_switcher_icon_width = 40
 
 --- Fonts
-theme.font = "sans 8"
+theme.font      = "sans 8"
+theme.font_name = "Roboto "
+
+--- Notifications
+theme.notification_font = theme.font_name
+theme.notification_width = 325
+theme.notification_height = 125
+theme.notification_icon_size = 115
+theme.notification_border_color = "#1e1e2e"
+theme.notification_fg = "#f5e0dc"
 
 --- Icons
 theme.menu_submenu_icon                         = theme.dir .. "/icons/submenu.png"
