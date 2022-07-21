@@ -45,19 +45,10 @@ $HELPER -S --noconfirm --needed --quiet "${KDE_PACKAGES[@]}"
 
 # Enable services
 sudo systemctl enable touchegg.service
-sudo systemctl enable sddm.service
-
-# Autologin
-read -rp "${YELLOW}:: ${BWHITE}Do you want to enable automatic login? [y/N]${NC}: " auto_login
-
-if [[ $auto_login == y* ]]; then
-	echo "${BLUE}:: ${BWHITE}Enabling automatic login...${NC}"
-	CURRENT_USER="$USER"
-	sudo tee /etc/sddm.conf.d/autologin.conf >/dev/null <<EOT
-[Autologin]
-User=${CURRENT_USER}
-Session=plasma
-EOT
+if [[ $(systemctl is-enabled sddm-plymouth.service 2>/dev/null) == enabled ]]; then
+	echo "${YELLOW}:: ${BWHITE}It seems that you have sddm-plymouth service enabled${NC} -- skipping sddm service"
+else
+	sudo systemctl enable sddm.service
 fi
 
 # Add archcraft repository

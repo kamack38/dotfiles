@@ -164,6 +164,7 @@ SECONDARY_LOCALE="pl_PL.UTF-8"
 SPELLCHECK_LOCALES=("${MAIN_LOCALE/_*/}" "${SECONDARY_LOCALE/_*/}")
 KB_LAYOUT="pl"
 MAKEFLAGS="-j$(nproc)"
+CURRENT_USER="$USER"
 
 # Root notice
 if [ "$(id -u)" = 0 ]; then
@@ -435,29 +436,54 @@ fi
 echo "${BLUE}:: ${BWHITE}Updating ${BLUE}submodules${NC}"
 git --git-dir="$DOTFILES" --work-tree="$HOME" submodule update --init --remote
 
-# Additional tools
-echo "${BLUE}:: ${BWHITE}Which DE do you want to install?${NC}"
-echo "	1) None 2) KDE 3) xfce"
-read -rp "Enter a number (default=1): " de_script
-
 # Enable services
 echo "${BLUE}:: ${BWHITE}Enabling services...${NC}"
 systemctl --user enable mpd.service
 systemctl --user enable mpDris2.service
 
-case $de_script in
+# Desktop setup
+echo "${BLUE}:: ${BWHITE}Select desktop environments to install...${NC}"
+echo "${BLUE}:: ${BWHITE}Use TAB to select more than one.${NC}"
+echo "${BLUE}:: ${BWHITE}Press ESCAPE to exit.${NC}"
+DESKTOP_ENVIRONMENTS=(
+	"KDE"
+	"Xfce"
+	"AwesomeWM"
+)
 
-2)
-	bash "$HOME/scripts/kde.sh"
-	;;
+SELECTED_DE=$(printf "%s\n" "${DESKTOP_ENVIRONMENTS[@]}" | fzf --multi --height=20% --layout=reverse || true)
 
-3)
-	bash "$HOME/scripts/xfce.sh"
-	;;
-*)
-	echo "${YELLOW}:: ${BWHITE}Skipping..."
-	;;
-esac
+if [[ "${SELECTED_DE}" != "" ]]; then
+	for DE in $SELECTED_DE; do
+		DE=$(echo $DE | awk '{print tolower($0)}')
+		bash "$HOME/scripts/${DE}.sh"
+	done
+else
+	echo "${YELLOW}:: ${BWHITE}No desktop environment selected${NC} -- skipping"
+fi
+
+if [[ $(pacman -Q sddm) ]]; then
+	read -rp "${YELLOW}:: ${BWHITE}Do you want to enable automatic login? [y/N]${NC}: " auto_login
+
+	if [[ $auto_login == y* ]]; then
+		SESSIONS=(
+			"awesome"
+			"plasma"
+		)
+		echo "${BLUE}:: ${BWHITE}Select session to which you want to be logged in automatically...${NC}"
+		SESSION=$(printf "%s\n" "${SESSIONS[@]}" | fzf --height=20% --layout=reverse)
+		if [[ $SESSION != "" ]]; then
+			echo "${BLUE}:: ${BWHITE}Enabling automatic login...${NC}"
+			sudo tee /etc/sddm.conf.d/autologin.conf >/dev/null <<EOT
+[Autologin]
+User=${CURRENT_USER}
+Session=plasma
+EOT
+		else
+			echo "${RED}:: ${BHWITE}No session selected${NC} -- skipping"
+		fi
+	fi
+fi
 
 PLYMOUTH_PACKAGES=(
 	"plymouth"                 # Startup screen
@@ -604,7 +630,6 @@ if [[ $razer_script == y* ]]; then
 	$HELPER -S --noconfirm --needed --quiet "${RAZER_PACKAGES[@]}"
 
 	# Add current user to plugdev group
-	CURRENT_USER="$USER"
 	sudo gpasswd -a $CURRENT_USER plugdev
 fi
 
