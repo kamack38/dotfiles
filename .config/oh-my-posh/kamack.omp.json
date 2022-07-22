@@ -239,6 +239,15 @@
                     "type": "rust"
                 },
                 {
+                    "background": "#000080",
+                    "foreground": "#fff",
+                    "invert_powerline": true,
+                    "powerline_symbol": "",
+                    "style": "powerline",
+                    "template": "  {{ .Full }} ",
+                    "type": "lua"
+                },
+                {
                     "background": "#FEAC19",
                     "foreground": "#ffffff",
                     "invert_powerline": true,
