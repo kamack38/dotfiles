@@ -70,6 +70,16 @@
                     },
                     "style": "powerline",
                     "type": "git"
+                },
+                {
+                    "background": "#ffeb3b",
+                    "foreground": "#193549",
+                    "powerline_symbol": "",
+                    "properties": {
+                        "fetch_status": true
+                    },
+                    "style": "powerline",
+                    "type": "svn"
                 }
             ],
             "type": "prompt"
@@ -128,6 +138,7 @@
                     "invert_powerline": true,
                     "powerline_symbol": "",
                     "style": "powerline",
+                    "template": " R {{ .Full }} ",
                     "type": "r"
                 },
                 {
@@ -246,6 +257,15 @@
                     "style": "powerline",
                     "template": "  {{ .Full }} ",
                     "type": "lua"
+                },
+                {
+                    "background": "#1E9748",
+                    "foreground": "#E8EAEE",
+                    "invert_powerline": true,
+                    "powerline_symbol": "",
+                    "style": "powerline",
+                    "template": "  cmake {{ .Full }} ",
+                    "type": "cmake"
                 },
                 {
                     "background": "#FEAC19",
