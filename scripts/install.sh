@@ -592,6 +592,21 @@ Section "InputClass"
     Option "AccelSpeed" "-1"
 EndSection
 EOT
+	echo "${BLUE}:: ${BWHITE}Adding ${BLUE}libinput${BWHITE} support...${NC}"
+	$HELPER -S --noconfirm --needed --quiet libinput
+	sudo tee /etc/X11/xorg.conf.d/40-libinput.conf >/dev/null <<EOT
+Section "InputClass"
+	Identifier "libinput touchpad catchall"
+	MatchIsTouchpad "on"
+	MatchDevicePath "/dev/input/event*"
+	Driver "libinput"
+	# Enable left mouse button by tapping
+	Option "Tapping" "on"
+	Option "TappingButtonMap" "lrm"
+   	Option "NaturalScrolling" "on"
+	Option "ScrollMethod" "twofinger"
+EndSection
+EOT
 fi
 
 read -rp "${BLUE}:: ${BWHITE}Do you want to setup additional programming fonts? [Y/n]${NC}: " fonts_setup
