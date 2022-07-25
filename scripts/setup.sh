@@ -55,6 +55,11 @@ TOTAL_RAM=$(echo "scale=1; $(cat /proc/meminfo | grep -i 'memtotal' | grep -o '[
 echo "${YELLOW}:: ${BWHITE}You have ${TOTAL_RAM}GB of RAM${NC}"
 read -rep "${YELLOW}:: ${BWHITE}Do you wish to create 8GB swap? [Y/n]${NC}" SWAP
 
+# Swap on zram
+if [[ $SWAP == n* ]]; then
+    read -rep "${YELLOW}:: ${BWHITE}Do you wish to create ${TOTAL_RAM}GB swap on zram? [y/N]${NC}" ZRAM
+fi
+
 # Create luks password (encryption)
 while true; do
     echo -n "${YELLOW}:: ${BWHITE}Please enter your luks password: ${NC}"
@@ -278,6 +283,20 @@ function chroot {
     fi
     sed -i "s%^GRUB_CMDLINE_LINUX_DEFAULT=\"%GRUB_CMDLINE_LINUX_DEFAULT=\"cryptdevice=UUID=${ENCRYPTED_PARTITION_UUID}:root root=/dev/mapper/root %" /etc/default/grub
     sed -i "s/^#GRUB_ENABLE_CRYPTODISK=y/GRUB_ENABLE_CRYPTODISK=y/" /etc/default/grub
+
+    if [[ $ZRAM == y* ]]; then
+        echo "${BLUE}:: ${BWHITE}Creating swap on zram...${NC}"
+        pacman -S zram-generator
+        systemctl daemon-reload
+        systemctl start /dev/zram0
+        tee /etc/systemd/zram-generator.conf >/dev/null <<EOT
+[zram0]
+host-memory-limit = none
+zram-fraction = 1
+max-zram-size = none
+compression-algorithm = zstd
+EOT
+    fi
 
     if [[ $SWAP != n* ]]; then
         echo "${BLUE}:: ${BWHITE}Adding hibernation...${NC}"
