@@ -269,7 +269,6 @@ if [[ $SWAP != n* ]]; then
     mkswap /mnt/opt/swap/swapfile
     swapon /mnt/opt/swap/swapfile
     echo "/opt/swap/swapfile	none	swap	sw	0	0" >>/mnt/etc/fstab
-
 fi
 
 function chroot {
@@ -277,7 +276,7 @@ function chroot {
     if [[ -d "/sys/firmware/efi" ]]; then
         grub-install --efi-directory=/boot ${DISK}
     fi
-    sed -i "s%GRUB_CMDLINE_LINUX_DEFAULT=\"%GRUB_CMDLINE_LINUX_DEFAULT=\"cryptdevice=UUID=${ENCRYPTED_PARTITION_UUID}:root root=/dev/mapper/root %g" /etc/default/grub
+    sed -i "s%^GRUB_CMDLINE_LINUX_DEFAULT=\"%GRUB_CMDLINE_LINUX_DEFAULT=\"cryptdevice=UUID=${ENCRYPTED_PARTITION_UUID}:root root=/dev/mapper/root %" /etc/default/grub
     sed -i "s/^#GRUB_ENABLE_CRYPTODISK=y/GRUB_ENABLE_CRYPTODISK=y/" /etc/default/grub
 
     if [[ $SWAP != n* ]]; then
