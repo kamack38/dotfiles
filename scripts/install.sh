@@ -115,10 +115,12 @@ SOUND_PROFILE=(
 	"pamixer"             # Pulseaudio command-line mixer like amixer
 )
 
-BLUETOOTH_PROFILE=("bluetooth-support")
+BLUETOOTH_PROFILE=(
+	"bluetooth-support" # Metapkg containing needed packages for using Bluetooth
+)
 
 RUST_DEV=(
-	"rustup"
+	"rustup" # The Rust toolchain installer
 )
 
 NVIDIA_DRIVERS=(
@@ -148,6 +150,28 @@ INTEL_DRIVERS=(
 	"lib32-vulkan-intel"
 	"vulkan-icd-loader"
 	"lib32-vulkan-icd-loader"
+)
+
+DESKTOP_ENVIRONMENTS=(
+	"KDE"
+	"Xfce"
+	"AwesomeWM"
+)
+
+PLYMOUTH_PACKAGES=(
+	"plymouth"                 # A graphical boot splash screen with kernel mode-setting support
+	"archcraft-plymouth-theme" # Default plymouth theme for Archcraft
+)
+
+RAZER_PACKAGES=(
+	"polychromatic-git"  # RGB lighting management front-end application for OpenRazer
+	"openrazer-meta-git" # Meta package for installing all required openrazer packages
+)
+
+SECURITY_PACKAGES=(
+	"lynis"        # Security and system auditing tool to harden Unix/Linux systems
+	"rkhunter"     # Checks machines for the presence of rootkits and other unwanted tools
+	"libpwquality" # Library for password quality checking and generating random passwords
 )
 
 # Default vars
@@ -445,11 +469,6 @@ systemctl --user enable mpDris2.service
 echo "${BLUE}:: ${BWHITE}Select desktop environments to install...${NC}"
 echo "${BLUE}:: ${BWHITE}Use TAB to select more than one.${NC}"
 echo "${BLUE}:: ${BWHITE}Press ESCAPE to exit.${NC}"
-DESKTOP_ENVIRONMENTS=(
-	"KDE"
-	"Xfce"
-	"AwesomeWM"
-)
 
 SELECTED_DE=$(printf "%s\n" "${DESKTOP_ENVIRONMENTS[@]}" | fzf --multi --height=20% --layout=reverse || true)
 
@@ -484,11 +503,6 @@ EOT
 		fi
 	fi
 fi
-
-PLYMOUTH_PACKAGES=(
-	"plymouth"                 # Startup screen
-	"archcraft-plymouth-theme" # Plymouth theme
-)
 
 if [[ $(pacman -Q grub) ]]; then
 	# Detect login manager
@@ -635,11 +649,6 @@ fi
 
 read -rp "${BLUE}:: ${BWHITE}Do you want to add support for razer hardware? [y/N]${NC}: " razer_script
 
-RAZER_PACKAGES=(
-	"polychromatic-git"
-	"openrazer-meta-git"
-)
-
 if [[ $razer_script == y* ]]; then
 	echo "${BLUE}:: ${BWHITE}Installing razer drivers & RGB software...${NC}"
 	$HELPER -S --noconfirm --needed --quiet "${RAZER_PACKAGES[@]}"
@@ -649,12 +658,6 @@ if [[ $razer_script == y* ]]; then
 fi
 
 read -rp "${BLUE}:: ${BWHITE}Do you want to harden your system? [y/N]${NC}: " harden
-
-SECURITY_PACKAGES=(
-	"lynis"
-	"rkhunter"
-	"libpwquality"
-)
 
 if [[ $harden == y* ]]; then
 	echo "${BLUE}:: ${BWHITE}Installing security packages...${NC}"
