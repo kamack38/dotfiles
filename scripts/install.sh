@@ -399,6 +399,10 @@ TWEAKS=$(echo -e "performance-tweaks\npowersave-tweaks" | fzf --height=20% --lay
 if [[ $TWEAKS != "" ]]; then
 	echo "${BLUE}:: ${BWHITE}Installing ${TWEAKS/-/ }...${NC}"
 	$HELPER -S --noconfirm --needed --quiet "$TWEAKS"
+
+	if [[ $TWEAKS == "performance-tweaks" ]]; then
+		sudo sed -i 's,\(^GRUB_CMDLINE_LINUX_DEFAULT=\".*\)quiet\(.*\"\),\1quiet mitigations=off\2,' /etc/default/grub
+	fi
 fi
 
 # Install spellchecking

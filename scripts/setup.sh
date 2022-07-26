@@ -304,7 +304,7 @@ EOT
         SWAP_FILE_DEV_UUID=$(findmnt -no UUID -T $SWAP_FILE_PATH)
         SWAP_FILE_OFFSET=$(filefrag -v $SWAP_FILE_PATH | awk '$1=="0:" {print substr($4, 1, length($4)-2)}')
         sed -i "s,\(^HOOKS=\".*\)filesystems\(.*\"\),\1filesystems resume\2," /etc/mkinitcpio.conf
-        sed -i "s,\(GRUB_CMDLINE_LINUX_DEFAULT=\".*\)\(.*\"\),\1 resume=UUID=${SWAP_FILE_DEV_UUID} resume_offset=${SWAP_FILE_OFFSET}\2," /etc/default/grub
+        sed -i "s,\(^GRUB_CMDLINE_LINUX_DEFAULT=\".*\)\(.*\"\),\1 resume=UUID=${SWAP_FILE_DEV_UUID} resume_offset=${SWAP_FILE_OFFSET}\2," /etc/default/grub
     fi
 
     echo "${BLUE}:: ${BWHITE}Setting up snapper...${NC}"
