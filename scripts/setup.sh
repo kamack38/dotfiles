@@ -264,16 +264,17 @@ else
 fi
 
 # Swap
+SWAP_FILE_PATH="/opt/swap/swapfile"
 if [[ $SWAP != n* ]]; then
     echo "${BLUE}:: ${BWHITE}Creating swap...${NC}"
     mkdir -p /mnt/opt/swap  # make a dir that we can apply NOCOW to to make it btrfs-friendly.
     chattr +C /mnt/opt/swap # apply NOCOW, btrfs needs that.
-    dd if=/dev/zero of=/mnt/opt/swap/swapfile bs=1M count=8000 status=progress
-    chmod 600 /mnt/opt/swap/swapfile
-    chown root /mnt/opt/swap/swapfile
-    mkswap /mnt/opt/swap/swapfile
-    swapon /mnt/opt/swap/swapfile
-    echo "/opt/swap/swapfile	none	swap	sw	0	0" >>/mnt/etc/fstab
+    dd if=/dev/zero of=/mnt$SWAP_FILE_PATH bs=1M count=8000 status=progress
+    chmod 600 /mnt$SWAP_FILE_PATH
+    chown root /mnt$SWAP_FILE_PATH
+    mkswap /mnt$SWAP_FILE_PATH
+    swapon /mnt$SWAP_FILE_PATH
+    echo "$SWAP_FILE_PATH	none	swap	sw	0	0" >>/mnt/etc/fstab
 fi
 
 function chroot {
@@ -300,8 +301,10 @@ EOT
 
     if [[ $SWAP != n* ]]; then
         echo "${BLUE}:: ${BWHITE}Adding hibernation...${NC}"
+        SWAP_FILE_DEV_UUID=$(findmnt -no UUID -T $SWAP_FILE_PATH)
+        SWAP_FILE_OFFSET=$(filefrag -v /swapfile | awk '$1=="0:" {print substr($4, 1, length($4)-2)}')
         sed -i "s,\(^HOOKS=\".*\)filesystems\(.*\"\),\1filesystems resume\2," /etc/mkinitcpio.conf
-        sed -i "s,\(GRUB_CMDLINE_LINUX_DEFAULT=\".*\)\(.*\"),\1resume=/dev/mapper/root\2" /etc/default/grub
+        sed -i "s,\(GRUB_CMDLINE_LINUX_DEFAULT=\".*\)\(.*\"),\1resume=UUID=${SWAP_FILE_DEV_UUID} resume_offset=${SWAP_FILE_OFFSET}\2" /etc/default/grub
     fi
 
     echo "${BLUE}:: ${BWHITE}Setting up snapper...${NC}"
@@ -451,6 +454,7 @@ export USERNAME
 export PASSWORD
 export MACHINE_NAME
 export ENCRYPTED_PARTITION_UUID
+export SWAP_FILE_PATH
 
 # Chroot into new OS
 arch-chroot /mnt /bin/bash -c "chroot"
