@@ -28,7 +28,7 @@ sed -i 's/^#ParallelDownloads/ParallelDownloads/' /etc/pacman.conf
 
 # Update keyrings to latest to prevent packages from failing to install
 pacman -Sy --noconfirm archlinux-keyring
-pacman -S --noconfirm --needed pacman-contrib fzf reflector rsync grub
+pacman -S --noconfirm --needed pacman-contrib fzf reflector rsync grub bc
 
 # Select disk
 echo "${BLUE}:: ${BWHITE}Select disk to install system on.${NC}"
@@ -307,8 +307,10 @@ function chroot {
     case $SWAP_TYPE in
     swapfile)
         echo "${BLUE}:: ${BWHITE}Adding hibernation...${NC}"
+        curl -s "https://raw.githubusercontent.com/osandov/osandov-linux/master/scripts/btrfs_map_physical.c" -O ~/btrfs_map_physical.c
+        gcc -O2 -o ~/btrfs_map_physical ~/btrfs_map_physical.c
         SWAP_FILE_DEV_UUID=$(findmnt -no UUID -T $SWAP_FILE_PATH)
-        SWAP_FILE_OFFSET=$(filefrag -v $SWAP_FILE_PATH | awk '$1=="0:" {print substr($4, 1, length($4)-2)}')
+        SWAP_FILE_OFFSET=$(echo "$(~/btrfs_map_physical $SWAP_FILE_PATH | cut -f 9 | head -2 | tail -1) / $(getconf PAGESIZE)" | bc)
         sed -i "s,\(^HOOKS=\".*\)filesystems\(.*\"\),\1filesystems resume\2," /etc/mkinitcpio.conf
         sed -i "s,\(^GRUB_CMDLINE_LINUX_DEFAULT=\".*\)\(.*\"\),\1 resume=UUID=${SWAP_FILE_DEV_UUID} resume_offset=${SWAP_FILE_OFFSET}\2," /etc/default/grub
         ;;
