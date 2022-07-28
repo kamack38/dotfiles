@@ -44,21 +44,24 @@ read -rp "${BLUE}:: ${BWHITE}Do you wish to ${RED}ERASE${BWHITE} the disk before
 # Check if drive is a ssd
 if [[ "$(cat /sys/block/${DISK#/*/}/queue/rotational)" == "0" ]]; then
     echo "${YELLOW}:: ${BWHITE}Selected drive is a ssd...${NC}"
-    MOUNT_OPTIONS="noatime,space_cache=v2,compress=zstd,ssd,commit=120"
+    MOUNT_OPTIONS="noatime,compress=zstd,space_cache=v2,ssd,commit=120"
+    SWAP_MOUNT_OPTIONS="noatime,space_cache=v2,ssd,commit=120"
 else
     echo "${YELLOW}:: ${BWHITE}Selected drive is NOT a ssd...${NC}"
-    MOUNT_OPTIONS="noatime,space_cache=v2,compress=zstd,commit=120"
+    MOUNT_OPTIONS="noatime,compress=zstd,space_cache=v2,commit=120"
+    SWAP_MOUNT_OPTIONS="noatime,space_cache=v2,commit=120"
 fi
 
 # Swap
 SWAP_OPTIONS=(
-    "swap"
+    "swapfile"
     # "zswap"
     "zram"
 )
-TOTAL_RAM=$(echo "scale=1; $(cat /proc/meminfo | grep -i 'memtotal' | grep -o '[[:digit:]]*')/1000000" | bc)
+TOTAL_RAM_GB=$(echo "scale=1; $(cat /proc/meminfo | grep -i 'memtotal' | grep -o '[[:digit:]]*')/1000000" | bc)
+TOTAL_RAM_MB=$(echo "scale=0; $(cat /proc/meminfo | grep -i 'memtotal' | grep -o '[[:digit:]]*')/1000" | bc)
 echo "${YELLOW}:: ${BWHITE}You have ${TOTAL_RAM}GB of RAM${NC}"
-echo "${YELLOW}:: ${BWHITE}Do you wish to create ${TOTAL_RAM}GB swap, ${TOTAL_RAM}GB zswap or ${TOTAL_RAM}GB zram?${NC}"
+echo "${YELLOW}:: ${BWHITE}Do you wish to create ${TOTAL_RAM_GB}GB swapfile, ${TOTAL_RAM_GB}GB zswap or ${TOTAL_RAM_GB}GB zram?${NC}"
 SWAP_TYPE=$(printf "%s\n" "${SWAP_OPTIONS[@]}" | fzf --height=20% --layout=reverse || true)
 
 # Create luks password (encryption)
@@ -181,10 +184,10 @@ echo -n "${LUKS_PASSWORD}" | cryptsetup -v luksFormat ${ROOT_PART} -
 
 # Open luks container and ROOT will be place holder
 echo "${BLUE}:: ${BWHITE}Opening root partition...${NC}"
-echo -n "${LUKS_PASSWORD}" | cryptsetup open ${ROOT_PART} root -
+echo -n "${LUKS_PASSWORD}" | cryptsetup open ${ROOT_PART} cryptroot -
 
 # Format luks container
-mapper=/dev/mapper/root
+mapper=/dev/mapper/cryptroot
 mkfs.btrfs -L root ${mapper}
 
 # Create subvolumes for btrfs
@@ -195,6 +198,7 @@ btrfs subvolume create /mnt/@
 btrfs subvolume create /mnt/@home
 btrfs subvolume create /mnt/@var
 btrfs subvolume create /mnt/@tmp
+btrfs subvolume create /mnt/@swap
 btrfs subvolume create /mnt/@.snapshots
 
 # unmount root to remount with subvolume
@@ -203,8 +207,8 @@ umount /mnt
 echo "${BLUE}:: ${BWHITE}Mounting @ subvolume...${NC}"
 mount -o ${MOUNT_OPTIONS},subvol=@ ${mapper} /mnt
 
-echo "${BLUE}:: ${BWHITE}Creating directories (home, var, tmp, .snapshots)...${NC}"
-mkdir -p /mnt/{home,var,tmp,.snapshots}
+echo "${BLUE}:: ${BWHITE}Creating directories (home, var, tmp, swap, .snapshots)...${NC}"
+mkdir -p /mnt/{home,var,tmp,swap,.snapshots}
 
 # Mount all btrfs subvolumes
 echo "${BLUE}:: ${BWHITE}Mounting other btrfs subvolumes...${NC}"
@@ -212,6 +216,7 @@ mount -o ${MOUNT_OPTIONS},subvol=@home ${mapper} /mnt/home
 mount -o ${MOUNT_OPTIONS},nodev,nosuid,noexec,subvol=@tmp ${mapper} /mnt/tmp
 mount -o ${MOUNT_OPTIONS},subvol=@var ${mapper} /mnt/var
 mount -o ${MOUNT_OPTIONS},subvol=@.snapshots ${mapper} /mnt/.snapshots
+mount -o ${SWAP_MOUNT_OPTIONS},subvol=@swap ${mapper} /mnt/swap
 
 ENCRYPTED_PARTITION_UUID=$(blkid -s UUID -o value ${ROOT_PART})
 
@@ -265,18 +270,20 @@ else
 fi
 
 # Swap
-SWAP_FILE_PATH="/opt/swap/swapfile"
+SWAP_SIZE=$TOTAL_RAM_MB
+SWAP_FILE_PATH="/swap/swapfile"
 case $SWAP_TYPE in
-swap)
-    echo "${BLUE}:: ${BWHITE}Creating swap...${NC}"
-    mkdir -p /mnt/opt/swap  # make a dir that we can apply NOCOW to to make it btrfs-friendly.
-    chattr +C /mnt/opt/swap # apply NOCOW, btrfs needs that.
-    dd if=/dev/zero of=/mnt$SWAP_FILE_PATH bs=1M count=8000 status=progress
-    chmod 600 /mnt$SWAP_FILE_PATH
+swapfile)
+    echo "${BLUE}:: ${BWHITE}Creating swapfile...${NC}"
+    truncate -s 0 /mnt${SWAP_FILE_PATH}                                               # create swap file
+    chattr +C /mnt${SWAP_FILE_PATH}                                                   # apply NOCOW, btrfs needs that.
+    btrfs property set /mnt${SWAP_FILE_PATH} compression none                         # disable compression
+    dd if=/dev/zero of=/mnt${SWAP_FILE_PATH} bs=1M count=${SWAP_SIZE} status=progress # copy bytes
+    chmod 600 /mnt${SWAP_FILE_PATH}                                                   # set permissions
     chown root /mnt$SWAP_FILE_PATH
-    mkswap /mnt$SWAP_FILE_PATH
-    swapon /mnt$SWAP_FILE_PATH
-    echo "$SWAP_FILE_PATH	none	swap	sw	0	0" >>/mnt/etc/fstab
+    mkswap /mnt${SWAP_FILE_PATH}
+    swapon /mnt${SWAP_FILE_PATH}
+    echo "${SWAP_FILE_PATH}	none	swap	sw	0	0" >>/mnt/etc/fstab
     ;;
 zswap)
     echo "${BLUE}:: ${BWHITE}Installing ${BLUE}zswap${BWHITE} prerequisites...${NC}"
@@ -286,20 +293,19 @@ zswap)
 zram)
     echo "${BLUE}:: ${BWHITE}Installing ${BLUE}zram${BWHITE} prerequisites...${NC}"
     pacstrap /mnt zram-generator --noconfirm --needed 1>/dev/null
-
     ;;
 esac
 
 function chroot {
     echo "${BLUE}:: ${BWHITE}Setting up ${BLUE}GRUB${BWHITE}...${NC}"
     if [[ -d "/sys/firmware/efi" ]]; then
-        grub-install --efi-directory=/boot ${DISK}
+        grub-install --efi-directory=/boot --bootloader-id=GRUB ${DISK}
     fi
-    sed -i "s%^GRUB_CMDLINE_LINUX_DEFAULT=\"%GRUB_CMDLINE_LINUX_DEFAULT=\"cryptdevice=UUID=${ENCRYPTED_PARTITION_UUID}:root root=/dev/mapper/root %" /etc/default/grub
+    sed -i "s%^GRUB_CMDLINE_LINUX_DEFAULT=\"%GRUB_CMDLINE_LINUX_DEFAULT=\"cryptdevice=UUID=${ENCRYPTED_PARTITION_UUID}:cryptroot root=/dev/mapper/cryptroot %" /etc/default/grub
     sed -i "s/^#GRUB_ENABLE_CRYPTODISK=y/GRUB_ENABLE_CRYPTODISK=y/" /etc/default/grub
 
     case $SWAP_TYPE in
-    swap)
+    swapfile)
         echo "${BLUE}:: ${BWHITE}Adding hibernation...${NC}"
         SWAP_FILE_DEV_UUID=$(findmnt -no UUID -T $SWAP_FILE_PATH)
         SWAP_FILE_OFFSET=$(filefrag -v $SWAP_FILE_PATH | awk '$1=="0:" {print substr($4, 1, length($4)-2)}')
