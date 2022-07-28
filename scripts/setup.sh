@@ -51,14 +51,15 @@ else
 fi
 
 # Swap
+SWAP_OPTIONS=(
+    "swap"
+    # "zswap"
+    "zram"
+)
 TOTAL_RAM=$(echo "scale=1; $(cat /proc/meminfo | grep -i 'memtotal' | grep -o '[[:digit:]]*')/1000000" | bc)
 echo "${YELLOW}:: ${BWHITE}You have ${TOTAL_RAM}GB of RAM${NC}"
-read -rep "${YELLOW}:: ${BWHITE}Do you wish to create 8GB swap? [Y/n]${NC}" SWAP
-
-# Swap on zram
-if [[ $SWAP == n* ]]; then
-    read -rep "${YELLOW}:: ${BWHITE}Do you wish to create ${TOTAL_RAM}GB swap on zram? [y/N]${NC}" ZRAM
-fi
+echo "${YELLOW}:: ${BWHITE}Do you wish to create ${TOTAL_RAM}GB swap, ${TOTAL_RAM}GB zswap or ${TOTAL_RAM}GB zram?${NC}"
+SWAP_TYPE=$(printf "%s\n" "${SWAP_OPTIONS[@]}" | fzf --height=20% --layout=reverse || true)
 
 # Create luks password (encryption)
 while true; do
@@ -265,7 +266,8 @@ fi
 
 # Swap
 SWAP_FILE_PATH="/opt/swap/swapfile"
-if [[ $SWAP != n* ]]; then
+case $SWAP_TYPE in
+swap)
     echo "${BLUE}:: ${BWHITE}Creating swap...${NC}"
     mkdir -p /mnt/opt/swap  # make a dir that we can apply NOCOW to to make it btrfs-friendly.
     chattr +C /mnt/opt/swap # apply NOCOW, btrfs needs that.
@@ -275,7 +277,18 @@ if [[ $SWAP != n* ]]; then
     mkswap /mnt$SWAP_FILE_PATH
     swapon /mnt$SWAP_FILE_PATH
     echo "$SWAP_FILE_PATH	none	swap	sw	0	0" >>/mnt/etc/fstab
-fi
+    ;;
+zswap)
+    echo "${BLUE}:: ${BWHITE}Installing ${BLUE}zswap${BWHITE} prerequisites...${NC}"
+    pacstrap /mnt systemd-swap --noconfirm --needed 1>/dev/null
+    ;;
+
+zram)
+    echo "${BLUE}:: ${BWHITE}Installing ${BLUE}zram${BWHITE} prerequisites...${NC}"
+    pacstrap /mnt zram-generator --noconfirm --needed 1>/dev/null
+
+    ;;
+esac
 
 function chroot {
     echo "${BLUE}:: ${BWHITE}Setting up ${BLUE}GRUB${BWHITE}...${NC}"
@@ -285,9 +298,19 @@ function chroot {
     sed -i "s%^GRUB_CMDLINE_LINUX_DEFAULT=\"%GRUB_CMDLINE_LINUX_DEFAULT=\"cryptdevice=UUID=${ENCRYPTED_PARTITION_UUID}:root root=/dev/mapper/root %" /etc/default/grub
     sed -i "s/^#GRUB_ENABLE_CRYPTODISK=y/GRUB_ENABLE_CRYPTODISK=y/" /etc/default/grub
 
-    if [[ $ZRAM == y* ]]; then
+    case $SWAP_TYPE in
+    swap)
+        echo "${BLUE}:: ${BWHITE}Adding hibernation...${NC}"
+        SWAP_FILE_DEV_UUID=$(findmnt -no UUID -T $SWAP_FILE_PATH)
+        SWAP_FILE_OFFSET=$(filefrag -v $SWAP_FILE_PATH | awk '$1=="0:" {print substr($4, 1, length($4)-2)}')
+        sed -i "s,\(^HOOKS=\".*\)filesystems\(.*\"\),\1filesystems resume\2," /etc/mkinitcpio.conf
+        sed -i "s,\(^GRUB_CMDLINE_LINUX_DEFAULT=\".*\)\(.*\"\),\1 resume=UUID=${SWAP_FILE_DEV_UUID} resume_offset=${SWAP_FILE_OFFSET}\2," /etc/default/grub
+        ;;
+    zswap)
+        systemctl enable --now systemd-swap
+        ;;
+    zram)
         echo "${BLUE}:: ${BWHITE}Creating swap on zram...${NC}"
-        pacman -S zram-generator
         systemctl daemon-reload
         systemctl start /dev/zram0
         tee /etc/systemd/zram-generator.conf >/dev/null <<EOT
@@ -297,15 +320,8 @@ zram-fraction = 1
 max-zram-size = none
 compression-algorithm = zstd
 EOT
-    fi
-
-    if [[ $SWAP != n* ]]; then
-        echo "${BLUE}:: ${BWHITE}Adding hibernation...${NC}"
-        SWAP_FILE_DEV_UUID=$(findmnt -no UUID -T $SWAP_FILE_PATH)
-        SWAP_FILE_OFFSET=$(filefrag -v $SWAP_FILE_PATH | awk '$1=="0:" {print substr($4, 1, length($4)-2)}')
-        sed -i "s,\(^HOOKS=\".*\)filesystems\(.*\"\),\1filesystems resume\2," /etc/mkinitcpio.conf
-        sed -i "s,\(^GRUB_CMDLINE_LINUX_DEFAULT=\".*\)\(.*\"\),\1 resume=UUID=${SWAP_FILE_DEV_UUID} resume_offset=${SWAP_FILE_OFFSET}\2," /etc/default/grub
-    fi
+        ;;
+    esac
 
     echo "${BLUE}:: ${BWHITE}Setting up snapper...${NC}"
     # Change grub snapshot submenu name
