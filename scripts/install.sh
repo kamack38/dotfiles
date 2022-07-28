@@ -400,7 +400,7 @@ if [[ $TWEAKS != "" ]]; then
 	echo "${BLUE}:: ${BWHITE}Installing ${TWEAKS/-/ }...${NC}"
 	$HELPER -S --noconfirm --needed --quiet "$TWEAKS"
 
-	if [[ $TWEAKS == "performance-tweaks" ]]; then
+	if [[ $TWEAKS == "performance-tweaks" && ! $(grep -q 'mitigations=off' /etc/default/grub) ]]; then
 		sudo sed -i 's,\(^GRUB_CMDLINE_LINUX_DEFAULT=\".*\)quiet\(.*\"\),\1quiet mitigations=off\2,' /etc/default/grub
 	fi
 fi
