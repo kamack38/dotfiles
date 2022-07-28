@@ -25,6 +25,7 @@ mv -f "$backupDir/firefox/profiles.ini" "$firefoxConfigPath/profiles.ini"
 mv -f "$backupDir/Pictures" "$HOME/Pictures"
 mv -f "$backupDir/Videos" "$HOME/Videos"
 mv -f "$backupDir/Documents" "$HOME/Documents"
+mv -f "$backupDir/Music" "$HOME/Music"
 
 # Copy ngrok settings
 mv -f "$backupDir/.config/ngrok" "$HOME/.config/ngrok"

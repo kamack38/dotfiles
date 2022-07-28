@@ -32,6 +32,7 @@ DIR_TO_BACKUP=(
     "Pictures"
     "Videos"
     "Documents"
+    "Music"
     ".mozilla/firefox/$firefoxProfilePath"
     ".mozilla/firefox/profiles.ini"
     ".keys/backupkeys.pgp"
