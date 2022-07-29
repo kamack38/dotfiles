@@ -87,5 +87,3 @@ installKDEPackage 1719504
 # installKDEPackage 1669395
 # Fluent round dark plasma: https://store.kde.org/p/1544466
 # installKDEPackage 1544466
-# Fluent cursors theme: https://store.kde.org/p/1499852
-# installKDEPackage 1499852
