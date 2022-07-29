@@ -55,13 +55,12 @@ fi
 # Swap
 SWAP_OPTIONS=(
     "swapfile"
-    # "zswap"
     "zram"
 )
 TOTAL_RAM_GB=$(echo "scale=1; $(cat /proc/meminfo | grep -i 'memtotal' | grep -o '[[:digit:]]*')/1000000" | bc)
 TOTAL_RAM_MB=$(echo "scale=0; $(cat /proc/meminfo | grep -i 'memtotal' | grep -o '[[:digit:]]*')/1000" | bc)
 echo "${YELLOW}:: ${BWHITE}You have ${TOTAL_RAM}GB of RAM${NC}"
-echo "${YELLOW}:: ${BWHITE}Do you wish to create ${TOTAL_RAM_GB}GB swapfile, ${TOTAL_RAM_GB}GB zswap or ${TOTAL_RAM_GB}GB zram?${NC}"
+echo "${YELLOW}:: ${BWHITE}Do you wish to create ${TOTAL_RAM_GB}GB swapfile or ${TOTAL_RAM_GB}GB zram?${NC}"
 SWAP_TYPE=$(printf "%s\n" "${SWAP_OPTIONS[@]}" | fzf --height=20% --layout=reverse || true)
 
 # Create luks password (encryption)
@@ -285,11 +284,6 @@ swapfile)
     swapon /mnt${SWAP_FILE_PATH}
     echo "${SWAP_FILE_PATH}	none	swap	sw	0	0" >>/mnt/etc/fstab
     ;;
-zswap)
-    echo "${BLUE}:: ${BWHITE}Installing ${BLUE}zswap${BWHITE} prerequisites...${NC}"
-    pacstrap /mnt systemd-swap --noconfirm --needed 1>/dev/null
-    ;;
-
 zram)
     echo "${BLUE}:: ${BWHITE}Installing ${BLUE}zram${BWHITE} prerequisites...${NC}"
     pacstrap /mnt zram-generator --noconfirm --needed 1>/dev/null
@@ -313,9 +307,6 @@ function chroot {
         SWAP_FILE_OFFSET=$(echo "$(~/btrfs_map_physical $SWAP_FILE_PATH | cut -f 9 | head -2 | tail -1) / $(getconf PAGESIZE)" | bc)
         sed -i "s,\(^HOOKS=\".*\)filesystems\(.*\"\),\1filesystems resume\2," /etc/mkinitcpio.conf
         sed -i "s,\(^GRUB_CMDLINE_LINUX_DEFAULT=\".*\)\(.*\"\),\1 resume=UUID=${SWAP_FILE_DEV_UUID} resume_offset=${SWAP_FILE_OFFSET}\2," /etc/default/grub
-        ;;
-    zswap)
-        systemctl enable --now systemd-swap
         ;;
     zram)
         echo "${BLUE}:: ${BWHITE}Creating swap on zram...${NC}"
