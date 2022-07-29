@@ -38,6 +38,7 @@ CUSTOMIZATION_PACKAGES=(
 	"lightly-qt"                   # A modern style for qt applications
 	"archcraft-backgrounds"        # Desktop backgrounds
 	"archcraft-sddm-theme-default" # Default archcraft sddm theme
+	"fluent-icon-theme-git"        # A Fluent design icon theme
 )
 
 echo "${GREEN}:: ${BWHITE}Installing KDE and its components...${NC}"

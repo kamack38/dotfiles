@@ -152,7 +152,7 @@ shadeSortColumn=true
 widgetStyle=Breeze
 
 [Icons]
-Theme=Fluent
+Theme=Fluent-dark
 
 [KDE]
 ColorScheme=BreezeDark
