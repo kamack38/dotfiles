@@ -39,6 +39,7 @@ CUSTOMIZATION_PACKAGES=(
 	"archcraft-backgrounds"        # Desktop backgrounds
 	"archcraft-sddm-theme-default" # Default archcraft sddm theme
 	"fluent-icon-theme-git"        # A Fluent design icon theme
+	"fluent-cursor-theme-git"      # An x-cursor theme inspired by Qogir theme and based on capitaine-cursors.
 )
 
 echo "${GREEN}:: ${BWHITE}Installing KDE and its components...${NC}"

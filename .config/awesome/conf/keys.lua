@@ -74,13 +74,13 @@ awful.keyboard.append_global_keybindings({
     end, { description = "decrease brightness", group = "hotkeys" }),
 
     --- Media keys
-    awful.key({}, "XF86AudioPlay", function() awful.util.spawn("playerctl play-pause") end,
+    awful.key({}, "XF86AudioPlay", function() awful.util.spawn("playerctl --player=plasma-browser-integration,%any play-pause") end,
         { description = "play/pause audio", group = "hotkeys" }),
-    awful.key({}, "XF86AudioStop", function() awful.util.spawn("playerctl stop") end,
+    awful.key({}, "XF86AudioStop", function() awful.util.spawn("playerctl --player=plasma-browser-integration,%any stop") end,
         { description = "stop audio", group = "hotkeys" }),
-    awful.key({}, "XF86AudioNext", function() awful.util.spawn("playerctl next") end,
+    awful.key({}, "XF86AudioNext", function() awful.util.spawn("playerctl --player=plasma-browser-integration,%any next") end,
         { description = "skip to next", group = "hotkeys" }),
-    awful.key({}, "XF86AudioPrev", function() awful.util.spawn("playerctl previous") end,
+    awful.key({}, "XF86AudioPrev", function() awful.util.spawn("playerctl --player=plasma-browser-integration,%any previous") end,
         { description = "skip to previous", group = "hotkeys" }),
     awful.key({}, "XF86AudioMute", function() awful.util.spawn("pamixer -t") end,
         { description = "mute volume", group = "hotkeys" }),
@@ -88,9 +88,9 @@ awful.keyboard.append_global_keybindings({
         { description = "raise volume", group = "hotkeys" }),
     awful.key({}, "XF86AudioLowerVolume", function() awful.util.spawn("pamixer -d 2") end,
         { description = "lower volume", group = "hotkeys" }),
-    awful.key({ shift }, "XF86AudioNext", function() awful.util.spawn("playerctl position 5+") end,
+    awful.key({ shift }, "XF86AudioNext", function() awful.util.spawn("playerctl --player=plasma-browser-integration,%any position 5+") end,
         { description = "go 5 sec ahead", group = "hotkeys" }),
-    awful.key({ shift }, "XF86AudioPrev", function() awful.util.spawn("playerctl position 5-") end,
+    awful.key({ shift }, "XF86AudioPrev", function() awful.util.spawn("playerctl --player=plasma-browser-integration,%any position 5-") end,
         { description = "go 5 sec back", group = "hotkeys" }),
 
     --- Open programs
