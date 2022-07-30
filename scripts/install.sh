@@ -186,7 +186,7 @@ TIME_ZONE="Europe/Warsaw" # To get all timezones run `timedatectl list-timezones
 MAIN_LOCALE="en_GB.UTF-8"
 SECONDARY_LOCALE="pl_PL.UTF-8"
 SPELLCHECK_LOCALES=("${MAIN_LOCALE/_*/}" "${SECONDARY_LOCALE/_*/}")
-KB_LAYOUT="pl"
+KB_LAYOUT="pl" # To get all keyboard layouts run `localectl list-keymaps`
 MAKEFLAGS="-j$(nproc)"
 CURRENT_USER="$USER"
 
