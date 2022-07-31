@@ -139,7 +139,7 @@ function pasq --description 'Search and install a package' -a pkg
     command paru -Sl | fzf --with-nth=2 --multi --preview 'paru -Si {1}/{2}' --preview-window wrap -q$pkg | awk '{print $1"/"$2}' | xargs -ro paru -Si
 end
 function paq --description 'Search and show info about a package' -a pkg
-    command paru -Qq | fzf --multi --preview 'paru -Si {1}' --preview-window wrap -q$pkg | xargs -ro paru -Qi
+    command paru -Qq | fzf --multi --preview 'paru -Qi {1}' --preview-window wrap -q$pkg | xargs -ro paru -Qi
 end
 function par --description 'Search and remove a package' -a pkg
     command paru -Qq | fzf --multi --preview 'paru -Si {1}' --preview-window wrap -q$pkg | xargs -ro paru -Rns # fzf package remove prompt
