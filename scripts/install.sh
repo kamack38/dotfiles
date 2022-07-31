@@ -609,6 +609,10 @@ fi
 
 if [[ $(pacman -Q xorg-server) ]]; then
 	echo "${YELLOW}:: ${BWHITE}Xorg server detected${NC}"
+
+	source "$HOME/scripts/repos.sh"
+	archcraft
+
 	echo "${BLUE}:: ${BWHITE}Installing customization packages...${NC}"
 	$HELPER -S --noconfirm --needed --quiet "${CUSTOMIZATION_PACKAGES[@]}"
 

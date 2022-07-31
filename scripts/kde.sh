@@ -34,14 +34,6 @@ KDE_PACKAGES=(
 	"sddm"                                # QML based X11 and Wayland display manager
 )
 
-CUSTOMIZATION_PACKAGES=(
-	"lightly-qt"                   # A modern style for qt applications
-	"archcraft-backgrounds"        # Desktop backgrounds
-	"archcraft-sddm-theme-default" # Default archcraft sddm theme
-	"fluent-icon-theme-git"        # A Fluent design icon theme
-	"fluent-cursor-theme-git"      # An x-cursor theme inspired by Qogir theme and based on capitaine-cursors.
-)
-
 echo "${GREEN}:: ${BWHITE}Installing KDE and its components...${NC}"
 $HELPER -S --noconfirm --needed --quiet "${KDE_PACKAGES[@]}"
 
@@ -52,10 +44,6 @@ if [[ $(systemctl is-enabled sddm-plymouth.service 2>/dev/null) == enabled ]]; t
 else
 	sudo systemctl enable sddm.service
 fi
-
-# Add archcraft repository
-source "$HOME/scripts/repos.sh"
-archcraft
 
 # Refresh databases
 sudo $HELPER -Sy
