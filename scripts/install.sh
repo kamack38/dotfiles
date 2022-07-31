@@ -158,6 +158,13 @@ DESKTOP_ENVIRONMENTS=(
 	"AwesomeWM"
 )
 
+CUSTOMIZATION_PACKAGES=(
+	"lightly-qt"              # A modern style for qt applications
+	"archcraft-backgrounds"   # Desktop backgrounds
+	"fluent-icon-theme-git"   # A Fluent design icon theme
+	"fluent-cursor-theme-git" # An x-cursor theme inspired by Qogir theme and based on capitaine-cursors.
+)
+
 PLYMOUTH_PACKAGES=(
 	"plymouth"                 # A graphical boot splash screen with kernel mode-setting support
 	"archcraft-plymouth-theme" # Default plymouth theme for Archcraft
@@ -602,6 +609,16 @@ fi
 
 if [[ $(pacman -Q xorg-server) ]]; then
 	echo "${YELLOW}:: ${BWHITE}Xorg server detected${NC}"
+	echo "${BLUE}:: ${BWHITE}Installing customization packages...${NC}"
+	$HELPER -S --noconfirm --needed --quiet "${CUSTOMIZATION_PACKAGES[@]}"
+
+	echo "${BLUE}:: ${BWHITE}Setting cursour...${NC}"
+	mkdir -p "/usr/share/icons/default"
+	sudo tee /usr/share/icons/default/index.theme >/dev/null <<EOT
+[Icon Theme]
+Inherits=Fluent-cursors
+EOT
+
 	echo "${BLUE}:: ${BWHITE}Disabling mouse acceleration...${NC}"
 	sudo touch /etc/X11/xorg.conf.d/50-mouse-acceleration.conf
 	sudo tee /etc/X11/xorg.conf.d/50-mouse-acceleration.conf >/dev/null <<EOT
@@ -628,6 +645,17 @@ Section "InputClass"
 	Option "ScrollMethod" "twofinger"
 EndSection
 EOT
+	if [[ $(pacman -Q sddm) ]]; then
+		echo "${BLUE}:: ${BWHITE}Installing sddm theme...${NC}"
+		$HELPER -S --noconfirm --needed --quiet "archcraft-sddm-theme-default"
+
+		echo "${BLUE}:: ${BWHITE}Configuring sddm...${NC}"
+		sudo tee /etc/sddm.conf.d/30-theme.conf >/dev/null <<EOF
+[Theme]
+Current=archcraft
+CursorTheme=Fluent-cursors
+EOF
+	fi
 fi
 
 read -rp "${BLUE}:: ${BWHITE}Do you want to setup additional programming fonts? [Y/n]${NC}: " fonts_setup

@@ -60,17 +60,6 @@ archcraft
 # Refresh databases
 sudo $HELPER -Sy
 
-# Install styles/themes
-echo "${BLUE}:: ${BWHITE}Installing KDE themes...${NC}"
-$HELPER -S --noconfirm --needed --quiet "${CUSTOMIZATION_PACKAGES[@]}"
-
-# Set xorg cursor
-mkdir -p "/usr/share/icons/default"
-sudo tee /usr/share/icons/default/index.theme >/dev/null <<EOT
-[Icon Theme]
-Inherits=Fluent-cursors
-EOT
-
 function installKDEPackage {
 	# $1 - package id
 	pkgUrl=$(curl -sL "https://store.kde.org/p/$1/loadFiles" | jq -r '.files[0].url' | sed 's#%3A#:#g' | sed 's#%2F#/#g')
