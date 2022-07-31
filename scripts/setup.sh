@@ -253,7 +253,7 @@ PREREQUISITES=(
 
 # Start arch installation
 echo "${BLUE}:: ${BWHITE}Installing prerequisites to ${BLUE}/mnt${BWHITE}...${NC}"
-pacstrap /mnt "${PREREQUISITES[@]}" --noconfirm --needed 1>/dev/null
+pacstrap /mnt "${PREREQUISITES[@]}" --noconfirm --needed
 echo "keyserver hkp://keyserver.ubuntu.com" >>/mnt/etc/pacman.d/gnupg/gpg.conf
 cp /etc/pacman.d/mirrorlist /mnt/etc/pacman.d/mirrorlist
 
