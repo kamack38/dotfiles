@@ -499,7 +499,7 @@ fi
 
 if [[ $(pacman -Q sddm) ]]; then
 	read -rp "${YELLOW}:: ${BWHITE}Do you want to enable automatic login? [y/N]${NC}: " auto_login
-	mkdir -p /etc/sddm.conf.d
+	sudo mkdir -p /etc/sddm.conf.d
 
 	if [[ $auto_login == y* ]]; then
 		SESSIONS=(
