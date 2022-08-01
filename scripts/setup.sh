@@ -277,9 +277,9 @@ SWAP_FILE_PATH="/swap/swapfile"
 case $SWAP_TYPE in
 swapfile)
     echo "${BLUE}:: ${BWHITE}Creating swapfile...${NC}"
-    truncate -s 0 /mnt${SWAP_FILE_PATH}                                               # create swap file
-    chattr +C /mnt${SWAP_FILE_PATH}                                                   # apply NOCOW, btrfs needs that.
-    btrfs property set /mnt${SWAP_FILE_PATH} compression none                         # disable compression
+    truncate -s 0 /mnt${SWAP_FILE_PATH} # create swap file
+    chattr +C /mnt${SWAP_FILE_PATH}     # apply NOCOW, btrfs needs that.
+    # btrfs property set /mnt${SWAP_FILE_PATH} compression none                         # disable compression
     dd if=/dev/zero of=/mnt${SWAP_FILE_PATH} bs=1M count=${SWAP_SIZE} status=progress # copy bytes
     chmod 600 /mnt${SWAP_FILE_PATH}                                                   # set permissions
     chown root /mnt$SWAP_FILE_PATH
