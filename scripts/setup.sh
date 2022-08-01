@@ -26,6 +26,9 @@ echo "		${RED}Thank you for using my script! ${NC}"
 # Enable parallel downloads
 sed -i 's/^#ParallelDownloads/ParallelDownloads/' /etc/pacman.conf
 
+# Enable colour
+sed -i 's/^#Color/Color/' /etc/pacman.conf
+
 # Update keyrings to latest to prevent packages from failing to install
 pacman -Sy --noconfirm archlinux-keyring
 pacman -S --noconfirm --needed pacman-contrib fzf reflector rsync grub bc
