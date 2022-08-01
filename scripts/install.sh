@@ -183,6 +183,7 @@ SECURITY_PACKAGES=(
 
 # Default vars
 HELPER="paru"
+HELPER_CLONE_PATH="$HOME/.cache/paru/clone"
 DOTFILES="$HOME/.dotfiles"
 REPO="https://github.com/kamack38/dotfiles"
 NEOVIM_CONFIG_DIR="$HOME/.config/nvim"
@@ -286,7 +287,8 @@ sudo sed -i 's/^#ILoveCandy/ILoveCandy/' /etc/pacman.conf
 # Install helper
 if ! command -v $HELPER &>/dev/null; then
 	echo "${YELLOW}:: ${BWHITE}It seems that you don't have ${BLUE}$HELPER${BWHITE} installed${NC} -- installing"
-	git clone https://aur.archlinux.org/$HELPER.git /tmp/$HELPER
+	mkdir -p $HELPER_CLONE_PATH
+	git clone https://aur.archlinux.org/$HELPER.git $HELPER_CLONE_PATH/$HELPER
 	(cd /tmp/$HELPER/ && makepkg --noconfirm -si)
 else
 	echo "${GREEN}:: ${BLUE}${HELPER}${BWHITE} is already installed${NC} -- skipping"
