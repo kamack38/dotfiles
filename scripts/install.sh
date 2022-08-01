@@ -406,7 +406,7 @@ if [[ $additional_packages == *"5"* ]]; then
 fi
 
 # Install tweaks
-TWEAKS=$(echo -e "performance-tweaks\npowersave-tweaks" | fzf --height=20% --layout=reverse)
+TWEAKS=$(echo -e "performance-tweaks\npowersave-tweaks" | fzf --height=20% --layout=reverse || true)
 
 if [[ $TWEAKS != "" ]]; then
 	echo "${BLUE}:: ${BWHITE}Installing ${TWEAKS/-/ }...${NC}"
@@ -507,7 +507,7 @@ if [[ $(pacman -Q sddm) ]]; then
 			"plasma"
 		)
 		echo "${BLUE}:: ${BWHITE}Select session to which you want to be logged in automatically...${NC}"
-		SESSION=$(printf "%s\n" "${SESSIONS[@]}" | fzf --height=20% --layout=reverse)
+		SESSION=$(printf "%s\n" "${SESSIONS[@]}" | fzf --height=20% --layout=reverse || true)
 		if [[ $SESSION != "" ]]; then
 			echo "${BLUE}:: ${BWHITE}Enabling automatic login...${NC}"
 			sudo tee /etc/sddm.conf.d/autologin.conf >/dev/null <<EOT
