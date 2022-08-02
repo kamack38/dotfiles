@@ -160,6 +160,23 @@ function nfs --description 'Search nerdfonts gylphs' -a search_term
 end
 
 # Visual Studio Code
+function workspace_preview -a name
+    if test -f $(string replace '~' "$HOME" $name)
+        if begin
+                [ $(string split -r -m1 . $(basename -- $(string replace '~' "$HOME" $name)))[2] = code-workspace ]; and type -q as-tree; and type -q jq
+            end
+            cat $(string replace '~' "$HOME" $name) | jq '.folders[] .path' | as-tree
+        else
+            bat --paging=never --color=always --style=plain $(string replace '~' "$HOME" $name)
+        end
+    else
+        if test -d $(string replace '~' "$HOME" $name)
+            exa $(string replace '~' "$HOME" $name)
+        else
+            echo -e "\033[0;31mDELETED\033[0m"
+        end
+    end
+end
 function vsr -d "List recently opened files with vscode" -a serach
     set -l vscode_path "$HOME/.config/Code"
     set -l grep
@@ -170,17 +187,21 @@ function vsr -d "List recently opened files with vscode" -a serach
         set grep grep -o
     end
 
+
     set -l selected (\
-          $grep '"path": "/.*[^/]"' "$vscode_path/User/globalStorage/storage.json" \
-          | string replace -a '"path": ' '' \
-          | string trim -c '"'\
-          | fzf --exit-0 --height 50% --layout=reverse -q$serach --preview 'if test -f {}; if begin [ $(string split -r -m1 . $(basename -- {}))[2] = "code-workspace" ]; and type -q as-tree; and type -q jq; end; cat {} | jq \'.folders[] .path\' | as-tree; else; bat --paging=never --color=always --style=plain {}; end; else; if test -d {}; exa {}; else; echo -e \'\033[0;31mDELETED\033[0m\'; end; end' )
+        $grep '"path": "/.*[^/]"' "$vscode_path/User/globalStorage/storage.json" \
+        | string replace -a '"path": ' '' \
+        | string trim -c '"'\
+        | string replace -a "$HOME" '~'\
+        | fzf --exit-0 --height 50% --layout=reverse -q$serach --preview "workspace_preview {}"\
+        | string replace -a '~' "$HOME"
+    )
 
     [ -n "$selected" ]; and code "$selected"
 end
 
 function fcd -d "cd into favourite your dir"
-    cd $(z -l | sed "s#/home/$USER#~#" | fzf --with-nth=2.. --preview 'exa -alF {2..}' --height 50% --layout=reverse | awk '{print substr($2, 1)}')
+    cd $(z -l | sed "s#$HOME#~#" | fzf --with-nth=2.. --preview 'exa -alF {2..}' --height 50% --layout=reverse | awk '{print substr($2, 1)}' | sed "s#~#$HOME#")
 end
 
 # ffmpeg
