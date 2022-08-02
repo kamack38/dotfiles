@@ -28,42 +28,6 @@ export QT_QPA_PLATFORMTHEME="kde"
 # ------------
 # XDG
 # ------------
-export XDG_CACHE_HOME="$HOME/.cache"
-export XDG_STATE_HOME="$HOME/.local/state"
-export XDG_CONFIG_HOME="$HOME/.config"
-export XDG_DATA_HOME="$HOME/.local/share"
-
-# Data
-export CARGO_HOME="$XDG_DATA_HOME/cargo"
-export GNUPGHOME="$XDG_DATA_HOME/gnupg"
-export NODE_REPL_HISTORY="$XDG_DATA_HOME/node_repl_history"
-export TS_NODE_HISTORY="$XDG_DATA_HOME/ts_node_repl_history"
-export NVM_DIR="$XDG_DATA_HOME/nvm"
-export RUSTUP_HOME="$XDG_DATA_HOME/rustup"
-export WINEPREFIX="$XDG_DATA_HOME/wine"
-export WORKON_HOME="$XDG_DATA_HOME/virtualenvs"
-export VAGRANT_HOME="$XDG_DATA_HOME"/vagrant
-export VAGRANT_ALIAS_FILE="$XDG_DATA_HOME/vagrant/aliases"
-export GOPATH="$XDG_DATA_HOME/go"
-
-# Config
-export WAKATIME_HOME="$XDG_CONFIG_HOME/wakatime"
-export KDEHOME="$XDG_CONFIG_HOME/kde"
-export GTK_RC_FILES="$XDG_CONFIG_HOME/gtk-1.0/gtkrc"
-export GTK2_RC_FILES="$XDG_CONFIG_HOME/gtk-2.0/gtkrc"
-export XINITRC="$XDG_CONFIG_HOME/X11/xinitrc"
-export _JAVA_OPTIONS=-Djava.util.prefs.userRoot="$XDG_CONFIG_HOME/java"
-export FFMPEG_DATADIR="$XDG_CONFIG_HOME/ffmpeg"
-export PYTHONSTARTUP="$XDG_CONFIG_HOME/python/pythonrc"
-
-# Cache
-export LESSHISTFILE="$XDG_CACHE_HOME/less/history"
-export CUDA_CACHE_PATH="$XDG_CACHE_HOME/nv"
-export HISTFILE="$XDG_CACHE_HOME/bash/history"
-
-# NPM
-export NPM_CONFIG_USERCONFIG="$XDG_CONFIG_HOME/npm/.npmrc"
-export NPM_CONFIG_CACHE="$XDG_CACHE_HOME/npm"
 
 # XDG fix
 alias svn="svn --config-dir \"$XDG_CONFIG_HOME/subversion\""

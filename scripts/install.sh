@@ -309,7 +309,11 @@ fi
 
 # Load XDG variables
 echo "${GREEN}:: ${BWHITE}Loading ${BLUE}XDG${BWHITE} paths...${NC}"
-eval "$(sed -n '/^# XDG/,${p;/^# Keybindings/q}' .config/fish/config.fish)"
+while IFS="" read -r p || [ -n "$p" ]; do
+	if [[ $p != "#"* && $p != "" ]]; then
+		eval "$(echo $p | sed 's/DEFAULT=//; s/@/$/g' | awk '{ print "export="$1"=\""$2"\"" }')"
+	fi
+done <~/.pam_environment
 
 # Add additional repositories
 source "$HOME/scripts/repos.sh"
