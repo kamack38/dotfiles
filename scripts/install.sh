@@ -229,9 +229,9 @@ sudo pacman -S --noconfirm --needed base-devel wget git
 
 # Create dirs
 echo "${BLUE}:: ${BWHITE}Creating directories...${NC}"
-mkdir -p $HOME/.local/share/fonts
-mkdir -p $NEOVIM_CONFIG_DIR
-mkdir -p $HOME/.srcs
+mkdir -p "$HOME/.local/share/fonts"
+mkdir -p "$NEOVIM_CONFIG_DIR"
+mkdir -p "$HOME/.srcs"
 
 # Set time zone and enable time sync
 echo "${BLUE}:: ${BWHITE}Setting time zone to ${BLUE}${TIME_ZONE}${BWHITE}...${NC}"
@@ -287,21 +287,21 @@ sudo sed -i 's/^#ILoveCandy/ILoveCandy/' /etc/pacman.conf
 # Install helper
 if ! command -v $HELPER &>/dev/null; then
 	echo "${YELLOW}:: ${BWHITE}It seems that you don't have ${BLUE}$HELPER${BWHITE} installed${NC} -- installing"
-	mkdir -p $HELPER_CLONE_PATH
-	git clone https://aur.archlinux.org/$HELPER.git $HELPER_CLONE_PATH/$HELPER
-	(cd $HELPER_CLONE_PATH/$HELPER && makepkg --noconfirm -si)
+	mkdir -p "$HELPER_CLONE_PATH"
+	git clone https://aur.archlinux.org/$HELPER.git "$HELPER_CLONE_PATH/$HELPER"
+	(cd "$HELPER_CLONE_PATH/$HELPER" && makepkg --noconfirm -si)
 else
 	echo "${GREEN}:: ${BLUE}${HELPER}${BWHITE} is already installed${NC} -- skipping"
 fi
 
 # Install dotfiles
-if [[ -d "$DOTFILES" && "$(git -C $DOTFILES ls-remote --get-url)" == "$REPO"* ]]; then
+if [[ -d "$DOTFILES" && "$(git -C "$DOTFILES" ls-remote --get-url)" == "$REPO"* ]]; then
 	echo "${YELLOW}:: ${BLUE}dotfiles${BWHITE} are already installed${NC} -- updating"
 	git --git-dir="$DOTFILES" --work-tree="$HOME" fetch --all
 	git --git-dir="$DOTFILES" --work-tree="$HOME" pull --all
 else
 	echo "${YELLOW}:: ${BWHITE}Cloning ${BLUE}dotfiles${NC} from ${BLUE}${REPO#*//*/}${NC}"
-	git clone --bare $REPO $DOTFILES
+	git clone --bare $REPO "$DOTFILES"
 	git --git-dir="$DOTFILES" --work-tree="$HOME" fetch --all
 	git --git-dir="$DOTFILES" --work-tree="$HOME" config --local status.showUntrackedFiles no
 	git --git-dir="$DOTFILES" --work-tree="$HOME" checkout --force
@@ -311,7 +311,7 @@ fi
 echo "${GREEN}:: ${BWHITE}Loading ${BLUE}XDG${BWHITE} paths...${NC}"
 while IFS="" read -r p || [ -n "$p" ]; do
 	if [[ $p != "#"* && $p != "" ]]; then
-		eval "$(echo $p | sed 's/DEFAULT=//; s/@/$/g' | awk '{ print "export="$1"=\""$2"\"" }')"
+		eval "$(echo "$p" | sed 's/DEFAULT=//; s/@/$/g' | awk '{ print "export="$1"=\""$2"\"" }')"
 	fi
 done <~/.pam_environment
 
@@ -324,15 +324,13 @@ sudo $HELPER -Sy
 
 # Install CPU drivers
 proc_type=$(lscpu)
-if grep -E "GenuineIntel" <<<${proc_type}; then
+if grep -E "GenuineIntel" <<<"${proc_type}"; then
 	echo "${BLUE}:: ${BWHITE}Installing ${BLUE}Intel${BWHITE} microcode...${NC}"
 	echo "Installing Intel microcode"
 	sudo pacman -S --noconfirm --needed intel-ucode
-	proc_ucode=intel-ucode.img
-elif grep -E "AuthenticAMD" <<<${proc_type}; then
+elif grep -E "AuthenticAMD" <<<"${proc_type}"; then
 	echo "${BLUE}:: ${BWHITE}Installing ${BLUE}AMD${BWHITE} microcode...${NC}"
 	sudo pacman -S --noconfirm --needed amd-ucode
-	proc_ucode=amd-ucode.img
 fi
 
 # Install GPU drivers
@@ -394,7 +392,7 @@ if [[ $additional_packages == *"3"* ]]; then
 	# Add all users to group realtime
 	echo "${BLUE}:: ${BWHITE}Adding users to realtime group...${NC}"
 	for ID in $(cat /etc/passwd | grep /home | cut -d ':' -f1); do
-		(sudo usermod -aG realtime $ID)
+		(sudo usermod -aG realtime "$ID")
 	done
 fi
 if [[ $additional_packages == *"4"* ]]; then
@@ -444,23 +442,23 @@ fish -c "fisher install jorgebucaran/nvm.fish && nvm install ${NODE_VERSION} && 
 	git-cz"
 
 echo "${GREEN}:: ${BWHITE}Installing ${BLUE}quokka.js plugins${NC}"
-fish -c 'npm i --prefix $HOME/.quokka dotenv-quokka-plugin \
-	jsdom-quokka-plugin'
+fish -c "npm i --prefix $HOME/.quokka dotenv-quokka-plugin \
+	jsdom-quokka-plugin"
 
 # Install NvChad
-if [[ -d "$NEOVIM_CONFIG_DIR/.git" && $(git -C $NEOVIM_CONFIG_DIR ls-remote --get-url) == "$NVCHAD_URL"* ]]; then
+if [[ -d "$NEOVIM_CONFIG_DIR/.git" && $(git -C "$NEOVIM_CONFIG_DIR" ls-remote --get-url) == "$NVCHAD_URL"* ]]; then
 	echo "${YELLOW}:: ${BLUE}NvChad${BWHITE} is already installed${NC} -- updating"
-	git -C $NEOVIM_CONFIG_DIR fetch --all
-	git -C $NEOVIM_CONFIG_DIR pull
+	git -C "$NEOVIM_CONFIG_DIR" fetch --all
+	git -C "$NEOVIM_CONFIG_DIR" pull
 else
 	echo "${BLUE}:: ${BWHITE}Installing ${BLUE}NvChad${NC}"
-	mv $NEOVIM_CONFIG_DIR $HOME/.config/NVIM.BAK
-	git clone https://github.com/NvChad/NvChad $NEOVIM_CONFIG_DIR --depth 1
+	mv "$NEOVIM_CONFIG_DIR" "$HOME/.config/NVIM.BAK"
+	git clone "$NVCHAD_URL" "$NEOVIM_CONFIG_DIR" --depth 1
 
 	nvim \
 		+'autocmd User PackerComplete sleep 1000m | write $HOME/.packer.sync.result | qall' \
 		+PackerSync
-	cat $HOME/.packer.sync.result | grep -v 'Press'
+	cat "$HOME/.packer.sync.result" | grep -v 'Press'
 fi
 
 # Enable spicetify
@@ -473,7 +471,7 @@ fi
 # Set default shell to fish
 if [ ! "$(basename -- "$SHELL")" = "fish" ]; then
 	echo "${YELLOW}:: ${BWHITE}Setting default shell to ${BLUE}fish${NC}"
-	sudo chsh -s /bin/fish $USER
+	sudo chsh -s /bin/fish "$USER"
 fi
 
 # Update submodules
@@ -494,7 +492,7 @@ SELECTED_DE=$(printf "%s\n" "${DESKTOP_ENVIRONMENTS[@]}" | fzf --multi --height=
 
 if [[ "${SELECTED_DE}" != "" ]]; then
 	for DE in $SELECTED_DE; do
-		DE=$(echo $DE | awk '{print tolower($0)}')
+		DE=$(echo "$DE" | awk '{print tolower($0)}')
 		bash "$HOME/scripts/${DE}.sh"
 	done
 else
@@ -538,7 +536,7 @@ if [[ $(pacman -Q grub) ]]; then
 		LOGIN_MANAGER="none"
 	fi
 
-	if "$LOGIN_MANAGER" == "none"; then
+	if [ "$LOGIN_MANAGER" == "none" ]; then
 		echo "${YELLOW}:: ${BWHITE}You're not using any login manager or plymouth is already installed${NC} -- skipping plymouth install"
 	else
 		echo "${BLUE}:: ${BWHITE}You're using ${BLUE}${LOGIN_MANAGER}${NC}"
@@ -553,7 +551,7 @@ if [[ $(pacman -Q grub) ]]; then
 		sudo plymouth-set-default-theme -R archcraft
 
 		# Correct hooks
-		if [[ $(grep "^HOOKS=.*systemd.*" /etc/mkinitcpio.conf) ]]; then
+		if grep -q "^HOOKS=.*systemd.*" /etc/mkinitcpio.conf; then
 			echo "${BLUE}:: ${BWHITE}You're using ${BLUE} systemd hook${NC} -- correcting hooks"
 			PLYMOUTH_HOOK_PARENT="systemd"
 			PLYMOUTH_HOOK="sd-plymouth"
@@ -600,7 +598,7 @@ if [[ $(pacman -Q grub) ]]; then
 		fi
 
 		# Create initial ramdisk
-		if "${CHANGED}" == "true"; then
+		if [ "${CHANGED}" == "true" ]; then
 			sudo mkinitcpio -P
 		fi
 
@@ -673,7 +671,7 @@ read -rp "${BLUE}:: ${BWHITE}Do you want to setup additional programming fonts? 
 
 if [[ $fonts_setup != n* ]]; then
 	echo "${BLUE}:: ${BWHITE}Installing fonts...${NC}"
-	bash $HOME/scripts/fonts.sh
+	bash "$HOME/scripts/fonts.sh"
 fi
 
 read -rp "${BLUE}:: ${BWHITE}Do you want to add additional pacman repositories (archstrike, blackarch, archcraft)? [y/N]${NC}: " repos_script
@@ -690,7 +688,7 @@ read -rp "${BLUE}:: ${BWHITE}Do you want to run script for asus laptops? [y/N]${
 
 if [[ $asus_script == y* ]]; then
 	echo "${BLUE}:: ${BWHITE}Running asus script...${NC}"
-	bash $HOME/scripts/asus.sh
+	bash "$HOME/scripts/asus.sh"
 fi
 
 read -rp "${BLUE}:: ${BWHITE}Do you want to add support for razer hardware? [y/N]${NC}: " razer_script
@@ -700,7 +698,7 @@ if [[ $razer_script == y* ]]; then
 	$HELPER -S --noconfirm --needed --quiet "${RAZER_PACKAGES[@]}"
 
 	# Add current user to plugdev group
-	sudo gpasswd -a $CURRENT_USER plugdev
+	sudo gpasswd -a "$CURRENT_USER" plugdev
 fi
 
 read -rp "${BLUE}:: ${BWHITE}Do you want to harden your system? [y/N]${NC}: " harden

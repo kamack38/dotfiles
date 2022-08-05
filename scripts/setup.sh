@@ -37,7 +37,7 @@ pacman -S --noconfirm --needed pacman-contrib fzf reflector rsync grub bc
 echo "${BLUE}:: ${BWHITE}Select disk to install system on.${NC}"
 DISK=$(lsblk -n --output TYPE,KNAME,SIZE | awk '$1=="disk"{print "/dev/"$2"|"$3}' | fzf --height=20% --layout=reverse)
 DISK=${DISK%|*}
-DISK_SIZE=$(lsblk -n --output SIZE ${DISK} | head -n1)
+DISK_SIZE=$(lsblk -n --output SIZE "${DISK}" | head -n1)
 echo "${BLUE}:: ${BWHITE}Selected disk is: ${BLUE}${DISK}${NC}"
 echo "${BLUE}:: ${BWHITE}Selected disk has a size of ${DISK_SIZE}GB${NC}"
 
@@ -46,60 +46,60 @@ read -rp "${BLUE}:: ${BWHITE}Do you wish to ${RED}ERASE${BWHITE} the disk before
 
 # Check if drive is a ssd
 if [[ "$(cat /sys/block/${DISK#/*/}/queue/rotational)" == "0" ]]; then
-    echo "${YELLOW}:: ${BWHITE}Selected drive is a ssd...${NC}"
-    MOUNT_OPTIONS="noatime,compress=zstd,space_cache=v2,ssd,commit=120"
-    SWAP_MOUNT_OPTIONS="noatime,space_cache=v2,ssd,commit=120"
+	echo "${YELLOW}:: ${BWHITE}Selected drive is a ssd...${NC}"
+	MOUNT_OPTIONS="noatime,compress=zstd,space_cache=v2,ssd,commit=120"
+	SWAP_MOUNT_OPTIONS="noatime,space_cache=v2,ssd,commit=120"
 else
-    echo "${YELLOW}:: ${BWHITE}Selected drive is NOT a ssd...${NC}"
-    MOUNT_OPTIONS="noatime,compress=zstd,space_cache=v2,commit=120"
-    SWAP_MOUNT_OPTIONS="noatime,space_cache=v2,commit=120"
+	echo "${YELLOW}:: ${BWHITE}Selected drive is NOT a ssd...${NC}"
+	MOUNT_OPTIONS="noatime,compress=zstd,space_cache=v2,commit=120"
+	SWAP_MOUNT_OPTIONS="noatime,space_cache=v2,commit=120"
 fi
 
 # Swap
 SWAP_OPTIONS=(
-    "swapfile"
-    "zram"
+	"swapfile"
+	"zram"
 )
-TOTAL_RAM_GB=$(echo "scale=1; $(cat /proc/meminfo | grep -i 'memtotal' | grep -o '[[:digit:]]*')/1000000" | bc)
-TOTAL_RAM_MB=$(echo "scale=0; $(cat /proc/meminfo | grep -i 'memtotal' | grep -o '[[:digit:]]*')/1000" | bc)
+TOTAL_RAM_GB=$(echo "scale=1; $(grep -i 'memtotal' /proc/meminfo | grep -o '[[:digit:]]*')/1000000" | bc)
+TOTAL_RAM_MB=$(echo "scale=0; $(grep -i 'memtotal' /proc/meminfo | grep -o '[[:digit:]]*')/1000" | bc)
 echo "${YELLOW}:: ${BWHITE}You have ${TOTAL_RAM}GB of RAM${NC}"
 echo "${YELLOW}:: ${BWHITE}Do you wish to create ${TOTAL_RAM_GB}GB swapfile or ${TOTAL_RAM_GB}GB zram?${NC}"
 SWAP_TYPE=$(printf "%s\n" "${SWAP_OPTIONS[@]}" | fzf --height=20% --layout=reverse || true)
 
 # Create luks password (encryption)
 while true; do
-    echo -n "${YELLOW}:: ${BWHITE}Please enter your luks password: ${NC}"
-    read -s luks_password # read password without echo
+	echo -n "${YELLOW}:: ${BWHITE}Please enter your luks password: ${NC}"
+	read -rs luks_password # read password without echo
 
-    echo -ne "\n${YELLOW}:: ${BWHITE}Please repeat your luks password: ${NC}"
-    read -s luks_password2 # read password without echo
+	echo -ne "\n${YELLOW}:: ${BWHITE}Please repeat your luks password: ${NC}"
+	read -rs luks_password2 # read password without echo
 
-    if [ "$luks_password" = "$luks_password2" ]; then
-        echo -e "\n${GREEN}:: ${BWHITE}Passwords match.${NC}"
-        LUKS_PASSWORD="$luks_password"
-        break
-    else
-        echo -e "\n${RED}:: ${BWHITE}Passwords do not match. Please try again.${NC}"
-    fi
+	if [ "$luks_password" = "$luks_password2" ]; then
+		echo -e "\n${GREEN}:: ${BWHITE}Passwords match.${NC}"
+		LUKS_PASSWORD="$luks_password"
+		break
+	else
+		echo -e "\n${RED}:: ${BWHITE}Passwords do not match. Please try again.${NC}"
+	fi
 done
 
 # Create user credentials
 read -rp "${BLUE}:: ${BWHITE}Enter your username: ${NC}" USERNAME
 
 while true; do
-    echo -n "${YELLOW}:: ${BWHITE}Please enter your password: ${NC}"
-    read -s password # read password without echo
+	echo -n "${YELLOW}:: ${BWHITE}Please enter your password: ${NC}"
+	read -rs password # read password without echo
 
-    echo -ne "\n${YELLOW}:: ${BWHITE}Please repeat your password: ${NC}"
-    read -s password2 # read password without echo
+	echo -ne "\n${YELLOW}:: ${BWHITE}Please repeat your password: ${NC}"
+	read -rs password2 # read password without echo
 
-    if [ "$password" = "$password2" ]; then
-        echo -e "\n${GREEN}:: ${BWHITE}Passwords match.${NC}"
-        PASSWORD="$password"
-        break
-    else
-        echo -e "\n${RED}:: ${BWHITE}Passwords do not match. Please try again.${NC}"
-    fi
+	if [ "$password" = "$password2" ]; then
+		echo -e "\n${GREEN}:: ${BWHITE}Passwords match.${NC}"
+		PASSWORD="$password"
+		break
+	else
+		echo -e "\n${RED}:: ${BWHITE}Passwords do not match. Please try again.${NC}"
+	fi
 done
 
 read -rep "${YELLOW}:: ${BWHITE}Please enter your hostname: ${NC}" MACHINE_NAME
@@ -111,8 +111,8 @@ timedatectl set-ntp true
 # Setup faster mirrors
 read -rp "${BLUE}:: ${BWHITE}Do you want to setup faster mirrors? [Y/n]${NC}: " fonts_setup
 if [[ $fonts_setup != n* ]]; then
-    echo "${BLUE}:: ${BWHITE}Setting up faster mirrors using ${BLUE}reflector${BWHITE}...${NC}"
-    reflector -a 48 -f 10 -l 20 --sort rate --save /etc/pacman.d/mirrorlist
+	echo "${BLUE}:: ${BWHITE}Setting up faster mirrors using ${BLUE}reflector${BWHITE}...${NC}"
+	reflector -a 48 -f 10 -l 20 --sort rate --save /etc/pacman.d/mirrorlist
 fi
 
 # Create mount directory
@@ -124,10 +124,10 @@ pacman -S --noconfirm --needed gptfdisk btrfs-progs glibc
 
 # Make sure everything is unmounted when starting
 if grep -qs '/mnt' /proc/mounts; then
-    echo "${YELLOW}:: ${BLUE}/mnt${BWHITE} is mounted${NC} -- unmounting"
-    umount -AR /mnt
+	echo "${YELLOW}:: ${BLUE}/mnt${BWHITE} is mounted${NC} -- unmounting"
+	umount -AR /mnt
 else
-    echo "${BLUE}:: ${BLUE}/mnt${BWHITE} is not mounted${NC} -- skipping"
+	echo "${BLUE}:: ${BLUE}/mnt${BWHITE} is not mounted${NC} -- skipping"
 fi
 
 # Get partition numbers
@@ -136,57 +136,57 @@ j=0
 i=1
 PART_NUMBERS=()
 if [[ "${DISK}" =~ "nvme" ]]; then
-    TMP_DISK="${DISK}p"
+	TMP_DISK="${DISK}p"
 else
-    TMP_DISK="${DISK}"
+	TMP_DISK="${DISK}"
 fi
 while [ $j -lt 3 ]; do
-    if [[ ! -e "${TMP_DISK}${i}" ]]; then
-        echo "${BLUE}:: ${BLUE}${i}${BWHITE} is free! ${NC}"
-        ((j = j + 1))
-        PART_NUMBERS+=("$i")
-    fi
-    ((i = i + 1))
+	if [[ ! -e "${TMP_DISK}${i}" ]]; then
+		echo "${BLUE}:: ${BLUE}${i}${BWHITE} is free! ${NC}"
+		((j = j + 1))
+		PART_NUMBERS+=("$i")
+	fi
+	((i = i + 1))
 done
 
 echo "${BLUE}:: ${BWHITE}Formatting disk...${NC}"
 if [[ $erase_disk != n* ]]; then
-    echo "${YELLOW}:: ${BWHITE}All data from disk ${DISK} is being ${RED}ERASED${BWHITE}!${NC}"
-    sgdisk -Z ${DISK}
-    sgdisk -a 2048 -o ${DISK}
+	echo "${YELLOW}:: ${BWHITE}All data from disk ${DISK} is being ${RED}ERASED${BWHITE}!${NC}"
+	sgdisk -Z "${DISK}"
+	sgdisk -a 2048 -o "${DISK}"
 fi
-sgdisk -n "${PART_NUMBERS[0]}"::+1M --typecode="${PART_NUMBERS[0]}":ef02 --change-name="${PART_NUMBERS[0]}":'BIOSBOOT' ${DISK}  # partition 1 (BIOS Boot Partition)
-sgdisk -n "${PART_NUMBERS[1]}"::+300M --typecode="${PART_NUMBERS[1]}":ef00 --change-name="${PART_NUMBERS[1]}":'EFIBOOT' ${DISK} # partition 2 (UEFI Boot Partition)
-sgdisk -N "${PART_NUMBERS[2]}" --typecode="${PART_NUMBERS[2]}":8300 --change-name="${PART_NUMBERS[2]}":'ROOT' ${DISK}           # partition 3 (Root), default start, remaining
+sgdisk -n "${PART_NUMBERS[0]}"::+1M --typecode="${PART_NUMBERS[0]}":ef02 --change-name="${PART_NUMBERS[0]}":'BIOSBOOT' "${DISK}"  # partition 1 (BIOS Boot Partition)
+sgdisk -n "${PART_NUMBERS[1]}"::+300M --typecode="${PART_NUMBERS[1]}":ef00 --change-name="${PART_NUMBERS[1]}":'EFIBOOT' "${DISK}" # partition 2 (UEFI Boot Partition)
+sgdisk -N "${PART_NUMBERS[2]}" --typecode="${PART_NUMBERS[2]}":8300 --change-name="${PART_NUMBERS[2]}":'ROOT' "${DISK}"           # partition 3 (Root), default start, remaining
 
 # Check for bios system
 if [[ ! -d "/sys/firmware/efi" ]]; then
-    sgdisk -A "${PART_NUMBERS[0]}":set:"${PART_NUMBERS[1]}" ${DISK}
+	sgdisk -A "${PART_NUMBERS[0]}":set:"${PART_NUMBERS[1]}" "${DISK}"
 fi
 
 echo "${BLUE}:: ${BWHITE}Rereading partition table...${NC}"
-partprobe ${DISK}
+partprobe "${DISK}"
 
 echo "${BLUE}:: ${BWHITE}Naming partitions...${NC}"
 if [[ "${DISK}" =~ "nvme" ]]; then
-    EFI_PART="${DISK}p${PART_NUMBERS[1]}"
-    ROOT_PART="${DISK}p${PART_NUMBERS[2]}"
+	EFI_PART="${DISK}p${PART_NUMBERS[1]}"
+	ROOT_PART="${DISK}p${PART_NUMBERS[2]}"
 else
-    EFI_PART="${DISK}${PART_NUMBERS[1]}"
-    ROOT_PART="${DISK}${PART_NUMBERS[2]}"
+	EFI_PART="${DISK}${PART_NUMBERS[1]}"
+	ROOT_PART="${DISK}${PART_NUMBERS[2]}"
 fi
 
 # Create boot partition
 echo "${BLUE}:: ${BWHITE}Creating EFI partition...${NC}"
-mkfs.vfat -F32 -n "EFIBOOT" ${EFI_PART}
+mkfs.vfat -F32 -n "EFIBOOT" "${EFI_PART}"
 
 # Enter luks password to cryptsetup and format root partition
 echo "${BLUE}:: ${BWHITE}Encrypting root partition...${NC}"
-echo -n "${LUKS_PASSWORD}" | cryptsetup -v luksFormat ${ROOT_PART} -
+echo -n "${LUKS_PASSWORD}" | cryptsetup -v luksFormat "${ROOT_PART}" -
 
 # Open luks container and ROOT will be place holder
 echo "${BLUE}:: ${BWHITE}Opening root partition...${NC}"
-echo -n "${LUKS_PASSWORD}" | cryptsetup open ${ROOT_PART} cryptroot -
+echo -n "${LUKS_PASSWORD}" | cryptsetup open "${ROOT_PART}" cryptroot -
 
 # Format luks container
 mapper=/dev/mapper/cryptroot
@@ -220,7 +220,7 @@ mount -o ${MOUNT_OPTIONS},subvol=@var ${mapper} /mnt/var
 mount -o ${MOUNT_OPTIONS},subvol=@.snapshots ${mapper} /mnt/.snapshots
 mount -o ${SWAP_MOUNT_OPTIONS},subvol=@swap ${mapper} /mnt/swap
 
-ENCRYPTED_PARTITION_UUID=$(blkid -s UUID -o value ${ROOT_PART})
+ENCRYPTED_PARTITION_UUID=$(blkid -s UUID -o value "${ROOT_PART}")
 
 echo "${BLUE}:: ${BWHITE}Encrypted partition UUID is: ${BLUE}${ENCRYPTED_PARTITION_UUID}${NC}"
 
@@ -230,28 +230,28 @@ mount -t vfat -L EFIBOOT /mnt/boot/
 
 # Check if drive is mounted
 if ! grep -qs '/mnt' /proc/mounts; then
-    echo "${RED}:: ${BWHITE}Drive is not mounted can not continue${NC}"
-    echo "${YELLOW}:: ${BWHITE}Rebooting in 3 Seconds...${NC}" && sleep 1
-    echo "${YELLOW}:: ${BWHITE}Rebooting in 2 Seconds...${NC}" && sleep 1
-    echo "${YELLOW}:: ${BWHITE}Rebooting in 1 Seconds...${NC}" && sleep 1
-    reboot now
+	echo "${RED}:: ${BWHITE}Drive is not mounted can not continue${NC}"
+	echo "${YELLOW}:: ${BWHITE}Rebooting in 3 Seconds...${NC}" && sleep 1
+	echo "${YELLOW}:: ${BWHITE}Rebooting in 2 Seconds...${NC}" && sleep 1
+	echo "${YELLOW}:: ${BWHITE}Rebooting in 1 Seconds...${NC}" && sleep 1
+	reboot now
 fi
 
 PREREQUISITES=(
-    "base"
-    "btrfs-progs"
-    "linux"
-    "linux-firmware"
-    "sudo"
-    "grub"
-    "archlinux-keyring"
-    "libnewt"
-    "modemmanager"
-    "networkmanager"
-    "dhclient"
-    "snapper"    # A tool for managing BTRFS and LVM snapshots. It can create, diff and restore snapshots and provides timelined auto-snapping.
-    "snap-pac"   # Pacman hooks that use snapper to create pre/post btrfs snapshots like openSUSE's YaST
-    "grub-btrfs" # Include btrfs snapshots in GRUB boot options
+	"base"
+	"btrfs-progs"
+	"linux"
+	"linux-firmware"
+	"sudo"
+	"grub"
+	"archlinux-keyring"
+	"libnewt"
+	"modemmanager"
+	"networkmanager"
+	"dhclient"
+	"snapper"    # A tool for managing BTRFS and LVM snapshots. It can create, diff and restore snapshots and provides timelined auto-snapping.
+	"snap-pac"   # Pacman hooks that use snapper to create pre/post btrfs snapshots like openSUSE's YaST
+	"grub-btrfs" # Include btrfs snapshots in GRUB boot options
 )
 
 # Start arch installation
@@ -266,9 +266,9 @@ cat /mnt/etc/fstab
 
 # Install GRUB
 if [[ ! -d "/sys/firmware/efi" ]]; then
-    grub-install --boot-directory=/mnt/boot ${DISK}
+	grub-install --boot-directory=/mnt/boot "${DISK}"
 else
-    pacstrap /mnt efibootmgr --noconfirm --needed
+	pacstrap /mnt efibootmgr --noconfirm --needed
 fi
 
 # Swap
@@ -276,66 +276,66 @@ SWAP_SIZE=$TOTAL_RAM_MB
 SWAP_FILE_PATH="/swap/swapfile"
 case $SWAP_TYPE in
 swapfile)
-    echo "${BLUE}:: ${BWHITE}Creating swapfile...${NC}"
-    truncate -s 0 /mnt${SWAP_FILE_PATH} # create swap file
-    chattr +C /mnt${SWAP_FILE_PATH}     # apply NOCOW, btrfs needs that.
-    # btrfs property set /mnt${SWAP_FILE_PATH} compression none                         # disable compression
-    dd if=/dev/zero of=/mnt${SWAP_FILE_PATH} bs=1M count=${SWAP_SIZE} status=progress # copy bytes
-    chmod 600 /mnt${SWAP_FILE_PATH}                                                   # set permissions
-    chown root /mnt$SWAP_FILE_PATH
-    mkswap /mnt${SWAP_FILE_PATH}
-    swapon /mnt${SWAP_FILE_PATH}
-    echo "${SWAP_FILE_PATH}	none	swap	sw	0	0" >>/mnt/etc/fstab
-    ;;
+	echo "${BLUE}:: ${BWHITE}Creating swapfile...${NC}"
+	truncate -s 0 /mnt${SWAP_FILE_PATH} # create swap file
+	chattr +C /mnt${SWAP_FILE_PATH}     # apply NOCOW, btrfs needs that.
+	# btrfs property set /mnt${SWAP_FILE_PATH} compression none                         # disable compression
+	dd if=/dev/zero of=/mnt${SWAP_FILE_PATH} bs=1M count="${SWAP_SIZE}" status=progress # copy bytes
+	chmod 600 /mnt${SWAP_FILE_PATH}                                                     # set permissions
+	chown root /mnt$SWAP_FILE_PATH
+	mkswap /mnt${SWAP_FILE_PATH}
+	swapon /mnt${SWAP_FILE_PATH}
+	echo "${SWAP_FILE_PATH}	none	swap	sw	0	0" >>/mnt/etc/fstab
+	;;
 zram)
-    echo "${BLUE}:: ${BWHITE}Installing ${BLUE}zram${BWHITE} prerequisites...${NC}"
-    pacstrap /mnt zram-generator --noconfirm --needed 1>/dev/null
-    ;;
+	echo "${BLUE}:: ${BWHITE}Installing ${BLUE}zram${BWHITE} prerequisites...${NC}"
+	pacstrap /mnt zram-generator --noconfirm --needed 1>/dev/null
+	;;
 esac
 
 function chroot {
-    echo "${BLUE}:: ${BWHITE}Setting up ${BLUE}GRUB${BWHITE}...${NC}"
-    if [[ -d "/sys/firmware/efi" ]]; then
-        grub-install --efi-directory=/boot --bootloader-id=GRUB ${DISK}
-    fi
-    sed -i "s%^GRUB_CMDLINE_LINUX_DEFAULT=\"%GRUB_CMDLINE_LINUX_DEFAULT=\"cryptdevice=UUID=${ENCRYPTED_PARTITION_UUID}:cryptroot root=/dev/mapper/cryptroot %" /etc/default/grub
-    sed -i "s/^#GRUB_ENABLE_CRYPTODISK=y/GRUB_ENABLE_CRYPTODISK=y/" /etc/default/grub
+	echo "${BLUE}:: ${BWHITE}Setting up ${BLUE}GRUB${BWHITE}...${NC}"
+	if [[ -d "/sys/firmware/efi" ]]; then
+		grub-install --efi-directory=/boot --bootloader-id=GRUB "${DISK}"
+	fi
+	sed -i "s%^GRUB_CMDLINE_LINUX_DEFAULT=\"%GRUB_CMDLINE_LINUX_DEFAULT=\"cryptdevice=UUID=${ENCRYPTED_PARTITION_UUID}:cryptroot root=/dev/mapper/cryptroot %" /etc/default/grub
+	sed -i "s/^#GRUB_ENABLE_CRYPTODISK=y/GRUB_ENABLE_CRYPTODISK=y/" /etc/default/grub
 
-    case $SWAP_TYPE in
-    swapfile)
-        echo "${BLUE}:: ${BWHITE}Adding hibernation...${NC}"
-        curl -s "https://raw.githubusercontent.com/osandov/osandov-linux/master/scripts/btrfs_map_physical.c" -O ~/btrfs_map_physical.c
-        gcc -O2 -o ~/btrfs_map_physical ~/btrfs_map_physical.c
-        SWAP_FILE_DEV_UUID=$(findmnt -no UUID -T $SWAP_FILE_PATH)
-        SWAP_FILE_OFFSET=$(echo "$(~/btrfs_map_physical $SWAP_FILE_PATH | cut -f 9 | head -2 | tail -1) / $(getconf PAGESIZE)" | bc)
-        sed -i "s,\(^HOOKS=\".*\)filesystems\(.*\"\),\1filesystems resume\2," /etc/mkinitcpio.conf
-        sed -i "s,\(^GRUB_CMDLINE_LINUX_DEFAULT=\".*\)\(.*\"\),\1 resume=UUID=${SWAP_FILE_DEV_UUID} resume_offset=${SWAP_FILE_OFFSET}\2," /etc/default/grub
-        ;;
-    zram)
-        echo "${BLUE}:: ${BWHITE}Creating swap on zram...${NC}"
-        systemctl daemon-reload
-        systemctl start /dev/zram0
-        tee /etc/systemd/zram-generator.conf >/dev/null <<EOT
+	case $SWAP_TYPE in
+	swapfile)
+		echo "${BLUE}:: ${BWHITE}Adding hibernation...${NC}"
+		curl -s "https://raw.githubusercontent.com/osandov/osandov-linux/master/scripts/btrfs_map_physical.c" -O ~/btrfs_map_physical.c
+		gcc -O2 -o ~/btrfs_map_physical ~/btrfs_map_physical.c
+		SWAP_FILE_DEV_UUID=$(findmnt -no UUID -T $SWAP_FILE_PATH)
+		SWAP_FILE_OFFSET=$(echo "$(~/btrfs_map_physical $SWAP_FILE_PATH | cut -f 9 | head -2 | tail -1) / $(getconf PAGESIZE)" | bc)
+		sed -i "s,\(^HOOKS=\".*\)filesystems\(.*\"\),\1filesystems resume\2," /etc/mkinitcpio.conf
+		sed -i "s,\(^GRUB_CMDLINE_LINUX_DEFAULT=\".*\)\(.*\"\),\1 resume=UUID=${SWAP_FILE_DEV_UUID} resume_offset=${SWAP_FILE_OFFSET}\2," /etc/default/grub
+		;;
+	zram)
+		echo "${BLUE}:: ${BWHITE}Creating swap on zram...${NC}"
+		systemctl daemon-reload
+		systemctl start /dev/zram0
+		tee /etc/systemd/zram-generator.conf >/dev/null <<EOT
 [zram0]
 host-memory-limit = none
 zram-fraction = 1
 max-zram-size = none
 compression-algorithm = zstd
 EOT
-        ;;
-    esac
+		;;
+	esac
 
-    echo "${BLUE}:: ${BWHITE}Setting up snapper...${NC}"
-    # Change grub snapshot submenu name
-    sed -i /etc/default/grub-btrfs/config \
-        -e 's,.*GRUB_BTRFS_SUBMENUNAME=.*,GRUB_BTRFS_SUBMENUNAME=\"BTRFS snapshots\",'
+	echo "${BLUE}:: ${BWHITE}Setting up snapper...${NC}"
+	# Change grub snapshot submenu name
+	sed -i /etc/default/grub-btrfs/config \
+		-e 's,.*GRUB_BTRFS_SUBMENUNAME=.*,GRUB_BTRFS_SUBMENUNAME=\"BTRFS snapshots\",'
 
-    if [[ $(systemctl is-enabled grub-btrfs.path) == "enabled" ]]; then
-        systemctl disable --now grub-btrfs.path
-    fi
+	if [[ $(systemctl is-enabled grub-btrfs.path) == "enabled" ]]; then
+		systemctl disable --now grub-btrfs.path
+	fi
 
-    # Add template
-    sudo tee /etc/snapper/config-templates/garuda <<EOF
+	# Add template
+	sudo tee /etc/snapper/config-templates/garuda <<EOF
 # subvolume to snapshot
 SUBVOLUME="/"
 
@@ -399,9 +399,9 @@ EMPTY_PRE_POST_CLEANUP="yes"
 EMPTY_PRE_POST_MIN_AGE="1800"
 EOF
 
-    echo "${BLUE}:: ${BWHITE}Enabling automatic rebuild of grub-btrfs when snapshots are taken...${NC}"
-    # Add grub-btrfs service
-    sudo tee /usr/lib/systemd/system/grub-btrfs-snapper.service <<EOF
+	echo "${BLUE}:: ${BWHITE}Enabling automatic rebuild of grub-btrfs when snapshots are taken...${NC}"
+	# Add grub-btrfs service
+	sudo tee /usr/lib/systemd/system/grub-btrfs-snapper.service <<EOF
 [Unit]
 Description=Regenerate grub-btrfs.cfg
 
@@ -415,7 +415,7 @@ EnvironmentFile=/etc/default/grub-btrfs/config
 ExecStart=bash -c 'if [[ -z $(/usr/bin/findmnt -n / | /usr/bin/grep "\.snapshots") ]]; then if [ -s "\${GRUB_BTRFS_GRUB_DIRNAME:-/boot/grub}/grub-btrfs.cfg" ]; then /etc/grub.d/41_snapshots-btrfs; else \${GRUB_BTRFS_MKCONFIG:-grub-mkconfig} -o \${GRUB_BTRFS_GRUB_DIRNAME:-/boot/grub}/grub.cfg; fi; fi'
 EOF
 
-    sudo tee /usr/lib/systemd/system/grub-btrfs-snapper.path <<EOF
+	sudo tee /usr/lib/systemd/system/grub-btrfs-snapper.path <<EOF
 [Unit]
 Description=Monitors for new snapshots
 
@@ -426,40 +426,40 @@ PathModified=/.snapshots
 WantedBy=multi-user.target
 EOF
 
-    systemctl daemon-reload
-    systemctl enable --now grub-btrfs-snapper.path
-    systemctl enable snapper-cleanup.timer
+	systemctl daemon-reload
+	systemctl enable --now grub-btrfs-snapper.path
+	systemctl enable snapper-cleanup.timer
 
-    echo "${BLUE}:: ${BWHITE}Creating snapper config...${NC}"
-    snapper create-config --template garuda /
+	echo "${BLUE}:: ${BWHITE}Creating snapper config...${NC}"
+	snapper create-config --template garuda /
 
-    if [[ ! $(grep -qe "^HOOKS=.*grub-btrfs-overlayfs" /etc/mkinitcpio.conf) ]]; then
-        echo "${BLUE}:: ${BWHITE}Adding ${BLUE}grub-btrfs-overlayfs${BWHITE} hook...${NC}"
-        sed -re 's/(^HOOKS=\([^)]+)/\1 grub-btrfs-overlayfs/gi' -i /etc/mkinitcpio.conf
-    fi
+	if [[ ! $(grep -qe "^HOOKS=.*grub-btrfs-overlayfs" /etc/mkinitcpio.conf) ]]; then
+		echo "${BLUE}:: ${BWHITE}Adding ${BLUE}grub-btrfs-overlayfs${BWHITE} hook...${NC}"
+		sed -re 's/(^HOOKS=\([^)]+)/\1 grub-btrfs-overlayfs/gi' -i /etc/mkinitcpio.conf
+	fi
 
-    grub-mkconfig -o /boot/grub/grub.cfg
+	grub-mkconfig -o /boot/grub/grub.cfg
 
-    echo "${BLUE}:: ${BWHITE}Creating user...${NC}"
-    groupadd libvirt
-    useradd -mG wheel,libvirt -s /bin/bash $USERNAME
-    echo "${BLUE}:: ${BWHITE}$USERNAME added to wheel and libvirt group, default shell set to ${BlUE}/bin/bash${NC}"
-    echo "$USERNAME:$PASSWORD" | chpasswd
-    echo "${BLUE}:: ${BWHITE}${USERNAME} password set${NC}"
+	echo "${BLUE}:: ${BWHITE}Creating user...${NC}"
+	groupadd libvirt
+	useradd -mG wheel,libvirt -s /bin/bash "$USERNAME"
+	echo "${BLUE}:: ${BWHITE}$USERNAME added to wheel and libvirt group, default shell set to ${BLUE}/bin/bash${NC}"
+	echo "$USERNAME:$PASSWORD" | chpasswd
+	echo "${BLUE}:: ${BWHITE}${USERNAME} password set${NC}"
 
-    echo "${BLUE}:: ${BWHITE}Setting up NetworkManager...${NC}"
-    systemctl enable NetworkManager.service
-    systemctl enable ModemManager.service
+	echo "${BLUE}:: ${BWHITE}Setting up NetworkManager...${NC}"
+	systemctl enable NetworkManager.service
+	systemctl enable ModemManager.service
 
-    # Add sudo rights
-    echo "${BLUE}:: ${BWHITE}Adding ${BLUE}wheel${BWHITE} group sudo rights...${NC}"
-    sed -i 's/^# %wheel ALL=(ALL) ALL/%wheel ALL=(ALL) ALL/' /etc/sudoers
-    sed -i 's/^# %wheel ALL=(ALL:ALL) ALL/%wheel ALL=(ALL:ALL) ALL/' /etc/sudoers
+	# Add sudo rights
+	echo "${BLUE}:: ${BWHITE}Adding ${BLUE}wheel${BWHITE} group sudo rights...${NC}"
+	sed -i 's/^# %wheel ALL=(ALL) ALL/%wheel ALL=(ALL) ALL/' /etc/sudoers
+	sed -i 's/^# %wheel ALL=(ALL:ALL) ALL/%wheel ALL=(ALL:ALL) ALL/' /etc/sudoers
 
-    echo "${BLUE}:: ${BWHITE}Hostname is set to ${BLUE}${MACHINE_NAME}${NC}"
-    echo $MACHINE_NAME >/etc/hostname
-    sed -i 's/filesystems/encrypt filesystems/g' /etc/mkinitcpio.conf
-    mkinitcpio -P
+	echo "${BLUE}:: ${BWHITE}Hostname is set to ${BLUE}${MACHINE_NAME}${NC}"
+	echo "$MACHINE_NAME" >/etc/hostname
+	sed -i 's/filesystems/encrypt filesystems/g' /etc/mkinitcpio.conf
+	mkinitcpio -P
 }
 export -f chroot
 
@@ -481,6 +481,6 @@ echo "${GREEN}:: ${BWHITE}Setup completed!${NC}"
 
 read -rp "${RED}:: ${BWHITE}Do you want to reboot? [Y/n]${NC}: " reboot_prompt
 if [[ $reboot_prompt != n* ]]; then
-    echo "${YELLOW}:: ${BWHITE}Rebooting...${NC}"
-    systemctl reboot
+	echo "${YELLOW}:: ${BWHITE}Rebooting...${NC}"
+	systemctl reboot
 fi
