@@ -22,9 +22,6 @@ export GPG_TTY=(tty)
 # Enable colored output
 export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 
-# Qt theme 
-export QT_QPA_PLATFORMTHEME="kde"
-
 # ------------
 # XDG
 # ------------

@@ -280,7 +280,10 @@
                     "type": "azfunc"
                 },
                 {
-                    "background_templates": ["{{if contains \"default\" .Profile}}#FFA400{{end}}", "{{if contains \"jan\" .Profile}}#f1184c{{end}}"],
+                    "background_templates": [
+                        "{{if contains \"default\" .Profile}}#FFA400{{end}}",
+                        "{{if contains \"jan\" .Profile}}#f1184c{{end}}"
+                    ],
                     "foreground": "#ffffff",
                     "invert_powerline": true,
                     "powerline_symbol": "",
@@ -319,7 +322,9 @@
                 },
                 {
                     "background": "#3BD01D",
-                    "background_templates": ["{{ if gt .Code 0 }}#FF005D{{ end }}"],
+                    "background_templates": [
+                        "{{ if gt .Code 0 }}#FF005D{{ end }}"
+                    ],
                     "foreground": "#d3d7cf",
                     "invert_powerline": true,
                     "powerline_symbol": "",
@@ -379,7 +384,11 @@
                 "home_enabled": true
             },
             "style": "diamond",
-            "tips": ["node", "n", "npm"],
+            "tips": [
+                "node",
+                "n",
+                "npm"
+            ],
             "trailing_diamond": "",
             "type": "node"
         },
@@ -393,7 +402,10 @@
                 "home_enabled": true
             },
             "style": "diamond",
-            "tips": ["java", "jar"],
+            "tips": [
+                "java",
+                "jar"
+            ],
             "trailing_diamond": "",
             "type": "java"
         }

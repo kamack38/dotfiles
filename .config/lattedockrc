@@ -11,7 +11,7 @@ DP-1-0 eDP-1 Width 2560x1440=404
 
 [LatteSettingsDialog]
 downloadWindowSize=980,600
-windowSize=2560,1333
+windowSize=1900,976
 
 [LatteSettingsDialog][DetailsDialog]
 windowSize=560,640
