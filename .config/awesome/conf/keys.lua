@@ -108,6 +108,8 @@ awful.keyboard.append_global_keybindings({
         { description = "open a terminal", group = "launcher" }),
     awful.key({ modkey, }, "e", function() awful.spawn(apps.default.file_manager) end,
         { description = "open a file manager", group = "launcher" }),
+    -- awful.key({ modkey, shift }, "l", function() awful.spawn(apps.default.lock_screen_cmd) end,
+    --     { description = "launch lock screen", group = "launcher" }),
 
     --- Awesome control
     awful.key({ modkey, shift }, "r", awesome.restart,

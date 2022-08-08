@@ -17,6 +17,8 @@ return {
 		file_manager = "dolphin",
 		--- Default network manager
 		network_manager = term .. " -e nmtui",
+		--- Default lock screen cmd
+		lock_screen_cmd = term .. "-e 'betterlockscreen -l'",
 		--- Default bluetooth manager
 		-- bluetooth_manager = "blueman-manager",
 		--- Default power manager
