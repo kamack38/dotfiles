@@ -26,5 +26,12 @@
         "updated_at": "2022-07-21T15:56:55.287967",
         "last_commit": "aa9515e42487a7372fe7d72f7825d92a225f5a9b",
         "last_commit_time": "2022-07-15T19:55:34"
+    },
+    "com.github.melianmiko.ulauncher-nmcli": {
+        "id": "com.github.melianmiko.ulauncher-nmcli",
+        "url": "https://github.com/melianmiko/ulauncher-nmcli",
+        "updated_at": "2022-08-08T23:48:02.258205",
+        "last_commit": "fe967c947748616df602c9d022fec6d68a6b2cf2",
+        "last_commit_time": "2022-05-01T12:20:38"
     }
 }

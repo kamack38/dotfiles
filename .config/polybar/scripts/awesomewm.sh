@@ -1,6 +1,8 @@
 #!/bin/env bash
 
 OUTPUT=""
+# OUTPUT_PREFIX="%{B#FF9677} "
+# OUTPUT_SUFFIX=" %{B-}"
 
 while getopts 'lf' OPTION; do
     case "$OPTION" in
@@ -24,5 +26,5 @@ while getopts 'lf' OPTION; do
 done
 
 if [[ "$OUTPUT" != "" ]]; then
-    echo "$OUTPUT"
+    echo "${OUTPUT_PREFIX}${OUTPUT}${OUTPUT_SUFFIX}"
 fi

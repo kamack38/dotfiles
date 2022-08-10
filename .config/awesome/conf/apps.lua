@@ -12,7 +12,7 @@ return {
 		--- Default code editor
 		code_editor = "code",
 		--- Default web browser
-		web_browser = "firefox",
+		web_browser = "firefox-developer-edition",
 		--- Default file manager
 		file_manager = "dolphin",
 		--- Default network manager
