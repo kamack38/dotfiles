@@ -152,6 +152,20 @@ INTEL_DRIVERS=(
 	"lib32-vulkan-icd-loader"
 )
 
+FISH_PACKAGES=(
+	"PatrickF1/colored_man_pages.fish" # Coloured man pages
+	"jorgebucaran/nvm.fish"            # Node version manager
+)
+
+NPM_PACKAGES=(
+	"npm"
+	"yarn"
+	"pm2"
+	"neovim"
+	"npm-check-updates"
+	"git-cz"
+)
+
 DESKTOP_ENVIRONMENTS=(
 	"KDE"
 	"Xfce"
@@ -432,15 +446,15 @@ pip install --no-warn-script-location --upgrade neovim
 # Add .local/bin to PATH
 export PATH="$HOME/.local/bin:$PATH"
 
-# Install node & npm packages
-echo -e "${GREEN}:: ${BWHITE}Installing ${BLUE}node${BWHITE} & ${BLUE}npm${BWHITE} packages${NC}"
-fish -c "fisher install jorgebucaran/nvm.fish && nvm install ${NODE_VERSION} && npm i -g npm \
-	yarn \
-	pm2 \
-	neovim \
-	npm-check-updates \
-	git-cz"
+# Install fish plugins
+echo "${GREEN}:: ${BWHITE}Installing ${BLUE}fish${BWHITE} packages${NC}"
+echo "fisher install ${FISH_PACKAGES[@]}" | fish
 
+# Install node & npm packages
+echo "${GREEN}:: ${BWHITE}Installing ${BLUE}node${BWHITE} (${NODE_VERSION}) & ${BLUE}npm${BWHITE} packages${NC}"
+echo "nvm install ${NODE_VERSION} && npm i --location=global ${NPM_PACKAGES[@]}" | fish
+
+# Quokka.js
 echo "${GREEN}:: ${BWHITE}Installing ${BLUE}quokka.js plugins${NC}"
 fish -c "npm i --prefix $HOME/.quokka dotenv-quokka-plugin \
 	jsdom-quokka-plugin"
