@@ -29,6 +29,7 @@ AWESOMEWM_PACKAGES=(
 	"clipster"           # Python clipboard manager
 	"brightnessctl"      # Lightweight brightness control tool
 	"picom-jonaburg-git" # jonaburg's picom fork with tryone144's dual_kawase blur and ibhagwan's rounded corners, an X compositor (compton's fork)
+	"betterlockscreen"   # A simple, minimal lockscreen
 )
 
 echo "${GREEN}:: ${BWHITE}Installing awesomeWM and its components...${NC}"
@@ -40,3 +41,4 @@ if [[ $(systemctl is-enabled sddm-plymouth.service 2>/dev/null) == enabled ]]; t
 else
 	sudo systemctl enable sddm.service
 fi
+sudo systemctl enable "betterlockscreen@$CURRENT_USER.service"
