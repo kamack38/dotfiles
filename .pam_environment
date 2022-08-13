@@ -7,6 +7,7 @@ XDG_STATE_HOME DEFAULT=@{HOME}/.local/state
 XDG_CONFIG_HOME DEFAULT=@{HOME}/.config
 XDG_DATA_HOME DEFAULT=@{HOME}/.local/share
 XDG_BIN_HOME DEFAULT=@{HOME}/.local/bin
+XDG_DATA_DIRS DEFAULT=@{HOME}/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:/usr/local/share/:/usr/share/
 
 # Data
 CARGO_HOME DEFAULT=${XDG_DATA_HOME}/cargo
