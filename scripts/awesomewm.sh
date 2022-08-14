@@ -14,6 +14,7 @@ NC=$'\e[0m' # No Colour
 
 # Default vars
 HELPER="paru"
+CURRENT_USER="$USER"
 
 AWESOMEWM_PACKAGES=(
 	"xorg"               # Display server
