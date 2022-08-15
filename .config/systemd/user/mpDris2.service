@@ -1,6 +1,6 @@
 [Unit]
 Description=MPRIS V2.1 support for mpd 
-Documentation=man:picom(1)
+Documentation=mpDris2 --help
 After=network.target sound.target mpd.service
 
 [Service]
