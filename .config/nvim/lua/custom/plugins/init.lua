@@ -1,12 +1,7 @@
 return {
    ["goolord/alpha-nvim"] = { disable = false, },
    ["wakatime/vim-wakatime"] = {},
-   ["Pocco81/TrueZen.nvim"] = {
-      cmd = {
-         "TZAtaraxis",
-         "TZMinimalist",
-         "TZFocus",
-      },
+   ["Pocco81/true-zen.nvim"] = {
       config = function()
          require "custom.plugins.truezen"
       end,
