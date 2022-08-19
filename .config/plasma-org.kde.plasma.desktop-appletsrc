@@ -11,7 +11,7 @@ lastUpdate=2022,6,11,21,21,21.296
 [Containments][1]
 ItemGeometries-1920x1080=Applet-66:0,80,1920,176,0;
 ItemGeometries-2560x1440=Applet-66:912,64,736,176,0;
-ItemGeometriesHorizontal=Applet-66:0,80,1920,176,0;
+ItemGeometriesHorizontal=Applet-66:912,64,736,176,0;
 activityId=70236a50-2422-44b5-bcb3-9d8c342fc3e7
 formfactor=0
 immutability=1
@@ -136,7 +136,7 @@ wallpaperplugin=org.kde.image
 PreloadWeight=0
 
 [Containments][60][Wallpaper][org.kde.image][General]
-Image=file:///opt/dwall-git/firewatch/20.png
+Image=file:///usr/share/wallpapers/Next/contents/images/1920x1080.jpg
 
 [Containments][67]
 ItemGeometries-1920x1080=
