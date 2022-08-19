@@ -42,9 +42,16 @@ return {
       end,
    },
    ["folke/todo-comments.nvim"] = {
-     requires = "nvim-lua/plenary.nvim",
-     config = function()
-       require("todo-comments").setup()
-     end
+      requires = "nvim-lua/plenary.nvim",
+      config = function()
+         require("todo-comments").setup()
+      end,
+   },
+   ["gbprod/cutlass.nvim"] = {
+      config = function()
+         require("cutlass").setup({
+            override_del = true,
+         })
+      end,
    }
 }
