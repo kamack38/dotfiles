@@ -74,34 +74,97 @@ awful.keyboard.append_global_keybindings({
     end, { description = "decrease brightness", group = "hotkeys" }),
 
     --- Media keys
-    awful.key({}, "XF86AudioPlay",
-        function() awful.util.spawn("playerctl --player=plasma-browser-integration,%any play-pause") end,
-        { description = "play/pause audio", group = "hotkeys" }),
-    awful.key({}, "XF86AudioStop",
-        function() awful.util.spawn("playerctl --player=plasma-browser-integration,%any stop") end,
-        { description = "stop audio", group = "hotkeys" }),
-    awful.key({}, "XF86AudioNext",
-        function() awful.util.spawn("playerctl --player=plasma-browser-integration,%any next") end,
-        { description = "skip to next", group = "hotkeys" }),
-    awful.key({}, "XF86AudioPrev",
-        function() awful.util.spawn("playerctl --player=plasma-browser-integration,%any previous") end,
-        { description = "skip to previous", group = "hotkeys" }),
-    awful.key({}, "XF86AudioMute", function() awful.util.spawn("pamixer -t") end,
-        { description = "mute volume", group = "hotkeys" }),
-    awful.key({}, "XF86AudioRaiseVolume", function() awful.util.spawn("pamixer -i 2") end,
-        { description = "raise volume", group = "hotkeys" }),
-    awful.key({}, "XF86AudioLowerVolume", function() awful.util.spawn("pamixer -d 2") end,
-        { description = "lower volume", group = "hotkeys" }),
-    awful.key({ shift }, "XF86AudioRaiseVolume", function() awful.util.spawn("mpc vol +2") end,
-        { description = "raise mpd volume", group = "hotkeys" }),
-    awful.key({ shift }, "XF86AudioLowerVolume", function() awful.util.spawn("mpc vol -2") end,
-        { description = "lower mpd volume", group = "hotkeys" }),
-    awful.key({ shift }, "XF86AudioNext",
-        function() awful.util.spawn("playerctl --player=plasma-browser-integration,%any position 5+") end,
-        { description = "go 5 sec ahead", group = "hotkeys" }),
-    awful.key({ shift }, "XF86AudioPrev",
-        function() awful.util.spawn("playerctl --player=plasma-browser-integration,%any position 5-") end,
-        { description = "go 5 sec back", group = "hotkeys" }),
+    awful.key(
+        {}, "XF86AudioPlay",
+        function()
+            awful.util.spawn("playerctl --player=plasma-browser-integration,%any play-pause")
+        end,
+        { description = "play/pause audio", group = "hotkeys" }
+    ),
+    awful.key(
+        {}, "XF86AudioStop",
+        function()
+            awful.util.spawn("playerctl --player=plasma-browser-integration,%any stop")
+        end,
+        { description = "stop audio", group = "hotkeys" }
+    ),
+    awful.key(
+        {}, "XF86AudioNext",
+        function()
+            awful.util.spawn("playerctl --player=plasma-browser-integration,%any next")
+        end,
+        { description = "skip to next", group = "hotkeys" }
+    ),
+    awful.key(
+        {}, "XF86AudioPrev",
+        function()
+            awful.util.spawn("playerctl --player=plasma-browser-integration,%any previous")
+        end,
+        { description = "skip to previous", group = "hotkeys" }
+    ),
+    awful.key(
+        {}, "XF86AudioMute",
+        function()
+            awful.util.spawn("pamixer -t")
+        end,
+        { description = "mute volume", group = "hotkeys" }
+    ),
+    awful.key(
+        {}, "XF86AudioRaiseVolume",
+        function()
+            awful.util.spawn("pamixer -i 2")
+        end,
+        { description = "raise volume", group = "hotkeys" }
+    ),
+    awful.key(
+        {}, "XF86AudioLowerVolume",
+        function()
+            awful.util.spawn("pamixer -d 2")
+        end,
+        { description = "lower volume", group = "hotkeys" }
+    ),
+    awful.key(
+        { shift }, "XF86AudioRaiseVolume",
+        function()
+            awful.util.spawn("mpc vol +2")
+        end,
+        { description = "raise mpd volume", group = "hotkeys" }
+    ),
+    awful.key(
+        { shift }, "XF86AudioLowerVolume",
+        function()
+            awful.util.spawn("mpc vol -2")
+        end,
+        { description = "lower mpd volume", group = "hotkeys" }
+    ),
+    awful.key(
+        { shift }, "XF86AudioNext",
+        function()
+            awful.util.spawn("playerctl --player=plasma-browser-integration,%any position 5+")
+        end,
+        { description = "go 5 sec ahead", group = "hotkeys" }
+    ),
+    awful.key(
+        { shift }, "XF86AudioPrev",
+        function()
+            awful.util.spawn("playerctl --player=plasma-browser-integration,%any position 5-")
+        end,
+        { description = "go 5 sec back", group = "hotkeys" }
+    ),
+    awful.key(
+        { }, "XF86AudioMicMute",
+        function()
+            awful.util.spawn([[pactl list sources | grep -oP "Name: \S+" | grep "input" | cut -d' ' -f2 | xargs -I{} pactl set-source-mute {} toggle]])
+        end,
+        { description = "Toggle mute on all microphones", group = "hotkeys" }
+    ),
+    awful.key(
+        { shift }, "XF86AudioMicMute",
+        function()
+            awful.util.spawn([[pactl list sources | grep -oP "Name: \S+" | grep "input" | cut -d' ' -f2 | xargs -I{} pactl set-source-mute {} false]])
+        end,
+        { description = "Unmute all microphones", group = "hotkeys" }
+    ),
 
     --- Open programs
     awful.key({ modkey, }, "`", function() awful.spawn(apps.default.terminal) end,
