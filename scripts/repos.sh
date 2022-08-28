@@ -120,3 +120,18 @@ EOT
 		sudo pacman-key --lsign-key $_pgpkey
 	fi
 }
+
+bioarch() {
+	if grep -Fxq "[bioarchlinux]" /etc/pacman.conf; then
+		echo "${YELLOW}:: ${BLUE}bioarchlinux${BWHITE} repo already exists${NC} -- skipping"
+	else
+		echo "${BLUE}:: ${BWHITE}Adding ${BLUE}bioarchlinux${BWHITE} repository${NC}"
+		sudo tee -a /etc/pacman.conf >/dev/null <<EOT
+[bioarchlinux]
+Server = https://repo.bioarchlinux.org/$arch
+EOT
+		sudo pacman-key --recv-keys B1F96021DB62254D
+		sudo pacman-key --finger B1F96021DB62254D
+		sudo pacman-key --lsign-key B1F96021DB62254D
+	fi
+}
