@@ -703,6 +703,7 @@ if [[ $repos_script == y* ]]; then
 	blackarch
 	archstrike
 	dtos
+	sudo pacman -Sy
 fi
 
 read -rp "${BLUE}:: ${BWHITE}Do you want to run script for asus laptops? [y/N]${NC}: " asus_script
