@@ -760,6 +760,8 @@ EOT
 	sudo chmod 600 /etc/cron.deny
 
 	echo "${BLUE}:: ${BWHITE}Setting up ${BLUE}iptables${BWHITE}...${NC}"
+	sudo iptables -F # Clear all rules
+
 	sudo iptables -N TCP
 	sudo iptables -N UDP
 	sudo iptables -P FORWARD DROP
