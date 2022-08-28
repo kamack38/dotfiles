@@ -48,5 +48,18 @@ return {
             override_del = true,
          })
       end,
-   }
+   },
+   ["neovim/nvim-lspconfig"] = {
+      config = function()
+         require "plugins.configs.lspconfig"
+         require "custom.plugins.lspconfig"
+      end,
+   },
+   ["L3MON4D3/LuaSnip"] = {
+      config = function()
+         require("plugins.configs.others").luasnip()
+         require("luasnip.loaders.from_vscode").lazy_load({ paths = { os.getenv("XDG_CONFIG_HOME") ..
+             "/Code/User/snippets" } })
+      end,
+   },
 }

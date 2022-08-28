@@ -16,7 +16,7 @@ local sources = {
    b.diagnostics.shellcheck.with { diagnostics_format = "#{m} [#{c}]" },
 
    -- cpp
-   b.formatting.clang_format,
+   b.formatting.clang_format.with { extra_args = { "--style", '{ BasedOnStyle: Google, IndentWidth: 4, ColumnLimit: 500 }' } },
 }
 
 local M = {}

@@ -24,5 +24,22 @@ M.nvimtree = {
     },
 }
 
+M.mason = {
+  ensure_installed = {
+    -- web dev
+    "css-lsp",
+    "html-lsp",
+    "typescript-language-server",
+    "emmet-ls",
+    "json-lsp",
+
+    -- shell
+    "shfmt",
+    "shellcheck",
+
+    -- cpp
+    "clangd",
+  },
+}
 
 return M

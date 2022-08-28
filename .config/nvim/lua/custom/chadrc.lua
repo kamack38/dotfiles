@@ -19,15 +19,10 @@ M.ui = {
 }
 
 M.plugins = {
-   options = {
-      lspconfig = {
-         setup_lspconf = "custom.plugins.lspconfig",
-      },
-   },
-
    override = {
       ["kyazdani42/nvim-tree.lua"] = override.nvimtree,
       ["nvim-treesitter/nvim-treesitter"] = override.treesitter,
+      ["williamboman/mason.nvim"] = override.mason,
    },
 
    default_plugin_config_replace = {},
