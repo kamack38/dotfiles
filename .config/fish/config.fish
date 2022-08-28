@@ -41,8 +41,8 @@ alias wget="wget --hsts-file=$XDG_DATA_HOME/wget-hsts"
 # ------------
 # LS aliases
 alias ll='exa -alF'
-alias ls='exa'
-alias la='exa -a'
+alias ls='exa --icons'
+alias la='exa -a --icons'
 alias lt='exa -T'
 alias le='exa -alTL 2'
 
