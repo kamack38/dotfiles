@@ -782,7 +782,7 @@ EOT
 	sudo iptables -D INPUT -p udp -j REJECT --reject-with icmp-port-unreachable
 	sudo iptables -A INPUT -p udp -m recent --set --name UDP-PORTSCAN -j REJECT --reject-with icmp-port-unreachable
 
-	sudo iptables-save >/etc/iptables/iptables.rules
+	sudo iptables-save | sudo tee /etc/iptables/iptables.rules >/dev/null
 	sudo systemctl enable --now iptables.service
 
 	echo "${BLUE}:: ${BWHITE}Setting ${BLUE}umask${BWHITE} to 0077...${NC}"
