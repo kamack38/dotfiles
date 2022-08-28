@@ -31,6 +31,7 @@ AWESOMEWM_PACKAGES=(
 	"brightnessctl"      # Lightweight brightness control tool
 	"picom-jonaburg-git" # jonaburg's picom fork with tryone144's dual_kawase blur and ibhagwan's rounded corners, an X compositor (compton's fork)
 	"betterlockscreen"   # A simple, minimal lockscreen
+	"autorandr"          # Auto-detect connected display hardware and load appropiate X11 setup using xrandr
 )
 
 echo "${GREEN}:: ${BWHITE}Installing awesomeWM and its components...${NC}"

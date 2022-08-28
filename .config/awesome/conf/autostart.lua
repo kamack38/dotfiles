@@ -21,6 +21,8 @@ local function autostart_apps()
 	launch_polybar()
 	--- Launcher
 	awful.spawn.with_shell("env GDK_BACKEND=x11 /usr/bin/ulauncher --hide-window --no-window-shadow")
+	--- Setup monitors
+	awful.spawn.with_shell("autorandr --change")
 end
 
 autostart_apps()
