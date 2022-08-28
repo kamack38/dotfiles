@@ -1,381 +1,386 @@
 {
-  // Starters
-  "Initialize cpp": {
-    "prefix": "!!!",
-    "body": ["#include <${1:bits/stdc++.h}>", "", "using namespace std;", "", "int main() {", "    $0", "    return 0;", "}"]
-  },
+    "Initialize cpp": {
+        "prefix": "!!!",
+        "body": ["#include <${1:bits/stdc++.h}>", "", "using namespace std;", "", "int main() {", "    $0", "    return 0;", "}"]
+    },
 
-  "Initialize cpp with array": {
-    "prefix": "!!",
-    "body": ["#include <${1:bits/stdc++.h}>", "", "using namespace std;", "", "int T[${2:/* length */}];", "", "int main() {", "    $0", "    return 0;", "}"]
-  },
+    "Initialize cpp with array": {
+        "prefix": "!!",
+        "body": ["#include <${1:bits/stdc++.h}>", "", "using namespace std;", "", "int T[${2:/* length */}];", "", "int main() {", "    $0", "    return 0;", "}"]
+    },
 
-  "Declare function main": {
-    "prefix": "!main",
-    "body": ["int main () {", "    $0", "    return 0;", "}"]
-  },
+    "Declare function main": {
+        "prefix": "!main",
+        "body": ["int main () {", "    $0", "    return 0;", "}"]
+    },
 
-  "file header": {
-    "prefix": "!fileheader",
-    "body": [
-      "/**",
-      "**********************************************************************************************************************************************************************************************************************************",
-      "* @file:\t$TM_FILENAME",
-      "* @author:\t$1",
-      "* @date:\t$CURRENT_YEAR.$CURRENT_MONTH.$CURRENT_DATE $CURRENT_HOUR:$CURRENT_MINUTE:$CURRENT_SECOND $CURRENT_DAY_NAME",
-      "* @brief:\t$2",
-      "**********************************************************************************************************************************************************************************************************************************",
-      "**/"
-    ],
-    "description": "Initialize file header"
-  },
+    "file header": {
+        "prefix": "!fileheader",
+        "body": [
+            "/**",
+            "**********************************************************************************************************************************************************************************************************************************",
+            "* @file:\t$TM_FILENAME",
+            "* @author:\t$1",
+            "* @date:\t$CURRENT_YEAR.$CURRENT_MONTH.$CURRENT_DATE $CURRENT_HOUR:$CURRENT_MINUTE:$CURRENT_SECOND $CURRENT_DAY_NAME",
+            "* @brief:\t$2",
+            "**********************************************************************************************************************************************************************************************************************************",
+            "**/"
+        ],
+        "description": "Initialize file header"
+    },
 
-  // Initializers
-  "include": {
-    "prefix": "#inc",
-    "body": ["#include <${1:bits/stdc++.h}>$0"],
-    "description": "snippet for #include"
-  },
+    "include": {
+        "prefix": "#inc",
+        "body": ["#include <${1:bits/stdc++.h}>$0"],
+        "description": "snippet for #include"
+    },
 
-  "namespace": {
-    "prefix": "!using",
-    "body": ["using namespace ${1:std};$0"],
-    "description": "Add namespace"
-  },
+    "namespace": {
+        "prefix": "!using",
+        "body": ["using namespace ${1:std};$0"],
+        "description": "Add namespace"
+    },
 
-  "long long": {
-    "prefix": "!LL",
-    "body": ["using LL = long long;"],
-    "description": "Create long long alias"
-  },
+    "long long": {
+        "prefix": "!LL",
+        "body": ["using LL = long long;"],
+        "description": "Create long long alias"
+    },
 
-  // Structures
-  "tab": {
-    "prefix": "!tab",
-    "body": ["${1:int} A[${2:1000000}];"],
-    "description": "Create array"
-  },
+    "tab": {
+        "prefix": "!tab",
+        "body": ["${1:int} A[${2:1000000}];"],
+        "description": "Create array"
+    },
 
-  "array": {
-    "prefix": "!arr",
-    "body": ["array<${1:int}, ${2:2}>"],
-    "description": "Create an array"
-  },
+    "array": {
+        "prefix": "!arr",
+        "body": ["array<${1:int}, ${2:2}>"],
+        "description": "Create an array"
+    },
 
-  "vector": {
-    "prefix": "!vec",
-    "body": ["vector<${1:int}> ${2:vec};"],
-    "description": "Create vector"
-  },
+    "vector": {
+        "prefix": "!vec",
+        "body": ["vector<${1:int}> ${2:vec};"],
+        "description": "Create vector"
+    },
 
-  "set": {
-    "prefix": "!set",
-    "body": ["set<${1:int}> S;"],
-    "description": "Create set"
-  },
+    "set": {
+        "prefix": "!set",
+        "body": ["set<${1:int}> S;"],
+        "description": "Create set"
+    },
 
-  "unordered set": {
-    "prefix": "!uset",
-    "body": ["unordered_set<${1:int}> S;"],
-    "description": "Creates unordered set"
-  },
+    "unordered set": {
+        "prefix": "!uset",
+        "body": ["unordered_set<${1:int}> S;"],
+        "description": "Creates unordered set"
+    },
 
-  "multiset": {
-    "prefix": "!mset",
-    "body": ["multiset<${1:int}> S;"],
-    "description": "Creates multiset"
-  },
+    "multiset": {
+        "prefix": "!mset",
+        "body": ["multiset<${1:int}> S;"],
+        "description": "Creates multiset"
+    },
 
-  "unordered multiset": {
-    "prefix": "!umset",
-    "body": ["unordered_multiset<${1:int}> S;"],
-    "description": "Creates unordered multiset"
-  },
+    "unordered multiset": {
+        "prefix": "!umset",
+        "body": ["unordered_multiset<${1:int}> S;"],
+        "description": "Creates unordered multiset"
+    },
 
-  "map": {
-    "prefix": "!map",
-    "body": ["map<${1:int}, ${2:int}> M;"],
-    "description": "Create map"
-  },
+    "map": {
+        "prefix": "!map",
+        "body": ["map<${1:int}, ${2:int}> M;"],
+        "description": "Create map"
+    },
 
-  "unordered map": {
-    "prefix": "!umap",
-    "body": ["unordered_map<${1:int}, ${2:int}> M;"],
-    "description": "Create unordered map"
-  },
+    "unordered map": {
+        "prefix": "!umap",
+        "body": ["unordered_map<${1:int}, ${2:int}> M;"],
+        "description": "Create unordered map"
+    },
 
-  "stack": {
-    "prefix": "!stack",
-    "body": ["stack<${1:int}> Q;"],
-    "description": "Create a stack"
-  },
+    "stack": {
+        "prefix": "!stack",
+        "body": ["stack<${1:int}> Q;"],
+        "description": "Create a stack"
+    },
 
-  "queue": {
-    "prefix": "!queue",
-    "body": ["queue<${1:int}> Q;"],
-    "description": "Create queue"
-  },
+    "queue": {
+        "prefix": "!queue",
+        "body": ["queue<${1:int}> Q;"],
+        "description": "Create queue"
+    },
 
-  "dequeue": {
-    "prefix": "!dequeue",
-    "body": ["dequeue<${1:int}> Q;"],
-    "description": "Create dequeue"
-  },
+    "dequeue": {
+        "prefix": "!dequeue",
+        "body": ["dequeue<${1:int}> Q;"],
+        "description": "Create dequeue"
+    },
 
-  "priority queue": {
-    "prefix": "!pqueue",
-    "body": ["priority_queue<${1:int}> Q;"],
-    "description": "Create priority queue"
-  },
+    "priority queue": {
+        "prefix": "!pqueue",
+        "body": ["priority_queue<${1:int}> Q;"],
+        "description": "Create priority queue"
+    },
 
-  "pair": {
-    "prefix": "!pair",
-    "body": ["pair<${1:int}, ${2:int}>"],
-    "description": "Create a pair"
-  },
+    "pair": {
+        "prefix": "!pair",
+        "body": ["pair<${1:int}, ${2:int}>"],
+        "description": "Create a pair"
+    },
 
-  "tuple": {
-    "prefix": "!tuple",
-    "body": ["tuple<${1:int}, ${2:int}, ${3:int}>"],
-    "description": "Create a tuple"
-  },
+    "tuple": {
+        "prefix": "!tuple",
+        "body": ["tuple<${1:int}, ${2:int}, ${3:int}>"],
+        "description": "Create a tuple"
+    },
 
-  "get_tuple": {
-    "prefix": "!get_tuple",
-    "body": ["get<${1:index}>(${2:var})"],
-    "description": "Create a tuple"
-  },
+    "get_tuple": {
+        "prefix": "!get_tuple",
+        "body": ["get<${1:index}>(${2:var})"],
+        "description": "Create a tuple"
+    },
 
-  // Constructors
-  "greater": {
-    "prefix": "!greater",
-    "body": ["greater<${1:int}>"],
-    "description": "Create a greater comparator"
-  },
+    "greater": {
+        "prefix": "!greater",
+        "body": ["greater<${1:int}>"],
+        "description": "Create a greater comparator"
+    },
 
-  // Simple snippets
-  "Normal for loop": {
-    "prefix": "!for",
-    "body": ["for (int ${1:i} = ${2:0}; ${1:i} < ${3:n}; ${1:i}++) {", "    $4", "}$0"],
-    "description": "Simple for loop"
-  },
+    "Normal for loop": {
+        "prefix": "!for",
+        "body": ["for (int ${1:i} = ${2:0}; ${1:i} < ${3:n}; ${1:i}++) {", "    $4", "}$0"],
+        "description": "Simple for loop"
+    },
 
-  "Reverse for loop": {
-    "prefix": "!forr",
-    "body": ["for (int i = ${1:n - 1}; i >= 0; i--) {", "    $2", "}$0"],
-    "description": "Reverse for loop"
-  },
+    "Reverse for loop": {
+        "prefix": "!forr",
+        "body": ["for (int i = ${1:n - 1}; i >= 0; i--) {", "    $2", "}$0"],
+        "description": "Reverse for loop"
+    },
 
-  "Colon for loop": {
-    "prefix": "!fora",
-    "body": ["for (auto i : ${1:vec}) {", "    $2", "}$0"],
-    "description": "Colon for loop"
-  },
+    "Colon for loop": {
+        "prefix": "!fora",
+        "body": ["for (auto i : ${1:vec}) {", "    $2", "}$0"],
+        "description": "Colon for loop"
+    },
 
-  "endline": {
-    "prefix": "!n",
-    "body": "<< '\\n';",
-    "description": "Adds endline to cout"
-  },
+    "endline": {
+        "prefix": "!n",
+        "body": "<< '\\n';",
+        "description": "Adds endline to cout"
+    },
 
-  // Hacks
-  "Make ur code faster": {
-    "prefix": "!fast",
-    "body": ["ios_base::sync_with_stdio(false);", "cin.tie(0);", "cout.tie(0);"]
-  },
+    "Make ur code faster": {
+        "prefix": "!fast",
+        "body": ["ios_base::sync_with_stdio(false);", "cin.tie(0);", "cout.tie(0);"]
+    },
 
-  "swap": {
-    "prefix": "!swap",
-    "body": ["swap(${1:a}, ${2:b});"],
-    "description": "Create unordered set"
-  },
+    "swap": {
+        "prefix": "!swap",
+        "body": ["swap(${1:a}, ${2:b});"],
+        "description": "Create unordered set"
+    },
 
-  "next permutation": {
-    "prefix": "!nperm",
-    "body": ["next_permutation(${1:vec}.begin(), ${1:vec}.end())"],
-    "description": "Create priority queue"
-  },
+    "next permutation": {
+        "prefix": "!nperm",
+        "body": ["next_permutation(${1:vec}.begin(), ${1:vec}.end())"],
+        "description": "Create priority queue"
+    },
 
-  "srand": {
-    "prefix": "!rand",
-    "body": ["srand(${1:seed})"],
-    "description": "Generate random number from seed"
-  },
+    "srand": {
+        "prefix": "!rand",
+        "body": ["srand(${1:seed})"],
+        "description": "Generate random number from seed"
+    },
 
-  "lower_bound": {
-    "prefix": "!lower_bound",
-    "body": ["lower_bound(${1}.begin(), ${1}.end(), ${2:number})"],
-    "description": "Returns an iterator pointing to the first element in the range first,last which does not compare less than val."
-  },
+    "lower_bound": {
+        "prefix": "!lower_bound",
+        "body": ["lower_bound(${1}.begin(), ${1}.end(), ${2:number})"],
+        "description": "Returns an iterator pointing to the first element in the range first,last which does not compare less than val."
+    },
 
-  "upper_bound": {
-    "prefix": "!upper_bound",
-    "body": ["upper_bound(${1}.begin(), ${1}.end(), ${2:number})"],
-    "description": "Returns an iterator pointing to the first element in the range first,last which compares greater than val."
-  },
+    "upper_bound": {
+        "prefix": "!upper_bound",
+        "body": ["upper_bound(${1}.begin(), ${1}.end(), ${2:number})"],
+        "description": "Returns an iterator pointing to the first element in the range first,last which compares greater than val."
+    },
 
-  "assert": {
-    "prefix": "!assert",
-    "body": ["assert((${1:/* Condition to validate */}))"],
-    "description": "Checks if condition is true"
-  },
+    "assert": {
+        "prefix": "!assert",
+        "body": ["assert((${1:/* Condition to validate */}))"],
+        "description": "Checks if condition is true"
+    },
 
-  "cerr": {
-    "prefix": "!cerr",
-    "body": ["cerr >> $0;"],
-    "description": "Helpful for printing debug information"
-  },
+    "cerr": {
+        "prefix": "!cerr",
+        "body": ["cerr >> $0;"],
+        "description": "Helpful for printing debug information"
+    },
 
-  "gcd": {
-    "prefix": ["!gcd", "!nwd"],
-    "body": ["__gcd($1, $2)$0"],
-    "description": "Greatest common divisor function"
-  },
+    "gcd": {
+        "prefix": ["!gcd", "!nwd"],
+        "body": ["__gcd($1, $2)$0"],
+        "description": "Greatest common divisor function"
+    },
 
-  // Algorithms
-  "fastPowMod": {
-    "prefix": "!fastPowMod",
-    "body": [
-      "long long myPow(int a, int b, int m) {",
-      "  if (b == 0) return 1;",
-      "  if (b % 2 == 0) {",
-      "    long long tmp = myPow(a, b / 2, m);",
-      "    return (tmp * tmp) % m;",
-      "  } else {",
-      "    long long tmp = myPow(a, b / 2, m);",
-      "    return (((tmp * tmp) % m) * a) % m;",
-      "  }",
-      "}"
-    ],
-    "description": "Quickly calculate a^b mod c"
-  },
+    "fastPowMod": {
+        "prefix": "!fastPowMod",
+        "body": [
+            "long long myPow(int a, int b, int m) {",
+            "  if (b == 0) return 1;",
+            "  if (b % 2 == 0) {",
+            "    long long tmp = myPow(a, b / 2, m);",
+            "    return (tmp * tmp) % m;",
+            "  } else {",
+            "    long long tmp = myPow(a, b / 2, m);",
+            "    return (((tmp * tmp) % m) * a) % m;",
+            "  }",
+            "}"
+        ],
+        "description": "Quickly calculate a^b mod c"
+    },
 
-  "pow": {
-    "prefix": "!pow",
-    "body": ["long long Pow(int y, int x) {", "    if (x == 0) return 1;", "    return y * Pow(y, x - 1);", "}"],
-    "description": "Quickly calculate a^b mod c"
-  },
+    "pow": {
+        "prefix": "!pow",
+        "body": ["long long Pow(int y, int x) {", "    if (x == 0) return 1;", "    return y * Pow(y, x - 1);", "}"],
+        "description": "Quickly calculate a^b mod c"
+    },
 
-  "find": {
-    "prefix": "!find",
-    "body": ["int Find(int a) {", "if (${1:array}[a] != a) ${1:array}[a] = Find(${1:array}[a]);", "return ${1:array}[a];", "}"],
-    "description": "Find function"
-  },
+    "find": {
+        "prefix": "!find",
+        "body": ["int Find(int a) {", "if (${1:array}[a] != a) ${1:array}[a] = Find(${1:array}[a]);", "return ${1:array}[a];", "}"],
+        "description": "Find function"
+    },
 
-  "binary search": {
-    "prefix": "!binsrc",
-    "body": [
-      "int binSrc(int a, int b) {",
-      "  while (a + 1 != b) {",
-      "    int c = (a + b) / 2;",
-      "    if (${1:/* Your condition goes here */}) {",
-      "        a = c;",
-      "    } else {",
-      "        b = c;",
-      "    }",
-      "  }",
-      "  return a;",
-      "}"
-    ],
-    "description": "Binary search function"
-  },
+    "binary search": {
+        "prefix": "!binsrc",
+        "body": [
+            "int binSrc(int a, int b) {",
+            "  while (a + 1 != b) {",
+            "    int c = (a + b) / 2;",
+            "    if (${1:/* Your condition goes here */}) {",
+            "        a = c;",
+            "    } else {",
+            "        b = c;",
+            "    }",
+            "  }",
+            "  return a;",
+            "}"
+        ],
+        "description": "Binary search function"
+    },
 
-  "breadth-first search": {
-    "prefix": "!bfs",
-    "body": [
-      "void BFS(int s) {",
-      "  queue<int> Q;",
-      "  vector<int> visited;",
-      "  Q.push(s);",
-      "  visited[s] = true;",
-      "  while (!Q.empty()) {",
-      "    int x = Q.front();",
-      "    Q.pop();",
-      "    for (auto i : vec[x]) {",
-      "      if (!visited[i]) {",
-      "        Q.push(i);",
-      "        visited[i] = true;",
-      "      }",
-      "    }",
-      "  }",
-      "}"
-    ],
-    "description": "Breadth-first search algorithm"
-  },
+    "breadth-first search": {
+        "prefix": "!bfs",
+        "body": [
+            "void BFS(int s) {",
+            "  queue<int> Q;",
+            "  vector<int> visited;",
+            "  Q.push(s);",
+            "  visited[s] = true;",
+            "  while (!Q.empty()) {",
+            "    int x = Q.front();",
+            "    Q.pop();",
+            "    for (auto i : vec[x]) {",
+            "      if (!visited[i]) {",
+            "        Q.push(i);",
+            "        visited[i] = true;",
+            "      }",
+            "    }",
+            "  }",
+            "}"
+        ],
+        "description": "Breadth-first search algorithm"
+    },
 
-  "depth-first search": {
-    "prefix": "!dfs",
-    "body": ["void DFS(int x) {", "  if (visited[x]) return;", "  visited[x] = true;", "  for (auto i : graph[x]) {", "    DFS(i);", "  }", "}"],
-    "description": "Depth-first search algorithm"
-  },
+    "depth-first search": {
+        "prefix": "!dfs",
+        "body": ["void DFS(int x) {", "  if (visited[x]) return;", "  visited[x] = true;", "  for (auto i : graph[x]) {", "    DFS(i);", "  }", "}"],
+        "description": "Depth-first search algorithm"
+    },
 
-  "minimum spanning tree": {
-    "prefix": "!mst",
-    "body": ["void"],
-    "description": "Minimum spanning tree algorithm"
-  },
+    "minimum spanning tree": {
+        "prefix": "!mst",
+        "body": ["void"],
+        "description": "Minimum spanning tree algorithm"
+    },
 
-  "dijkstra": {
-    "prefix": "!dijkstra",
-    "body": [
-      "void DIJ(int start) {",
-      "  priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> Q;",
-      "  Q.push({0, start});",
-      "  while (!Q.empty()) {",
-      "    int distance = Q.top().first, vertex_number = Q.top().second;",
-      "    Q.pop();",
-      "    if (visited[vertex_number]) continue;",
-      "    visited[vertex_number] = true;",
-      "    distances[vertex_number] = distance;",
-      "    for (const auto vertex : graph[vertex_number]) {",
-      "      if (!visited[vertex.first]) {",
-      "        Q.push({vertex.second + distance, vertex.first});",
-      "      }",
-      "    }",
-      "  }",
-      "}"
-    ],
-    "description": "Dijkstra's algorithm"
-  },
+    "dijkstra": {
+        "prefix": "!dijkstra",
+        "body": [
+            "void DIJ(int start) {",
+            "  priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> Q;",
+            "  Q.push({0, start});",
+            "  while (!Q.empty()) {",
+            "    int distance = Q.top().first, vertex_number = Q.top().second;",
+            "    Q.pop();",
+            "    if (visited[vertex_number]) continue;",
+            "    visited[vertex_number] = true;",
+            "    distances[vertex_number] = distance;",
+            "    for (const auto vertex : graph[vertex_number]) {",
+            "      if (!visited[vertex.first]) {",
+            "        Q.push({vertex.second + distance, vertex.first});",
+            "      }",
+            "    }",
+            "  }",
+            "}"
+        ],
+        "description": "Dijkstra's algorithm"
+    },
 
-  "interval tree - update": {
-    "prefix": "!itupdate",
-    "body": [
-      "void update(int num, int value) {",
-      "  num = num + BASE - 1;",
-      "  ${1:vec}[num] = value;",
-      "  for (int i = num / 2; 0 < i; i /= 2) {",
-      "    ${1:vec}[i] = ${1:vec}[i * 2] + ${1:vec}[i * 2 + 1];",
-      "  }",
-      "}"
-    ],
-    "description": "Update function on interval tree"
-  },
-
-  "interval tree - sum": {
-    "prefix": "!itsum",
-    "body": [
-      "long long sum(int a, int b) {",
-      "  long long arraySum = 0LL;",
-      "  a += BASE - 1;",
-      "  b += BASE + 1;",
-      "  for (; a / 2 != b / 2; a /= 2, b /= 2) {",
-      "    if (a % 2 == 0) {",
-      "      arraySum += ${1:vec}[a + 1];",
-      "    }",
-      "    if (b % 2 != 0) {",
-      "      arraySum += ${1:vec}[b - 1];",
-      "    }",
-      "  }",
-      "  return arraySum;",
-      "}"
-    ],
-    "description": "Sum function on interval tree"
-  }
-
-  // "nwd": {
-  //   "prefix": "!nwd",
-  //   "body": ["long long nwd(long long a, long long b) {", "  for (; b != 0;) {", "      long long c = a % b;", "      a = b;", "      b = c;", "  }", "  return a;", "}"],
-  //   "description": "Sum function on interval tree"
-  // }
+    "interval tree - point, range": {
+        "prefix": "!PIntervalTree",
+        "body": [
+            "template <class NodeType = int, class ReducerType = long long>",
+            "struct PIntervalTree {",
+            "    vector<NodeType> inter;",
+            "    long long BASE = 1;",
+            "    long long getValueOperation(NodeType& newValue, ReducerType& oldValue) { return ",
+            "newValue + oldValue; }",
+            "    long long setValueOperation(NodeType& newValue, ReducerType& oldValue) { return ",
+            "newValue; }",
+            "    PIntervalTree(int size) {",
+            "        while (BASE < size) {",
+            "            BASE = (BASE << 1);",
+            "        }",
+            "        inter.resize(2 * BASE + 2, 0);",
+            "    }",
+            "",
+            "    ReducerType getValue(int start, int end) {",
+            "        ReducerType result = 0LL;",
+            "        start += BASE - 1;",
+            "        end += BASE + 1;",
+            "        for (; start / 2 != end / 2; start /= 2, end /= 2) {",
+            "            if (start % 2 == 0) {",
+            "                result = getValueOperation(inter[start + 1], result);",
+            "            }",
+            "            if (end % 2 != 0) {",
+            "                result = getValueOperation(inter[end - 1], result);",
+            "            }",
+            "        }",
+            "        return result;",
+            "    }",
+            "",
+            "    void setValue(int position, int value) {",
+            "        position = position + BASE - 1;",
+            "        inter[position] = setValueOperation(value, inter[position]);",
+            "        for (int i = position / 2; 0 < i; i /= 2) {",
+            "            inter[i] = inter[i * 2] + inter[i * 2 + 1];",
+            "        }",
+            "    }",
+            "",
+            "    void refreshValues() {",
+            "        for (int i = BASE / 2; 0 < i; i /= 2) {",
+            "            for (int j = i; j < i * 2; j++) {",
+            "                inter[j] = inter[j * 2] + inter[j * 2 + 1];",
+            "            }",
+            "        }",
+            "    }",
+            "};"
+        ],
+        "description": "interval tree - point, range"
+    }
 }
