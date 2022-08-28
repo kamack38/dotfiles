@@ -686,7 +686,7 @@ sudo mkdir -p /etc/sudoers.d
 sudo tee /etc/sudoers.d/pwfeedback >/dev/null <<EOT
 Defaults pwfeedback
 EOT
-chmod 750 /etc/sudoers.d/pwfeedback
+sudo chmod 750 /etc/sudoers.d/pwfeedback
 
 read -rp "${BLUE}:: ${BWHITE}Do you want to setup additional programming fonts? [Y/n]${NC}: " fonts_setup
 
