@@ -682,9 +682,11 @@ EOF
 fi
 
 # Enable password feedback
-if [[ ! $(sudo grep -q '^Defaults.*pwfeedback' /etc/sudoers) ]]; then
-	sudo sed -i 's#\(Default.*\)#\1,pwfeedback#' /etc/sudoers
-fi
+sudo mkdir -p /etc/sudoers.d
+sudo tee /etc/sudoers.d/pwfeedback >/dev/null <<EOT
+Defaults pwfeedback
+EOT
+chmod 750 /etc/sudoers.d/pwfeedback
 
 read -rp "${BLUE}:: ${BWHITE}Do you want to setup additional programming fonts? [Y/n]${NC}: " fonts_setup
 
