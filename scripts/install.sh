@@ -761,6 +761,7 @@ EOT
 
 	echo "${BLUE}:: ${BWHITE}Setting up ${BLUE}iptables${BWHITE}...${NC}"
 	sudo iptables -F # Clear all rules
+	sudo iptables -X
 
 	sudo iptables -N TCP
 	sudo iptables -N UDP
