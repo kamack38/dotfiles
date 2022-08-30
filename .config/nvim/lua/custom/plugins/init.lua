@@ -62,4 +62,24 @@ return {
              "/Code/User/snippets" } })
       end,
    },
+   ["folke/trouble.nvim"] = {
+      requires = "kyazdani42/nvim-web-devicons",
+      config = function()
+         require("trouble").setup()
+      end,
+   },
+   ["weilbith/nvim-code-action-menu"] = {
+      cmd = 'CodeActionMenu',
+   },
+   ["CRAG666/code_runner.nvim"] = {
+      requires = 'nvim-lua/plenary.nvim',
+      config = function()
+         require('code_runner').setup({
+            filetype = {
+               cpp = "mkdir -p \"$dir/bin\" && cd \"$dir/bin\" && g++ \"../$fileName\" -o \"$fileNameWithoutExt\" -fsanitize=address && \"./$fileNameWithoutExt\"",
+            },
+            startinsert = true,
+         })
+      end,
+   },
 }
