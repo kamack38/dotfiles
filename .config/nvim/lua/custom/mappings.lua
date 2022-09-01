@@ -12,6 +12,7 @@ M.truzen = {
 M.telescope = {
   n = {
     ["<leader>fp"] = { "<cmd> Telescope media_files <CR>", "  find media" },
+    ["<leader>wk"] = { "<cmd> Telescope keymaps <CR>", "find keys" },
   },
 }
 
