@@ -34,4 +34,13 @@ M.codeactions = {
   },
 }
 
+M.neovim = {
+  n = {
+    ["<A-k>"] = { "<cmd> m-2 <CR>", "move curent line up" },
+    ["<A-j>"] = { "<cmd> m+ <CR>", "move curent line down" },
+    ["<A-S-j>"] = { "<cmd> yank <CR> p", "copy curent line down" },
+    ["<A-S-k>"] = { "<cmd> yank <CR> P", "copy curent line up" },
+  },
+}
+
 return M
