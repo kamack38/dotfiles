@@ -36,7 +36,7 @@ DEV_PROFILE=(
 	"bash-language-server"       # Bash language server implementation based on Tree Sitter and its grammar for Bash
 	"typescript-language-server" # Language Server Protocol (LSP) implementation for TypeScript using tsserver
 	"prettierd"                  # prettier, as a daemon, for ludicrous formatting speed
-	"ccls"                       # C/C++/ObjC language server supporting cross references, hierarchies, completion and semantic highlighting
+	"clang"                      # C language family frontend for LLVM
 	"typos"                      # Source code spell checker
 	"rustcat"                    # A modern port listener and reverse shell
 )
