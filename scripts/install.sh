@@ -239,6 +239,7 @@ echo "${BLUE}:: ${BWHITE}Doing a system update, cause stuff may break if it's no
 sudo pacman --noconfirm -Syu
 
 echo "${BLUE}:: ${BWHITE}Installing basic packages...${NC}"
+yes | sudo pacman -S --needed iptables-nft
 sudo pacman -S --noconfirm --needed base-devel wget git
 
 # Create dirs
@@ -811,7 +812,7 @@ fi
 
 read -rp "${RED}:: ${BWHITE}Do you want to reboot? [Y/n]${NC}: " reboot_prompt
 
-if [[ $reboot_prompt == n* ]]; then
+if [[ $reboot_prompt != n* ]]; then
 	echo "${YELLOW}:: ${BWHITE}Rebooting...${NC}"
 	systemctl reboot
 fi
