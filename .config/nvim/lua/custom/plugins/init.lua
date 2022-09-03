@@ -1,5 +1,6 @@
 return {
   ["goolord/alpha-nvim"] = { disable = false },
+  ["folke/which-key.nvim"] = { disable = false },
   ["wakatime/vim-wakatime"] = {},
   ["Pocco81/true-zen.nvim"] = {
     config = function()
