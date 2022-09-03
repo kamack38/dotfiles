@@ -1,390 +1,390 @@
 {
-  "C_Cpp.autocompleteAddParentheses": true,
-  "C_Cpp.clang_format_fallbackStyle": "{ BasedOnStyle: Google, IndentWidth: 4, ColumnLimit: 500 }",
-  "C_Cpp.clang_format_path": "/usr/bin/clang-format",
-  "C_Cpp.codeAnalysis.clangTidy.path": "/usr/bin/clang-tidy",
-  "C_Cpp.codeAnalysis.clangTidy.checks.enabled": ["cppcoreguidelines-*", "clang-analyzer-core.*"],
-  "C_Cpp.codeAnalysis.clangTidy.checks.disabled": ["cppcoreguidelines-avoid-*"],
-  "C_Cpp.codeAnalysis.clangTidy.args": ["-std=c++11", "-x", "c++"],
-  "C_Cpp.codeAnalysis.clangTidy.enabled": true,
-  "[cpp]": {
-    "editor.defaultFormatter": "ms-vscode.cpptools"
-  },
-  "[dockerfile]": {
-    "editor.defaultFormatter": "ms-azuretools.vscode-docker"
-  },
-  "[javascript][typescript][typescriptreact][react][json][html][css][scss][jsx][markdown][yaml][json][jsonc][dockercompose]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "[shellscript][sh]": {
-    "editor.defaultFormatter": "foxundermoon.shell-format",
-    "files.eol": "\n"
-  },
-  "[fish]": {
-    "files.eol": "\n"
-  },
-  "[lua]": {
-    "editor.defaultFormatter": "sumneko.lua"
-  },
-  "cSpell.enableFiletypes": ["ini"],
-  "cSpell.language": "en-GB,pl",
-  "cSpell.userWords": [
-    "alacritty",
-    "capslock",
-    "Cheatsheet",
-    "colors",
-    "commandline",
-    "CRSF",
-    "dotfiles",
-    "featurename",
-    "Fira",
-    "kamack",
-    "minmax",
-    "multiset",
-    "nametag",
-    "norestart",
-    "numlock",
-    "polybar",
-    "powerline",
-    "preconnect",
-    "quokka",
-    "signin",
-    "stdc",
-    "webclient",
-    "webdev",
-    "webp"
-  ],
-  "code-runner.executorMap": {
-    "FortranFreeForm": "cd $dir && gfortran $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
-    "ahk": "autohotkey",
-    "applescript": "osascript",
-    "autoit": "autoit3",
-    "bat": "cmd /c",
-    "c": "cd $dir && gcc $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
-    "clojure": "lein exec",
-    "coffeescript": "coffee",
-    // "cpp": "$folder = $dirWithoutTrailingSlash + \"\\bin\"; if (!(Test-Path $folder)) { New-Item -Type Directory -Path $folder | Out-Null}; cd $folder && g++ \"../$fileName\" -o \"$fileNameWithoutExt\" && & './$fileNameWithoutExt'",
-    "cpp": "mkdir -p $dirWithoutTrailingSlash/bin && cd $dirWithoutTrailingSlash/bin && g++ ../$fileName -o $fileNameWithoutExt -fsanitize=address && ./$fileNameWithoutExt",
-    "crystal": "crystal",
-    "csharp": "scriptcs",
-    "d": "cd $dir && dmd $fileName && $dir$fileNameWithoutExt",
-    "dart": "dart",
-    "fortran": "cd $dir && gfortran $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
-    "fortran-modern": "cd $dir && gfortran $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
-    "fortran_fixed-form": "cd $dir && gfortran $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
-    "fsharp": "fsi",
-    "go": "go run",
-    "groovy": "groovy",
-    "haskell": "runhaskell",
-    "haxe": "haxe --cwd $dirWithoutTrailingSlash --run $fileNameWithoutExt",
-    "java": "cd $dir && javac $fileName && java $fileNameWithoutExt",
-    "javascript": "node",
-    "julia": "julia",
-    "kit": "kitc --run",
-    "less": "cd $dir && lessc $fileName $fileNameWithoutExt.css",
-    "lisp": "sbcl --script",
-    "lua": "lua",
-    "nim": "nim compile --verbosity:0 --hints:off --run",
-    "objective-c": "cd $dir && gcc -framework Cocoa $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
-    "ocaml": "ocaml",
-    "pascal": "cd $dir && fpc $fileName && $dir$fileNameWithoutExt",
-    "perl": "perl",
-    "perl6": "perl6",
-    "php": "php",
-    "powershell": "cd $dir && powershell -ExecutionPolicy ByPass -File $fileName",
-    "python": "python -u",
-    "r": "Rscript",
-    "racket": "racket",
-    "ruby": "ruby",
-    "rust": "cd $dir && rustc $fileName && $dir$fileNameWithoutExt",
-    "sass": "sass --style expanded",
-    "scala": "scala",
-    "scheme": "csi -script",
-    "scss": "scss --style expanded",
-    "shellscript": "bash",
-    "swift": "swift",
-    "typescript": "ts-node",
-    "v": "v run",
-    "vbscript": "cscript //Nologo"
-  },
-  "code-runner.preserveFocus": false,
-  "code-runner.runInTerminal": true,
-  "code-runner.saveFileBeforeRun": true,
-  "debug.internalConsoleOptions": "neverOpen",
-  "diffEditor.codeLens": true,
-  "diffEditor.ignoreTrimWhitespace": false,
-  "diffEditor.wordWrap": "on",
-  "discord.idleTimeout": 1200,
-  "editor.bracketPairColorization.enabled": true,
-  "editor.codeActionsOnSave": {
-    "source.fixAll": true,
-    "source.organizeImports": true
-  },
-  "editor.cursorBlinking": "smooth",
-  "editor.cursorSmoothCaretAnimation": true,
-  "editor.cursorStyle": "line",
-  "editor.defaultFormatter": null,
-  "editor.fontFamily": "FiraCode Nerd Font",
-  "editor.fontLigatures": true,
-  "editor.fontWeight": "500",
-  "editor.formatOnPaste": true,
-  "editor.formatOnSave": true,
-  "editor.guides.bracketPairs": "active",
-  "editor.guides.bracketPairsHorizontal": "active",
-  "editor.guides.highlightActiveIndentation": true,
-  "editor.hover.above": true,
-  "editor.lineNumbers": "on",
-  "editor.linkedEditing": true,
-  "editor.minimap.enabled": false,
-  "editor.parameterHints.enabled": true,
-  "editor.quickSuggestionsDelay": 0,
-  "editor.renderWhitespace": "selection",
-  "editor.snippetSuggestions": "top",
-  "editor.suggestSelection": "first",
-  "editor.tabCompletion": "on",
-  "editor.unicodeHighlight.allowedCharacters": {
-    "Ą": true,
-    "ą": true,
-    "Ć": true,
-    "ć": true,
-    "Ę": true,
-    "ę": true,
-    "Ł": true,
-    "ł": true,
-    "Ń": true,
-    "ń": true,
-    "Ó": true,
-    "ó": true,
-    "Ś": true,
-    "ś": true,
-    "Ż": true,
-    "ż": true,
-    "Ź": true,
-    "ź": true
-  },
-  "editor.unicodeHighlight.ambiguousCharacters": true,
-  "editor.unicodeHighlight.invisibleCharacters": true,
-  "editor.unicodeHighlight.nonBasicASCII": true,
-  "editor.wordWrap": "on",
-  "emmet.variables": {
-    "lang": "pl"
-  },
-  "emojisense.languages": {
-    "markdown": true,
-    "plaintext": {
-      "markupCompletionsEnabled": false,
-      "emojiDecoratorsEnabled": false
+    "C_Cpp.autocompleteAddParentheses": true,
+    "C_Cpp.clang_format_fallbackStyle": "{ BasedOnStyle: Google, IndentWidth: 4, ColumnLimit: 500 }",
+    "C_Cpp.clang_format_path": "/usr/bin/clang-format",
+    "C_Cpp.codeAnalysis.clangTidy.path": "/usr/bin/clang-tidy",
+    "C_Cpp.codeAnalysis.clangTidy.checks.enabled": ["cppcoreguidelines-*", "clang-analyzer-core.*"],
+    "C_Cpp.codeAnalysis.clangTidy.checks.disabled": ["cppcoreguidelines-avoid-*"],
+    "C_Cpp.codeAnalysis.clangTidy.args": ["-std=c++11", "-x", "c++"],
+    "C_Cpp.codeAnalysis.clangTidy.enabled": true,
+    "[cpp]": {
+        "editor.defaultFormatter": "ms-vscode.cpptools"
     },
-    "scminput": true,
-    "git-commit": true,
-    "yaml": true,
-    "ts": true
-  },
-  "explorer.compactFolders": false,
-  "explorer.confirmDelete": false,
-  "explorer.confirmDragAndDrop": false,
+    "[dockerfile]": {
+        "editor.defaultFormatter": "ms-azuretools.vscode-docker"
+    },
+    "[javascript][typescript][typescriptreact][react][json][html][css][scss][jsx][markdown][yaml][json][jsonc][dockercompose]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[shellscript][sh]": {
+        "editor.defaultFormatter": "foxundermoon.shell-format",
+        "files.eol": "\n"
+    },
+    "[fish]": {
+        "files.eol": "\n"
+    },
+    "[lua]": {
+        "editor.defaultFormatter": "sumneko.lua"
+    },
+    "cSpell.enableFiletypes": ["ini"],
+    "cSpell.language": "en-GB,pl",
+    "cSpell.userWords": [
+        "alacritty",
+        "capslock",
+        "Cheatsheet",
+        "colors",
+        "commandline",
+        "CRSF",
+        "dotfiles",
+        "featurename",
+        "Fira",
+        "kamack",
+        "minmax",
+        "multiset",
+        "nametag",
+        "norestart",
+        "numlock",
+        "polybar",
+        "powerline",
+        "preconnect",
+        "quokka",
+        "signin",
+        "stdc",
+        "webclient",
+        "webdev",
+        "webp"
+    ],
+    "code-runner.executorMap": {
+        "FortranFreeForm": "cd $dir && gfortran $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
+        "ahk": "autohotkey",
+        "applescript": "osascript",
+        "autoit": "autoit3",
+        "bat": "cmd /c",
+        "c": "cd $dir && gcc $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
+        "clojure": "lein exec",
+        "coffeescript": "coffee",
+        // "cpp": "$folder = $dirWithoutTrailingSlash + \"\\bin\"; if (!(Test-Path $folder)) { New-Item -Type Directory -Path $folder | Out-Null}; cd $folder && g++ \"../$fileName\" -o \"$fileNameWithoutExt\" && & './$fileNameWithoutExt'",
+        "cpp": "mkdir -p $dirWithoutTrailingSlash/bin && cd $dirWithoutTrailingSlash/bin && g++ ../$fileName -o $fileNameWithoutExt -fsanitize=address && ./$fileNameWithoutExt",
+        "crystal": "crystal",
+        "csharp": "scriptcs",
+        "d": "cd $dir && dmd $fileName && $dir$fileNameWithoutExt",
+        "dart": "dart",
+        "fortran": "cd $dir && gfortran $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
+        "fortran-modern": "cd $dir && gfortran $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
+        "fortran_fixed-form": "cd $dir && gfortran $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
+        "fsharp": "fsi",
+        "go": "go run",
+        "groovy": "groovy",
+        "haskell": "runhaskell",
+        "haxe": "haxe --cwd $dirWithoutTrailingSlash --run $fileNameWithoutExt",
+        "java": "cd $dir && javac $fileName && java $fileNameWithoutExt",
+        "javascript": "node",
+        "julia": "julia",
+        "kit": "kitc --run",
+        "less": "cd $dir && lessc $fileName $fileNameWithoutExt.css",
+        "lisp": "sbcl --script",
+        "lua": "lua",
+        "nim": "nim compile --verbosity:0 --hints:off --run",
+        "objective-c": "cd $dir && gcc -framework Cocoa $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
+        "ocaml": "ocaml",
+        "pascal": "cd $dir && fpc $fileName && $dir$fileNameWithoutExt",
+        "perl": "perl",
+        "perl6": "perl6",
+        "php": "php",
+        "powershell": "cd $dir && powershell -ExecutionPolicy ByPass -File $fileName",
+        "python": "python -u",
+        "r": "Rscript",
+        "racket": "racket",
+        "ruby": "ruby",
+        "rust": "cd $dir && rustc $fileName && $dir$fileNameWithoutExt",
+        "sass": "sass --style expanded",
+        "scala": "scala",
+        "scheme": "csi -script",
+        "scss": "scss --style expanded",
+        "shellscript": "bash",
+        "swift": "swift",
+        "typescript": "ts-node",
+        "v": "v run",
+        "vbscript": "cscript //Nologo"
+    },
+    "code-runner.preserveFocus": false,
+    "code-runner.runInTerminal": true,
+    "code-runner.saveFileBeforeRun": true,
+    "debug.internalConsoleOptions": "neverOpen",
+    "diffEditor.codeLens": true,
+    "diffEditor.ignoreTrimWhitespace": false,
+    "diffEditor.wordWrap": "on",
+    "discord.idleTimeout": 1200,
+    "editor.bracketPairColorization.enabled": true,
+    "editor.codeActionsOnSave": {
+        "source.fixAll": true,
+        "source.organizeImports": true
+    },
+    "editor.cursorBlinking": "smooth",
+    "editor.cursorSmoothCaretAnimation": true,
+    "editor.cursorStyle": "line",
+    "editor.defaultFormatter": null,
+    "editor.fontFamily": "FiraCode Nerd Font",
+    "editor.fontLigatures": true,
+    "editor.fontWeight": "500",
+    "editor.formatOnPaste": true,
+    "editor.formatOnSave": true,
+    "editor.guides.bracketPairs": "active",
+    "editor.guides.bracketPairsHorizontal": "active",
+    "editor.guides.highlightActiveIndentation": true,
+    "editor.hover.above": true,
+    "editor.lineNumbers": "on",
+    "editor.linkedEditing": true,
+    "editor.minimap.enabled": false,
+    "editor.parameterHints.enabled": true,
+    "editor.quickSuggestionsDelay": 0,
+    "editor.renderWhitespace": "selection",
+    "editor.snippetSuggestions": "top",
+    "editor.suggestSelection": "first",
+    "editor.tabCompletion": "on",
+    "editor.unicodeHighlight.allowedCharacters": {
+        "Ą": true,
+        "ą": true,
+        "Ć": true,
+        "ć": true,
+        "Ę": true,
+        "ę": true,
+        "Ł": true,
+        "ł": true,
+        "Ń": true,
+        "ń": true,
+        "Ó": true,
+        "ó": true,
+        "Ś": true,
+        "ś": true,
+        "Ż": true,
+        "ż": true,
+        "Ź": true,
+        "ź": true
+    },
+    "editor.unicodeHighlight.ambiguousCharacters": true,
+    "editor.unicodeHighlight.invisibleCharacters": true,
+    "editor.unicodeHighlight.nonBasicASCII": true,
+    "editor.wordWrap": "on",
+    "emmet.variables": {
+        "lang": "pl"
+    },
+    "emojisense.languages": {
+        "markdown": true,
+        "plaintext": {
+            "markupCompletionsEnabled": false,
+            "emojiDecoratorsEnabled": false
+        },
+        "scminput": true,
+        "git-commit": true,
+        "yaml": true,
+        "ts": true
+    },
+    "explorer.compactFolders": false,
+    "explorer.confirmDelete": false,
+    "explorer.confirmDragAndDrop": false,
 
-  "explorer.fileNesting.enabled": true,
-  "explorer.fileNesting.patterns": {
-    "*.ts": "$(capture).js, $(capture).d.ts, $(capture).test.ts",
-    "*.js": "$(capture).js.map, $(capture).min.js, $(capture).d.ts, $(capture).test.js",
-    "*.jsx": "$(capture).js",
-    "*.tsx": "$(capture).ts, $(capture).*.ts, $(capture).*.tsx",
-    "tsconfig.json": "tsconfig.*.json",
-    "docker-compose.yml": "docker-compose.*.yml",
-    ".env": ".env.*",
-    "next.config.*": "next-env.d.ts",
-    "package.json": "package-lock.json, .npmrc, yarn.lock, .yarnrc, .eslintrc*, .prettierrc*, .swcrc",
-    ".gitignore": ".*ignore"
-  },
-  "files.associations": {
-    "*.cfg": "CSGO cfg"
-  },
-  "files.defaultLanguage": "${activeEditorLanguage}",
-  "files.eol": "\n",
-  "git.autofetch": true,
-  "git.confirmSync": false,
-  "git.enableCommitSigning": true,
-  "git.enableSmartCommit": true,
-  "git.mergeEditor": true,
-  "githubPullRequests.createOnPublishBranch": "never",
-  "gitlens.hovers.currentLine.over": "line",
-  "html.autoClosingTags": true,
-  "javascript.autoClosingTags": true,
-  "javascript.preferences.jsxAttributeCompletionStyle": "auto",
-  "javascript.suggest.paths": false,
-  "Lua.telemetry.enable": false,
-  "typescript.preferences.jsxAttributeCompletionStyle": "auto",
-  "typescript.updateImportsOnFileMove.enabled": "never",
-  "launch": {
-    "compounds": [],
-    "configurations": [
-      {
-        "MIMode": "gdb",
-        "args": [],
-        "cwd": "${fileDirname}/bin",
-        "environment": [],
-        "externalConsole": false,
-        "name": "C/C++ - Build and debug active file",
-        "preLaunchTask": "C++: build active file",
-        "program": "${fileDirname}/bin/${fileBasenameNoExtension}",
-        "request": "launch",
-        "setupCommands": [
-          {
-            "description": "Enable pretty-printing for gdb",
-            "ignoreFailures": true,
-            "text": "-enable-pretty-printing"
-          }
-        ],
-        "stopAtEntry": false,
-        "type": "cppdbg",
-        "windows": {
-          "program": "${fileDirname}/bin/${fileBasenameNoExtension}.exe",
-          "cwd": "${fileDirname}\\bin"
+    "explorer.fileNesting.enabled": true,
+    "explorer.fileNesting.patterns": {
+        "*.ts": "$(capture).js, $(capture).d.ts, $(capture).test.ts",
+        "*.js": "$(capture).js.map, $(capture).min.js, $(capture).d.ts, $(capture).test.js",
+        "*.jsx": "$(capture).js",
+        "*.tsx": "$(capture).ts, $(capture).*.ts, $(capture).*.tsx",
+        "tsconfig.json": "tsconfig.*.json",
+        "docker-compose.yml": "docker-compose.*.yml",
+        ".env": ".env.*",
+        "next.config.*": "next-env.d.ts",
+        "package.json": "package-lock.json, .npmrc, yarn.lock, .yarnrc, .eslintrc*, .prettierrc*, .swcrc",
+        ".gitignore": ".*ignore"
+    },
+    "files.associations": {
+        "*.cfg": "CSGO cfg"
+    },
+    "files.defaultLanguage": "${activeEditorLanguage}",
+    "files.eol": "\n",
+    "git.autofetch": true,
+    "git.confirmSync": false,
+    "git.enableCommitSigning": true,
+    "git.enableSmartCommit": true,
+    "git.mergeEditor": true,
+    "githubPullRequests.createOnPublishBranch": "never",
+    "gitlens.hovers.currentLine.over": "line",
+    "html.autoClosingTags": true,
+    "javascript.autoClosingTags": true,
+    "javascript.preferences.jsxAttributeCompletionStyle": "auto",
+    "javascript.suggest.paths": false,
+    "Lua.telemetry.enable": false,
+    "typescript.preferences.jsxAttributeCompletionStyle": "auto",
+    "typescript.updateImportsOnFileMove.enabled": "never",
+    "launch": {
+        "compounds": [],
+        "configurations": [
+            {
+                "MIMode": "gdb",
+                "args": [],
+                "cwd": "${fileDirname}/bin",
+                "environment": [],
+                "externalConsole": false,
+                "name": "C/C++ - Build and debug active file",
+                "preLaunchTask": "C++: build active file",
+                "program": "${fileDirname}/bin/${fileBasenameNoExtension}",
+                "request": "launch",
+                "setupCommands": [
+                    {
+                        "description": "Enable pretty-printing for gdb",
+                        "ignoreFailures": true,
+                        "text": "-enable-pretty-printing"
+                    }
+                ],
+                "stopAtEntry": false,
+                "type": "cppdbg",
+                "windows": {
+                    "program": "${fileDirname}/bin/${fileBasenameNoExtension}.exe",
+                    "cwd": "${fileDirname}\\bin"
+                }
+            }
+        ]
+    },
+    "liveServer.settings.CustomBrowser": "firefox",
+    "liveServer.settings.donotShowInfoMsg": true,
+    "liveServer.settings.donotVerifyTags": true,
+    "liveshare.presence": true,
+    "markdown.preview.fontSize": 26,
+    "markdown-preview-enhanced.codeBlockTheme": "one-dark.css",
+    "markdown-preview-enhanced.enableExtendedTableSyntax": true,
+    "markdown-preview-enhanced.enableTypographer": true,
+    "markdown-preview-enhanced.mermaidTheme": "dark",
+    "markdown-preview-enhanced.previewTheme": "github-dark.css",
+    "markdown-preview-enhanced.revealjsTheme": "solarized.css",
+    "markdown.extension.list.indentationSize": "inherit",
+    "markdownlint.config": {
+        "MD007": { "indent": 2 },
+        "MD013": false,
+        "MD024": false,
+        "MD033": false,
+        "MD041": false
+    },
+    "material-icon-theme.folders.associations": {
+        ".bin": "dist"
+    },
+    "path-intellisense.extensionOnImport": true,
+    "path-intellisense.showHiddenFiles": true,
+    "platformSettings.autoLoad": true,
+    "platformSettings.condition": "os.release()",
+    "platformSettings.platforms": {
+        "default": {
+            "nodes": {
+                "editor.fontFamily": "FiraCode NF"
+            }
+        },
+        "win32": {
+            "inherits": "default",
+            "nodes": {
+                "editor.fontFamily": "FiraCode NF",
+                "terminal.integrated.fontFamily": "FiraCode NF",
+                "C_Cpp.clang_format_path": "C:\\Program Files\\LLVM\\bin\\clang-format.exe",
+                "C_Cpp.codeAnalysis.clangTidy.path": "C:\\Program Files\\LLVM\\bin\\clang-tidy.exe",
+                "shellformat.path": "C:\\ProgramData\\chocolatey\\bin\\shfmt.exe"
+            }
+        },
+        "linux": {
+            "inherits": "default",
+            "nodes": {
+                "editor.fontFamily": "FiraCode Nerd Font",
+                "terminal.integrated.fontFamily": "FiraCode Nerd Font Mono",
+                "C_Cpp.clang_format_path": "/usr/bin/clang-format",
+                "C_Cpp.codeAnalysis.clangTidy.path": "/usr/bin/clang-tidy",
+                "shellformat.path": "/usr/bin/shfmt"
+            }
         }
-      }
-    ]
-  },
-  "liveServer.settings.CustomBrowser": "firefox",
-  "liveServer.settings.donotShowInfoMsg": true,
-  "liveServer.settings.donotVerifyTags": true,
-  "liveshare.presence": true,
-  "markdown.preview.fontSize": 26,
-  "markdown-preview-enhanced.codeBlockTheme": "one-dark.css",
-  "markdown-preview-enhanced.enableExtendedTableSyntax": true,
-  "markdown-preview-enhanced.enableTypographer": true,
-  "markdown-preview-enhanced.mermaidTheme": "dark",
-  "markdown-preview-enhanced.previewTheme": "github-dark.css",
-  "markdown-preview-enhanced.revealjsTheme": "solarized.css",
-  "markdown.extension.list.indentationSize": "inherit",
-  "markdownlint.config": {
-    "MD007": { "indent": 2 },
-    "MD013": false,
-    "MD024": false,
-    "MD033": false,
-    "MD041": false
-  },
-  "material-icon-theme.folders.associations": {
-    ".bin": "dist"
-  },
-  "path-intellisense.extensionOnImport": true,
-  "path-intellisense.showHiddenFiles": true,
-  "platformSettings.autoLoad": true,
-  "platformSettings.condition": "os.release()",
-  "platformSettings.platforms": {
-    "default": {
-      "nodes": {
-        "editor.fontFamily": "FiraCode NF"
-      }
     },
-    "win32": {
-      "inherits": "default",
-      "nodes": {
-        "editor.fontFamily": "FiraCode NF",
-        "terminal.integrated.fontFamily": "FiraCode NF",
-        "C_Cpp.clang_format_path": "C:\\Program Files\\LLVM\\bin\\clang-format.exe",
-        "C_Cpp.codeAnalysis.clangTidy.path": "C:\\Program Files\\LLVM\\bin\\clang-tidy.exe",
-        "shellformat.path": "C:\\ProgramData\\chocolatey\\bin\\shfmt.exe"
-      }
+    "powershell.codeFormatting.autoCorrectAliases": true,
+    "powershell.promptToUpdatePowerShell": false,
+    "prettier.arrowParens": "always",
+    "prettier.bracketSpacing": true,
+    "prettier.printWidth": 180,
+    "prettier.requireConfig": true,
+    "prettier.requirePragma": true,
+    "prettier.singleQuote": true,
+    "prettier.semi": false,
+    "prettier.trailingComma": "all",
+    "python.languageServer": "Pylance",
+    "quokka.automaticRestart": true,
+    "reactSnippets.settings.importReactOnTop": false,
+    "reactSnippets.settings.typescript": true,
+    "redhat.telemetry.enabled": false,
+    "remote.SSH.connectTimeout": 1200,
+    "resmon.show.disk": true,
+    "resmon.disk.format": "PercentUsed",
+    "security.workspace.trust.untrustedFiles": "open",
+    "shellformat.path": "/usr/bin/shfmt",
+    "tabnine.experimentalAutoImports": true,
+    "task.quickOpen.showAll": true,
+    "terminal.explorerKind": "external",
+    "terminal.external.windowsExec": "wt.exe",
+    "terminal.external.linuxExec": "kitty",
+    "terminal.integrated.commandsToSkipShell": ["psl.stepIn", "psl.stepOut", "psl.stepOver", "psl.sendToHostTerminal"],
+    "terminal.integrated.confirmOnKill": "never",
+    "terminal.integrated.cursorStyle": "line",
+    "terminal.integrated.defaultProfile.linux": "fish",
+    "terminal.integrated.defaultProfile.windows": "PowerShell",
+    "terminal.integrated.fontFamily": "FiraCode Nerd Font Mono",
+    "terminal.integrated.fontSize": 14,
+    "terminal.integrated.localEchoExcludePrograms": ["vim", "vi", "nano", "tmux", "nvim"],
+    "terminal.integrated.profiles.linux": {
+        "bash": {
+            "path": "bash",
+            "icon": "terminal-bash"
+        },
+        "zsh": {
+            "path": "zsh"
+        },
+        "fish": {
+            "path": "fish"
+        }
     },
-    "linux": {
-      "inherits": "default",
-      "nodes": {
-        "editor.fontFamily": "FiraCode Nerd Font",
-        "terminal.integrated.fontFamily": "FiraCode Nerd Font Mono",
-        "C_Cpp.clang_format_path": "/usr/bin/clang-format",
-        "C_Cpp.codeAnalysis.clangTidy.path": "/usr/bin/clang-tidy",
-        "shellformat.path": "/usr/bin/shfmt"
-      }
-    }
-  },
-  "powershell.codeFormatting.autoCorrectAliases": true,
-  "powershell.promptToUpdatePowerShell": false,
-  "prettier.arrowParens": "always",
-  "prettier.bracketSpacing": true,
-  "prettier.printWidth": 180,
-  "prettier.requireConfig": true,
-  "prettier.requirePragma": true,
-  "prettier.singleQuote": true,
-  "prettier.semi": false,
-  "prettier.trailingComma": "all",
-  "python.languageServer": "Pylance",
-  "quokka.automaticRestart": true,
-  "reactSnippets.settings.importReactOnTop": false,
-  "reactSnippets.settings.typescript": true,
-  "redhat.telemetry.enabled": false,
-  "remote.SSH.connectTimeout": 1200,
-  "resmon.show.disk": true,
-  "resmon.disk.format": "PercentUsed",
-  "security.workspace.trust.untrustedFiles": "open",
-  "shellformat.path": "/usr/bin/shfmt",
-  "tabnine.experimentalAutoImports": true,
-  "task.quickOpen.showAll": true,
-  "terminal.explorerKind": "external",
-  "terminal.external.windowsExec": "wt.exe",
-  "terminal.external.linuxExec": "kitty",
-  "terminal.integrated.commandsToSkipShell": ["psl.stepIn", "psl.stepOut", "psl.stepOver", "psl.sendToHostTerminal"],
-  "terminal.integrated.confirmOnKill": "never",
-  "terminal.integrated.cursorStyle": "line",
-  "terminal.integrated.defaultProfile.linux": "fish",
-  "terminal.integrated.defaultProfile.windows": "PowerShell",
-  "terminal.integrated.fontFamily": "FiraCode Nerd Font Mono",
-  "terminal.integrated.fontSize": 14,
-  "terminal.integrated.localEchoExcludePrograms": ["vim", "vi", "nano", "tmux", "nvim"],
-  "terminal.integrated.profiles.linux": {
-    "bash": {
-      "path": "bash",
-      "icon": "terminal-bash"
+    "terminal.integrated.profiles.windows": {
+        "PowerShell": {
+            "args": ["-NoExit", "-NoLogo", "-ExecutionPolicy", "Bypass"],
+            "path": "pwsh.exe"
+        }
     },
-    "zsh": {
-      "path": "zsh"
+    "terminal.integrated.tabs.enabled": true,
+    "terminal.integrated.enableMultiLinePasteWarning": false,
+    "terminal.integrated.enablePersistentSessions": false,
+    "terminal.integrated.minimumContrastRatio": 1,
+    "typescript.autoClosingTags": true,
+    "typescript.suggest.paths": false,
+    "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
+    "window.commandCenter": true,
+    "window.titleBarStyle": "custom",
+    "workbench.colorCustomizations": {
+        // Brackets
+        "editorBracketHighlight.foreground1": "#FFB86C",
+        "editorBracketHighlight.foreground2": "#FF75B5",
+        "editorBracketHighlight.foreground3": "#45A9F9",
+        "editorBracketHighlight.foreground4": "#B084EB",
+        "editorBracketHighlight.foreground5": "#E6E6E6",
+        "editorBracketHighlight.foreground6": "#6fce85",
+        "editorBracketHighlight.unexpectedBracket.foreground": "#eb3247",
+        "editorBracketMatch.background": "#515a6b",
+        "editorBracketMatch.border": "#f9c4408f",
+        "editorBracketPairGuide.activeBackground1": "#FFB86C",
+        "editorBracketPairGuide.activeBackground2": "#FF75B5",
+        "editorBracketPairGuide.activeBackground3": "#45A9F9",
+        "editorBracketPairGuide.activeBackground4": "#B084EB",
+        "editorBracketPairGuide.activeBackground5": "#E6E6E6",
+        "editorBracketPairGuide.activeBackground6": "#6fce85"
     },
-    "fish": {
-      "path": "fish"
-    }
-  },
-  "terminal.integrated.profiles.windows": {
-    "PowerShell": {
-      "args": ["-NoExit", "-NoLogo", "-ExecutionPolicy", "Bypass"],
-      "path": "pwsh.exe"
-    }
-  },
-  "terminal.integrated.tabs.enabled": true,
-  "terminal.integrated.enableMultiLinePasteWarning": false,
-  "terminal.integrated.enablePersistentSessions": false,
-  "terminal.integrated.minimumContrastRatio": 1,
-  "typescript.autoClosingTags": true,
-  "typescript.suggest.paths": false,
-  "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
-  "window.commandCenter": true,
-  "window.titleBarStyle": "custom",
-  "workbench.colorCustomizations": {
-    // Brackets
-    "editorBracketHighlight.foreground1": "#FFB86C",
-    "editorBracketHighlight.foreground2": "#FF75B5",
-    "editorBracketHighlight.foreground3": "#45A9F9",
-    "editorBracketHighlight.foreground4": "#B084EB",
-    "editorBracketHighlight.foreground5": "#E6E6E6",
-    "editorBracketHighlight.foreground6": "#6fce85",
-    "editorBracketHighlight.unexpectedBracket.foreground": "#eb3247",
-    "editorBracketMatch.background": "#515a6b",
-    "editorBracketMatch.border": "#f9c4408f",
-    "editorBracketPairGuide.activeBackground1": "#FFB86C",
-    "editorBracketPairGuide.activeBackground2": "#FF75B5",
-    "editorBracketPairGuide.activeBackground3": "#45A9F9",
-    "editorBracketPairGuide.activeBackground4": "#B084EB",
-    "editorBracketPairGuide.activeBackground5": "#E6E6E6",
-    "editorBracketPairGuide.activeBackground6": "#6fce85"
-  },
-  "workbench.colorTheme": "Atom One Dark",
-  "workbench.editor.wrapTabs": true,
-  "workbench.editorAssociations": {
-    "*.lnk": "default",
-    "*.ttf": "default"
-  },
-  "workbench.iconTheme": "material-icon-theme",
-  "workbench.startupEditor": "welcomePage",
-  "zenMode.hideLineNumbers": false,
-  "errorLens.fontWeight": "500",
-  "keyboard.layout": "00000415"
+    "workbench.colorTheme": "Atom One Dark",
+    "workbench.editor.wrapTabs": true,
+    "workbench.editorAssociations": {
+        "*.lnk": "default",
+        "*.ttf": "default"
+    },
+    "workbench.iconTheme": "material-icon-theme",
+    "workbench.startupEditor": "welcomePage",
+    "zenMode.hideLineNumbers": false,
+    "errorLens.fontWeight": "500",
+    "keyboard.layout": "00000415"
 }
