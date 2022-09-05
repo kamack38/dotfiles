@@ -183,7 +183,6 @@
     "explorer.compactFolders": false,
     "explorer.confirmDelete": false,
     "explorer.confirmDragAndDrop": false,
-
     "explorer.fileNesting.enabled": true,
     "explorer.fileNesting.patterns": {
         "*.ts": "$(capture).js, $(capture).d.ts, $(capture).test.ts",
@@ -340,7 +339,8 @@
             "path": "zsh"
         },
         "fish": {
-            "path": "fish"
+            "path": "fish",
+            "icon": "terminal-linux"
         }
     },
     "terminal.integrated.profiles.windows": {
@@ -386,5 +386,10 @@
     "workbench.startupEditor": "welcomePage",
     "zenMode.hideLineNumbers": false,
     "errorLens.fontWeight": "500",
-    "keyboard.layout": "00000415"
+    "keyboard.layout": "00000415",
+    "customizeUI.stylesheet": {
+        ".tabs-container ": "padding-top:5px; padding-left:2px; padding-bottom:3px",
+        ".tabs-container > .tab": "border-radius: 7px 7px 7px 7px; height: 20px; margin-left: 5px; padding-right:4px",
+        ".monaco-editor .suggest-widget": "border-radius: 10px 10px 10px 10px; overflow:hidden;"
+    }
 }
