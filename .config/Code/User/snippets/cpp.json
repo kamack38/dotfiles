@@ -222,8 +222,14 @@
 
     "gcd": {
         "prefix": ["!gcd", "!nwd"],
-        "body": ["__gcd($1, $2)$0"],
+        "body": ["${1:int} GCD(${1:int} a, ${1:int} b) {", "  if (b == 0) return a;", "  return GCD(b, a % b);", "}"],
         "description": "Greatest common divisor function"
+    },
+
+    "gcf": {
+        "prefix": ["!gcf", "!nww"],
+        "body": ["int GCF(int a, int b) { return a / GCD(a, b) * b; }"],
+        "description": "Greatest common factor function"
     },
 
     "fastPowMod": {
