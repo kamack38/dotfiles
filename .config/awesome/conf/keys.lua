@@ -255,7 +255,15 @@ client.connect_signal("request::default_keybindings", function()
 		end, { description = "move to master", group = "client" }),
 		awful.key({ modkey }, "o", function(c)
 			c:move_to_screen()
-		end, { description = "move to screen", group = "client" }),
+		end, { description = "move to the next screen", group = "client" }),
+
+		--- Move through screens
+		awful.key({ modkey, shift }, "Right", function(c)
+			c:move_to_screen(c.screen.index + 1)
+		end, { description = "move to the next screen", group = "client" }),
+		awful.key({ modkey, shift }, "Left", function(c)
+			c:move_to_screen(c.screen.index - 1)
+		end, { description = "move to the pervoius screen", group = "client" }),
 	})
 end)
 
