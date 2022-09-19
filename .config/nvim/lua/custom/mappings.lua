@@ -18,7 +18,7 @@ M.telescope = {
 
 M.coderunner = {
   n = {
-    ["<F7>"] = { "<cmd> RunCode <CR>", "   Run code" },
+    ["<F7>"] = { "<cmd> RunFile <CR>", "   Run code" },
   },
 }
 
