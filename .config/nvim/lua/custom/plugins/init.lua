@@ -52,6 +52,17 @@ return {
     override_options = overrides.mason,
   },
 
+  -- ["NvChad/ui"] = {
+  --   override_options = {
+  --     tabufline = {
+  --       lazyload = false, -- to show tabufline by default
+  --       overriden_modules = function()
+  --         return require "custom.plugins.ui"
+  --       end,
+  --     },
+  --   },
+  -- },
+
   ----------------------------------- custom plugins -----------------------------------
 
   ["wakatime/vim-wakatime"] = {},
@@ -118,4 +129,16 @@ return {
       }
     end,
   },
+
+  -- ["B4mbus/nvim-headband"] = {
+  --   requires = {
+  --     { "SmiteshP/nvim-navic", opt = false }, -- required for for the navic section to work
+  --     { "kyazdani42/nvim-web-devicons", opt = true }, -- required for for devicons and default location_section.separator highlight group
+  --   },
+  --   config = function()
+  --     require("nvim-headband").setup {
+  --       -- Optionally, if you want to configure stuff
+  --     }
+  --   end,
+  -- },
 }
