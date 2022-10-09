@@ -68,7 +68,6 @@ alias gzipnow='tar czf'
 alias of="onefetch"
 alias icat="kitty +kitten icat"
 alias xterm-kitty="kitty"
-alias dolp="dolphin &> /dev/null & disown"
 
 if command -v firefox-developer-edition &>/dev/null
     alias firefox="firefox-developer-edition"
@@ -91,6 +90,11 @@ alias python-gen-deps="pipreqs"
 
 # Sudo edit
 alias esudo="sudoedit"
+
+# Dolphin
+function dolp -a path
+    command dolphin $path &> /dev/null & disown
+end
 
 # Paru
 function pas --description 'Search and install a package' -a pkg
