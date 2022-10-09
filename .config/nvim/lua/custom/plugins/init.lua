@@ -1,4 +1,6 @@
 local overrides = require "custom.plugins.overrides"
+-- local reverse_arrow = require("nvim-headband.symbols").reverse_nice_arrow
+-- local bubbles_wrap = { "%#BubblesFront#", "%#BubblesFront#" }
 
 return {
 
@@ -132,13 +134,37 @@ return {
 
   -- ["B4mbus/nvim-headband"] = {
   --   requires = {
-  --     { "SmiteshP/nvim-navic", opt = false }, -- required for for the navic section to work
-  --     { "kyazdani42/nvim-web-devicons", opt = true }, -- required for for devicons and default location_section.separator highlight group
+  --     { "SmiteshP/nvim-navic" }, -- required for for the navic section to work
+  --     { "kyazdani42/nvim-web-devicons" }, -- required for for devicons and default location_section.separator highlight group
   --   },
   --   config = function()
   --     require("nvim-headband").setup {
-  --       -- Optionally, if you want to configure stuff
+  --       file_section = {
+  --         enable = false,
+  --       },
+  --       location_section = {
+  --         enable = true,
+  --
+  --         wrap = bubbles_wrap,
+  --
+  --         separator = reverse_arrow,
+  --
+  --         empty_symbol = "",
+  --
+  --         position = "right",
+  --       },
   --     }
   --   end,
   -- },
+
+  -- Mark signatures
+  ["kshenoy/vim-signature"] = {},
+
+  ["iamcco/markdown-preview.nvim"] = {
+    run = "cd app && npm install",
+    setup = function()
+      vim.g.mkdp_filetypes = { "markdown" }
+    end,
+    ft = { "markdown" },
+  },
 }
