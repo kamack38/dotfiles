@@ -67,14 +67,17 @@ return {
 
   ----------------------------------- custom plugins -----------------------------------
 
+  -- Track the time you're spending with your code
   ["wakatime/vim-wakatime"] = {},
 
+  -- Focus on your code
   ["Pocco81/true-zen.nvim"] = {
     config = function()
       require "custom.plugins.truezen"
     end,
   },
 
+  -- Let everyone know your using NeoVim
   ["andweeb/presence.nvim"] = {
     config = function()
       require("presence"):setup { main_image = "file" }
@@ -94,6 +97,7 @@ return {
     end,
   },
 
+  -- Organize your work with comments
   ["folke/todo-comments.nvim"] = {
     requires = "nvim-lua/plenary.nvim",
     config = function()
@@ -101,6 +105,7 @@ return {
     end,
   },
 
+  -- Delete without copying
   ["gbprod/cutlass.nvim"] = {
     config = function()
       require("cutlass").setup {
@@ -109,6 +114,7 @@ return {
     end,
   },
 
+  -- Show all problems in your code
   ["folke/trouble.nvim"] = {
     requires = "kyazdani42/nvim-web-devicons",
     config = function()
@@ -116,10 +122,12 @@ return {
     end,
   },
 
+  -- Apply code fixes swiftly
   ["weilbith/nvim-code-action-menu"] = {
     cmd = "CodeActionMenu",
   },
 
+  -- Run code inside NeoVim
   ["CRAG666/code_runner.nvim"] = {
     requires = "nvim-lua/plenary.nvim",
     config = function()
@@ -160,11 +168,19 @@ return {
   -- Mark signatures
   ["kshenoy/vim-signature"] = {},
 
+  -- Markdown browser preview
   ["iamcco/markdown-preview.nvim"] = {
     run = "cd app && npm install",
     setup = function()
       vim.g.mkdp_filetypes = { "markdown" }
     end,
     ft = { "markdown" },
+  },
+
+  -- Surround text with quotes
+  ["kylechui/nvim-surround"] = {
+    config = function()
+      require("nvim-surround").setup {}
+    end,
   },
 }
