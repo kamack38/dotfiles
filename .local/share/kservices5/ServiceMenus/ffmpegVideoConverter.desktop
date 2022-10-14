@@ -1,0 +1,22 @@
+[Desktop Entry]
+Type=Service
+X-KDE-ServiceTypes=KonqPopupMenu/Plugin
+MimeType=video/*;
+Actions=convertToMp4;convertToWebm;convertToMkv;
+Encoding=UTF-8
+X-KDE-Submenu=Convert using ffmpeg
+
+[Desktop Action convertToMp4]
+Name=Convert to MP4
+Icon=video-mp4
+Exec=file=%f; ffmpeg -i "$file" "${file%.*}.mp4"
+
+[Desktop Action convertToWebm]
+Name=Convert to WEBM
+Icon=video-webm
+Exec=file=%f; ffmpeg -i "$file" "${file%.*}.webm"
+
+[Desktop Action convertToMkv]
+Name=Convert to MKV
+Icon=video-mkv
+Exec=file=%f; ffmpeg -i "$file" "${file%.*}.mkv"

@@ -1,0 +1,32 @@
+[Desktop Entry]
+Type=Service
+X-KDE-ServiceTypes=KonqPopupMenu/Plugin
+MimeType=image/*;
+Actions=convertToPng;convertToJpg;convertToBmp;convertToJpeg;convertToWebp;
+Encoding=UTF-8
+X-KDE-Submenu=Convert using ffmpeg
+
+[Desktop Action convertToPng]
+Name=Convert to PNG
+Icon=image-png
+Exec=file=%f; ffmpeg -i "$file" "${file%.*}.png"
+
+[Desktop Action convertToJpg]
+Name=Convert to JPG
+Icon=jpg
+Exec=file=%f; ffmpeg -i "$file" "${file%.*}.jpg"
+
+[Desktop Action convertToJpeg]
+Name=Convert to JPEG
+Icon=jpeg
+Exec=file=%f; ffmpeg -i "$file" "${file%.*}.jpeg"
+
+[Desktop Action convertToBmp]
+Name=Convert to BMP
+Icon=image-bmp
+Exec=file=%f; ffmpeg -i "$file" "${file%.*}.bmp"
+
+[Desktop Action convertToWebp]
+Name=Convert to WEBP
+Icon=image
+Exec=file=%f; ffmpeg -i "$file" "${file%.*}.webp"
