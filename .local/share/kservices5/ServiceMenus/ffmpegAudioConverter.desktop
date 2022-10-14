@@ -1,0 +1,22 @@
+[Desktop Entry]
+Type=Service
+X-KDE-ServiceTypes=KonqPopupMenu/Plugin
+MimeType=video/*;audio/*;
+Actions=convertToMp3;convertToOgg;convertToWav;
+Encoding=UTF-8
+X-KDE-Submenu=Convert using ffmpeg
+
+[Desktop Action convertToMp3]
+Name=Convert to MP3
+Icon=audio-mp3
+Exec=file=%f; ffmpeg -i "$file" "${file%.*}.mp3"
+
+[Desktop Action convertToOgg]
+Name=Convert to OGG
+Icon=audio-ogg
+Exec=file=%f; ffmpeg -i "$file" "${file%.*}.ogg"
+
+[Desktop Action convertToWav]
+Name=Convert to WAV
+Icon=audio-wav
+Exec=file=%f; ffmpeg -i "$file" "${file%.*}.wav"
