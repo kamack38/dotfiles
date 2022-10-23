@@ -1,6 +1,4 @@
 local overrides = require "custom.plugins.overrides"
--- local reverse_arrow = require("nvim-headband.symbols").reverse_nice_arrow
--- local bubbles_wrap = { "%#BubblesFront#", "%#BubblesFront#" }
 
 return {
 
@@ -140,6 +138,7 @@ return {
     end,
   },
 
+  -- Headband
   -- ["B4mbus/nvim-headband"] = {
   --   requires = {
   --     { "SmiteshP/nvim-navic" }, -- required for for the navic section to work
@@ -153,13 +152,13 @@ return {
   --       location_section = {
   --         enable = true,
   --
-  --         wrap = bubbles_wrap,
-  --
-  --         separator = reverse_arrow,
-  --
-  --         empty_symbol = "",
-  --
-  --         position = "right",
+  --         --   wrap = bubbles_wrap,
+  --         --
+  --         --   separator = reverse_arrow,
+  --         --
+  --         --   empty_symbol = "",
+  --         --
+  --         --   position = "right",
   --       },
   --     }
   --   end,
