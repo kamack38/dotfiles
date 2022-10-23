@@ -235,18 +235,44 @@
     "fastPowMod": {
         "prefix": "!fastPowMod",
         "body": [
-            "long long myPow(int a, int b, int m) {",
-            "  if (b == 0) return 1;",
-            "  if (b % 2 == 0) {",
-            "    long long tmp = myPow(a, b / 2, m);",
+            "long long myPow(int a, int exponent, int m) {",
+            "    if (!exponent) return 1;",
+            "    long long tmp = myPow(a, exponent / 2, m);",
+            "    if (exponent & 1) return (((tmp * tmp) % m) * a) % m;",
             "    return (tmp * tmp) % m;",
-            "  } else {",
-            "    long long tmp = myPow(a, b / 2, m);",
-            "    return (((tmp * tmp) % m) * a) % m;",
-            "  }",
             "}"
         ],
         "description": "Quickly calculate a^b mod c"
+    },
+
+    "newton": {
+        "prefix": "!newton",
+        "body": [
+            "template <typename FactorialType, int size>",
+            "class Newton {",
+            "    FactorialType F[size];",
+            "    FactorialType modulo;",
+            "",
+            "    FactorialType fast_mod_power(FactorialType a, FactorialType exponent) {",
+            "        if (!exponent) return 1;",
+            "        if (exponent & 1) return (a * fast_mod_power(a, exponent - 1)) % modulo;",
+            "        return fast_mod_power((a * a) % mod, exponent / 2) % modulo;",
+            "    }",
+            "",
+            "   public:",
+            "    Newton(int modulo_value) {",
+            "        modulo = modulo_value;",
+            "        F[0] = 1;",
+            "        for (FactorialType i = 1; i < size; ++i) {",
+            "            F[i] = (F[i - 1] * i) % modulo;",
+            "        }",
+            "    }",
+            "    FactorialType get_reverse_factor(FactorialType x) { return fast_mod_power(F[x], modulo - 2); }",
+            "    FactorialType get_factor(FactorialType x) { return F[x]; }",
+            "    FactorialType n_choose_k(FactorialType n, FactorialType k) { return ((((F[n] * get_reverse_factor(k)) % mod)) * get_reverse_factor(n - k)) % mod; }",
+            "};"
+        ],
+        "description": "Calculate newton symbol and get factors"
     },
 
     "pow": {
