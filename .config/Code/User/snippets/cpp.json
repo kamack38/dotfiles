@@ -275,6 +275,47 @@
         "description": "Calculate newton symbol and get factors"
     },
 
+    "next power": {
+        "prefix": "!nextpowof2",
+        "body": [
+            "unsigned int next_pow_2(unsigned int a) {",
+            "    a--;",
+            "    a |= a >> 1;",
+            "    a |= a >> 2;",
+            "    a |= a >> 4;",
+            "    a |= a >> 8;",
+            "    a |= a >> 16;",
+            "    a++;",
+            "    return a;",
+            "}"
+        ],
+        "description": "Get the next closest power of 2 to the given number"
+    },
+
+    "log": {
+        "prefix": "!log",
+        "body": [
+            "long long Pow(long long y, long long x) {",
+            "    if (x == 0) return 1;",
+            "    return y * Pow(y, x - 1);",
+            "}",
+            "",
+            "long long Log(long long base, long long argument) {",
+            "    long long a = -1LL, b = argument, c = 0LL;",
+            "    while (a + 1 != b) {",
+            "        c = (a + b) / 2;",
+            "        if (Pow(base, c) <= argument) {",
+            "            a = c;",
+            "        } else {",
+            "            b = c;",
+            "        }",
+            "    }",
+            "    return a;",
+            "}"
+        ],
+        "description": "Get the next closest power of 2 to the given number"
+    },
+
     "pow": {
         "prefix": "!pow",
         "body": ["long long Pow(int y, int x) {", "    if (x == 0) return 1;", "    return y * Pow(y, x - 1);", "}"],
