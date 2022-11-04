@@ -4,7 +4,7 @@ editor = code --wait
 [user]
 name = kamack38
 email = 64226248+kamack38@users.noreply.github.com
-signingkey = 1C2136B65A9440CF
+signingkey = 706A3FF0C395D52B
 
 [commit]
 gpgsign = true

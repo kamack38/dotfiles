@@ -1,22 +1,45 @@
-local null_ls = require "null-ls"
+local present, null_ls = pcall(require, "null-ls")
+
+if not present then
+  return
+end
+
 local b = null_ls.builtins
 
 local sources = {
 
   -- spelling
   -- b.diagnostics.cspell.with {
-  --    diagnostics_postprocess = function(diagnostic)
-  --       diagnostic.severity = vim.diagnostic.severity["INFO"]
-  --    end,
-  --    extra_args = { "--locale en-GB,pl" },
+  --   diagnostics_postprocess = function(diagnostic)
+  --     diagnostic.severity = vim.diagnostic.severity["INFO"]
+  --   end,
+  --   extra_args = { "--locale", "en-GB,pl" },
   -- },
+  -- b.code_actions.cspell,
 
   -- webdev stuff
-  b.formatting.prettierd.with { filetypes = { "html", "markdown", "css", "json", "yaml", "scss" } },
+  b.code_actions.eslint,
+  b.formatting.prettierd.with {
+    filetypes = {
+      "javascript",
+      "javascriptreact",
+      "typescript",
+      "typescriptreact",
+      "vue",
+      "css",
+      "scss",
+      "html",
+      "json",
+      "jsonc",
+      "yaml",
+      "markdown",
+      "markdown.mdx",
+    },
+  },
 
   -- Lua
   b.formatting.stylua, --.with { extra_args = { "--indent-type Spaces" } },
-  b.diagnostics.luacheck.with { extra_args = { "--global vim" } },
+  -- b.diagnostics.luacheck.with { extra_args = { "--global vim" } },
 
   -- Shell
   b.formatting.shfmt,
@@ -32,13 +55,22 @@ local sources = {
 local M = {}
 
 M.setup = function()
+  local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
   null_ls.setup {
     debug = true,
     sources = sources,
     -- format on save
-    on_attach = function(client)
-      if client.resolved_capabilities.document_formatting then
-        vim.cmd "autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_sync()"
+    on_attach = function(client, bufnr)
+      if client.supports_method "textDocument/formatting" then
+        vim.api.nvim_clear_autocmds { group = augroup, buffer = bufnr }
+        vim.api.nvim_create_autocmd("BufWritePre", {
+          group = augroup,
+          buffer = bufnr,
+          callback = function()
+            -- on 0.8, you should use vim.lsp.buf.format({ bufnr = bufnr }) instead
+            vim.lsp.buf.format { bufnr = bufnr }
+          end,
+        })
       end
     end,
   }

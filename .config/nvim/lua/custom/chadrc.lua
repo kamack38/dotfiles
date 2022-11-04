@@ -10,6 +10,10 @@ if vim.fn.has "win32" == 1 then
   opt.shellredir = "| Out-File -Encoding UTF8 %s"
 end
 
+opt.tabstop = 4
+opt.shiftwidth = 4
+opt.expandtab = true
+
 M.ui = {
   theme = "onedark",
   transparency = true,

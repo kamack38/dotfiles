@@ -4,7 +4,10 @@ return {
 
   ----------------------------------- default plugins -----------------------------------
 
-  ["goolord/alpha-nvim"] = { disable = false },
+  ["goolord/alpha-nvim"] = {
+    override_options = overrides.alpha(),
+    disable = false,
+  },
 
   ["folke/which-key.nvim"] = { disable = false, cmd = "WhichKey" },
 

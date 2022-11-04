@@ -9,6 +9,12 @@ M.truzen = {
   },
 }
 
+M.dashboard = {
+  n = {
+    ["<leader>db"] = { "<cmd> Alpha <CR>", "舘  Show dashboard" },
+  },
+}
+
 M.telescope = {
   n = {
     ["<leader>fp"] = { "<cmd> Telescope media_files <CR>", "  Find media" },
@@ -37,9 +43,9 @@ M.codeactions = {
 M.neovim = {
   n = {
     ["<A-k>"] = { "<cmd> m-2 <CR>", "  Move curent line up" },
-    ["<A-j>"] = { "<cmd> m+ <CR>", "  Move curent line down" },
-    ["<A-S-j>"] = { "<cmd> yank <CR> p", "  Copy curent line down" },
-    ["<A-S-k>"] = { "<cmd> yank <CR> P", "  Copy curent line up" },
+    ["<A-j>"] = { "<cmd> m+ <CR>", "  Move curent line down" },
+    ["<A-S-j>"] = { "<cmd> t. <CR>", "  Copy curent line down" },
+    ["<A-S-k>"] = { "<cmd> t- <CR>", "  Copy curent line up" },
   },
 }
 
