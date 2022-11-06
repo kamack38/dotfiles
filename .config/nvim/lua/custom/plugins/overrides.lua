@@ -45,7 +45,6 @@ M.mason = {
 
     -- lua
     "stylua",
-    "luacheck",
   },
 }
 
