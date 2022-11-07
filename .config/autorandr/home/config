@@ -3,14 +3,12 @@ off
 output DP-1-1
 off
 output DP-1-0
-crtc 0
 mode 2560x1440
 pos 1920x0
 primary
 rate 165.08
 x-prop-non_desktop 0
 output eDP-1
-crtc 1
 mode 1920x1080
 pos 0x360
 rate 300.01
