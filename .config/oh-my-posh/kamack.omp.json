@@ -280,10 +280,7 @@
                     "type": "azfunc"
                 },
                 {
-                    "background_templates": [
-                        "{{if contains \"default\" .Profile}}#FFA400{{end}}",
-                        "{{if contains \"jan\" .Profile}}#f1184c{{end}}"
-                    ],
+                    "background_templates": ["{{if contains \"default\" .Profile}}#FFA400{{end}}", "{{if contains \"jan\" .Profile}}#f1184c{{end}}"],
                     "foreground": "#ffffff",
                     "invert_powerline": true,
                     "powerline_symbol": "",
@@ -322,9 +319,7 @@
                 },
                 {
                     "background": "#3BD01D",
-                    "background_templates": [
-                        "{{ if gt .Code 0 }}#FF005D{{ end }}"
-                    ],
+                    "background_templates": ["{{ if gt .Code 0 }}#FF005D{{ end }}"],
                     "foreground": "#d3d7cf",
                     "invert_powerline": true,
                     "powerline_symbol": "",
@@ -372,44 +367,6 @@
     "console_title_template": "{{if .Root}}⚡ {{end}}{{ .Shell }} in {{ .Folder }}",
     "final_space": true,
     "osc99": false,
-    "tooltips": [
-        {
-            "background": "#689f63",
-            "foreground": "#ffffff",
-            "leading_diamond": "",
-            "properties": {
-                "display_mode": "always",
-                "fetch_package_manager": true,
-                "fetch_version": true,
-                "home_enabled": true
-            },
-            "style": "diamond",
-            "tips": [
-                "node",
-                "n",
-                "npm"
-            ],
-            "trailing_diamond": "",
-            "type": "node"
-        },
-        {
-            "background": "#29315A",
-            "foreground": "#E64747",
-            "leading_diamond": "",
-            "properties": {
-                "display_mode": "always",
-                "fetch_version": true,
-                "home_enabled": true
-            },
-            "style": "diamond",
-            "tips": [
-                "java",
-                "jar"
-            ],
-            "trailing_diamond": "",
-            "type": "java"
-        }
-    ],
     "transient_prompt": {
         "background": "transparent",
         "foreground": "#ffffff",
