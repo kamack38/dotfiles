@@ -48,7 +48,7 @@ local sources = {
 
   -- cpp
   b.formatting.clang_format.with {
-    extra_args = { "--style", "{ BasedOnStyle: Google, IndentWidth: 4, ColumnLimit: 500 }" },
+    extra_args = { "--style", "{ BasedOnStyle: Google, IndentWidth: 4, ColumnLimit: 100 }" },
   },
 }
 

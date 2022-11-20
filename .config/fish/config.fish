@@ -68,6 +68,7 @@ alias gzipnow='tar czf'
 alias of="onefetch"
 alias icat="kitty +kitten icat"
 alias xterm-kitty="kitty"
+alias n="nvim"
 
 if command -v firefox-developer-edition &>/dev/null
     alias firefox="firefox-developer-edition"
