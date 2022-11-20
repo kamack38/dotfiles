@@ -11,7 +11,6 @@
 # ------------
 # Set default node version
 set --universal nvm_default_version lts
-export PATH="$PATH:$HOME/.local/bin/:$HOME/.local/share/cargo/bin"
 export DIFFPROG="delta"
 export EDITOR="nvim"
 # export VISUAL="code"
@@ -77,6 +76,7 @@ end
 alias makesrcinfo="makepkg --printsrcinfo > .SRCINFO"
 
 alias passwdgen="date +%s | sha256sum | base64 | head -c 64 ; echo"
+alias passgen="strings /dev/urandom | grep -o '[^\\r\\n\\t\\f\\v `	\'~]' | head -n 32 | tr -d '\n'; echo"
 
 # Cleanup orphaned packages
 alias cleanup='sudo pacman -Rns (pacman -Qtdq)'

@@ -1,5 +1,5 @@
 # Path
-PATH DEFAULT=${PATH}:@{HOME}/.local/bin/:@{HOME}/.local/share/cargo/bin
+PATH DEFAULT=${PATH}:/usr/local/sbin:/usr/local/bin:/usr/bin:@{HOME}/.local/bin/:@{HOME}/.local/share/cargo/bin
 
 # XDG
 XDG_CACHE_HOME DEFAULT=@{HOME}/.cache
@@ -21,6 +21,7 @@ WORKON_HOME DEFAULT=${XDG_DATA_HOME}/virtualenvs
 VAGRANT_HOME DEFAULT=${XDG_DATA_HOME}/vagrant
 VAGRANT_ALIAS_FILE DEFAULT=${XDG_DATA_HOME}/vagrant/aliases
 GOPATH DEFAULT=${XDG_DATA_HOME}/go
+DOCKER_CONFIG DEFAULT=${XDG_CONFIG_HOME}/docker
 
 # Config
 WAKATIME_HOME DEFAULT=${XDG_CONFIG_HOME}/wakatime
