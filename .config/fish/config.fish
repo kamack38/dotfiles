@@ -60,6 +60,8 @@ alias udev-reload="sudo udevadm control --reload-rules && sudo udevadm trigger"
 alias gpg-reload="gpg-connect-agent reloadagent /bye"
 alias systemctl-reload="sudo systemctl daemon-reload"
 
+alias logout="loginctl terminate-user $USER"
+
 alias tarnow='tar -acf '
 alias untar='tar -xvf '
 alias gzipnow='tar czf'
