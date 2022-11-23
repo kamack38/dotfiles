@@ -10,7 +10,7 @@ if (len(sys.argv) < 2) :
 model = whisper.load_model("base")
 
 audio = sys.argv[1]
-transcribe = model.transcribe(audio, task="translate")
+transcribe = model.transcribe(audio)
 
 if (len(sys.argv) >= 3) :
     f = open(sys.argv[2], "a")
