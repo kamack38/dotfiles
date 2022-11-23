@@ -29,7 +29,7 @@ AWESOMEWM_PACKAGES=(
 	"sddm"               # QML based X11 and Wayland display manager
 	"clipster"           # Python clipboard manager
 	"brightnessctl"      # Lightweight brightness control tool
-	"picom-jonaburg-git" # jonaburg's picom fork with tryone144's dual_kawase blur and ibhagwan's rounded corners, an X compositor (compton's fork)
+	"picom"              # A lightweight compositor for X11
 	"betterlockscreen"   # A simple, minimal lockscreen
 	"autorandr"          # Auto-detect connected display hardware and load appropiate X11 setup using xrandr
 )

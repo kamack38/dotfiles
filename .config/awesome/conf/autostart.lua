@@ -16,7 +16,7 @@ end
 
 local function autostart_apps()
 	--- Compositor
-	awful.spawn.with_shell("picom --experimental-backends")
+	awful.spawn.with_shell("picom")
 	--- Bar
 	launch_polybar()
 	--- Launcher
