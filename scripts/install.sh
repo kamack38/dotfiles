@@ -44,49 +44,38 @@ DEV_PROFILE=(
 VM_PROFILE=("virt-manager-meta")
 
 NORMAL_PROFILE=(
-	"ripgrep"                          # Better grep
-	"python"                           # Programming language
-	"python-pip"                       # Python package manager
-	"python-gobject"                   # Ui creation (polybar mpris support)
-	"flatpak"                          # Flatpak package manager
-	"bat"                              # Better cat
-	"exa"                              # Better ls
-	"croc"                             # File transfer utility
-	"mpv"                              # Image/Video player
-	"ffmpeg"                           # Audio/Image/Video file converter
-	"yt-dlp"                           # Better YouTube downloader
-	"neovim"                           # Vim-like text editor
-	"fish"                             # New shell
-	"fisher"                           # Fish plugin manager
-	"discord"                          # VoIP and instant messaging social platform
-	"firefox-developer-edition"        # Web browser for developers
-	"ff2mpv-native-messaging-host-git" # Open video in mpv
-	"oh-my-posh-bin"                   # Shell prompt
-	"fzf"                              # Fuzzy finder
-	"caprine"                          # Messenger app for Linux
-	"spotify"                          # Music client
-	"spicetify-cli"                    # Cli for extending spotify
-	"libqalculate"                     # Calculator (qalc)
-	"cava"                             # Audio visualizer
-	"ttf-font-awesome"                 # Font Awesome font
-	"ulauncher"                        # Application launcher for Linux
-	"playerctl"                        # Command-line utility and library for controlling media players
-	"mpv-mpris"                        # mpv mpris support
-	"update-grub"                      # Utility for updating grup config
-	"btop"                             # System monitor tool
-	"kitty-git"                        # GPU accelerated terminal
-	"polybar-git"                      # Bar
-	"reflector"                        # Pacman mirror sorter
-	"pigz"                             # Parallel implementation of the gzip file compressor
-	"garuda-hooks"                     # Garuda pacman hooks
-	"mpdris2"                          # MPRIS2 support for MPD
-	"mpd"                              # Flexible, powerful, server-side application for playing music
-	"mpc"                              # Minimalist command line interface to MPD
-	"ncmpcpp"                          # Almost exact clone of ncmpc with some new features
-	"dbus-python"                      # Python bindings for DBUS (Polybar ...)
-	"python-google-api-python-client"  # Google API Client Library for Python (Polybar Gmail)
-	"python-google-auth-httplib2"      # Google Authentication Library: httplib2 transport (Polybar Gmail)
-	"python-google-auth-oauthlib"      # oauthlib integration for Google auth (Polybar Gmail)
+	"ripgrep"          # Better grep
+	"python"           # Programming language
+	"python-pip"       # Python package manager
+	"python-gobject"   # Ui creation (polybar mpris support)
+	"flatpak"          # Flatpak package manager
+	"bat"              # Better cat
+	"exa"              # Better ls
+	"croc"             # File transfer utility
+	"mpv"              # Image/Video player
+	"ffmpeg"           # Audio/Image/Video file converter
+	"yt-dlp"           # Better YouTube downloader
+	"neovim"           # Vim-like text editor
+	"fish"             # New shell
+	"fisher"           # Fish plugin manager
+	"oh-my-posh-bin"   # Shell prompt
+	"fzf"              # Fuzzy finder
+	"libqalculate"     # Calculator (qalc)
+	"cava"             # Audio visualizer
+	"ttf-font-awesome" # Font Awesome font
+	"playerctl"        # Command-line utility and library for controlling media players
+	"mpv-mpris"        # mpv mpris support
+	"update-grub"      # Utility for updating grup config
+	"btop"             # System monitor tool
+	"reflector"        # Pacman mirror sorter
+	"pigz"             # Parallel implementation of the gzip file compressor
+	"garuda-hooks"     # Garuda pacman hooks
+	"mpdris2"          # MPRIS2 support for MPD
+	"mpd"              # Flexible, powerful, server-side application for playing music
+	"mpc"              # Minimalist command line interface to MPD
+	"ncmpcpp"          # Almost exact clone of ncmpc with some new features
+	"brightnessctl"    # Lightweight brightness control tool
+	"clipster"         # Python clipboard manager
 	"${DEV_PROFILE[@]}"
 )
 
@@ -113,6 +102,28 @@ SOUND_PROFILE=(
 	"sof-firmware"        # Sound Open Firmware
 	"realtime-privileges" # Realtime privileges for users
 	"pamixer"             # Pulseaudio command-line mixer like amixer
+)
+
+DESKTOP_APPS=(
+	"ark"                              # Archive Manager
+	"dolphin"                          # File Manager
+	"partitionmanager"                 # Partition Manager
+	"gwenview"                         # Image viewer
+	"qt5-imageformats"                 # Add more image formats (webp)
+	"ulauncher"                        # Application launcher for Linux
+	"caprine"                          # Messenger app for Linux
+	"discord"                          # VoIP and instant messaging social platform
+	"firefox-developer-edition"        # Web browser for developers
+	"ff2mpv-native-messaging-host-git" # Open video in mpv
+	"spotify"                          # Music client
+	"spicetify-cli"                    # Cli for extending spotify
+	"kitty-git"                        # GPU accelerated terminal
+	"polybar-git"                      # Bar
+	"dbus-python"                      # Python bindings for DBUS (Polybar ...)
+	"python-google-api-python-client"  # Google API Client Library for Python (Polybar Gmail)
+	"python-google-auth-httplib2"      # Google Authentication Library: httplib2 transport (Polybar Gmail)
+	"python-google-auth-oauthlib"      # oauthlib integration for Google auth (Polybar Gmail)
+	"desktop-file-utils"               # Command line utilities for working with desktop entries
 )
 
 BLUETOOTH_PROFILE=(
@@ -406,7 +417,7 @@ if [[ $additional_packages == *"3"* ]]; then
 
 	# Add all users to group realtime
 	echo "${BLUE}:: ${BWHITE}Adding users to realtime group...${NC}"
-	for ID in $(cat /etc/passwd | grep /home | cut -d ':' -f1); do
+	for ID in $(grep '/home' /etc/passwd | cut -d ':' -f1); do
 		(sudo usermod -aG realtime "$ID")
 	done
 fi
@@ -429,13 +440,13 @@ if [[ $TWEAKS != "" ]]; then
 	echo "${BLUE}:: ${BWHITE}Installing ${TWEAKS/-/ }...${NC}"
 	$HELPER -S --noconfirm --needed --quiet "$TWEAKS"
 
-	if [[ $TWEAKS == "performance-tweaks" && ! $(grep -q 'mitigations=off' /etc/default/grub) ]]; then
+	if [[ $TWEAKS == "performance-tweaks" ]] && ! grep -q 'mitigations=off' /etc/default/grub; then
 		sudo sed -i 's,\(^GRUB_CMDLINE_LINUX_DEFAULT=\".*\)quiet\(.*\"\),\1quiet mitigations=off\2,' /etc/default/grub
 	fi
 fi
 
 # Install spellchecking
-echo "${GREEN}:: ${BWHITE}Installing ${BLUE}spellchecking${BWHITE} and ${BLUE}thesaurus${BWHITE} for ${BLUE}${SPELLCHECK_LOCALES[@]}${BWHITE}...${NC}"
+echo "${GREEN}:: ${BWHITE}Installing ${BLUE}spellchecking${BWHITE} and ${BLUE}thesaurus${BWHITE} for ${BLUE}${SPELLCHECK_LOCALES[*]}${BWHITE}...${NC}"
 for LOCALE in "${SPELLCHECK_LOCALES[@]}"; do
 	$HELPER -S --noconfirm --needed --quiet "aspell-${LOCALE}" "mythes-${LOCALE}"
 done
@@ -471,9 +482,9 @@ else
 	git clone "$NVCHAD_URL" "$NEOVIM_CONFIG_DIR" --depth 1
 
 	nvim \
-		+'autocmd User PackerComplete sleep 1000m | write $HOME/.packer.sync.result | qall' \
+		+"autocmd User PackerComplete sleep 1000m | write $HOME/.packer.sync.result | qall" \
 		+PackerSync
-	cat "$HOME/.packer.sync.result" | grep -v 'Press'
+	grep -v 'Press' "$HOME/.packer.sync.result"
 fi
 
 # Enable spicetify
@@ -506,6 +517,7 @@ echo "${BLUE}:: ${BWHITE}Press ESCAPE to exit.${NC}"
 SELECTED_DE=$(printf "%s\n" "${DESKTOP_ENVIRONMENTS[@]}" | fzf --multi --height=20% --layout=reverse || true)
 
 if [[ "${SELECTED_DE}" != "" ]]; then
+	$HELPER -S --noconfirm --needed --quiet "${DESKTOP_APPS[@]}"
 	for DE in $SELECTED_DE; do
 		DE=$(echo "$DE" | awk '{print tolower($0)}')
 		bash "$HOME/scripts/${DE}.sh"
@@ -580,7 +592,7 @@ if [[ $(pacman -Q grub) ]]; then
 		CHANGED="false"
 
 		# Plymouth hook
-		if [[ ! $(grep "^HOOKS=.*${PLYMOUTH_HOOK}.*" /etc/mkinitcpio.conf) ]]; then
+		if ! grep -q "^HOOKS=.*${PLYMOUTH_HOOK}.*" /etc/mkinitcpio.conf; then
 			echo "${YELLOW}:: ${BWHITE}Adding ${PLYMOUTH_HOOK} hook...${NC}"
 			sudo sed -i "s,\(^HOOKS=.*\)${PLYMOUTH_HOOK_PARENT}\(.*\),\1${PLYMOUTH_HOOK_PARENT} ${PLYMOUTH_HOOK}\2," "/etc/mkinitcpio.conf"
 			CHANGED="true"
@@ -590,7 +602,7 @@ if [[ $(pacman -Q grub) ]]; then
 		fi
 
 		# Encrypt hook
-		if [[ ! $(grep "^HOOKS=.*${ENCRYPT_PLYMOUTH_HOOK}.*" /etc/mkinitcpio.conf) ]]; then
+		if ! grep -q "^HOOKS=.*${ENCRYPT_PLYMOUTH_HOOK}.*" /etc/mkinitcpio.conf; then
 			echo "${YELLOW}:: ${BWHITE}Adding ${ENCRYPT_PLYMOUTH_HOOK} hook...${NC}"
 			sudo sed -i "s,\(^HOOKS=.*\)encrypt\(.*\),\1${ENCRYPT_PLYMOUTH_HOOK}\2," "/etc/mkinitcpio.conf"
 			CHANGED="true"
@@ -599,8 +611,8 @@ if [[ $(pacman -Q grub) ]]; then
 		fi
 
 		# Zfs hook
-		if [[ ! $(grep "^HOOKS=.*plymouth-zfs.*" /etc/mkinitcpio.conf) ]]; then
-			if [[ $(grep "^HOOKS=.*zfs.*" /etc/mkinitcpio.conf) ]]; then
+		if ! grep -q "^HOOKS=.*plymouth-zfs.*" /etc/mkinitcpio.conf; then
+			if grep -q "^HOOKS=.*zfs.*" /etc/mkinitcpio.conf; then
 				echo "${YELLOW}:: ${BWHITE}Adding plymouth-zfs hook...${NC}"
 				$HELPER -S --noconfirm --needed --quiet plymouth-zfs
 				sudo sed -i "s,\(^HOOKS=.*\)zfs\(.*\),\1plymouth-zfs\2," "/etc/mkinitcpio.conf"
@@ -792,7 +804,7 @@ EOT
 	echo "${BLUE}:: ${BWHITE}Setting ${BLUE}umask${BWHITE} to 0077...${NC}"
 	sudo sed -i 's/umask 022/umask 077/' /etc/profile
 
-	if [[ ! $(grep "^auth optional pam_faildelay.so" /etc/pam.d/system-login) ]]; then
+	if ! grep "^auth optional pam_faildelay.so" /etc/pam.d/system-login; then
 		echo "${BLUE}:: ${BWHITE}Setting ${BLUE}login delay${BWHITE} to 4 seconds...${NC}"
 		sudo tee -a /etc/pam.d/system-login >/dev/null <<EOT
 auth optional pam_faildelay.so delay=4000000

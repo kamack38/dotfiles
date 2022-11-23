@@ -17,21 +17,12 @@ HELPER="paru"
 CURRENT_USER="$USER"
 
 AWESOMEWM_PACKAGES=(
-	"xorg"               # Display server
-	"awesome-git"        # Highly configurable framework window manager
-	"dolphin"            # File Manager
-	"ark"                # Archive Manager
-	"desktop-file-utils" # Command line utilities for working with desktop entries
-	"partitionmanager"   # Partition Manager
-	"kcron"              # Task scheduler
-	"gwenview"           # Image viewer
-	"qt5-imageformats"   # Add more image formats (webp)
-	"sddm"               # QML based X11 and Wayland display manager
-	"clipster"           # Python clipboard manager
-	"brightnessctl"      # Lightweight brightness control tool
-	"picom"              # A lightweight compositor for X11
-	"betterlockscreen"   # A simple, minimal lockscreen
-	"autorandr"          # Auto-detect connected display hardware and load appropiate X11 setup using xrandr
+	"xorg"             # Display server
+	"awesome-git"      # Highly configurable framework window manager
+	"sddm"             # QML based X11 and Wayland display manager
+	"picom"            # A lightweight compositor for X11
+	"betterlockscreen" # A simple, minimal lockscreen
+	"autorandr"        # Auto-detect connected display hardware and load appropiate X11 setup using xrandr
 )
 
 echo "${GREEN}:: ${BWHITE}Installing awesomeWM and its components...${NC}"

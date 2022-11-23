@@ -18,20 +18,13 @@ HELPER="paru"
 KDE_PACKAGES=(
 	"xorg"                                # Display server
 	"plasma-meta"                         # Plasma meta package
+	"sddm"                                # QML based X11 and Wayland display manager
 	"kdeplasma-addons"                    # Plasma addons
 	"plasma5-wallpapers-wallpaper-engine" # Support for wallpaper engine wallpapers
 	"spectacle"                           # Screenshot tool
 	"latte-dock"                          # KDE dock
 	"touchegg"                            # Touchpad gestures support
-	"dolphin"                             # File Manager
-	"ark"                                 # Archive Manager
-	"desktop-file-utils"                  # Command line utilities for working with desktop entries
-	"partitionmanager"                    # Partition Manager
-	"kcron"                               # Task scheduler
-	"gwenview"                            # Image viewer
-	"qt5-imageformats"                    # Add more image formats (webp)
 	"plasma-browser-integration"          # Integrate browser and plasma
-	"sddm"                                # QML based X11 and Wayland display manager
 )
 
 echo "${GREEN}:: ${BWHITE}Installing KDE and its components...${NC}"
@@ -52,7 +45,7 @@ function installKDEPackage {
 	# $1 - package id
 	pkgUrl=$(curl -sL "https://store.kde.org/p/$1/loadFiles" | jq -r '.files[0].url' | sed 's#%3A#:#g' | sed 's#%2F#/#g')
 	pkgName=$(curl -sL "https://store.kde.org/p/$1/loadFiles" | jq -r '.files[0].name')
-	wget -qO "/tmp/$pkgName" $pkgUrl
+	wget -qO "/tmp/$pkgName" "$pkgUrl"
 	kpackagetool5 --install "/tmp/$pkgName"
 }
 
