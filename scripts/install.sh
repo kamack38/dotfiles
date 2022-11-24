@@ -105,6 +105,7 @@ SOUND_PROFILE=(
 )
 
 DESKTOP_APPS=(
+	"sddm"                             # QML based X11 and Wayland display manager
 	"ark"                              # Archive Manager
 	"dolphin"                          # File Manager
 	"partitionmanager"                 # Partition Manager
@@ -179,8 +180,8 @@ NPM_PACKAGES=(
 
 DESKTOP_ENVIRONMENTS=(
 	"KDE"
-	"Xfce"
 	"AwesomeWM"
+	"Hyprland"
 )
 
 CUSTOMIZATION_PACKAGES=(
@@ -487,13 +488,6 @@ else
 	grep -v 'Press' "$HOME/.packer.sync.result"
 fi
 
-# Enable spicetify
-if [[ ! -f "$HOME/.config/spicetify/Backup/xpui.spa" ]]; then
-	echo "${YELLOW}:: ${BWHITE}Fixing ${BLUE}spicetify${BWHITE}...${NC}"
-	sed -i "s,\(prefs_path.*=\).*,\1 $SPOTIFY_PREFS," "$HOME/.config/spicetify/config-xpui.ini"
-	echo "${YELLOW}:: ${BWHITE}Run ${BLUE}spicetify backup apply${BWHITE} to apply spicetify...${NC}"
-fi
-
 # Set default shell to fish
 if [ ! "$(basename -- "$SHELL")" = "fish" ]; then
 	echo "${YELLOW}:: ${BWHITE}Setting default shell to ${BLUE}fish${NC}"
@@ -522,6 +516,20 @@ if [[ "${SELECTED_DE}" != "" ]]; then
 		DE=$(echo "$DE" | awk '{print tolower($0)}')
 		bash "$HOME/scripts/${DE}.sh"
 	done
+
+	# Enable services
+	if [[ $(systemctl is-enabled sddm-plymouth.service 2>/dev/null) == enabled ]]; then
+		echo "${YELLOW}:: ${BWHITE}It seems that you have sddm-plymouth service enabled${NC} -- skipping sddm service"
+	else
+		sudo systemctl enable sddm.service
+	fi
+
+	# Enable spicetify
+	if [[ ! -f "$HOME/.config/spicetify/Backup/xpui.spa" ]]; then
+		echo "${YELLOW}:: ${BWHITE}Fixing ${BLUE}spicetify${BWHITE}...${NC}"
+		sed -i "s,\(prefs_path.*=\).*,\1 $SPOTIFY_PREFS," "$HOME/.config/spicetify/config-xpui.ini"
+		echo "${YELLOW}:: ${BWHITE}Run ${BLUE}spicetify backup apply${BWHITE} to apply spicetify...${NC}"
+	fi
 else
 	echo "${YELLOW}:: ${BWHITE}No desktop environment selected${NC} -- skipping"
 fi

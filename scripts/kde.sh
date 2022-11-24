@@ -18,7 +18,6 @@ HELPER="paru"
 KDE_PACKAGES=(
 	"xorg"                                # Display server
 	"plasma-meta"                         # Plasma meta package
-	"sddm"                                # QML based X11 and Wayland display manager
 	"kdeplasma-addons"                    # Plasma addons
 	"plasma5-wallpapers-wallpaper-engine" # Support for wallpaper engine wallpapers
 	"spectacle"                           # Screenshot tool
@@ -32,14 +31,6 @@ $HELPER -S --noconfirm --needed --quiet "${KDE_PACKAGES[@]}"
 
 # Enable services
 sudo systemctl enable touchegg.service
-if [[ $(systemctl is-enabled sddm-plymouth.service 2>/dev/null) == enabled ]]; then
-	echo "${YELLOW}:: ${BWHITE}It seems that you have sddm-plymouth service enabled${NC} -- skipping sddm service"
-else
-	sudo systemctl enable sddm.service
-fi
-
-# Refresh databases
-sudo $HELPER -Sy
 
 function installKDEPackage {
 	# $1 - package id

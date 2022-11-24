@@ -19,7 +19,6 @@ CURRENT_USER="$USER"
 AWESOMEWM_PACKAGES=(
 	"xorg"             # Display server
 	"awesome-git"      # Highly configurable framework window manager
-	"sddm"             # QML based X11 and Wayland display manager
 	"picom"            # A lightweight compositor for X11
 	"betterlockscreen" # A simple, minimal lockscreen
 	"autorandr"        # Auto-detect connected display hardware and load appropiate X11 setup using xrandr
@@ -29,9 +28,4 @@ echo "${GREEN}:: ${BWHITE}Installing awesomeWM and its components...${NC}"
 $HELPER -S --noconfirm --needed --quiet "${AWESOMEWM_PACKAGES[@]}"
 
 # Enable services
-if [[ $(systemctl is-enabled sddm-plymouth.service 2>/dev/null) == enabled ]]; then
-	echo "${YELLOW}:: ${BWHITE}It seems that you have sddm-plymouth service enabled${NC} -- skipping sddm service"
-else
-	sudo systemctl enable sddm.service
-fi
 sudo systemctl enable "betterlockscreen@$CURRENT_USER.service"
