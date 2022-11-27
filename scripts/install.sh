@@ -182,6 +182,7 @@ DESKTOP_ENVIRONMENTS=(
 	"KDE"
 	"AwesomeWM"
 	"Hyprland"
+	"Hypr"
 )
 
 CUSTOMIZATION_PACKAGES=(
@@ -514,7 +515,7 @@ if [[ "${SELECTED_DE}" != "" ]]; then
 	$HELPER -S --noconfirm --needed --quiet "${DESKTOP_APPS[@]}"
 	for DE in $SELECTED_DE; do
 		DE=$(echo "$DE" | awk '{print tolower($0)}')
-		bash "$HOME/scripts/${DE}.sh"
+		bash "$HOME/scripts/profiles/${DE}.sh"
 	done
 
 	# Enable services
