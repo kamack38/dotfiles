@@ -151,24 +151,24 @@ awful.keyboard.append_global_keybindings({
 	awful.key({ modkey, shift }, "q", awesome.quit, { description = "quit awesome", group = "awesome" }),
 
 	--- Resize window
-	awful.key({ modkey }, "l", function()
+	awful.key({ modkey, alt }, "l", function()
 		awful.tag.incmwfact(0.05)
 	end, { description = "increase master width factor", group = "layout" }),
-	awful.key({ modkey }, "h", function()
+	awful.key({ modkey, alt }, "h", function()
 		awful.tag.incmwfact(-0.05)
 	end, { description = "decrease master width factor", group = "layout" }),
 
 	--- Change number of columns and rows
-	awful.key({ modkey, alt }, "h", function()
+	awful.key({ modkey, ctrl }, "h", function()
 		awful.tag.incnmaster(1, nil, true)
 	end, { description = "increase the number of master clients", group = "layout" }),
-	awful.key({ modkey, alt }, "l", function()
+	awful.key({ modkey, ctrl }, "l", function()
 		awful.tag.incnmaster(-1, nil, true)
 	end, { description = "decrease the number of master clients", group = "layout" }),
-	awful.key({ modkey, ctrl }, "h", function()
+	awful.key({ modkey, shift, ctrl }, "h", function()
 		awful.tag.incncol(1, nil, true)
 	end, { description = "increase the number of columns", group = "layout" }),
-	awful.key({ modkey, ctrl }, "l", function()
+	awful.key({ modkey, shift, ctrl }, "l", function()
 		awful.tag.incncol(-1, nil, true)
 	end, { description = "decrease the number of columns", group = "layout" }),
 
