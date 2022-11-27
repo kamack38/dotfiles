@@ -9,6 +9,7 @@ revelation.init()
 --- ~~~~
 local modkey = "Mod4"
 local alt = "Mod1"
+local alt_r = "Mod5"
 local ctrl = "Control"
 local shift = "Shift"
 
@@ -19,16 +20,28 @@ awful.keyboard.append_global_keybindings({
 	awful.key({ modkey }, "s", hotkeys_popup.show_help, { description = "show help", group = "awesome" }),
 
 	--- Change focus
-	awful.key({ modkey, alt }, "Up", function()
+	awful.key({ modkey }, "Up", function()
 		awful.client.focus.bydirection("up")
 	end, { description = "focus to the up", group = "layout" }),
-	awful.key({ modkey, alt }, "Down", function()
+	awful.key({ modkey }, "k", function()
+		awful.client.focus.bydirection("up")
+	end, { description = "focus to the up", group = "layout" }),
+	awful.key({ modkey }, "Down", function()
 		awful.client.focus.bydirection("down")
 	end, { description = "focus to the down", group = "layout" }),
-	awful.key({ modkey, alt }, "Left", function()
+	awful.key({ modkey }, "j", function()
+		awful.client.focus.bydirection("down")
+	end, { description = "focus to the down", group = "layout" }),
+	awful.key({ modkey }, "Left", function()
 		awful.client.focus.bydirection("left")
 	end, { description = "focus to the left", group = "layout" }),
-	awful.key({ modkey, alt }, "Right", function()
+	awful.key({ modkey }, "h", function()
+		awful.client.focus.bydirection("left")
+	end, { description = "focus to the left", group = "layout" }),
+	awful.key({ modkey }, "Right", function()
+		awful.client.focus.bydirection("right")
+	end, { description = "focus to the right", group = "layout" }),
+	awful.key({ modkey }, "l", function()
 		awful.client.focus.bydirection("right")
 	end, { description = "focus to the right", group = "layout" }),
 
@@ -146,10 +159,10 @@ awful.keyboard.append_global_keybindings({
 	end, { description = "decrease master width factor", group = "layout" }),
 
 	--- Change number of columns and rows
-	awful.key({ modkey, shift }, "h", function()
+	awful.key({ modkey, alt }, "h", function()
 		awful.tag.incnmaster(1, nil, true)
 	end, { description = "increase the number of master clients", group = "layout" }),
-	awful.key({ modkey, shift }, "l", function()
+	awful.key({ modkey, alt }, "l", function()
 		awful.tag.incnmaster(-1, nil, true)
 	end, { description = "decrease the number of master clients", group = "layout" }),
 	awful.key({ modkey, ctrl }, "h", function()
@@ -237,16 +250,28 @@ client.connect_signal("request::default_keybindings", function()
 		end, { description = "(un)maximize horizontally", group = "client" }),
 
 		--- Move or swap by direction
-		awful.key({ modkey }, "Up", function(c)
+		awful.key({ modkey, alt_r }, "Up", function(c)
 			helpers.client.move_client(c, "up")
 		end, { description = "move up", group = "layout" }),
-		awful.key({ modkey }, "Down", function(c)
+		awful.key({ modkey, alt_r }, "k", function(c)
+			helpers.client.move_client(c, "up")
+		end, { description = "move up", group = "layout" }),
+		awful.key({ modkey, alt_r }, "Down", function(c)
 			helpers.client.move_client(c, "down")
 		end, { description = "move down", group = "layout" }),
-		awful.key({ modkey }, "Left", function(c)
+		awful.key({ modkey, alt_r }, "j", function(c)
+			helpers.client.move_client(c, "down")
+		end, { description = "move down", group = "layout" }),
+		awful.key({ modkey, alt_r }, "Left", function(c)
 			helpers.client.move_client(c, "left")
 		end, { description = "move to the left", group = "layout" }),
-		awful.key({ modkey }, "Right", function(c)
+		awful.key({ modkey, alt_r }, "h", function(c)
+			helpers.client.move_client(c, "left")
+		end, { description = "move to the left", group = "layout" }),
+		awful.key({ modkey, alt_r }, "Right", function(c)
+			helpers.client.move_client(c, "right")
+		end, { description = "move to the right", group = "layout" }),
+		awful.key({ modkey, alt_r }, "l", function(c)
 			helpers.client.move_client(c, "right")
 		end, { description = "move to the right", group = "layout" }),
 
@@ -261,7 +286,13 @@ client.connect_signal("request::default_keybindings", function()
 		awful.key({ modkey, shift }, "Right", function(c)
 			c:move_to_screen(c.screen.index + 1)
 		end, { description = "move to the next screen", group = "client" }),
+		awful.key({ modkey, shift }, "l", function(c)
+			c:move_to_screen(c.screen.index + 1)
+		end, { description = "move to the next screen", group = "client" }),
 		awful.key({ modkey, shift }, "Left", function(c)
+			c:move_to_screen(c.screen.index - 1)
+		end, { description = "move to the pervoius screen", group = "client" }),
+		awful.key({ modkey, shift }, "h", function(c)
 			c:move_to_screen(c.screen.index - 1)
 		end, { description = "move to the pervoius screen", group = "client" }),
 	})
