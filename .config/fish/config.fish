@@ -61,6 +61,7 @@ alias gpg-reload="gpg-connect-agent reloadagent /bye"
 alias systemctl-reload="sudo systemctl daemon-reload"
 
 alias logout="loginctl terminate-user $USER"
+alias lock="betterlockscreen -l"
 
 alias tarnow='tar -acf '
 alias untar='tar -xvf '
