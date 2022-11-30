@@ -140,9 +140,9 @@ DirSelectDialog Size=839,598
 History Items[$e]=file:$HOME/Downloads/vista_proba_free,file:///run/media/kamack38/OS/Windows/System32/config,file:$HOME/.local/share/Steam,file:$HOME/.local/share/Steam
 
 [General]
-BrowserApplication=firefox-developer-edition.desktop
+BrowserApplication=firefoxdeveloperedition.desktop
 ColorScheme=BreezeDark
-ColorSchemeHash=bcce7c1c6181c5e14e633cd8301e7a9036b67ac6
+ColorSchemeHash=78952f1103f6f2c59b78c6ed5fa382c3f5ec18e7
 Name[en_GB]=Breeze Dark
 Name=Breeze Dark
 TerminalApplication=kitty
