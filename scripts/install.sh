@@ -462,7 +462,7 @@ export PATH="$HOME/.local/bin:$PATH"
 
 # Install fish plugins
 echo "${GREEN}:: ${BWHITE}Installing ${BLUE}fish${BWHITE} packages${NC}"
-echo "fisher install ${FISH_PACKAGES[@]}" | fish
+echo "fisher install ${FISH_PACKAGES[*]}" | fish
 
 # Install node & npm packages
 echo "${GREEN}:: ${BWHITE}Installing ${BLUE}node${BWHITE} (${NODE_VERSION}) & ${BLUE}npm${BWHITE} packages${NC}"
