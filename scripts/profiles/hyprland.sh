@@ -20,6 +20,7 @@ HYPRLAND_PACKAGES=(
 	"hyprland-git"           # A dynamic tiling Wayland compositor based on wlroots that doesn't sacrifice on its looks.
 	"hyprpaper-git"          # A blazing fast wayland wallpaper utility with IPC controls.
 	"wl-clipboard"           # Command-line copy/paste utilities for Wayland
+	"wlogout"                # Logout menu for wayland
 	"xdg-desktop-portal"     # Desktop integration portals for sandboxed apps
 	"xdg-desktop-portal-wlr" # xdg-desktop-portal backend for wlroots
 	"wev"                    # A tool for debugging wayland events, similar to xev

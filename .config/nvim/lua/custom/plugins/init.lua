@@ -185,4 +185,7 @@ return {
       require("nvim-surround").setup {}
     end,
   },
+
+  -- yuck syntax
+  ["elkowar/yuck.vim"] = {},
 }
