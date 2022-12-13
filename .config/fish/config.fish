@@ -13,6 +13,7 @@
 set --universal nvm_default_version lts
 export DIFFPROG="delta"
 export EDITOR="nvim"
+set Z_EXCLUDE "CPlusPlus/*/bin"
 # export VISUAL="code"
 
 # Set gpg tty
