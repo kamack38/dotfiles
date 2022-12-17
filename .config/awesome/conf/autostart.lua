@@ -21,6 +21,8 @@ local function autostart_apps()
 	launch_polybar()
 	--- Launcher
 	awful.spawn.with_shell("env GDK_BACKEND=x11 /usr/bin/ulauncher --hide-window --no-window-shadow")
+	--- Polkit agent
+	awful.spawn.with_shell("/usr/lib/polkit-kde-authentication-agent-1")
 end
 
 autostart_apps()

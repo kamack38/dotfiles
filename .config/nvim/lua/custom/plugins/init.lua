@@ -111,6 +111,7 @@ return {
     config = function()
       require("cutlass").setup {
         override_del = true,
+        exclude = { "ns", "nS" },
       }
     end,
   },
@@ -134,7 +135,7 @@ return {
     config = function()
       require("code_runner").setup {
         filetype = {
-          cpp = 'mkdir -p "$dir/bin" && cd "$dir/bin" && g++ "../$fileName" -o "$fileNameWithoutExt" -fsanitize=address && "./$fileNameWithoutExt"',
+          cpp = 'mkdir -p "$dir/bin" && cd "$dir/bin" && g++ "../$fileName" -o "$fileNameWithoutExt" -fsanitize=address,undefined && "./$fileNameWithoutExt"',
         },
         startinsert = true,
       }
@@ -188,4 +189,7 @@ return {
 
   -- yuck syntax
   ["elkowar/yuck.vim"] = {},
+
+  -- Fast search plugin
+  -- ["ggandor/lightspeed.nvim"] = {},
 }
