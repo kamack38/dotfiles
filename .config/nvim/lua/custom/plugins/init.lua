@@ -135,7 +135,7 @@ return {
     config = function()
       require("code_runner").setup {
         filetype = {
-          cpp = 'mkdir -p "$dir/bin" && cd "$dir/bin" && g++ "../$fileName" -o "$fileNameWithoutExt" -fsanitize=address,undefined && "./$fileNameWithoutExt"',
+          cpp = 'mkdir -p "$dir/bin" && cd "$dir/bin" && g++ "../$fileName" -o "$fileNameWithoutExt" -std=c++11 -fsanitize=address,undefined && "./$fileNameWithoutExt"',
         },
         startinsert = true,
       }
