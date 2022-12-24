@@ -100,3 +100,23 @@ client.connect_signal("property::maximized", border_adjust)
 client.connect_signal("unfocus", function(c)
 	c.border_color = beautiful.border_normal
 end)
+
+-- Mouse follows focus
+local function move_mouse_onto_focused_client()
+	local c = client.focus
+	gears.timer({
+		timeout = 0.01,
+		autostart = true,
+		single_shot = true,
+		callback = function()
+			if mouse.object_under_pointer() ~= c then
+				local geometry = c:geometry()
+				local x = geometry.x + geometry.width / 2
+				local y = geometry.y + geometry.height / 2
+				mouse.coords({ x = x, y = y }, true)
+			end
+		end,
+	})
+end
+client.connect_signal("focus", move_mouse_onto_focused_client)
+client.connect_signal("swapped", move_mouse_onto_focused_client)
