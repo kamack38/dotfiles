@@ -60,6 +60,9 @@ alias reload="source ~/.config/fish/config.fish"
 alias udev-reload="sudo udevadm control --reload-rules && sudo udevadm trigger"
 alias gpg-reload="gpg-connect-agent reloadagent /bye"
 alias systemctl-reload="sudo systemctl daemon-reload"
+alias sound-reload="systemctl --user restart wireplumber pipewire pipewire-pulse"
+
+alias list-sound-cards="cat /proc/asound/cards"
 
 alias logout="loginctl terminate-user $USER"
 alias lock="betterlockscreen -l"

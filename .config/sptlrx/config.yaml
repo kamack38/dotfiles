@@ -1,0 +1,7 @@
+player: mpris
+style:
+    hAlignment: center
+    before:
+        foreground: '#80ed99'
+    current:
+        foreground: '#38a3a5'

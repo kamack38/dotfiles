@@ -76,6 +76,7 @@ NORMAL_PROFILE=(
 	"ncmpcpp"          # Almost exact clone of ncmpc with some new features
 	"brightnessctl"    # Lightweight brightness control tool
 	"clipster"         # Python clipboard manager
+	"sptlrx-bin"       # Timesynced Spotify lyrics in your terminal
 	"${DEV_PROFILE[@]}"
 )
 
