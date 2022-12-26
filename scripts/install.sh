@@ -111,6 +111,7 @@ DESKTOP_APPS=(
 	"dolphin"                          # File Manager
 	"partitionmanager"                 # Partition Manager
 	"gwenview"                         # Image viewer
+	"polkit-kde-agent"                 # Daemon providing a polkit authentication UI
 	"qt5-imageformats"                 # Add more image formats (webp)
 	"ulauncher"                        # Application launcher for Linux
 	"caprine"                          # Messenger app for Linux

@@ -21,7 +21,6 @@ HYPRLAND_PACKAGES=(
 	"hyprpaper-git"          # A blazing fast wayland wallpaper utility with IPC controls.
 	"wl-clipboard"           # Command-line copy/paste utilities for Wayland
 	"wlogout"                # Logout menu for wayland
-	"polkit-kde-agent"       # Daemon providing a polkit authentication UI for KDE
 	"xdg-desktop-portal"     # Desktop integration portals for sandboxed apps
 	"xdg-desktop-portal-wlr" # xdg-desktop-portal backend for wlroots
 	"wev"                    # A tool for debugging wayland events, similar to xev
