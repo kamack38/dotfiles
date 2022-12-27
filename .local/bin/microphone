@@ -1,0 +1,21 @@
+#!/bin/sh
+# source: https://github.com/rxyhn/dotfiles/blob/main/home/rxyhn/modules/desktop/dunst/default.nix
+ASSETS_PATH="$HOME/.config/dunst/assets"
+
+pamixer --default-source "$@"
+mic="$(pamixer --default-source --get-volume-human)"
+if [ "$mic" = "muted" ]; then
+	notify-send -r 69 \
+		-a "Microphone" \
+		"Muted" \
+		-i "$ASSETS_PATH/mic-mute.svg" \
+		-t 888 \
+		-u low
+else
+	notify-send -r 69 \
+		-a "Microphone" "Currently at $mic" \
+		-h int:value:"$mic" \
+		-i "$ASSETS_PATH/mic.svg" \
+		-t 888 \
+		-u low
+fi

@@ -2,6 +2,7 @@ player: mpris
 style:
     hAlignment: center
     before:
-        foreground: '#80ed99'
+        foreground: '#6d597a'
     current:
-        foreground: '#38a3a5'
+        foreground: '#00b4d8'
+        bold: true

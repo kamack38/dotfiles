@@ -76,6 +76,7 @@ alias nf="neofetch"
 alias icat="kitty +kitten icat"
 alias xterm-kitty="kitty"
 alias n="nvim"
+alias btc="bluetoothctl"
 
 if command -v firefox-developer-edition &>/dev/null
     alias firefox="firefox-developer-edition"

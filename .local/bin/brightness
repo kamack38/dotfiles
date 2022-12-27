@@ -1,0 +1,12 @@
+#!/bin/sh
+# source: https://github.com/rxyhn/dotfiles/blob/main/home/rxyhn/modules/desktop/dunst/default.nix
+ASSETS_PATH="$HOME/.config/dunst/assets"
+
+brightnessctl "$@"
+brightness=$(echo $(($(brightnessctl g) * 100 / $(brightnessctl m))))
+notify-send -r 69 \
+	-a "Brightness" "Currently at $brightness%" \
+	-h int:value:"$brightness" \
+	-i "$ASSETS_PATH/brightness.svg" \
+	-t 888 \
+	-u low
