@@ -41,8 +41,6 @@ DEV_PROFILE=(
 	"rustcat"                    # A modern port listener and reverse shell
 )
 
-VM_PROFILE=("virt-manager-meta")
-
 NORMAL_PROFILE=(
 	"ripgrep"          # Better grep
 	"python"           # Programming language
@@ -105,6 +103,18 @@ SOUND_PROFILE=(
 	"pamixer"             # Pulseaudio command-line mixer like amixer
 )
 
+VM_PROFILE=(
+	"virt-manager-meta"
+)
+
+BLUETOOTH_PROFILE=(
+	"bluetooth-support" # Metapkg containing needed packages for using Bluetooth
+)
+
+RUST_DEV_PROFILE=(
+	"rustup" # The Rust toolchain installer
+)
+
 DESKTOP_APPS=(
 	"sddm"                             # QML based X11 and Wayland display manager
 	"ark"                              # Archive Manager
@@ -129,12 +139,12 @@ DESKTOP_APPS=(
 	"desktop-file-utils"               # Command line utilities for working with desktop entries
 )
 
-BLUETOOTH_PROFILE=(
-	"bluetooth-support" # Metapkg containing needed packages for using Bluetooth
-)
-
-RUST_DEV=(
-	"rustup" # The Rust toolchain installer
+PROFILES=(
+	"Gaming"
+	"Sound"
+	"VM"
+	"Bluetooth"
+	"Rust Dev"
 )
 
 NVIDIA_DRIVERS=(
@@ -393,15 +403,14 @@ echo "${GREEN}:: ${BWHITE}Installing ${BLUE}default${BWHITE} packages using ${BL
 $HELPER -S --noconfirm --needed --quiet "${NORMAL_PROFILE[@]}"
 
 # Additional packages
-echo "${BLUE}:: ${BWHITE}Which packages do you want to install?${NC}"
-echo "	1) Gaming 2) Virtual Machine 3) Sound 4) Bluetooth 5) Rust-DEV"
-read -rp "${BLUE}:: ${BWHITE}Packages to install (eg: 1 2 3): " additional_packages
+echo "${BLUE}:: ${BWHITE}Which profiles do you want to install?${NC}"
+SELECTED_PROFILES=$(printf "%s\n" "${PROFILES[@]}" | fzf --multi --height=20% --layout=reverse --header="Select profiles to install. Use TAB to select multiple." | awk '{print toupper($0)}' | sed 's/ /_/g' || true)
 
-if [[ $additional_packages == *"1"* ]]; then
+if [[ $SELECTED_PROFILES == *"GAMING"* ]]; then
 	echo "${BLUE}:: ${BWHITE}Installing ${BLUE}gaming${BWHITE} packages...${NC}"
 	$HELPER -S --noconfirm --needed --quiet "${GAMING_PROFILE[@]}"
 fi
-if [[ $additional_packages == *"2"* ]]; then
+if [[ $SELECTED_PROFILES == *"VM"* ]]; then
 	echo "${BLUE}:: ${BWHITE}Adding ${BLUE}virtual machine${BWHITE} support...${NC}"
 	$HELPER -S --noconfirm --needed --quiet "${VM_PROFILE[@]}"
 
@@ -412,7 +421,7 @@ if [[ $additional_packages == *"2"* ]]; then
 	sudo virsh net-autostart default
 	sudo virsh net-start default
 fi
-if [[ $additional_packages == *"3"* ]]; then
+if [[ $SELECTED_PROFILES == *"SOUND"* ]]; then
 	echo "${BLUE}:: ${BWHITE}Adding ${BLUE}sound${BWHITE} support...${NC}"
 	yes | $HELPER -S --needed --quiet "${SOUND_PROFILE[@]}"
 	systemctl enable --user pipewire-pulse.service
@@ -426,13 +435,13 @@ if [[ $additional_packages == *"3"* ]]; then
 		(sudo usermod -aG realtime "$ID")
 	done
 fi
-if [[ $additional_packages == *"4"* ]]; then
+if [[ $SELECTED_PROFILES == *"BLUETOOTH"* ]]; then
 	echo "${BLUE}:: ${BWHITE}Adding ${BLUE}bluetooth${BWHITE} support...${NC}"
 	$HELPER -S --noconfirm --needed --quiet "${BLUETOOTH_PROFILE[@]}"
 fi
-if [[ $additional_packages == *"5"* ]]; then
+if [[ $SELECTED_PROFILES == *"RUST_DEV"* ]]; then
 	echo "${BLUE}:: ${BWHITE}Installing rust profile...${NC}"
-	$HELPER -S --noconfirm --needed --quiet "${RUST_DEV[@]}"
+	$HELPER -S --noconfirm --needed --quiet "${RUST_DEV_PROFILE[@]}"
 	rustup install stable
 	rustup component add clippy
 	cargo install cargo-edit
@@ -469,7 +478,7 @@ echo "fisher install ${FISH_PACKAGES[*]}" | fish
 
 # Install node & npm packages
 echo "${GREEN}:: ${BWHITE}Installing ${BLUE}node${BWHITE} (${NODE_VERSION}) & ${BLUE}npm${BWHITE} packages${NC}"
-echo "nvm install ${NODE_VERSION} && npm i --location=global ${NPM_PACKAGES[@]}" | fish
+echo "nvm install ${NODE_VERSION} && npm i --location=global" "${NPM_PACKAGES[@]}" | fish
 
 # Quokka.js
 echo "${GREEN}:: ${BWHITE}Installing ${BLUE}quokka.js plugins${NC}"

@@ -26,6 +26,7 @@ HYPRLAND_PACKAGES=(
 	"wev"                    # A tool for debugging wayland events, similar to xev
 	"sddm"                   # QML based X11 and Wayland display manager
 	"autorandr"              # Auto-detect connected display hardware and load appropiate X11 setup using xrandr
+	"dunst"                  # Customizable and lightweight notification-daemon
 )
 
 echo "${GREEN}:: ${BWHITE}Installing Hyprland and its components...${NC}"
