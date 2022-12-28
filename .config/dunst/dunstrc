@@ -38,23 +38,18 @@
     icon_size = 48
     max_icon_size = 80
     corner_radius = 7
+    mouse_left_click = "do_action"
+    mouse_middle_click = "close_all"
+    mouse_right_click = "close_current"
+    foreground = "#b6beca"
+    background = "#101419"
+    highlight  = "#b6beca"
 
 [urgency_low]
-    # IMPORTANT: colors have to be defined in quotation marks.
-    # Otherwise the "#" and following would be interpreted as a comment.
-    background = "#101419"
-    foreground = "#b6beca"
-    highlight  = "#b6beca"
     timeout = 4
 
 [urgency_normal]
-    background = "#101419"
-    foreground = "#b6beca"
-    highlight  = "#b6beca"
     timeout = 6
 
 [urgency_critical]
-    background = "#101419"
-    foreground = "#b6beca"
-    highlight  = "#b6beca"
     timeout = 10
