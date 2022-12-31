@@ -158,6 +158,13 @@ NVIDIA_DRIVERS=(
 	"lib32-vulkan-icd-loader"
 )
 
+NVIDIA_MODULES=(
+	"nvidia"
+	"nvidia_modeset"
+	"nvidia_uvm"
+	"nvidia_drm"
+)
+
 AMD_DRIVERS=(
 	"garuda-video-linux-config"
 	"lib32-mesa"
@@ -167,6 +174,11 @@ AMD_DRIVERS=(
 	"lib32-vulkan-icd-loader"
 )
 
+AMD_MODULES=(
+	"amdgpu"
+	"radeon"
+)
+
 INTEL_DRIVERS=(
 	"garuda-video-linux-config"
 	"lib32-mesa"
@@ -174,6 +186,11 @@ INTEL_DRIVERS=(
 	"lib32-vulkan-intel"
 	"vulkan-icd-loader"
 	"lib32-vulkan-icd-loader"
+)
+
+INTEL_MODULES=(
+	"intel_agp"
+	"i915"
 )
 
 FISH_PACKAGES=(
@@ -379,6 +396,20 @@ VGA_INFO=$(lspci -vnn | grep VGA)
 if [[ $VGA_INFO == *"NVIDIA"* ]]; then
 	echo "${GREEN}:: ${BWHITE}Installing ${BLUE}NVIDIA${BWHITE} drivers${NC}"
 	$HELPER -S --noconfirm --needed --quiet "${NVIDIA_DRIVERS[@]}"
+
+	for i in "${NVIDIA_MODULES[@]}"; do
+		if ! grep -q "\b$i\b" /etc/mkinitcpio.conf; then
+			sudo sed -i "s,\(MODULES=.*\)\()\),\1 $i\2," /etc/mkinitcpio.conf
+		fi
+	done
+
+	sudo tee /etc/modprobe.d/nvidia.conf >/dev/null <<EOT
+options nouveau modeset=0
+EOT
+	sudo tee /etc/modprobe.d/blacklist-nvidia-nouveau.conf >/dev/null <<EOT
+blacklist nouveau
+options nouveau modeset=0
+EOT
 else
 	echo "${YELLOW}:: ${BLUE}NVIDIA${BWHITE} GPU not detected${NC} -- skipping"
 fi
@@ -386,14 +417,25 @@ fi
 if [[ $VGA_INFO == *"AMD"* ]]; then
 	echo "${GREEN}:: ${BWHITE}Installing ${BLUE}AMD${BWHITE} drivers${NC}"
 	$HELPER -S --noconfirm --needed --quiet "${AMD_DRIVERS[@]}"
+
+	for i in "${AMD_MODULES[@]}"; do
+		if ! grep -q "\b$i\b" /etc/mkinitcpio.conf; then
+			sudo sed -i "s,\(MODULES=.*\)\()\),\1 $i\2," /etc/mkinitcpio.conf
+		fi
+	done
 else
 	echo "${YELLOW}:: ${BLUE}AMD${BWHITE} GPU not detected${NC} -- skipping"
-
 fi
 
 if [[ $VGA_INFO == *"INTEL"* ]]; then
 	echo "${GREEN}:: ${BWHITE}Installing ${BLUE}INTEL${BWHITE} drivers${NC}"
 	$HELPER -S --noconfirm --needed --quiet "${INTEL_DRIVERS[@]}"
+
+	for i in "${INTEL_MODULES[@]}"; do
+		if ! grep -q "\b$i\b" /etc/mkinitcpio.conf; then
+			sudo sed -i "s,\(MODULES=.*\)\()\),\1 $i\2," /etc/mkinitcpio.conf
+		fi
+	done
 else
 	echo "${YELLOW}:: ${BLUE}INTEL${BWHITE} GPU not detected${NC} -- skipping"
 fi

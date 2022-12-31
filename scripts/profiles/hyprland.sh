@@ -27,15 +27,18 @@ HYPRLAND_PACKAGES=(
 	"sddm"                   # QML based X11 and Wayland display manager
 	"autorandr"              # Auto-detect connected display hardware and load appropiate X11 setup using xrandr
 	"dunst"                  # Customizable and lightweight notification-daemon
+	"qt5-wayland"            # Provides APIs for Wayland
+	"libva"                  # Video Acceleration (VA) API for Linux
+	"qt5ct"                  # Qt5 Configuration Utility
 )
 
 echo "${GREEN}:: ${BWHITE}Installing Hyprland and its components...${NC}"
 $HELPER -S --noconfirm --needed --quiet "${HYPRLAND_PACKAGES[@]}"
 
 echo "${BLUE}:: ${BWHITE}Adding custom Hyprland session...${NC}"
-sudo tee /usr/share/wayland-sessions/hyprland_custom.desktop >/dev/null <<EOT
+sudo tee /usr/share/wayland-sessions/hyprland_nvidia.desktop >/dev/null <<EOT
 [Desktop Entry]
-Name=Hyprland (Custom)
+Name=Hyprland (Nvidia)
 Comment=An intelligent dynamic tiling Wayland compositor
 Exec=/home/$CURRENT_USER/.local/bin/hl_wrapper
 Type=Application
