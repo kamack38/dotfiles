@@ -1,9 +1,9 @@
 #!/bin/env bash
 
 notify-send -r 69 \
-	-i "$(playerctl metadata --player=plasma-browser-integration,%any mpris:artUrl)" \
-	-a "Music Player" "$(playerctl --player=plasma-browser-integration,%any status): $(playerctl --player=plasma-browser-integration,%any metadata xesam:artist) - $(playerctl --player=plasma-browser-integration,%any metadata xesam:title)" \
-	"Vol: $(echo "scale=0; $(playerctl --player=plasma-browser-integration,%any volume) * 100/1" | bc)%" \
+	-i "$(playerctl metadata mpris:artUrl)" \
+	-a "Music Player" "$(playerctl status): $(playerctl metadata xesam:artist) - $(playerctl metadata xesam:title)" \
+	"Vol: $(echo "scale=0; $(playerctl volume) * 100/1" | bc)%" \
 	-u low \
 	-t 888 \
 	-h "int:value:$(($(($(dbus-send --print-reply=literal --session --dest=org.mpris.MediaPlayer2.playerctld --print-reply /org/mpris/MediaPlayer2 org.freedesktop.DBus.Properties.Get string:org.mpris.MediaPlayer2.Player string:Position | awk '{ print $3 }') * 100)) / $(playerctl metadata mpris:length)))"
