@@ -557,6 +557,7 @@ git --git-dir="$DOTFILES" --work-tree="$HOME" submodule update --init --remote
 echo "${BLUE}:: ${BWHITE}Enabling services...${NC}"
 systemctl --user enable mpd.service
 systemctl --user enable mpDris2.service
+systemctl --user enable playerctld.service
 
 # Desktop setup
 echo "${BLUE}:: ${BWHITE}Select desktop environments to install...${NC}"

@@ -1,0 +1,12 @@
+[Unit]
+Description=Keep track of media player activity
+Documentation=playerctld --help
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStop=killall playerctld
+ExecStart=/usr/bin/playerctld daemon
+
+[Install]
+WantedBy=default.target
