@@ -42,7 +42,7 @@
     mouse_middle_click = "close_all"
     mouse_right_click = "close_current"
     foreground = "#b6beca"
-    background = "#101419"
+    background = "#101419bb"
     highlight  = "#b6beca"
 
 [urgency_low]
