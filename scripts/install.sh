@@ -42,39 +42,40 @@ DEV_PROFILE=(
 )
 
 NORMAL_PROFILE=(
-	"ripgrep"          # Better grep
-	"python"           # Programming language
-	"python-pip"       # Python package manager
-	"python-gobject"   # Ui creation (polybar mpris support)
-	"flatpak"          # Flatpak package manager
-	"bat"              # Better cat
-	"exa"              # Better ls
-	"croc"             # File transfer utility
-	"mpv"              # Image/Video player
-	"ffmpeg"           # Audio/Image/Video file converter
-	"yt-dlp"           # Better YouTube downloader
-	"neovim"           # Vim-like text editor
-	"fish"             # New shell
-	"fisher"           # Fish plugin manager
-	"oh-my-posh-bin"   # Shell prompt
-	"fzf"              # Fuzzy finder
-	"libqalculate"     # Calculator (qalc)
-	"cava"             # Audio visualizer
-	"ttf-font-awesome" # Font Awesome font
-	"playerctl"        # Command-line utility and library for controlling media players
-	"mpv-mpris"        # mpv mpris support
-	"update-grub"      # Utility for updating grup config
-	"btop"             # System monitor tool
-	"reflector"        # Pacman mirror sorter
-	"pigz"             # Parallel implementation of the gzip file compressor
-	"garuda-hooks"     # Garuda pacman hooks
-	"mpdris2"          # MPRIS2 support for MPD
-	"mpd"              # Flexible, powerful, server-side application for playing music
-	"mpc"              # Minimalist command line interface to MPD
-	"ncmpcpp"          # Almost exact clone of ncmpc with some new features
-	"brightnessctl"    # Lightweight brightness control tool
-	"clipster"         # Python clipboard manager
-	"sptlrx-bin"       # Timesynced Spotify lyrics in your terminal
+	"ripgrep"               # Better grep
+	"python"                # Programming language
+	"python-pip"            # Python package manager
+	"python-gobject"        # Ui creation (polybar mpris support)
+	"flatpak"               # Flatpak package manager
+	"bat"                   # Better cat
+	"exa"                   # Better ls
+	"croc"                  # File transfer utility
+	"mpv"                   # Image/Video player
+	"ffmpeg"                # Audio/Image/Video file converter
+	"yt-dlp"                # Better YouTube downloader
+	"neovim"                # Vim-like text editor
+	"fish"                  # New shell
+	"fisher"                # Fish plugin manager
+	"oh-my-posh-bin"        # Shell prompt
+	"mkinitcpio-colors-git" # mkinitcpio hook to set VT console colors during early userspace
+	"fzf"                   # Fuzzy finder
+	"libqalculate"          # Calculator (qalc)
+	"cava"                  # Audio visualizer
+	"ttf-font-awesome"      # Font Awesome font
+	"playerctl"             # Command-line utility and library for controlling media players
+	"mpv-mpris"             # mpv mpris support
+	"update-grub"           # Utility for updating grup config
+	"btop"                  # System monitor tool
+	"reflector"             # Pacman mirror sorter
+	"pigz"                  # Parallel implementation of the gzip file compressor
+	"garuda-hooks"          # Garuda pacman hooks
+	"mpdris2"               # MPRIS2 support for MPD
+	"mpd"                   # Flexible, powerful, server-side application for playing music
+	"mpc"                   # Minimalist command line interface to MPD
+	"ncmpcpp"               # Almost exact clone of ncmpc with some new features
+	"brightnessctl"         # Lightweight brightness control tool
+	"clipster"              # Python clipboard manager
+	"sptlrx-bin"            # Timesynced Spotify lyrics in your terminal
 	"${DEV_PROFILE[@]}"
 )
 
@@ -543,6 +544,33 @@ else
 	grep -v 'Press' "$HOME/.packer.sync.result"
 fi
 
+# Enable custom tty colours
+sudo tee /etc/vconsole.conf >/dev/null <<EOT
+COLOR_0=1e2127
+COLOR_1=e06c75
+COLOR_2=98c379
+COLOR_3=d19a66
+COLOR_4=61afef
+COLOR_5=c678dd
+COLOR_6=56b6c2
+COLOR_7=abb2bf
+COLOR_8=5c6370
+COLOR_9=e06c75
+COLOR_10=98c379
+COLOR_11=d19a66
+COLOR_12=61afef
+COLOR_13=c678dd
+COLOR_14=56b6c2
+COLOR_15=ffffff
+FONT=ter-v20b
+KEYMAP=${KB_LAYOUT}
+EOT
+if grep -q "^HOOKS=.*systemd.*" /etc/mkinitcpio.conf; then
+	sudo sed -i "s,\(^HOOKS=.*\)systemd\(.*\),\1systemd colors\2," "/etc/mkinitcpio.conf"
+else
+	sudo sed -i "s,\(^HOOKS=.*\)udev\(.*\),\1udev colors\2," "/etc/mkinitcpio.conf"
+fi
+
 # Set default shell to fish
 if [ ! "$(basename -- "$SHELL")" = "fish" ]; then
 	echo "${YELLOW}:: ${BWHITE}Setting default shell to ${BLUE}fish${NC}"
@@ -688,11 +716,6 @@ if [[ $(pacman -Q grub) ]]; then
 			echo "${YELLOW}:: ${BWHITE}plymouth-zfs hook already exists${NC} -- skipping"
 		fi
 
-		# Create initial ramdisk
-		if [ "${CHANGED}" == "true" ]; then
-			sudo mkinitcpio -P
-		fi
-
 		# Update grub config
 		sudo sed -i "s,\(GRUB_CMDLINE_LINUX_DEFAULT=\".*\)\(\"\),\1 quiet splash vt.global_cursor_default=0\2," "/etc/default/grub"
 		sudo grub-mkconfig -o /boot/grub/grub.cfg
@@ -702,6 +725,9 @@ if [[ $(pacman -Q grub) ]]; then
 		sudo systemctl enable "${LOGIN_MANAGER}-plymouth.service"
 	fi
 fi
+
+# Create initial ramdisk
+sudo mkinitcpio -P
 
 if [[ $(pacman -Q xorg-server) ]]; then
 	echo "${YELLOW}:: ${BWHITE}Xorg server detected${NC}"
