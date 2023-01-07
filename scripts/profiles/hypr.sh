@@ -17,11 +17,13 @@ HELPER="paru"
 CURRENT_USER="$USER"
 
 HYPR_PACKAGES=(
-	"xorg"             # Display server
-	"hypr-git"         # Linux tiling window manager for Xorg. It's written in XCB with modern C++ and aims to provide easily readable and expandable code.
-	"picom"            # A lightweight compositor for X11
-	"betterlockscreen" # A simple, minimal lockscreen
-	"autorandr"        # Auto-detect connected display hardware and load appropiate X11 setup using xrandr
+	"xorg"               # Display server
+	"hypr-git"           # Linux tiling window manager for Xorg. It's written in XCB with modern C++ and aims to provide easily readable and expandable code.
+	"picom"              # A lightweight compositor for X11
+	"betterlockscreen"   # A simple, minimal lockscreen
+	"autorandr"          # Auto-detect connected display hardware and load appropiate X11 setup using xrandr
+	"xdg-desktop-portal" # Desktop integration portals for sandboxed apps
+	"dunst"              # Customizable and lightweight notification-daemon
 )
 
 echo "${GREEN}:: ${BWHITE}Installing Hypr and its components...${NC}"
