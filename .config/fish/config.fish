@@ -231,6 +231,10 @@ function fish_greeting
     neofetch
 end
 
-if status is-interactive && type -q oh-my-posh
+if status is-interactive
+  if [ "$TERM" = "linux" ] && type -q starship
+    source (starship init fish --print-full-init | psub)
+  else if type -q oh-my-posh
     oh-my-posh --init --shell fish --config '~/.config/oh-my-posh/kamack.omp.json' | source
+  end
 end
