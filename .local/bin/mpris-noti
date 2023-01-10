@@ -1,7 +1,7 @@
 #!/bin/env bash
 
 notify-send -r 69 \
-	-i "$(playerctl metadata mpris:artUrl)" \
+	-i "$(playerctl metadata mpris:artUrl | dunst-cache)" \
 	-a "Music Player" "$(playerctl status): $(playerctl metadata xesam:artist) - $(playerctl metadata xesam:title)" \
 	"Vol: $(echo "scale=0; $(playerctl volume) * 100/1" | bc)%" \
 	-u low \
