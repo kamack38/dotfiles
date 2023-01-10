@@ -3,6 +3,7 @@
 read -r url
 
 if echo "$url" | grep -Eq 'http://|https://'; then
+	url=$(echo -n "${url}" | sed 's,\(.*i.ytimg.com.*\)\(?.*\),\1,')
 	FILE_PATH="$HOME/.cache/dunst/icons/$(echo -n "$url" | sha256sum | head -c 64)"
 	mkdir -p ~/.cache/dunst/icons
 	if [ ! -f "$FILE_PATH" ]; then
