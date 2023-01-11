@@ -237,6 +237,7 @@ SECURITY_PACKAGES=(
 	"lynis"        # Security and system auditing tool to harden Unix/Linux systems
 	"rkhunter"     # Checks machines for the presence of rootkits and other unwanted tools
 	"libpwquality" # Library for password quality checking and generating random passwords
+	"ufw"          # Uncomplicated and easy to use CLI tool for managing a netfilter firewall
 )
 
 # Default vars
@@ -861,34 +862,12 @@ EOT
 	sudo chmod 700 -R /etc/cron.d /etc/cron.daily /etc/cron.hourly /etc/cron.weekly /etc/cron.monthly
 	sudo chmod 600 /etc/cron.deny
 
-	echo "${BLUE}:: ${BWHITE}Setting up ${BLUE}iptables${BWHITE}...${NC}"
-	sudo iptables -F # Clear all rules
-	sudo iptables -X
+	echo "${BLUE}:: ${BWHITE}Setting up ${BLUE}firewall${BWHITE} using ${BLUE}ufw${BWHITE}...${NC}"
+	sudo systemctl disable --now ip6tables.service iptables.service
 
-	sudo iptables -N TCP
-	sudo iptables -N UDP
-	sudo iptables -P FORWARD DROP
-	sudo iptables -P OUTPUT ACCEPT
-	sudo iptables -P INPUT DROP
-	sudo iptables -A INPUT -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
-	sudo iptables -A INPUT -i lo -j ACCEPT
-	sudo iptables -A INPUT -m conntrack --ctstate INVALID -j DROP
-	sudo iptables -A INPUT -p icmp --icmp-type 8 -m conntrack --ctstate NEW -j ACCEPT
-	sudo iptables -A INPUT -p udp -m conntrack --ctstate NEW -j UDP
-	sudo iptables -A INPUT -p tcp --syn -m conntrack --ctstate NEW -j TCP
-	sudo iptables -A INPUT -p udp -j REJECT --reject-with icmp-port-unreachable
-	sudo iptables -A INPUT -p tcp -j REJECT --reject-with tcp-reset
-	sudo iptables -A INPUT -j REJECT --reject-with icmp-proto-unreachable
-	sudo iptables -t raw -I PREROUTING -m rpfilter --invert -j DROP
-	sudo iptables -I TCP -p tcp -m recent --update --seconds 60 --name TCP-PORTSCAN -j REJECT --reject-with tcp-reset
-	sudo iptables -D INPUT -p tcp -j REJECT --reject-with tcp-reset
-	sudo iptables -A INPUT -p tcp -m recent --set --name TCP-PORTSCAN -j REJECT --reject-with tcp-reset
-	sudo iptables -I UDP -p udp -m recent --update --seconds 60 --name UDP-PORTSCAN -j REJECT --reject-with icmp-port-unreachable
-	sudo iptables -D INPUT -p udp -j REJECT --reject-with icmp-port-unreachable
-	sudo iptables -A INPUT -p udp -m recent --set --name UDP-PORTSCAN -j REJECT --reject-with icmp-port-unreachable
-
-	sudo iptables-save | sudo tee /etc/iptables/iptables.rules >/dev/null
-	sudo systemctl enable --now iptables.service
+	sudo ufw default deny incoming
+	sudo ufw default allow outgoing
+	sudo ufw enable
 
 	echo "${BLUE}:: ${BWHITE}Setting ${BLUE}umask${BWHITE} to 0077...${NC}"
 	sudo sed -i 's/umask 022/umask 077/' /etc/profile
