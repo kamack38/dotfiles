@@ -623,10 +623,7 @@ if [[ $(pacman -Q sddm) ]]; then
 	sudo mkdir -p /etc/sddm.conf.d
 
 	if [[ $auto_login == y* ]]; then
-		SESSIONS=(
-			"awesome"
-			"plasma"
-		)
+		SESSIONS=$(find /usr/share/wayland-sessions/ /usr/share/xsessions/ -type f | sed 's,.*/\(.*\).desktop,\1,')
 		echo "${BLUE}:: ${BWHITE}Select session to which you want to be logged in automatically...${NC}"
 		SESSION=$(printf "%s\n" "${SESSIONS[@]}" | fzf --height=20% --layout=reverse || true)
 		if [[ $SESSION != "" ]]; then
@@ -634,7 +631,7 @@ if [[ $(pacman -Q sddm) ]]; then
 			sudo tee /etc/sddm.conf.d/autologin.conf >/dev/null <<EOT
 [Autologin]
 User=${CURRENT_USER}
-Session=plasma
+Session=${SESSION}
 EOT
 		else
 			echo "${RED}:: ${BHWITE}No session selected${NC} -- skipping"
@@ -843,9 +840,11 @@ Protocol 2
 EOT
 		fi
 		if [[ ! $(sudo grep '^PermitRootLogin no' $SSH_PATH) ]]; then
-			echo "${BLUE}:: ${BWHITE}Disabling root login...${NC}"
+			echo "${BLUE}:: ${BWHITE}Disabling root login and passwords...${NC}"
 			sudo tee -a $SSH_PATH >/dev/null <<EOT
 PermitRootLogin no
+PasswordAuthentication no
+PermitEmptyPasswords no
 EOT
 		fi
 	fi
