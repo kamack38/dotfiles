@@ -1,2 +1,2 @@
-require(... .. ".notifications")
+-- require(... .. ".notifications")
 require(... .. ".main-menu")

@@ -89,45 +89,48 @@ awful.keyboard.append_global_keybindings({
 
 	--- Media keys
 	awful.key({}, "XF86AudioPlay", function()
-		awful.util.spawn("playerctl play-pause")
+		awful.spawn.with_shell("playerctl play-pause && mpris-noti")
+	end, { description = "play/pause audio", group = "hotkeys" }),
+	awful.key({ shift }, "XF86AudioPlay", function()
+		awful.spawn("mpris-noti")
 	end, { description = "play/pause audio", group = "hotkeys" }),
 	awful.key({}, "XF86AudioStop", function()
-		awful.util.spawn("playerctl stop")
+		awful.spawn.with_shell("playerctl stop && mpris-noti")
 	end, { description = "stop audio", group = "hotkeys" }),
 	awful.key({}, "XF86AudioNext", function()
-		awful.util.spawn("playerctl next")
+		awful.spawn.with_shell("playerctl next && mpris-noti")
 	end, { description = "skip to next", group = "hotkeys" }),
 	awful.key({}, "XF86AudioPrev", function()
-		awful.util.spawn("playerctl previous")
+		awful.spawn.with_shell("playerctl previous && mpris-noti")
 	end, { description = "skip to previous", group = "hotkeys" }),
 	awful.key({}, "XF86AudioMute", function()
-		awful.util.spawn("pamixer -t")
+		awful.spawn("volume -t")
 	end, { description = "mute volume", group = "hotkeys" }),
 	awful.key({}, "XF86AudioRaiseVolume", function()
-		awful.util.spawn("pamixer -i 2")
+		awful.spawn("volume -i 2")
 	end, { description = "raise volume", group = "hotkeys" }),
 	awful.key({}, "XF86AudioLowerVolume", function()
-		awful.util.spawn("pamixer -d 2")
+		awful.spawn("volume -d 2")
 	end, { description = "lower volume", group = "hotkeys" }),
 	awful.key({ shift }, "XF86AudioRaiseVolume", function()
-		awful.util.spawn("playerctl volume 0.02+")
+		awful.spawn.with_shell("playerctl volume 0.02+ && mpris-noti")
 	end, { description = "raise player volume", group = "hotkeys" }),
 	awful.key({ shift }, "XF86AudioLowerVolume", function()
-		awful.util.spawn("playerctl volume 0.02-")
+		awful.spawn.with_shell("playerctl volume 0.02- && mpris-noti")
 	end, { description = "lower player volume", group = "hotkeys" }),
 	awful.key({ shift }, "XF86AudioNext", function()
-		awful.util.spawn("playerctl position 5+")
+		awful.spawn.with_shell("playerctl position 5+ && mpris-noti")
 	end, { description = "go 5 sec ahead", group = "hotkeys" }),
 	awful.key({ shift }, "XF86AudioPrev", function()
-		awful.util.spawn("playerctl position 5-")
+		awful.spawn.with_shell("playerctl position 5- && mpris-noti")
 	end, { description = "go 5 sec back", group = "hotkeys" }),
 	awful.key({}, "XF86AudioMicMute", function()
-		awful.util.spawn(
+		awful.spawn(
 			[[pactl list sources | grep -oP "Name: \S+" | grep "input" | cut -d' ' -f2 | xargs -I{} pactl set-source-mute {} toggle]]
 		)
 	end, { description = "Toggle mute on all microphones", group = "hotkeys" }),
 	awful.key({ shift }, "XF86AudioMicMute", function()
-		awful.util.spawn(
+		awful.spawn(
 			[[pactl list sources | grep -oP "Name: \S+" | grep "input" | cut -d' ' -f2 | xargs -I{} pactl set-source-mute {} false]]
 		)
 	end, { description = "Unmute all microphones", group = "hotkeys" }),

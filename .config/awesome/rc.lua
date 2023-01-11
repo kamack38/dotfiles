@@ -2,6 +2,10 @@
 local gears = require("gears")
 local awful = require("awful")
 
+-- Disable naughty and use dunst
+package.loaded["naughty.dbus"] = {}
+awful.spawn.with_shell("dunst")
+
 --- Setup monitors
 awful.spawn.with_shell("autorandr --change")
 
