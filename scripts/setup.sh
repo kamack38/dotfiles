@@ -428,7 +428,7 @@ WantedBy=multi-user.target
 EOF
 
 	systemctl daemon-reload
-	systemctl enable --now grub-btrfs-snapper.path
+	systemctl enable grub-btrfs-snapper.path
 	systemctl enable snapper-cleanup.timer
 
 	echo "${BLUE}:: ${BWHITE}Creating snapper config...${NC}"
