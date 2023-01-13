@@ -76,6 +76,7 @@ NORMAL_PROFILE=(
 	"brightnessctl"         # Lightweight brightness control tool
 	"clipster"              # Python clipboard manager
 	"sptlrx-bin"            # Timesynced Spotify lyrics in your terminal
+	"terminus-font"         # Monospace bitmap font (for X11 and console)
 	"${DEV_PROFILE[@]}"
 )
 
