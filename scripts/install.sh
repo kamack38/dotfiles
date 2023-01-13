@@ -347,6 +347,9 @@ sudo sed -i 's/^#ILoveCandy/ILoveCandy/' /etc/pacman.conf
 # Install helper
 if ! command -v $HELPER &>/dev/null; then
 	echo "${YELLOW}:: ${BWHITE}It seems that you don't have ${BLUE}$HELPER${BWHITE} installed${NC} -- installing"
+	if [ -d "$HELPER_CLONE_PATH/$HELPER" ]; then
+		rm -rf "${HELPER_CLONE_PATH}/${HELPER}"
+	fi
 	mkdir -p "$HELPER_CLONE_PATH"
 	git clone https://aur.archlinux.org/$HELPER.git "$HELPER_CLONE_PATH/$HELPER"
 	(cd "$HELPER_CLONE_PATH/$HELPER" && makepkg --noconfirm -si)

@@ -17,19 +17,20 @@ HELPER="paru"
 CURRENT_USER="$USER"
 
 HYPRLAND_PACKAGES=(
-	"hyprland-git"           # A dynamic tiling Wayland compositor based on wlroots that doesn't sacrifice on its looks.
-	"hyprpaper-git"          # A blazing fast wayland wallpaper utility with IPC controls.
-	"wl-clipboard"           # Command-line copy/paste utilities for Wayland
-	"wlogout"                # Logout menu for wayland
-	"xdg-desktop-portal"     # Desktop integration portals for sandboxed apps
-	"xdg-desktop-portal-wlr" # xdg-desktop-portal backend for wlroots
-	"wev"                    # A tool for debugging wayland events, similar to xev
-	"sddm"                   # QML based X11 and Wayland display manager
-	"autorandr"              # Auto-detect connected display hardware and load appropiate X11 setup using xrandr
-	"dunst"                  # Customizable and lightweight notification-daemon
-	"qt5-wayland"            # Provides APIs for Wayland
-	"libva"                  # Video Acceleration (VA) API for Linux
-	"qt5ct"                  # Qt5 Configuration Utility
+	"hyprland-git"                    # A dynamic tiling Wayland compositor based on wlroots that doesn't sacrifice on its looks.
+	"hyprpaper-git"                   # A blazing fast wayland wallpaper utility with IPC controls.
+	"wl-clipboard"                    # Command-line copy/paste utilities for Wayland
+	"wlogout"                         # Logout menu for wayland
+	"xdg-desktop-portal"              # Desktop integration portals for sandboxed apps
+	"xdg-desktop-portal-wlr"          # xdg-desktop-portal backend for wlroots
+	"xdg-desktop-portal-hyprland-git" # xdg-desktop-portal backend for hyprland
+	"wev"                             # A tool for debugging wayland events, similar to xev
+	"sddm"                            # QML based X11 and Wayland display manager
+	"autorandr"                       # Auto-detect connected display hardware and load appropiate X11 setup using xrandr
+	"dunst"                           # Customizable and lightweight notification-daemon
+	"qt5-wayland"                     # Provides APIs for Wayland
+	"libva"                           # Video Acceleration (VA) API for Linux
+	"qt5ct"                           # Qt5 Configuration Utility
 )
 
 echo "${GREEN}:: ${BWHITE}Installing Hyprland and its components...${NC}"

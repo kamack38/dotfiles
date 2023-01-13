@@ -67,6 +67,8 @@ alias list-sound-cards="cat /proc/asound/cards"
 alias logout="loginctl terminate-user $USER"
 alias lock="betterlockscreen -l"
 
+alias si="su -s /bin/fish"
+
 alias tarnow='tar -acf '
 alias untar='tar -xvf '
 alias gzipnow='tar czf'
