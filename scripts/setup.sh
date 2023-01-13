@@ -305,10 +305,8 @@ function chroot {
 	case $SWAP_TYPE in
 	swapfile)
 		echo "${BLUE}:: ${BWHITE}Adding hibernation...${NC}"
-		curl -s "https://raw.githubusercontent.com/osandov/osandov-linux/master/scripts/btrfs_map_physical.c" -O ~/btrfs_map_physical.c
-		gcc -O2 -o ~/btrfs_map_physical ~/btrfs_map_physical.c
 		SWAP_FILE_DEV_UUID=$(findmnt -no UUID -T $SWAP_FILE_PATH)
-		SWAP_FILE_OFFSET=$(echo "$(~/btrfs_map_physical $SWAP_FILE_PATH | cut -f 9 | head -2 | tail -1) / $(getconf PAGESIZE)" | bc)
+		SWAP_FILE_OFFSET=$(btrfs inspect-internal map-swapfile -r "$SWAP_FILE_PATH")
 		sed -i "s,\(^HOOKS=.*\)filesystems\(.*\),\1filesystems resume\2," /etc/mkinitcpio.conf
 		sed -i "s,\(^GRUB_CMDLINE_LINUX_DEFAULT=\".*\)\(.*\"\),\1 resume=UUID=${SWAP_FILE_DEV_UUID} resume_offset=${SWAP_FILE_OFFSET}\2," /etc/default/grub
 		;;
@@ -482,7 +480,7 @@ arch-chroot /mnt /bin/bash -c "chroot"
 echo "${GREEN}:: ${BWHITE}Setup completed!${NC}"
 
 read -rp "${RED}:: ${BWHITE}Do you want to reboot? [Y/n]${NC}: " reboot_prompt
-if [[ ! $reboot_prompt == n* ]]; then
+if [[ ! $reboot_prompt == *n* ]]; then
 	echo "${YELLOW}:: ${BWHITE}Rebooting...${NC}"
 	systemctl reboot
 fi
