@@ -308,7 +308,9 @@ function chroot {
 		curl -s "https://raw.githubusercontent.com/osandov/osandov-linux/master/scripts/btrfs_map_physical.c" -O ~/btrfs_map_physical.c
 		gcc -O2 -o ~/btrfs_map_physical ~/btrfs_map_physical.c
 		SWAP_FILE_DEV_UUID=$(findmnt -no UUID -T $SWAP_FILE_PATH)
+		echo "$SWAP_FILE_DEV_UUID"
 		SWAP_FILE_OFFSET=$(echo "$(~/btrfs_map_physical $SWAP_FILE_PATH | cut -f 9 | head -2 | tail -1) / $(getconf PAGESIZE)" | bc)
+		echo "$SWAP_FILE_OFFSET"
 		sed -i "s,\(^HOOKS=.*\)filesystems\(.*\),\1filesystems resume\2," /etc/mkinitcpio.conf
 		sed -i "s,\(^GRUB_CMDLINE_LINUX_DEFAULT=\".*\)\(.*\"\),\1 resume=UUID=${SWAP_FILE_DEV_UUID} resume_offset=${SWAP_FILE_OFFSET}\2," /etc/default/grub
 		;;
@@ -325,7 +327,7 @@ compression-algorithm = zstd
 EOT
 		;;
 	esac
-
+	sleep 10
 	echo "${BLUE}:: ${BWHITE}Setting up snapper...${NC}"
 	# Change grub snapshot submenu name
 	sed -i /etc/default/grub-btrfs/config \
@@ -408,12 +410,12 @@ Description=Regenerate grub-btrfs.cfg
 
 [Service]
 Type=oneshot
-# Set the possible paths for $(grub-mkconfig)
+# Set the possible paths for \$(grub-mkconfig)
 Environment="PATH=/sbin:/bin:/usr/sbin:/usr/bin"
 # Load environment variables from the configuration
 EnvironmentFile=/etc/default/grub-btrfs/config
 # If we aren't booted off a snapshot, regenerate just '/boot/grub/grub-btrfs.cfg' if it exists and is not empty, else regenerate the whole grub menu
-ExecStart=bash -c 'if [[ -z $(/usr/bin/findmnt -n / | /usr/bin/grep "\.snapshots") ]]; then if [ -s "\${GRUB_BTRFS_GRUB_DIRNAME:-/boot/grub}/grub-btrfs.cfg" ]; then /etc/grub.d/41_snapshots-btrfs; else \${GRUB_BTRFS_MKCONFIG:-grub-mkconfig} -o \${GRUB_BTRFS_GRUB_DIRNAME:-/boot/grub}/grub.cfg; fi; fi'
+ExecStart=bash -c 'if [[ -z \$(/usr/bin/findmnt -n / | /usr/bin/grep "\.snapshots") ]]; then if [ -s "\${GRUB_BTRFS_GRUB_DIRNAME:-/boot/grub}/grub-btrfs.cfg" ]; then /etc/grub.d/41_snapshots-btrfs; else \${GRUB_BTRFS_MKCONFIG:-grub-mkconfig} -o \${GRUB_BTRFS_GRUB_DIRNAME:-/boot/grub}/grub.cfg; fi; fi'
 EOF
 
 	sudo tee /usr/lib/systemd/system/grub-btrfs-snapper.path <<EOF
