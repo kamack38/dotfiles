@@ -62,7 +62,7 @@ SWAP_OPTIONS=(
 )
 TOTAL_RAM_GB=$(echo "scale=1; $(grep -i 'memtotal' /proc/meminfo | grep -o '[[:digit:]]*')/1000000" | bc)
 TOTAL_RAM_MB=$(echo "scale=0; $(grep -i 'memtotal' /proc/meminfo | grep -o '[[:digit:]]*')/1000" | bc)
-echo "${YELLOW}:: ${BWHITE}You have ${TOTAL_RAM}GB of RAM${NC}"
+echo "${YELLOW}:: ${BWHITE}You have ${TOTAL_RAM_GB}GB of RAM${NC}"
 echo "${YELLOW}:: ${BWHITE}Do you wish to create ${TOTAL_RAM_GB}GB swapfile or ${TOTAL_RAM_GB}GB zram?${NC}"
 SWAP_TYPE=$(printf "%s\n" "${SWAP_OPTIONS[@]}" | fzf --height=20% --layout=reverse || true)
 
@@ -432,7 +432,7 @@ EOF
 	echo "${BLUE}:: ${BWHITE}Creating snapper config...${NC}"
 	snapper create-config --template garuda /
 
-	if [[ ! $(grep -qe "^HOOKS=.*grub-btrfs-overlayfs" /etc/mkinitcpio.conf) ]]; then
+	if ! grep -qe "^HOOKS=.*grub-btrfs-overlayfs" /etc/mkinitcpio.conf; then
 		echo "${BLUE}:: ${BWHITE}Adding ${BLUE}grub-btrfs-overlayfs${BWHITE} hook...${NC}"
 		sed -re 's/(^HOOKS=\([^)]+)/\1 grub-btrfs-overlayfs/gi' -i /etc/mkinitcpio.conf
 	fi
@@ -458,6 +458,9 @@ EOF
 	echo "${BLUE}:: ${BWHITE}Hostname is set to ${BLUE}${MACHINE_NAME}${NC}"
 	echo "$MACHINE_NAME" >/etc/hostname
 	sed -i 's/filesystems/encrypt filesystems/g' /etc/mkinitcpio.conf
+
+	# Add encrypt hook
+	sed -i "s,\(^HOOKS=.*\)filesystems\(.*\),\1encrypt filesystems\2," /etc/mkinitcpio.conf
 	mkinitcpio -P
 }
 export -f chroot
