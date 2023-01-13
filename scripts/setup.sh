@@ -481,7 +481,7 @@ arch-chroot /mnt /bin/bash -c "chroot"
 echo "${GREEN}:: ${BWHITE}Setup completed!${NC}"
 
 read -rp "${RED}:: ${BWHITE}Do you want to reboot? [Y/n]${NC}: " reboot_prompt
-if [[ "$reboot_prompt" != "n*" ]]; then
+if [[ ! $reboot_prompt == n* ]]; then
 	echo "${YELLOW}:: ${BWHITE}Rebooting...${NC}"
 	systemctl reboot
 fi
