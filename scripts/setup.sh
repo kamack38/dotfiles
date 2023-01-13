@@ -308,9 +308,7 @@ function chroot {
 		curl -s "https://raw.githubusercontent.com/osandov/osandov-linux/master/scripts/btrfs_map_physical.c" -O ~/btrfs_map_physical.c
 		gcc -O2 -o ~/btrfs_map_physical ~/btrfs_map_physical.c
 		SWAP_FILE_DEV_UUID=$(findmnt -no UUID -T $SWAP_FILE_PATH)
-		echo "$SWAP_FILE_DEV_UUID"
 		SWAP_FILE_OFFSET=$(echo "$(~/btrfs_map_physical $SWAP_FILE_PATH | cut -f 9 | head -2 | tail -1) / $(getconf PAGESIZE)" | bc)
-		echo "$SWAP_FILE_OFFSET"
 		sed -i "s,\(^HOOKS=.*\)filesystems\(.*\),\1filesystems resume\2," /etc/mkinitcpio.conf
 		sed -i "s,\(^GRUB_CMDLINE_LINUX_DEFAULT=\".*\)\(.*\"\),\1 resume=UUID=${SWAP_FILE_DEV_UUID} resume_offset=${SWAP_FILE_OFFSET}\2," /etc/default/grub
 		;;
@@ -327,7 +325,7 @@ compression-algorithm = zstd
 EOT
 		;;
 	esac
-	sleep 10
+
 	echo "${BLUE}:: ${BWHITE}Setting up snapper...${NC}"
 	# Change grub snapshot submenu name
 	sed -i /etc/default/grub-btrfs/config \
@@ -476,6 +474,7 @@ export PASSWORD
 export MACHINE_NAME
 export ENCRYPTED_PARTITION_UUID
 export SWAP_FILE_PATH
+export SWAP_TYPE
 
 # Chroot into new OS
 arch-chroot /mnt /bin/bash -c "chroot"
