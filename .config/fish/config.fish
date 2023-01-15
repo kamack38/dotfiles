@@ -65,7 +65,6 @@ alias sound-reload="systemctl --user restart wireplumber pipewire pipewire-pulse
 alias list-sound-cards="cat /proc/asound/cards"
 
 alias logout="loginctl terminate-user $USER"
-alias lock="betterlockscreen -l"
 
 alias si="su -s /bin/fish"
 

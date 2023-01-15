@@ -21,6 +21,8 @@ HYPRLAND_PACKAGES=(
 	"hyprpaper-git"                   # A blazing fast wayland wallpaper utility with IPC controls.
 	"wl-clipboard"                    # Command-line copy/paste utilities for Wayland
 	"wlogout"                         # Logout menu for wayland
+	"swaylock-effects"                # A fancier screen locker for Wayland.
+	"swaylockd"                       # A dumb launcher to spawn swaylock and ensure it runs no matter what
 	"xdg-desktop-portal"              # Desktop integration portals for sandboxed apps
 	"xdg-desktop-portal-wlr"          # xdg-desktop-portal backend for wlroots
 	"xdg-desktop-portal-hyprland-git" # xdg-desktop-portal backend for hyprland

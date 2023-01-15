@@ -1,0 +1,35 @@
+#!/bin/bash
+
+case "$XDG_SESSION_TYPE" in
+"wayland")
+	swaylockd \
+		--screenshots \
+		--indicator \
+		--clock \
+		--inside-wrong-color e56b6f \
+		--line-wrong-color e56b6f \
+		--ring-wrong-color e56b6f \
+		--inside-clear-color 57cc99 \
+		--ring-clear-color 57cc99 \
+		--line-clear-color 57cc99 \
+		--inside-ver-color 168aad \
+		--ring-ver-color 1e6091 \
+		--line-ver-color 1e6091 \
+		--text-color fbf1c7 \
+		--indicator-radius 120 \
+		--indicator-thickness 16 \
+		--effect-blur 9x9 \
+		--ring-color 4c566a \
+		--key-hl-color 38a3a5 \
+		--line-color 4c566a \
+		--inside-color 1e2127 \
+		--separator-color 00000000 \
+		--fade-in 0.15 &
+	;;
+"x11")
+	betterlockscreen -l &
+	;;
+*)
+	echo "No display server detected"
+	;;
+esac
