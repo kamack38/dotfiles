@@ -62,6 +62,8 @@ NORMAL_PROFILE=(
 	"libqalculate"          # Calculator (qalc)
 	"cava"                  # Audio visualizer
 	"ttf-font-awesome"      # Font Awesome font
+	"ttf-firacode-nerd"     # Patched font Fira (Fura) Code from nerd-fonts library
+	"terminus-font"         # Monospace bitmap font (for X11 and console)
 	"playerctl"             # Command-line utility and library for controlling media players
 	"mpv-mpris"             # mpv mpris support
 	"update-grub"           # Utility for updating grup config
@@ -76,7 +78,6 @@ NORMAL_PROFILE=(
 	"brightnessctl"         # Lightweight brightness control tool
 	"clipster"              # Python clipboard manager
 	"sptlrx-bin"            # Timesynced Spotify lyrics in your terminal
-	"terminus-font"         # Monospace bitmap font (for X11 and console)
 	"${DEV_PROFILE[@]}"
 )
 
@@ -290,7 +291,6 @@ sudo pacman -S --noconfirm --needed base-devel wget git
 
 # Create dirs
 echo "${BLUE}:: ${BWHITE}Creating directories...${NC}"
-mkdir -p "$HOME/.local/share/fonts"
 mkdir -p "$NEOVIM_CONFIG_DIR"
 mkdir -p "$HOME/.srcs"
 
@@ -792,13 +792,6 @@ sudo tee /etc/sudoers.d/pwfeedback >/dev/null <<EOT
 Defaults pwfeedback
 EOT
 sudo chmod 750 /etc/sudoers.d/pwfeedback
-
-read -rp "${BLUE}:: ${BWHITE}Do you want to setup additional programming fonts? [Y/n]${NC}: " fonts_setup
-
-if [[ $fonts_setup != n* ]]; then
-	echo "${BLUE}:: ${BWHITE}Installing fonts...${NC}"
-	bash "$HOME/scripts/fonts.sh"
-fi
 
 read -rp "${BLUE}:: ${BWHITE}Do you want to add additional pacman repositories (archstrike, blackarch, archcraft)? [y/N]${NC}: " repos_script
 
