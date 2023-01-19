@@ -43,7 +43,7 @@ return {
   },
 
   -- override default configs
-  ["kyazdani42/nvim-tree.lua"] = {
+  ["nvim-tree/nvim-tree.lua"] = {
     override_options = overrides.nvimtree,
   },
 

@@ -50,6 +50,9 @@ local sources = {
   b.formatting.clang_format.with {
     extra_args = { "--style", "{ BasedOnStyle: Google, IndentWidth: 4, ColumnLimit: 100 }" },
   },
+
+  -- Rust
+  b.formatting.rustfmt,
 }
 
 local M = {}
