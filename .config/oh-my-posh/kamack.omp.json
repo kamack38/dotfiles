@@ -37,15 +37,15 @@
                     "properties": {
                         "home_icon": "",
                         "mapped_locations": {
-                            "~\\.config": "",
-                            "~\\Desktop": "",
-                            "~\\Documents": "",
-                            "~\\Documents\\CPlusPlus": "",
-                            "~\\Documents\\GitHUB": "",
-                            "~\\Downloads": "",
-                            "~\\Music": "",
-                            "~\\Pictures": "",
-                            "~\\Videos": ""
+                            "~/.config": "",
+                            "~/Desktop": "",
+                            "~/Documents": "",
+                            "~/Documents/CPlusPlus": "",
+                            "~/Documents/GitHUB": "",
+                            "~/Downloads": "",
+                            "~/Music": "",
+                            "~/Pictures": "",
+                            "~/Videos": ""
                         },
                         "style": "full"
                     },
