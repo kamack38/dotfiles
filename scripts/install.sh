@@ -740,6 +740,9 @@ if [[ $(pacman -Q xorg-server) ]]; then
 	echo "${BLUE}:: ${BWHITE}Installing customization packages...${NC}"
 	$HELPER -S --noconfirm --needed --quiet "${CUSTOMIZATION_PACKAGES[@]}"
 
+	echo "${BLUE}:: ${BWHITE}Setting keyboard layout...${NC}"
+	sudo localectl set-x11-keymap $KB_LAYOUT
+
 	echo "${BLUE}:: ${BWHITE}Setting cursour...${NC}"
 	mkdir -p "/usr/share/icons/default"
 	sudo tee /usr/share/icons/default/index.theme >/dev/null <<EOT
