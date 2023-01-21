@@ -494,6 +494,8 @@ if [[ $SELECTED_PROFILES == *"RUST_DEV"* ]]; then
 	$HELPER -S --noconfirm --needed --quiet "${RUST_DEV_PROFILE[@]}"
 	rustup install stable
 	rustup component add clippy
+	rustup component add rustfmt
+
 	cargo install cargo-edit
 fi
 
@@ -685,13 +687,10 @@ if [[ $(pacman -Q grub) ]]; then
 			ENCRYPT_PLYMOUTH_HOOK="plymouth-encrypt"
 		fi
 
-		CHANGED="false"
-
 		# Plymouth hook
 		if ! grep -q "^HOOKS=.*${PLYMOUTH_HOOK}.*" /etc/mkinitcpio.conf; then
 			echo "${YELLOW}:: ${BWHITE}Adding ${PLYMOUTH_HOOK} hook...${NC}"
 			sudo sed -i "s,\(^HOOKS=.*\)${PLYMOUTH_HOOK_PARENT}\(.*\),\1${PLYMOUTH_HOOK_PARENT} ${PLYMOUTH_HOOK}\2," "/etc/mkinitcpio.conf"
-			CHANGED="true"
 
 		else
 			echo "${YELLOW}:: ${BWHITE}${PLYMOUTH_HOOK} hook already exists${NC} -- skipping"
@@ -701,7 +700,6 @@ if [[ $(pacman -Q grub) ]]; then
 		if ! grep -q "^HOOKS=.*${ENCRYPT_PLYMOUTH_HOOK}.*" /etc/mkinitcpio.conf; then
 			echo "${YELLOW}:: ${BWHITE}Adding ${ENCRYPT_PLYMOUTH_HOOK} hook...${NC}"
 			sudo sed -i "s,\(^HOOKS=.*\)encrypt\(.*\),\1${ENCRYPT_PLYMOUTH_HOOK}\2," "/etc/mkinitcpio.conf"
-			CHANGED="true"
 		else
 			echo "${YELLOW}:: ${BWHITE}${ENCRYPT_PLYMOUTH_HOOK} hook already exists${NC} -- skipping"
 		fi
@@ -712,7 +710,6 @@ if [[ $(pacman -Q grub) ]]; then
 				echo "${YELLOW}:: ${BWHITE}Adding plymouth-zfs hook...${NC}"
 				$HELPER -S --noconfirm --needed --quiet plymouth-zfs
 				sudo sed -i "s,\(^HOOKS=.*\)zfs\(.*\),\1plymouth-zfs\2," "/etc/mkinitcpio.conf"
-				CHANGED="true"
 			else
 				echo "${YELLOW}:: ${BWHITE}Zfs hook not detected${NC} -- skipping"
 			fi
