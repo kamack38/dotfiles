@@ -78,6 +78,8 @@ NORMAL_PROFILE=(
 	"brightnessctl"         # Lightweight brightness control tool
 	"clipster"              # Python clipboard manager
 	"sptlrx-bin"            # Timesynced Spotify lyrics in your terminal
+	"libfido2"              # Library functionality for FIDO 2.0, including communication with a device over USB
+	"yubikey-manager"       # Python library and command line tool for configuring a YubiKey
 	"${DEV_PROFILE[@]}"
 )
 
