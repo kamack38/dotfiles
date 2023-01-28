@@ -256,7 +256,7 @@
             "    FactorialType fast_mod_power(FactorialType a, FactorialType exponent) {",
             "        if (!exponent) return 1;",
             "        if (exponent & 1) return (a * fast_mod_power(a, exponent - 1)) % modulo;",
-            "        return fast_mod_power((a * a) % mod, exponent / 2) % modulo;",
+            "        return fast_mod_power((a * a) % modulo, exponent / 2) % modulo;",
             "    }",
             "",
             "   public:",
@@ -269,7 +269,7 @@
             "    }",
             "    FactorialType get_reverse_factor(FactorialType x) { return fast_mod_power(F[x], modulo - 2); }",
             "    FactorialType get_factor(FactorialType x) { return F[x]; }",
-            "    FactorialType n_choose_k(FactorialType n, FactorialType k) { return ((((F[n] * get_reverse_factor(k)) % mod)) * get_reverse_factor(n - k)) % mod; }",
+            "    FactorialType n_choose_k(FactorialType n, FactorialType k) { return ((((F[n] * get_reverse_factor(k)) % modulo)) * get_reverse_factor(n - k)) % modulo; }",
             "};"
         ],
         "description": "Calculate newton symbol and get factors"
