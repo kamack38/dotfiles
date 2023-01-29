@@ -20,6 +20,7 @@ HYPRLAND_PACKAGES=(
 	"hyprland-git"                    # A dynamic tiling Wayland compositor based on wlroots that doesn't sacrifice on its looks.
 	"hyprpaper-git"                   # A blazing fast wayland wallpaper utility with IPC controls.
 	"wl-clipboard"                    # Command-line copy/paste utilities for Wayland
+	"grimblast-git"                   # A helper for screenshots within Hyprland.
 	"wlogout"                         # Logout menu for wayland
 	"swaylock-effects"                # A fancier screen locker for Wayland.
 	"swaylockd"                       # A dumb launcher to spawn swaylock and ensure it runs no matter what
