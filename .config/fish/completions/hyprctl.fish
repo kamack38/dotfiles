@@ -1,7 +1,7 @@
 # fish completion for hyprctl
 
 # Subcommands
-set -l subcommands monitors workspaces clients activewindow layers devices dispatch keyword version kill splash hyprpaper reload setcursor getoption cursorpos switchxkblayout
+set -l subcommands monitors workspaces clients activewindow layers devices dispatch keyword version kill splash hyprpaper reload setcursor getoption cursorpos switchxkblayout seterror setprop
 set -l infocommands monitors workspaces clients activewindow layers devices activewindow layers devices version splash getoption cursorpos
 
 set -l hyprland_sections general decoration animations input input_touchpad input_touchdevice gestures misc binds debug
@@ -45,6 +45,8 @@ complete -c hyprctl -n "not __fish_seen_subcommand_from $subcommands" -a "setcur
 complete -c hyprctl -n "not __fish_seen_subcommand_from $subcommands" -a "getoption" -d ""
 complete -c hyprctl -n "not __fish_seen_subcommand_from $subcommands" -a "cursorpos" -d ""
 complete -c hyprctl -n "not __fish_seen_subcommand_from $subcommands" -a "switchxkblayout" -d ""
+complete -c hyprctl -n "not __fish_seen_subcommand_from $subcommands" -a "seterror" -d ""
+complete -c hyprctl -n "not __fish_seen_subcommand_from $subcommands" -a "setprop" -d ""
 
 complete -c hyprctl -n "not __fish_seen_subcommand_from $subcommands" -l "batch" -d "specify a batch of commands to execute"
 complete -c hyprctl -n "__fish_seen_subcommand_from $infocommands" \
