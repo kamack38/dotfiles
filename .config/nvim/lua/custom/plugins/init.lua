@@ -66,6 +66,14 @@ return {
   --   },
   -- },
 
+  ----------------------------------- syntax plugins -----------------------------------
+
+  -- .rasi
+  ["Fymyte/rasi.vim"] = {},
+
+  -- yuck syntax
+  ["elkowar/yuck.vim"] = {},
+
   ----------------------------------- custom plugins -----------------------------------
 
   -- Track the time you're spending with your code
@@ -186,9 +194,6 @@ return {
       require("nvim-surround").setup {}
     end,
   },
-
-  -- yuck syntax
-  ["elkowar/yuck.vim"] = {},
 
   -- Fast search plugin
   -- ["ggandor/lightspeed.nvim"] = {},
