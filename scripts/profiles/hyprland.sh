@@ -22,6 +22,7 @@ HYPRLAND_PACKAGES=(
 	"wl-clipboard"                    # Command-line copy/paste utilities for Wayland
 	"grimblast-git"                   # A helper for screenshots within Hyprland.
 	"wlogout"                         # Logout menu for wayland
+	"waybar-hyprland-git"             # Highly customizable Wayland bar for Wlroots based compositors, with workspaces support for Hyprland
 	"swaylock-effects"                # A fancier screen locker for Wayland.
 	"swaylockd"                       # A dumb launcher to spawn swaylock and ensure it runs no matter what
 	"xdg-desktop-portal"              # Desktop integration portals for sandboxed apps
