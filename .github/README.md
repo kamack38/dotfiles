@@ -26,6 +26,10 @@ bash <(curl -sL https://github.com/kamack38/dotfiles/raw/main/scripts/setup.sh)
 
 ![Hyprland](./../Pictures/Screenshots/Hyprland.png)
 
+### AwesomeWM
+
+![AwesomeWM](./../Pictures/Screenshots/awesomewm.png)
+
 ### KDE
 
 ![Apps screenshot](./../Pictures/Screenshots/Apps.png)
