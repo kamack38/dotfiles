@@ -2,10 +2,6 @@
 	path = .config/polybar/scripts/gmail
 	url = https://github.com/crabvk/polybar-gmail
 	update = rebase
-[submodule ".config/spicetify/Themes"]
-	path = .config/spicetify/Themes
-	url = https://github.com/spicetify/spicetify-themes
-	update = rebase
 [submodule ".config/awesome/revelation"]
 	path = .config/awesome/modules/revelation
 	url = https://github.com/guotsuan/awesome-revelation
