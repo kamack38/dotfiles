@@ -537,11 +537,6 @@ echo "fisher install ${FISH_PACKAGES[*]}" | fish
 echo "${GREEN}:: ${BWHITE}Installing ${BLUE}node${BWHITE} (${NODE_VERSION}) & ${BLUE}npm${BWHITE} packages${NC}"
 echo "nvm install ${NODE_VERSION} && npm i --location=global" "${NPM_PACKAGES[@]}" | fish
 
-# Quokka.js
-echo "${GREEN}:: ${BWHITE}Installing ${BLUE}quokka.js plugins${NC}"
-fish -c "npm i --prefix $HOME/.quokka dotenv-quokka-plugin \
-	jsdom-quokka-plugin"
-
 # Install NvChad
 if [[ -d "$NEOVIM_CONFIG_DIR/.git" && $(git -C "$NEOVIM_CONFIG_DIR" ls-remote --get-url) == "$NVCHAD_URL"* ]]; then
 	echo "${YELLOW}:: ${BLUE}NvChad${BWHITE} is already installed${NC} -- updating"
