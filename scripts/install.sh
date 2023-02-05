@@ -80,6 +80,7 @@ NORMAL_PROFILE=(
 	"sptlrx-bin"            # Timesynced Spotify lyrics in your terminal
 	"libfido2"              # Library functionality for FIDO 2.0, including communication with a device over USB
 	"yubikey-manager"       # Python library and command line tool for configuring a YubiKey
+	"xdg-user-dirs"         # Manages user directories
 	"${DEV_PROFILE[@]}"
 )
 
@@ -524,6 +525,9 @@ pip install --no-warn-script-location --upgrade neovim
 
 # Add .local/bin to PATH
 export PATH="$HOME/.local/bin:$PATH"
+
+# Update xdg dirs
+xdg-user-dirs-update
 
 # Install fish plugins
 echo "${GREEN}:: ${BWHITE}Installing ${BLUE}fish${BWHITE} packages${NC}"
