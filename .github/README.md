@@ -22,4 +22,10 @@ bash <(curl -sL https://github.com/kamack38/dotfiles/raw/main/scripts/setup.sh)
 
 ## Screenshots
 
+### Hyprland
+
+![Hyprland](./../Pictures/Screenshots/Hyprland.png)
+
+### KDE
+
 ![Apps screenshot](./../Pictures/Screenshots/Apps.png)
