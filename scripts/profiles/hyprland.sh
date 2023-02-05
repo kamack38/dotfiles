@@ -25,7 +25,6 @@ HYPRLAND_PACKAGES=(
 	"swaylock-effects"                # A fancier screen locker for Wayland.
 	"swaylockd"                       # A dumb launcher to spawn swaylock and ensure it runs no matter what
 	"xdg-desktop-portal"              # Desktop integration portals for sandboxed apps
-	"xdg-desktop-portal-wlr"          # xdg-desktop-portal backend for wlroots
 	"xdg-desktop-portal-hyprland-git" # xdg-desktop-portal backend for hyprland
 	"wev"                             # A tool for debugging wayland events, similar to xev
 	"sddm"                            # QML based X11 and Wayland display manager
@@ -34,6 +33,7 @@ HYPRLAND_PACKAGES=(
 	"qt5-wayland"                     # Provides APIs for Wayland
 	"libva"                           # Video Acceleration (VA) API for Linux
 	"qt5ct"                           # Qt5 Configuration Utility
+	"spotifywm-git"                   # Makes Spotify more friendly to window managers by settings a class name before opening the window.
 )
 
 echo "${GREEN}:: ${BWHITE}Installing Hyprland and its components...${NC}"
