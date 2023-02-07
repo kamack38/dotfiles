@@ -121,7 +121,7 @@
         "source.organizeImports": true
     },
     "editor.cursorBlinking": "smooth",
-    "editor.cursorSmoothCaretAnimation": true,
+    "editor.cursorSmoothCaretAnimation": "on",
     "editor.cursorStyle": "line",
     "editor.defaultFormatter": null,
     "editor.fontFamily": "FiraCode Nerd Font",
