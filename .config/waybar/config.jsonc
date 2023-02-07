@@ -6,6 +6,7 @@
     "modules-left": ["wlr/workspaces"],
     "modules-center": ["clock"],
     "modules-right": [
+        "custom/github",
         "custom/gmail",
         "custom/updates",
         "tray",
@@ -40,15 +41,15 @@
     },
 
     "custom/github": {
-        "format": "<span color='#CDD9E5'></span> {}",
+        "exec": "$HOME/.config/waybar/scripts/github.sh",
+        "format": "<span color='#CDD9E5'></span>  {}",
         "return-type": "json",
         "interval": 60,
-        "exec": "$HOME/.config/waybar/github.sh",
         "on-click": "xdg-open https://github.com/notifications"
     },
 
     "custom/gmail": {
-        "exec": "~/.config/waybar/scripts/gmail.sh",
+        "exec": "~/.config/polybar/scripts/gmail/launch.py -c '' -p ''",
         "format": "<span color='#be5046'></span>  {}",
         "on-click": "xdg-open 'https://gmail.com'"
     },
@@ -138,8 +139,8 @@
     },
 
     "network": {
-        "format-wifi": "直 {essid}",
-        "format-ethernet": " {essid}",
+        "format-wifi": "󰖩 {essid}",
+        "format-ethernet": "",
         "format-linked": "{ifname} (No IP) ",
         "format-disconnected": "睊 Disconnected",
         "tooltip-format-wifi": "Signal Strenght: {signalStrength}% | Down Speed: {bandwidthDownBits}, Up Speed: {bandwidthUpBits}"
