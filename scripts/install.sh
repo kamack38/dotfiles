@@ -574,10 +574,13 @@ COLOR_15=ffffff
 FONT=ter-v20b
 KEYMAP=${KB_LAYOUT}
 EOT
-if grep -q "^HOOKS=.*systemd.*" /etc/mkinitcpio.conf; then
-	sudo sed -i "s,\(^HOOKS=.*\)systemd\(.*\),\1systemd colors\2," "/etc/mkinitcpio.conf"
-else
-	sudo sed -i "s,\(^HOOKS=.*\)udev\(.*\),\1udev colors\2," "/etc/mkinitcpio.conf"
+
+if grep -q "^HOOKS=.*colors.*" /etc/mkinitcpio.conf; then
+	if grep -q "^HOOKS=.*systemd.*" /etc/mkinitcpio.conf; then
+		sudo sed -i "s,\(^HOOKS=.*\)systemd\(.*\),\1systemd colors\2," "/etc/mkinitcpio.conf"
+	else
+		sudo sed -i "s,\(^HOOKS=.*\)udev\(.*\),\1udev colors\2," "/etc/mkinitcpio.conf"
+	fi
 fi
 
 # Set default shell to fish
@@ -777,7 +780,7 @@ EndSection
 EOT
 	if [[ $(pacman -Q sddm) ]]; then
 		echo "${BLUE}:: ${BWHITE}Installing sddm theme...${NC}"
-		$HELPER -S --noconfirm --needed --quiet "archcraft-sddm-theme-default"
+		$HELPER -S --noconfirm --needed --quiet "archcraft-sddm-theme"
 
 		echo "${BLUE}:: ${BWHITE}Configuring sddm...${NC}"
 		sudo tee /etc/sddm.conf.d/30-theme.conf >/dev/null <<EOF
