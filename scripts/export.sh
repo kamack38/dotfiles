@@ -24,32 +24,31 @@ echo "${BLUE}:: ${BWHITE}Backing up GPG keys...${NC}"
 gpg --output "$HOME/.keys/backupkeys.pgp" --armor --export-secret-keys --export-options export-backup
 
 DIR_TO_BACKUP=(
-    ".config/ngrok"
-    ".config/wakatime/.wakatime.cfg"
-    ".ssh"
-    ".config/polybar/scripts/gmail/credentials.json"
-    ".keys"
-    "Pictures"
-    "Videos"
-    "Documents"
-    "Music"
-    ".mozilla/firefox/$firefoxProfilePath"
-    ".mozilla/firefox/profiles.ini"
-    ".keys/backupkeys.pgp"
+	".config/ngrok"
+	".config/wakatime/.wakatime.cfg"
+	".ssh"
+	".config/polybar/scripts/gmail/credentials.json"
+	".keys"
+	"Pictures"
+	"Videos"
+	"Documents"
+	"Music"
+	".mozilla/firefox/$firefoxProfilePath"
+	".mozilla/firefox/profiles.ini"
 )
 
 # Create a tar archive
-if ! command -v pigz &>/dev/null; then
-    echo "${YELLOW}:: ${BWHITE}It seems that you don't have ${BLUE}pigz${BWHITE} installed.${NC}"
-    echo "${YELLOW}:: ${BWHITE}Compression will be performed using only one core.${NC}"
-    tar -C $HOME -czvf "$HOME/backup.tar.gz" "${DIR_TO_BACKUP[@]}"
+if ! command -v crabz &>/dev/null; then
+	echo "${YELLOW}:: ${BWHITE}It seems that you don't have ${BLUE}pigz${BWHITE} installed.${NC}"
+	echo "${YELLOW}:: ${BWHITE}Compression will be performed using only one core.${NC}"
+	tar -C "$HOME" -czvf "$HOME/backup.tar.gz" "${DIR_TO_BACKUP[@]}"
 else
-    echo "${BLUE}:: ${BWHITE}Compressing with multiple cores using ${BLUE}pigz${BWHITE}.${NC}"
-    tar --totals=USR1 -C $HOME -c --use-compress-program=pigz --exclude='**node_modules' -f "$HOME/backup.tar.gz" "${DIR_TO_BACKUP[@]}"
+	echo "${BLUE}:: ${BWHITE}Compressing with multiple cores using ${BLUE}crabz${BWHITE}.${NC}"
+	tar -cf - -C "$HOME" --exclude='**node_modules' "${DIR_TO_BACKUP[@]}" | pv -s "$(du -sbc "${DIR_TO_BACKUP[@]}" | grep 'total' | awk '{ print $1 }')" | crabz >"$HOME/backup.tar.gz"
 fi
 
 # Clean up
 echo "${YELLOW}:: ${BWHITE}Cleaning up...${NC}"
-rm -f "backupkeys.pgp"
+rm -f "$HOME/keys/backupkeys.pgp"
 
 echo "${GREEN}:: ${BWHITE}Your backup is in ${BLUE}${HOME}/backup.tar.gz${NC}"
