@@ -69,7 +69,7 @@ NORMAL_PROFILE=(
 	"update-grub"           # Utility for updating grup config
 	"btop"                  # System monitor tool
 	"reflector"             # Pacman mirror sorter
-	"pigz"                  # Parallel implementation of the gzip file compressor
+	"crabz-bin"             # Like pigz, but in Rust
 	"garuda-hooks"          # Garuda pacman hooks
 	"mpdris2"               # MPRIS2 support for MPD
 	"mpd"                   # Flexible, powerful, server-side application for playing music
