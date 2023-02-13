@@ -859,7 +859,7 @@ EOT
 	fi
 
 	echo "${BLUE}:: ${BWHITE}Securing ${BLUE}cron${BWHITE} permissions...${NC}"
-	sudo chmod 700 -R /etc/cron.d /etc/cron.daily /etc/cron.hourly /etc/cron.weekly /etc/cron.monthly
+	sudo chmod 700 -R /etc/cron.*
 	sudo chmod 600 /etc/cron.deny
 
 	echo "${BLUE}:: ${BWHITE}Setting up ${BLUE}firewall${BWHITE} using ${BLUE}ufw${BWHITE}...${NC}"
