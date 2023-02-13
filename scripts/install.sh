@@ -860,7 +860,10 @@ EOT
 
 	echo "${BLUE}:: ${BWHITE}Securing ${BLUE}cron${BWHITE} permissions...${NC}"
 	sudo chmod 700 -R /etc/cron.*
-	sudo chmod 600 /etc/cron.deny
+
+	if [ -f /etc/cron.deny ]; then
+		sudo chmod 600 /etc/cron.deny
+	fi
 
 	echo "${BLUE}:: ${BWHITE}Setting up ${BLUE}firewall${BWHITE} using ${BLUE}ufw${BWHITE}...${NC}"
 	sudo systemctl disable --now ip6tables.service iptables.service
