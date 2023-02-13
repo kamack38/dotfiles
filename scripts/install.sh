@@ -95,19 +95,19 @@ GAMING_PROFILE=(
 )
 
 SOUND_PROFILE=(
-	"pipewire"                        # Low-latency audio/video router and processor
-	"pipewire-alsa"                   # Low-latency audio/video router and processor - ALSA configuration
-	"pipewire-jack"                   # Low-latency audio/video router and processor - JACK support
-	"pipewire-pulse"                  # Low-latency audio/video router and processor - PulseAudio replacement
-	"pipewire-v4l2"                   # Low-latency audio/video router and processor - V4L2 interceptor
-	"pipewire-zeroconf"               # Low-latency audio/video router and processor - Zeroconf support
-	"gst-plugin-pipewire"             # Multimedia graph framework - pipewire plugin
-	"libpulse"                        # A featureful, general-purpose sound server (client library)
-	"wireplumber"                     # Session / policy manager implementation for PipeWire
-	"sof-firmware"                    # Sound Open Firmware
-	"realtime-privileges"             # Realtime privileges for users
-	"pamixer"                         # Pulseaudio command-line mixer like amixer
-	"noise-suppression-for-voice-git" # A real-time noise suppression plugin for voice
+	"pipewire"                    # Low-latency audio/video router and processor
+	"pipewire-alsa"               # Low-latency audio/video router and processor - ALSA configuration
+	"pipewire-jack"               # Low-latency audio/video router and processor - JACK support
+	"pipewire-pulse"              # Low-latency audio/video router and processor - PulseAudio replacement
+	"pipewire-v4l2"               # Low-latency audio/video router and processor - V4L2 interceptor
+	"pipewire-zeroconf"           # Low-latency audio/video router and processor - Zeroconf support
+	"gst-plugin-pipewire"         # Multimedia graph framework - pipewire plugin
+	"libpulse"                    # A featureful, general-purpose sound server (client library)
+	"wireplumber"                 # Session / policy manager implementation for PipeWire
+	"sof-firmware"                # Sound Open Firmware
+	"realtime-privileges"         # Realtime privileges for users
+	"pamixer"                     # Pulseaudio command-line mixer like amixer
+	"noise-suppression-for-voice" # A real-time noise suppression plugin for voice
 )
 
 VM_PROFILE=(
@@ -493,7 +493,7 @@ if [[ $SELECTED_PROFILES == *"BLUETOOTH"* ]]; then
 fi
 if [[ $SELECTED_PROFILES == *"RUST_DEV"* ]]; then
 	echo "${BLUE}:: ${BWHITE}Installing rust profile...${NC}"
-	$HELPER -S --noconfirm --needed --quiet "${RUST_DEV_PROFILE[@]}"
+	yes | $HELPER -S --needed --quiet "${RUST_DEV_PROFILE[@]}"
 	rustup install stable
 	rustup component add clippy
 	rustup component add rustfmt
