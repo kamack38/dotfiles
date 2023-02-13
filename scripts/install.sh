@@ -497,8 +497,6 @@ if [[ $SELECTED_PROFILES == *"RUST_DEV"* ]]; then
 	rustup install stable
 	rustup component add clippy
 	rustup component add rustfmt
-
-	cargo install cargo-edit
 fi
 
 # Install tweaks
