@@ -789,12 +789,12 @@ EOF
 	fi
 fi
 
-# Enable password feedback
+# Enable password feedback and other options
 sudo mkdir -p /etc/sudoers.d
-sudo tee /etc/sudoers.d/pwfeedback >/dev/null <<EOT
-Defaults pwfeedback
+sudo tee /etc/sudoers.d/01_pwfeedback >/dev/null <<EOT
+Defaults env_reset,pwfeedback,insults
 EOT
-sudo chmod 750 /etc/sudoers.d/pwfeedback
+sudo chmod 750 /etc/sudoers.d/01_pwfeedback
 
 read -rp "${BLUE}:: ${BWHITE}Do you want to add additional pacman repositories (archstrike, blackarch, archcraft)? [y/N]${NC}: " repos_script
 
