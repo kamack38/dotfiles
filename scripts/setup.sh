@@ -35,8 +35,7 @@ pacman -S --noconfirm --needed pacman-contrib fzf reflector rsync grub bc
 
 # Select disk
 echo "${BLUE}:: ${BWHITE}Select disk to install system on.${NC}"
-DISK=$(lsblk -n --output TYPE,KNAME,SIZE | awk '$1=="disk"{print "/dev/"$2"|"$3}' | fzf --height=20% --layout=reverse)
-DISK=${DISK%|*}
+DISK=$(lsblk -n --output TYPE,KNAME,SIZE | awk '$1=="disk"{print "/dev/"$2"|"$3}' | fzf --height=20% --layout=reverse | sed 's/|.*//')
 DISK_SIZE=$(lsblk -n --output SIZE "${DISK}" | head -n1)
 echo "${BLUE}:: ${BWHITE}Selected disk is: ${BLUE}${DISK}${NC}"
 echo "${BLUE}:: ${BWHITE}Selected disk has a size of ${DISK_SIZE}GB${NC}"
