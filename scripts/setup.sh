@@ -43,8 +43,18 @@ echo "${BLUE}:: ${BWHITE}Selected disk has a size of ${DISK_SIZE}GB${NC}"
 # Select install type
 read -rp "${BLUE}:: ${BWHITE}Do you wish to ${RED}ERASE${BWHITE} the disk before partitioning [Y/n]?${NC}" erase_disk
 
+use_x_efi="n"
+if [[ $erase_disk != n* ]]; then
+	EFI_PART=$(lsblk -n -o PARTTYPE,KNAME "$DISK" | awk '$1=="c12a7328-f81f-11d2-ba4b-00a0c93ec93b" { print "/dev/"$2"" }')
+
+	if [ -n "$EFI_PART" ]; then
+		echo "${BLUE}:: ${BWHITE}EFI partition ${BLUE}${EFI_PART}${BWHITE} detected.${NC}"
+		read -rp "${BLUE}:: ${BWHITE}Do you want to use it [Y/n]?${NC}" use_x_efi
+	fi
+fi
+
 # Check if drive is a ssd
-if [[ "$(cat /sys/block/${DISK#/*/}/queue/rotational)" == "0" ]]; then
+if [[ "$(cat /sys/block/"${DISK#/*/}"/queue/rotational)" == "0" ]]; then
 	echo "${YELLOW}:: ${BWHITE}Selected drive is a ssd...${NC}"
 	MOUNT_OPTIONS="noatime,compress=zstd,space_cache=v2,ssd,commit=120"
 	SWAP_MOUNT_OPTIONS="noatime,space_cache=v2,ssd,commit=120"
@@ -129,55 +139,62 @@ else
 	echo "${BLUE}:: ${BLUE}/mnt${BWHITE} is not mounted${NC} -- skipping"
 fi
 
+if [[ $erase_disk != n* ]]; then
+	echo "${YELLOW}:: ${BWHITE}All data from disk ${DISK} is being ${RED}ERASED${BWHITE}!${NC}"
+	sgdisk -Z "${DISK}"
+	sgdisk -a 2048 -o "${DISK}"
+fi
+
 # Get partition numbers
 echo "${YELLOW}:: ${BWHITE}Looking for free partition numbers...${NC}"
-j=0
-i=1
 PART_NUMBERS=()
 if [[ "${DISK}" =~ "nvme" ]]; then
 	TMP_DISK="${DISK}p"
 else
 	TMP_DISK="${DISK}"
 fi
-while [ $j -lt 3 ]; do
+for ((i = 1, j = 0; j < 3; i++)); do
 	if [[ ! -e "${TMP_DISK}${i}" ]]; then
 		echo "${BLUE}:: ${BLUE}${i}${BWHITE} is free! ${NC}"
 		((j = j + 1))
 		PART_NUMBERS+=("$i")
 	fi
-	((i = i + 1))
 done
 
 echo "${BLUE}:: ${BWHITE}Formatting disk...${NC}"
-if [[ $erase_disk != n* ]]; then
-	echo "${YELLOW}:: ${BWHITE}All data from disk ${DISK} is being ${RED}ERASED${BWHITE}!${NC}"
-	sgdisk -Z "${DISK}"
-	sgdisk -a 2048 -o "${DISK}"
-fi
-sgdisk -n "${PART_NUMBERS[0]}"::+1M --typecode="${PART_NUMBERS[0]}":ef02 --change-name="${PART_NUMBERS[0]}":'BIOSBOOT' "${DISK}"  # partition 1 (BIOS Boot Partition)
-sgdisk -n "${PART_NUMBERS[1]}"::+300M --typecode="${PART_NUMBERS[1]}":ef00 --change-name="${PART_NUMBERS[1]}":'EFIBOOT' "${DISK}" # partition 2 (UEFI Boot Partition)
-sgdisk -N "${PART_NUMBERS[2]}" --typecode="${PART_NUMBERS[2]}":8300 --change-name="${PART_NUMBERS[2]}":'ROOT' "${DISK}"           # partition 3 (Root), default start, remaining
-
-# Check for bios system
 if [[ ! -d "/sys/firmware/efi" ]]; then
-	sgdisk -A "${PART_NUMBERS[0]}":set:"${PART_NUMBERS[1]}" "${DISK}"
+	sgdisk -n "${PART_NUMBERS[2]}"::+1M --typecode="${PART_NUMBERS[2]}":ef02 --change-name="${PART_NUMBERS[2]}":'BIOSBOOT' "${DISK}" # partition 3 (BIOS Boot Partition)
 fi
+if [[ $use_x_efi == n* ]]; then
+	sgdisk -n "${PART_NUMBERS[0]}"::+300M --typecode="${PART_NUMBERS[0]}":ef00 --change-name="${PART_NUMBERS[0]}":'EFIBOOT' "${DISK}" # partition 1 (UEFI Boot Partition)
+else
+	PART_NUMBERS[1]="${PART_NUMBERS[0]}"
+fi
+sgdisk -N "${PART_NUMBERS[1]}" --typecode="${PART_NUMBERS[1]}":8300 --change-name="${PART_NUMBERS[1]}":'ROOT' "${DISK}" # partition 1/2 (Root), default start, remaining
 
 echo "${BLUE}:: ${BWHITE}Rereading partition table...${NC}"
 partprobe "${DISK}"
 
 echo "${BLUE}:: ${BWHITE}Naming partitions...${NC}"
 if [[ "${DISK}" =~ "nvme" ]]; then
-	EFI_PART="${DISK}p${PART_NUMBERS[1]}"
-	ROOT_PART="${DISK}p${PART_NUMBERS[2]}"
+	ROOT_PART="${DISK}p${PART_NUMBERS[1]}"
+
+	if [[ $use_x_efi == n* ]]; then
+		EFI_PART="${DISK}p${PART_NUMBERS[0]}"
+	fi
 else
-	EFI_PART="${DISK}${PART_NUMBERS[1]}"
-	ROOT_PART="${DISK}${PART_NUMBERS[2]}"
+	ROOT_PART="${DISK}${PART_NUMBERS[1]}"
+
+	if [[ $use_x_efi == n* ]]; then
+		EFI_PART="${DISK}${PART_NUMBERS[0]}"
+	fi
 fi
 
 # Create boot partition
-echo "${BLUE}:: ${BWHITE}Creating EFI partition...${NC}"
-mkfs.vfat -F32 -n "EFIBOOT" "${EFI_PART}"
+if [[ $use_x_efi == n* ]]; then
+	echo "${BLUE}:: ${BWHITE}Formatting EFI partition...${NC}"
+	mkfs.vfat -F32 -n "EFIBOOT" "${EFI_PART}"
+fi
 
 # Enter luks password to cryptsetup and format root partition
 echo "${BLUE}:: ${BWHITE}Encrypting root partition...${NC}"
