@@ -370,7 +370,7 @@
     "transient_prompt": {
         "background": "transparent",
         "foreground": "#ffffff",
-        "template": "<#5555ff>{{ .Folder }}</> <#3BD01D>❯</> "
+        "template": "<#3BD01D>❯</> "
     },
     "version": 2
 }
