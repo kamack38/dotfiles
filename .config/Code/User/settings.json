@@ -196,6 +196,9 @@
         "package.json": "package-lock.json, .npmrc, yarn.lock, .yarnrc, .eslintrc*, .prettierrc*, .swcrc",
         ".gitignore": ".*ignore"
     },
+    "extensions.experimental.affinity": {
+        "asvetliakov.vscode-neovim": 1
+    },
     "files.associations": {
         "*.cfg": "CSGO cfg"
     },

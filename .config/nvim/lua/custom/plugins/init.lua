@@ -150,32 +150,6 @@ return {
     end,
   },
 
-  -- Headband
-  -- ["B4mbus/nvim-headband"] = {
-  --   requires = {
-  --     { "SmiteshP/nvim-navic" }, -- required for for the navic section to work
-  --     { "kyazdani42/nvim-web-devicons" }, -- required for for devicons and default location_section.separator highlight group
-  --   },
-  --   config = function()
-  --     require("nvim-headband").setup {
-  --       file_section = {
-  --         enable = false,
-  --       },
-  --       location_section = {
-  --         enable = true,
-  --
-  --         --   wrap = bubbles_wrap,
-  --         --
-  --         --   separator = reverse_arrow,
-  --         --
-  --         --   empty_symbol = "",
-  --         --
-  --         --   position = "right",
-  --       },
-  --     }
-  --   end,
-  -- },
-
   -- Mark signatures
   ["kshenoy/vim-signature"] = {},
 
@@ -193,6 +167,15 @@ return {
     config = function()
       require("nvim-surround").setup {}
     end,
+  },
+
+  -- Cheatsheet
+  ["sudormrfbin/cheatsheet.nvim"] = {
+    requires = {
+      { "nvim-telescope/telescope.nvim" },
+      { "nvim-lua/popup.nvim" },
+      { "nvim-lua/plenary.nvim" },
+    },
   },
 
   -- Fast search plugin
