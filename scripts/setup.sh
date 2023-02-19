@@ -347,6 +347,7 @@ EOT
 	fi
 
 	# Add template
+	mkdir -p /etc/snapper/config-templates
 	sudo tee /etc/snapper/config-templates/garuda <<EOF
 # subvolume to snapshot
 SUBVOLUME="/"
