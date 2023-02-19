@@ -146,6 +146,7 @@ if [[ $erase_disk != n* ]]; then
 	sgdisk -Z "${DISK}"
 	sgdisk -a 2048 -o "${DISK}"
 	partprobe "${DISK}"
+	partx -u "${DISK}"
 fi
 
 # Get partition numbers
