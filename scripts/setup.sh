@@ -46,7 +46,7 @@ echo "${BLUE}:: ${BWHITE}Selected disk has a size of ${DISK_SIZE}GB${NC}"
 read -rp "${BLUE}:: ${BWHITE}Do you wish to ${RED}ERASE${BWHITE} the disk before partitioning [Y/n]?${NC}" erase_disk
 
 use_x_efi="n"
-if [[ $erase_disk != n* ]]; then
+if [[ $erase_disk == n* ]]; then
 	EFI_PART=$(lsblk -n -o PARTTYPE,KNAME "$DISK" | awk '$1=="c12a7328-f81f-11d2-ba4b-00a0c93ec93b" { print "/dev/"$2"" }')
 
 	if [ -n "$EFI_PART" ]; then
