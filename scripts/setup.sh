@@ -294,13 +294,6 @@ fi
 SWAP_SIZE=$TOTAL_RAM_MB
 SWAP_FILE_PATH="/swap/swapfile"
 case $SWAP_TYPE in
-swapfile)
-	echo "${BLUE}:: ${BWHITE}Creating swapfile...${NC}"
-	btrfs filesystem mkswapfile /mnt${SWAP_FILE_PATH} -s "${SWAP_SIZE}m"
-	chown root /mnt$SWAP_FILE_PATH
-	swapon /mnt${SWAP_FILE_PATH}
-	echo "${SWAP_FILE_PATH}	none	swap	sw	0	0" >>/mnt/etc/fstab
-	;;
 zram)
 	echo "${BLUE}:: ${BWHITE}Installing ${BLUE}zram${BWHITE} prerequisites...${NC}"
 	pacstrap /mnt zram-generator --noconfirm --needed 1>/dev/null
@@ -317,6 +310,12 @@ function chroot {
 
 	case $SWAP_TYPE in
 	swapfile)
+		echo "${BLUE}:: ${BWHITE}Creating swapfile...${NC}"
+		btrfs filesystem mkswapfile ${SWAP_FILE_PATH} -s "${SWAP_SIZE}m"
+		chown root $SWAP_FILE_PATH
+		swapon ${SWAP_FILE_PATH}
+		echo "${SWAP_FILE_PATH}	none	swap	sw	0	0" >>/etc/fstab
+
 		echo "${BLUE}:: ${BWHITE}Adding hibernation...${NC}"
 		SWAP_FILE_DEV_UUID=$(findmnt -no UUID -T $SWAP_FILE_PATH)
 		SWAP_FILE_OFFSET=$(btrfs inspect-internal map-swapfile -r "$SWAP_FILE_PATH")
