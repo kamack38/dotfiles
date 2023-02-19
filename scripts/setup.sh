@@ -57,11 +57,11 @@ fi
 if [[ "$(cat /sys/block/"${DISK#/*/}"/queue/rotational)" == "0" ]]; then
 	echo "${YELLOW}:: ${BWHITE}Selected drive is a ssd...${NC}"
 	MOUNT_OPTIONS="noatime,compress=zstd,space_cache=v2,ssd,commit=120"
-	SWAP_MOUNT_OPTIONS="noatime,space_cache=v2,ssd,commit=120"
+	SWAP_MOUNT_OPTIONS="nodatacow,noatime,nospace_cache,ssd"
 else
 	echo "${YELLOW}:: ${BWHITE}Selected drive is NOT a ssd...${NC}"
 	MOUNT_OPTIONS="noatime,compress=zstd,space_cache=v2,commit=120"
-	SWAP_MOUNT_OPTIONS="noatime,space_cache=v2,commit=120"
+	SWAP_MOUNT_OPTIONS="nodatacow,noatime,nospace_cache"
 fi
 
 # Swap
@@ -294,13 +294,8 @@ SWAP_FILE_PATH="/swap/swapfile"
 case $SWAP_TYPE in
 swapfile)
 	echo "${BLUE}:: ${BWHITE}Creating swapfile...${NC}"
-	truncate -s 0 /mnt${SWAP_FILE_PATH} # create swap file
-	chattr +C /mnt${SWAP_FILE_PATH}     # apply NOCOW, btrfs needs that.
-	# btrfs property set /mnt${SWAP_FILE_PATH} compression none                         # disable compression
-	dd if=/dev/zero of=/mnt${SWAP_FILE_PATH} bs=1M count="${SWAP_SIZE}" status=progress # copy bytes
-	chmod 600 /mnt${SWAP_FILE_PATH}                                                     # set permissions
+	btrfs filesystem mkswapfile /mnt${SWAP_FILE_PATH} -s "${SWAP_SIZE}m"
 	chown root /mnt$SWAP_FILE_PATH
-	mkswap /mnt${SWAP_FILE_PATH}
 	swapon /mnt${SWAP_FILE_PATH}
 	echo "${SWAP_FILE_PATH}	none	swap	sw	0	0" >>/mnt/etc/fstab
 	;;
