@@ -4,13 +4,19 @@ return {
 
   ----------------------------------- default plugins -----------------------------------
 
+  -- Enable dashboard
   ["goolord/alpha-nvim"] = {
     override_options = overrides.alpha(),
     disable = false,
   },
 
-  ["folke/which-key.nvim"] = { disable = false, cmd = "WhichKey" },
+  -- Show suggestions when executing snippets
+  ["folke/which-key.nvim"] = {
+    disable = false,
+    cmd = "WhichKey",
+  },
 
+  -- Add more lsp servers
   ["neovim/nvim-lspconfig"] = {
     config = function()
       require "plugins.configs.lspconfig"
@@ -18,6 +24,7 @@ return {
     end,
   },
 
+  -- Load VSC snippets
   ["L3MON4D3/LuaSnip"] = {
     config = function()
       require("plugins.configs.others").luasnip()
@@ -93,12 +100,14 @@ return {
     end,
   },
 
+  -- Smooth scrolling
   ["karb94/neoscroll.nvim"] = {
     config = function()
       require("neoscroll").setup()
     end,
   },
 
+  -- Diagnostics, code actions and more
   ["jose-elias-alvarez/null-ls.nvim"] = {
     after = "nvim-lspconfig",
     config = function()
@@ -179,5 +188,9 @@ return {
   },
 
   -- Fast search plugin
-  -- ["ggandor/lightspeed.nvim"] = {},
+  ["ggandor/leap.nvim"] = {
+    requires = {
+      { "tpope/vim-repeat" },
+    },
+  },
 }

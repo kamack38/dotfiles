@@ -49,4 +49,13 @@ M.neovim = {
   },
 }
 
+M.leap = {
+  n = {
+    ["<leader>s"] = { "<Plug>(leap-forward-to)", "  Jump forward to search" },
+    ["<leader>S"] = { "<Plug>(leap-forward-till)", "  Jump forward till search" },
+    ["<leader>x"] = { "<Plug>(leap-backward-to)", "  Jump backward to search" },
+    ["<leader>X"] = { "<Plug>(leap-backward-till)", "  Jump backward till search" },
+  },
+}
+
 return M
