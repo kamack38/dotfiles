@@ -33,9 +33,6 @@ M.nvimtree = {
 
 M.mason = {
   ensure_installed = {
-    -- spelling
-    "cspell",
-
     -- web dev
     "css-lsp",
     "html-lsp",
