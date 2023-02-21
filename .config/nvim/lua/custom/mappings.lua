@@ -51,10 +51,18 @@ M.neovim = {
 
 M.leap = {
   n = {
-    ["<leader>s"] = { "<Plug>(leap-forward-to)", "  Jump forward to search" },
-    ["<leader>S"] = { "<Plug>(leap-forward-till)", "  Jump forward till search" },
-    ["<leader>x"] = { "<Plug>(leap-backward-to)", "  Jump backward to search" },
-    ["<leader>X"] = { "<Plug>(leap-backward-till)", "  Jump backward till search" },
+    ["<leader>s"] = {
+      function()
+        require("leap").leap { target_windows = { vim.fn.win_getid() } }
+      end,
+      "  Jump to search",
+    },
+    ["<leader>S"] = {
+      function()
+        require("leap").leap { offset = -1, target_windows = { vim.fn.win_getid() } }
+      end,
+      "  Jump till search",
+    },
   },
 }
 

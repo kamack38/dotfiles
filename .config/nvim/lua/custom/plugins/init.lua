@@ -193,4 +193,11 @@ return {
       { "tpope/vim-repeat" },
     },
   },
+
+  -- Set project root correctly
+  ["ahmedkhalf/project.nvim"] = {
+    config = function()
+      require("project_nvim").setup {}
+    end,
+  },
 }

@@ -13,7 +13,7 @@ end
 M.ui = {
   theme = "onedark",
   transparency = true,
-  theme_toggle = { "onedark", "everforest" },
+  theme_toggle = { "onedark", "doomchad" },
 }
 
 M.plugins = require "custom.plugins"
