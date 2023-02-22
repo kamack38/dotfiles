@@ -24,6 +24,9 @@ tooltip {
 #workspaces button {
     padding: 5px;
     color: #313244;
+}
+
+#workspaces button:last-child {
     margin-right: 5px;
 }
 

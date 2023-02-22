@@ -142,6 +142,7 @@ DESKTOP_APPS=(
 	"python-google-auth-httplib2"      # Google Authentication Library: httplib2 transport (Polybar Gmail)
 	"python-google-auth-oauthlib"      # oauthlib integration for Google auth (Polybar Gmail)
 	"desktop-file-utils"               # Command line utilities for working with desktop entries
+	"breeze"                           # Artwork, styles and assets for the Breeze visual style for the Plasma Desktop
 )
 
 PROFILES=(
