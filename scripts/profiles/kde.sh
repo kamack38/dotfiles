@@ -24,6 +24,8 @@ KDE_PACKAGES=(
 	"latte-dock"                          # KDE dock
 	"touchegg"                            # Touchpad gestures support
 	"plasma-browser-integration"          # Integrate browser and plasma
+	"polybar-git"                         # Bar
+	"ulauncher"                           # Application launcher for Linux
 )
 
 echo "${GREEN}:: ${BWHITE}Installing KDE and its components...${NC}"

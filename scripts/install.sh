@@ -130,7 +130,6 @@ DESKTOP_APPS=(
 	"gwenview"                         # Image viewer
 	"polkit-kde-agent"                 # Daemon providing a polkit authentication UI
 	"qt5-imageformats"                 # Add more image formats (webp)
-	"ulauncher"                        # Application launcher for Linux
 	"caprine"                          # Messenger app for Linux
 	"discord"                          # VoIP and instant messaging social platform
 	"firefox-developer-edition"        # Web browser for developers
@@ -138,7 +137,6 @@ DESKTOP_APPS=(
 	"spotify"                          # Music client
 	"spicetify-cli"                    # Cli for extending spotify
 	"kitty-git"                        # GPU accelerated terminal
-	"polybar-git"                      # Bar
 	"dbus-python"                      # Python bindings for DBUS (Polybar ...)
 	"python-google-api-python-client"  # Google API Client Library for Python (Polybar Gmail)
 	"python-google-auth-httplib2"      # Google Authentication Library: httplib2 transport (Polybar Gmail)

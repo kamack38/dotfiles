@@ -22,6 +22,8 @@ AWESOMEWM_PACKAGES=(
 	"picom"            # A lightweight compositor for X11
 	"betterlockscreen" # A simple, minimal lockscreen
 	"autorandr"        # Auto-detect connected display hardware and load appropiate X11 setup using xrandr
+	"polybar-git"      # Bar
+	"ulauncher"        # Application launcher for Linux
 )
 
 echo "${GREEN}:: ${BWHITE}Installing awesomeWM and its components...${NC}"
