@@ -10,6 +10,10 @@ if vim.fn.has "win32" == 1 then
   opt.shellredir = "| Out-File -Encoding UTF8 %s"
 end
 
+opt.foldmethod = "expr"
+opt.foldexpr = "nvim_treesitter#foldexpr()"
+opt.foldlevel = 20
+
 M.ui = {
   theme = "onedark",
   transparency = true,
