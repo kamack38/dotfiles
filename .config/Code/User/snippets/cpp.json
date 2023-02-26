@@ -181,13 +181,13 @@
     "swap": {
         "prefix": "!swap",
         "body": ["swap(${1:a}, ${2:b});"],
-        "description": "Create unordered set"
+        "description": "Swap two variables"
     },
 
     "next permutation": {
         "prefix": "!nperm",
         "body": ["next_permutation(${1:vec}.begin(), ${1:vec}.end())"],
-        "description": "Create priority queue"
+        "description": "Get the next permutation"
     },
 
     "srand": {
@@ -230,19 +230,6 @@
         "prefix": ["!gcf", "!nww"],
         "body": ["int GCF(int a, int b) { return a / GCD(a, b) * b; }"],
         "description": "Greatest common factor function"
-    },
-
-    "fastPowMod": {
-        "prefix": "!fastPowMod",
-        "body": [
-            "long long myPow(int a, int exponent, int m) {",
-            "    if (!exponent) return 1;",
-            "    long long tmp = myPow(a, exponent / 2, m);",
-            "    if (exponent & 1) return (((tmp * tmp) % m) * a) % m;",
-            "    return (tmp * tmp) % m;",
-            "}"
-        ],
-        "description": "Quickly calculate a^b mod c"
     },
 
     "newton": {
@@ -292,33 +279,31 @@
         "description": "Get the next closest power of 2 to the given number"
     },
 
-    "log": {
-        "prefix": "!log",
+    "fastPow": {
+        "prefix": "!pow",
         "body": [
-            "long long Pow(long long y, long long x) {",
-            "    if (x == 0) return 1;",
-            "    return y * Pow(y, x - 1);",
-            "}",
-            "",
-            "long long Log(long long base, long long argument) {",
-            "    long long a = -1LL, b = argument, c = 0LL;",
-            "    while (a + 1 != b) {",
-            "        c = (a + b) / 2;",
-            "        if (Pow(base, c) <= argument) {",
-            "            a = c;",
-            "        } else {",
-            "            b = c;",
-            "        }",
-            "    }",
-            "    return a;",
+            "template <class T>",
+            "long long pow(T a, T exponent) {",
+            "    if (!exponent) return 1;",
+            "    long long tmp = pow(a, exponent / 2);",
+            "    if (exponent & 1) return tmp * tmp * a;",
+            "    return tmp * tmp;",
             "}"
         ],
-        "description": "Get the next closest power of 2 to the given number"
+        "description": "Quickly calculate a^b"
     },
 
-    "pow": {
-        "prefix": "!pow",
-        "body": ["long long Pow(int y, int x) {", "    if (x == 0) return 1;", "    return y * Pow(y, x - 1);", "}"],
+    "fastPowMod": {
+        "prefix": "!fastPowMod",
+        "body": [
+            "template <class T>",
+            "long long powMod(T a, T exponent, T m) {",
+            "    if (!exponent) return 1;",
+            "    long long tmp = powMod(a, exponent / 2, m);",
+            "    if (exponent & 1) return (((tmp * tmp) % m) * a) % m;",
+            "    return (tmp * tmp) % m;",
+            "}"
+        ],
         "description": "Quickly calculate a^b mod c"
     },
 
@@ -402,6 +387,62 @@
             "}"
         ],
         "description": "Dijkstra's algorithm"
+    },
+
+    "lca": {
+        "prefix": "!lca",
+        "body": [
+            "array<array<int, MAX_SIZE>, 21> parent;",
+            "template <size_t MAX_SIZE>",
+            "struct LCA {",
+            "    array<vector<int>, MAX_SIZE>& graph;",
+            "    array<bool, MAX_SIZE> vis;",
+            "    array<int, MAX_SIZE> pre, post;  // preorder, postorder",
+            "",
+            "    unsigned int size, pre_order = 0, post_order = 0;",
+            "",
+            "    LCA(unsigned int size, array<vector<int>, MAX_SIZE>& graph) : size(size), graph(graph) {",
+            "        for (int i = 0; i <= size; i++) {",
+            "            parent[0][i] = i;",
+            "        }",
+            "        pre[0] = 0;",
+            "        post[0] = size + 1;",
+            "        prepareLCA(1, 0);",
+            "    }",
+            "",
+            "    void fillParents(int n) {",
+            "        for (int i = 2; i < parent.size(); i++) {",
+            "            parent[i][n] = parent[i - 1][parent[i - 1][n]];",
+            "        }",
+            "    }",
+            "",
+            "    void prepareLCA(int v, int v_parent) {",
+            "        if (vis[v]) return;",
+            "        vis[v] = true;",
+            "        parent[1][v] = v_parent;",
+            "        fillParents(v);",
+            "        pre[v] = ++pre_order;",
+            "        for (auto u : graph[v]) {",
+            "            prepareLCA(u, v);",
+            "        }",
+            "        post[v] = ++post_order;",
+            "    }",
+            "",
+            "    bool isParent(int a, int b) { return pre[a] <= pre[b] && post[a] >= post[b]; }",
+            "",
+            "    int operator()(int a, int b) {",
+            "        if (isParent(a, b)) return a;",
+            "        if (isParent(b, a)) return b;",
+            "        for (int i = parent.size() - 1; i > 0; --i) {",
+            "            if (!isParent(parent[i][a], b)) {",
+            "                a = parent[i][a];",
+            "            }",
+            "        }",
+            "        return parent[1][a];",
+            "    }",
+            "};"
+        ],
+        "description": "Lowest Common Ancestor algorithm"
     },
 
     "scc": {
