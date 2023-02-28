@@ -51,16 +51,24 @@ complete -c hyprctl -n "not __fish_seen_subcommand_from $subcommands" -l "batch"
 complete -c hyprctl -n "__fish_seen_subcommand_from $infocommands" \
     -s j -d "Print output in JSON"
 
+### dispatch
+set -l dispatchers exec execr pass killactive closewindow workspace movetoworkspace movetoworkspacesilent togglefloating fullscreen fakefullscreen dpms pin movefocus movewindow centerwindow resizeactive resizewindowpixel cyclenext swapnext focuswindow focusmonitor splitratio toggleopaque movecursortocorner workspaceopt renameworkspace exit forcerendererreload movecurrentworkspacetomonitor moveworkspacetomonitor swapactiveworkspaces bringactivetop togglespecialworkspace focussurgetolast togglegroup changegroupactive focuscurrentrolast lockgroups moveintogroup moveoutgroup
+complete -c hyprctl -n "__fish_seen_subcommand_from dispatch; and not __fish_seen_subcommand_from $dispatchers" -a "$dispatchers"
+
 ### getoption
-set -l options
+set -l config_options
 
 for section in $hyprland_sections
   for option in  (eval "printf '%s\n' \$$section[1]_options")
-    set -a options (string replace _ ':' $section):$option
+    set -a config_options (string replace _ ':' $section):$option
   end
 end
 
-complete -c hyprctl -n "__fish_seen_subcommand_from getoption; and not __fish_seen_subcommand_from $options" -a "$options"
+complete -c hyprctl -n "__fish_seen_subcommand_from getoption; and not __fish_seen_subcommand_from $config_options" -a "$config_options"
+
+### keyword
+set -l keyword_options $config_options monitor bind exec exec-once source bruls
+complete -c hyprctl -n "__fish_seen_subcommand_from keyword; and not __fish_seen_subcommand_from $keyword_options" -a "$keyword_options"
 
 ### setprop
 complete -c hyprctl -n "__fish_seen_subcommand_from setprop; and not __fish_seen_subcommand_from (__hyprctl_get_clients_addresses)" -a "(__hyprctl_get_clients_addresses)"
