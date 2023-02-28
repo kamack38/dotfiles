@@ -1,7 +1,11 @@
 # fish completion for hyprctl
 
+function __hyprctl_get_clients_addresses
+  hyprctl clients -j | jq '.[]|[.address]|@tsv' -r | sed 's/^/address:/'
+end
+
 # Subcommands
-set -l subcommands monitors workspaces clients activewindow layers devices dispatch keyword version kill splash hyprpaper reload setcursor getoption cursorpos switchxkblayout seterror setprop
+set -l subcommands monitors workspaces clients activewindow layers devices dispatch keyword version kill splash hyprpaper reload setcursor getoption cursorpos switchxkblayout seterror setprop plugin
 set -l infocommands monitors workspaces clients activewindow layers devices activewindow layers devices version splash getoption cursorpos
 
 set -l hyprland_sections general decoration animations input input_touchpad input_touchdevice gestures misc binds debug
@@ -17,17 +21,10 @@ set -l misc_options disable_hyprland_logo disable_splash_rendering no_vfr mouse_
 set -l binds_options pass_mouse_when_bound scroll_event_delay workspace_back_and_forth allow_workspace_cycles
 set -l debug_options overlay damage_blink disable_logs disable_time damage_tracking
 
-set -l options
-
-for section in $hyprland_sections
-  for option in  (eval "printf '%s\n' \$$section[1]_options")
-    set -a options (string replace _ ':' $section):$option
-  end
-end
-
 # Disable file completions for the entire command
 complete -c hyprctl -f
 
+## Subcommands
 complete -c hyprctl -n "not __fish_seen_subcommand_from $subcommands" -a "monitors" -d "show connected monitors"
 complete -c hyprctl -n "not __fish_seen_subcommand_from $subcommands" -a "workspaces" -d "show all workspaces"
 complete -c hyprctl -n "not __fish_seen_subcommand_from $subcommands" -a "clients" -d "show all clients"
@@ -41,16 +38,45 @@ complete -c hyprctl -n "not __fish_seen_subcommand_from $subcommands" -a "kill" 
 complete -c hyprctl -n "not __fish_seen_subcommand_from $subcommands" -a "splash" -d "print the current random splash"
 complete -c hyprctl -n "not __fish_seen_subcommand_from $subcommands" -a "hyprpaper" -d ""
 complete -c hyprctl -n "not __fish_seen_subcommand_from $subcommands" -a "reload" -d "force reload the config"
-complete -c hyprctl -n "not __fish_seen_subcommand_from $subcommands" -a "setcursor" -d ""
-complete -c hyprctl -n "not __fish_seen_subcommand_from $subcommands" -a "getoption" -d ""
-complete -c hyprctl -n "not __fish_seen_subcommand_from $subcommands" -a "cursorpos" -d ""
-complete -c hyprctl -n "not __fish_seen_subcommand_from $subcommands" -a "switchxkblayout" -d ""
-complete -c hyprctl -n "not __fish_seen_subcommand_from $subcommands" -a "seterror" -d ""
-complete -c hyprctl -n "not __fish_seen_subcommand_from $subcommands" -a "setprop" -d ""
+complete -c hyprctl -n "not __fish_seen_subcommand_from $subcommands" -a "setcursor" -d "sets the cursor theme and reloads the cursor manager."
+complete -c hyprctl -n "not __fish_seen_subcommand_from $subcommands" -a "getoption" -d "gets the config option status"
+complete -c hyprctl -n "not __fish_seen_subcommand_from $subcommands" -a "cursorpos" -d "gets the current cursor pos in global layout coordinates"
+complete -c hyprctl -n "not __fish_seen_subcommand_from $subcommands" -a "switchxkblayout" -d "sets the xkb layout index for a keyboard."
+complete -c hyprctl -n "not __fish_seen_subcommand_from $subcommands" -a "seterror" -d "sets the hyprctl error string"
+complete -c hyprctl -n "not __fish_seen_subcommand_from $subcommands" -a "setprop" -d "sets a window prop"
+complete -c hyprctl -n "not __fish_seen_subcommand_from $subcommands" -a "plugin" -d "lists, loads or unloads plugins"
 
+## Global options
 complete -c hyprctl -n "not __fish_seen_subcommand_from $subcommands" -l "batch" -d "specify a batch of commands to execute"
 complete -c hyprctl -n "__fish_seen_subcommand_from $infocommands" \
     -s j -d "Print output in JSON"
 
+### getoption
+set -l options
+
+for section in $hyprland_sections
+  for option in  (eval "printf '%s\n' \$$section[1]_options")
+    set -a options (string replace _ ':' $section):$option
+  end
+end
+
 complete -c hyprctl -n "__fish_seen_subcommand_from getoption; and not __fish_seen_subcommand_from $options" -a "$options"
+
+### setprop
+complete -c hyprctl -n "__fish_seen_subcommand_from setprop; and not __fish_seen_subcommand_from (__hyprctl_get_clients_addresses)" -a "(__hyprctl_get_clients_addresses)"
+
+#### props
+set -l setprop_props animation_style rounding forcenoblur forceopaque forceopqueoverriden forceallowsinput forcenoanims forcenoshadow widnowdancecompat nomaxsize dimaround alphaoverride alpha alphainactiveoverrdie alphainactive activebordercolor inactivebordercolor
+
+complete -c hyprctl -n "__fish_seen_subcommand_from setprop; and __fish_seen_subcommand_from (__hyprctl_get_clients_addresses); and not __fish_seen_subcommand_from $setprop_props" -a "$setprop_props"
+complete -c hyprctl -n "__fish_seen_subcommand_from setprop; and __fish_seen_subcommand_from (__hyprctl_get_clients_addresses); and __fish_seen_subcommand_from $setprop_props" -a "lock"
+
+### plugin
+set -l plugin_args list load unload
+
+complete -c hyprctl -n "__fish_seen_subcommand_from plugin; and not __fish_seen_subcommand_from $plugin_args" -a "list" -d "Show loaded plugins"
+complete -c hyprctl -n "__fish_seen_subcommand_from plugin; and not __fish_seen_subcommand_from $plugin_args" -a "load" -d "Load plugin by path"
+complete -c hyprctl -n "__fish_seen_subcommand_from plugin; and not __fish_seen_subcommand_from $plugin_args" -a "unload" -d "Unload plugin by path"
+
+complete -c hyprctl -n "__fish_seen_subcommand_from plugin; and __fish_seen_subcommand_from unload load" -F
 

@@ -102,6 +102,18 @@ alias python-gen-deps="pipreqs"
 # Sudo edit
 alias esudo="sudoedit"
 
+# Hyprland
+alias hypr-log="bat /tmp/hypr/$(/usr/bin/ls -t /tmp/hypr/ | head -n 2 | tail -n 1)/hyprland.log"
+alias hypr-log-tty="bat /tmp/hypr/$(/usr/bin/ls -t /tmp/hypr/ | head -n 1)/hyprland.log"
+
+# Virtual machine
+function remove-vm -a vm
+  sudo virsh shutdown --domain $vm
+  set -l pp (sudo virsh dumpxml --domain $vm | rg 'source file' | cut -d"'" -f 2)
+  sudo virsh undefine --domain $vm
+  sudo rm -rf $pp
+end
+
 # Dolphin
 function dolp -a path
     command dolphin $path &> /dev/null & disown
