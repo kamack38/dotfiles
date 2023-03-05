@@ -14,7 +14,16 @@ NC=$'\e[0m' # No Colour
 
 # Default vars
 HELPER="paru"
-CURRENT_USER="$USER"
+VGA_INFO=$(lspci -vnn | grep VGA)
+
+echo "${GREEN}:: ${BWHITE}Installing Hyprland...${NC}"
+if [[ $VGA_INFO == *"NVIDIA"* ]]; then
+	echo "${YELLOW}:: ${BLUE}NVIDIA${BWHITE} card detected!${NC}"
+	echo "${GREEN}:: ${BWHITE}Installing ${BLUE}hyprland-nvidia-git${BWHITE}...${NC}"
+	$HELPER -S --noconfirm --needed --quiet "hyprland-nvidia-git"
+else
+	$HELPER -S --noconfirm --needed --quiet "hyprland-git"
+fi
 
 HYPRLAND_PACKAGES=(
 	"hyprland-git"                    # A dynamic tiling Wayland compositor based on wlroots that doesn't sacrifice on its looks.
@@ -37,14 +46,5 @@ HYPRLAND_PACKAGES=(
 	"spotifywm-git"                   # Makes Spotify more friendly to window managers by settings a class name before opening the window.
 )
 
-echo "${GREEN}:: ${BWHITE}Installing Hyprland and its components...${NC}"
+echo "${GREEN}:: ${BWHITE}Installing Hyprland components...${NC}"
 $HELPER -S --noconfirm --needed --quiet "${HYPRLAND_PACKAGES[@]}"
-
-echo "${BLUE}:: ${BWHITE}Adding custom Hyprland session...${NC}"
-sudo tee /usr/share/wayland-sessions/hyprland_nvidia.desktop >/dev/null <<EOT
-[Desktop Entry]
-Name=Hyprland (Nvidia)
-Comment=An intelligent dynamic tiling Wayland compositor
-Exec=/home/$CURRENT_USER/.local/bin/hl_wrapper
-Type=Application
-EOT
