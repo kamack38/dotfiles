@@ -46,6 +46,10 @@ M.neovim = {
     ["<A-j>"] = { "<cmd> m+ <CR>", "  Move curent line down" },
     ["<A-S-j>"] = { "<cmd> t. <CR>", "  Copy curent line down" },
     ["<A-S-k>"] = { "<cmd> t- <CR>", "  Copy curent line up" },
+    ["<C-S-s>"] = {
+      "<cmd> set eventignore+=BufWritePre | w | set eventignore-=BufWritePre <CR>",
+      "󱪚  Save file without formatting",
+    },
   },
 }
 
