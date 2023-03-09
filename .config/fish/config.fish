@@ -35,6 +35,10 @@ alias wget="wget --hsts-file=$XDG_DATA_HOME/wget-hsts"
 # ------------
 # bind \b backward-kill-bigword
 # bind \e\[3\;5~ kill-word
+bind \cj history-search-forward
+bind \ck history-search-backward
+bind \cl forward-char
+bind \ch backward-char
 
 # ------------
 # Aliases
@@ -101,6 +105,9 @@ alias python-gen-deps="pipreqs"
 
 # Sudo edit
 alias esudo="sudoedit"
+
+# Pulseaudio
+alias multiple-sinks="pactl load-module module-combine-sink sink_name=Simultaneous sink_properties=device.description=CombinedSink slaves=(pactl list short sinks | awk '{print \$2}' | sed -z 's/\\n/,/g; s/,\$/\n/')"
 
 # Hyprland
 if test -d /tmp/hypr
