@@ -1,0 +1,6 @@
+{
+    "section": {
+        "prefix": "!beg",
+        "body": ["\\begin{$1}", "  $0", "\\end{$1}"]
+    }
+}

@@ -10,6 +10,7 @@
                     "plaintext",
                     "markdown",
                     "tex",
+                    "plaintex",
                     "html",
                     "global",
                     "all"
@@ -19,6 +20,13 @@
             {
                 "language": "cpp",
                 "path": "./cpp.json"
+            },
+            {
+                "language": [
+                    "tex",
+                    "plaintex"
+                ],
+                "path": "./tex.json"
             }
         ]
     }
