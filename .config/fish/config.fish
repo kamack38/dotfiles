@@ -82,6 +82,7 @@ alias icat="kitty +kitten icat"
 alias xterm-kitty="kitty"
 alias n="nvim"
 alias btc="bluetoothctl"
+alias xo="xdg-open"
 
 if command -v firefox-developer-edition &>/dev/null
     alias firefox="firefox-developer-edition"
