@@ -733,9 +733,6 @@ sudo mkinitcpio -P
 if [[ $(pacman -Q xorg-server) ]]; then
 	echo "${YELLOW}:: ${BWHITE}Xorg server detected${NC}"
 
-	source "$HOME/scripts/repos.sh"
-	archcraft
-
 	echo "${BLUE}:: ${BWHITE}Installing customization packages...${NC}"
 	$HELPER -S --noconfirm --needed --quiet "${CUSTOMIZATION_PACKAGES[@]}"
 
@@ -777,12 +774,12 @@ EndSection
 EOT
 	if [[ $(pacman -Q sddm) ]]; then
 		echo "${BLUE}:: ${BWHITE}Installing sddm theme...${NC}"
-		$HELPER -S --noconfirm --needed --quiet "archcraft-sddm-theme"
+		$HELPER -S --noconfirm --needed --quiet "sddm-theme-astronaut"
 
 		echo "${BLUE}:: ${BWHITE}Configuring sddm...${NC}"
 		sudo tee /etc/sddm.conf.d/30-theme.conf >/dev/null <<EOF
 [Theme]
-Current=archcraft
+Current=astronaut
 CursorTheme=Fluent-cursors
 EOF
 	fi
