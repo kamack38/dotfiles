@@ -12,12 +12,14 @@ M.treesitter = {
     "yaml",
     "toml",
     "markdown",
+    "latex",
     "c",
     "cpp",
     "bash",
     "fish",
     "lua",
     "rasi",
+    "norg",
   },
 }
 

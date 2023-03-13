@@ -81,6 +81,22 @@ return {
   -- yuck syntax
   ["elkowar/yuck.vim"] = {},
 
+  -- Neorg
+  ["nvim-neorg/neorg"] = {
+    ft = "norg",
+    after = "nvim-treesitter", -- You may want to specify Telescope here as well
+    config = function()
+      require("neorg").setup {
+        load = {
+          ["core.defaults"] = {}, -- Loads default behaviour
+          ["core.norg.concealer"] = {}, -- Adds pretty icons to your documents
+        },
+      }
+    end,
+    run = ":Neorg sync-parsers",
+    requires = "nvim-lua/plenary.nvim",
+  },
+
   ----------------------------------- custom plugins -----------------------------------
 
   -- Track the time you're spending with your code
@@ -153,6 +169,7 @@ return {
       require("code_runner").setup {
         filetype = {
           cpp = 'mkdir -p "$dir/bin" && cd "$dir/bin" && g++ "../$fileName" -o "$fileNameWithoutExt" -std=c++11 -fsanitize=address,undefined && "./$fileNameWithoutExt"',
+          tex = 'mkdir -p "$dir/bin" && pdflatex -output-directory="$dir/bin" "$dir/$fileName"',
         },
         startinsert = true,
       }
@@ -198,6 +215,13 @@ return {
   ["ahmedkhalf/project.nvim"] = {
     config = function()
       require("project_nvim").setup {}
+    end,
+  },
+
+  -- Line decorations
+  ["mvllow/modes.nvim"] = {
+    config = function()
+      require("modes").setup()
     end,
   },
 }
