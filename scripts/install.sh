@@ -42,45 +42,46 @@ DEV_PROFILE=(
 )
 
 NORMAL_PROFILE=(
-	"ripgrep"               # Better grep
-	"python"                # Programming language
-	"python-pip"            # Python package manager
-	"python-gobject"        # Ui creation (polybar mpris support)
-	"flatpak"               # Flatpak package manager
-	"bat"                   # Better cat
-	"exa"                   # Better ls
-	"croc"                  # File transfer utility
-	"mpv"                   # Image/Video player
-	"ffmpeg"                # Audio/Image/Video file converter
-	"yt-dlp"                # Better YouTube downloader
-	"neovim"                # Vim-like text editor
-	"fish"                  # New shell
-	"fisher"                # Fish plugin manager
-	"oh-my-posh-bin"        # Shell prompt
-	"mkinitcpio-colors-git" # mkinitcpio hook to set VT console colors during early userspace
-	"fzf"                   # Fuzzy finder
-	"libqalculate"          # Calculator (qalc)
-	"cava"                  # Audio visualizer
-	"ttf-font-awesome"      # Font Awesome font
-	"ttf-firacode-nerd"     # Patched font Fira (Fura) Code from nerd-fonts library
-	"terminus-font"         # Monospace bitmap font (for X11 and console)
-	"playerctl"             # Command-line utility and library for controlling media players
-	"mpv-mpris"             # mpv mpris support
-	"update-grub"           # Utility for updating grup config
-	"btop"                  # System monitor tool
-	"reflector"             # Pacman mirror sorter
-	"crabz-bin"             # Like pigz, but in Rust
-	"garuda-hooks"          # Garuda pacman hooks
-	"mpdris2"               # MPRIS2 support for MPD
-	"mpd"                   # Flexible, powerful, server-side application for playing music
-	"mpc"                   # Minimalist command line interface to MPD
-	"ncmpcpp"               # Almost exact clone of ncmpc with some new features
-	"brightnessctl"         # Lightweight brightness control tool
-	"clipster"              # Python clipboard manager
-	"sptlrx-bin"            # Timesynced Spotify lyrics in your terminal
-	"libfido2"              # Library functionality for FIDO 2.0, including communication with a device over USB
-	"yubikey-manager"       # Python library and command line tool for configuring a YubiKey
-	"xdg-user-dirs"         # Manages user directories
+	"ripgrep"                 # Better grep
+	"python"                  # Programming language
+	"python-pip"              # Python package manager
+	"python-gobject"          # Ui creation (polybar mpris support)
+	"flatpak"                 # Flatpak package manager
+	"bat"                     # Better cat
+	"exa"                     # Better ls
+	"croc"                    # File transfer utility
+	"mpv"                     # Image/Video player
+	"ffmpeg"                  # Audio/Image/Video file converter
+	"yt-dlp"                  # Better YouTube downloader
+	"neovim"                  # Vim-like text editor
+	"fish"                    # New shell
+	"fisher"                  # Fish plugin manager
+	"oh-my-posh-bin"          # Shell prompt
+	"mkinitcpio-colors-git"   # mkinitcpio hook to set VT console colors during early userspace
+	"fzf"                     # Fuzzy finder
+	"libqalculate"            # Calculator (qalc)
+	"cava"                    # Audio visualizer
+	"ttf-font-awesome"        # Font Awesome font
+	"ttf-firacode-nerd"       # Patched font Fira (Fura) Code from nerd-fonts library
+	"ttf-jetbrains-mono-nerd" # Patched font JetBrains Mono from nerd fonts library
+	"terminus-font"           # Monospace bitmap font (for X11 and console)
+	"playerctl"               # Command-line utility and library for controlling media players
+	"mpv-mpris"               # mpv mpris support
+	"update-grub"             # Utility for updating grup config
+	"btop"                    # System monitor tool
+	"reflector"               # Pacman mirror sorter
+	"crabz-bin"               # Like pigz, but in Rust
+	"garuda-hooks"            # Garuda pacman hooks
+	"mpdris2"                 # MPRIS2 support for MPD
+	"mpd"                     # Flexible, powerful, server-side application for playing music
+	"mpc"                     # Minimalist command line interface to MPD
+	"ncmpcpp"                 # Almost exact clone of ncmpc with some new features
+	"brightnessctl"           # Lightweight brightness control tool
+	"clipster"                # Python clipboard manager
+	"sptlrx-bin"              # Timesynced Spotify lyrics in your terminal
+	"libfido2"                # Library functionality for FIDO 2.0, including communication with a device over USB
+	"yubikey-manager"         # Python library and command line tool for configuring a YubiKey
+	"xdg-user-dirs"           # Manages user directories
 	"${DEV_PROFILE[@]}"
 )
 

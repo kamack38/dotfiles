@@ -18,6 +18,9 @@ M.ui = {
   theme = "onedark",
   transparency = true,
   theme_toggle = { "onedark", "doomchad" },
+  hl_override = {
+    Comment = { italic = true },
+  },
 }
 
 M.plugins = require "custom.plugins"
