@@ -39,8 +39,8 @@ DIR_TO_BACKUP=(
 
 # Create a tar archive
 BACKUP_PATH="$HOME/backup-$(date +%m-%Y).tar.gz"
-if ! command -v crabz &>/dev/null; then
-	echo "${YELLOW}:: ${BWHITE}It seems that you don't have ${BLUE}pigz${BWHITE} installed.${NC}"
+if ! command -v crabz &>/dev/null || ! command -v pv &>/dev/null; then
+	echo "${YELLOW}:: ${BWHITE}It seems that you don't have ${BLUE}crabz${BWHITE} and/or ${BLUE}pv{$BWHITE} installed.${NC}"
 	echo "${YELLOW}:: ${BWHITE}Compression will be performed using only one core.${NC}"
 	tar -C "$HOME" -czvf "$HOME/backup.tar.gz" "${DIR_TO_BACKUP[@]}"
 else
