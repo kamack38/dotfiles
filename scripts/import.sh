@@ -1,46 +1,58 @@
 #!/bin/bash
 
+# Colours
+BLACK=$'\e[0;30m'
+WHITE=$'\e[0;37m'
+BWHITE=$'\e[1;37m'
+RED=$'\e[0;31m'
+BLUE=$'\e[0;34m'
+GREEN=$'\e[0;32m'
+YELLOW=$'\e[0;33m'
+NC=$'\e[0m' # No Colour
+
 # Vars
 firefoxConfigPath="$HOME/.mozilla/firefox"
 firefoxProfileName="Profile0"
 backupDir="$HOME/.backup"
+backupFile="$HOME/backup.tar.gz"
+
+mkdir -p "$backupDir"
 
 # Extract tar archive
-if ! command -v pigz &>/dev/null; then
-    echo "${YELLOW}:: ${BWHITE}It seems that you don't have ${BLUE}pigz${BWHITE} installed.${NC}"
-    echo "${YELLOW}:: ${BWHITE}Extraction will be performed using only one core.${NC}"
-    tar -xf "$HOME/backup.tar.gz" -C=$backupDir
+if ! command -v crabz &>/dev/null || ! command -v pv &>/dev/null; then
+	echo "${YELLOW}:: ${BWHITE}It seems that you don't have ${BLUE}crabz${BWHITE} and/or ${BLUE}pv${BWHITE} installed.${NC}"
+	echo "${YELLOW}:: ${BWHITE}Extraction will be performed using only one core.${NC}"
+	tar -xf "$backupFile" -C="$backupDir"
 else
-    echo "${BLUE}:: ${BWHITE}Compressing with multiple cores using ${BLUE}pigz${BWHITE}.${NC}"
-    tar --totals=USR1 -xf --use-compress-program=pigz "$HOME/backup.tar.gz" -C=$backupDir
+	echo "${BLUE}:: ${BWHITE}Extracting with multiple cores using ${BLUE}crabz${BWHITE}.${NC}"
+	pv "$backupFile" | tar -I crabz -xf -C="$backupDir"
 fi
 
 # Copy firefox settings
 firefoxProfilePath=$(sed -nr "/^\[$firefoxProfileName\]/ { :l /^Path[ ]*=/ { s/[^=]*=[ ]*//; p; q;}; n; b l;}" "$backupDir/firefox/profiles.ini")
 
-mv -f "$backupDir/firefox/$firefoxProfilePath" "$firefoxConfigPath/$firefoxProfilePath"
-mv -f "$backupDir/firefox/profiles.ini" "$firefoxConfigPath/profiles.ini"
+declare -A paths
+paths=(
+	["firefox/$firefoxProfilePath"]="$firefoxConfigPath/$firefoxProfilePath"
+	["firefox/profiles.ini"]="$firefoxConfigPath/profiles.ini"
 
-# Copy documents
-mv -f "$backupDir/Pictures" "$HOME/Pictures"
-mv -f "$backupDir/Videos" "$HOME/Videos"
-mv -f "$backupDir/Documents" "$HOME/Documents"
-mv -f "$backupDir/Music" "$HOME/Music"
+	# Documents
+	["Pictures"]="$HOME/Pictures"
+	["Videos"]="$HOME/Videos"
+	["Documents"]="$HOME/Documents"
+	["Music"]="$HOME/Music"
 
-# Copy ngrok settings
-mv -f "$backupDir/.config/ngrok" "$HOME/.config/ngrok"
+	[".keys"]="$HOME/.keys"
+	[".ssh"]="$HOME/.ssh"
 
-# Copy tokens/keys
-mv -f "$backupDir/.keys" "$HOME/.keys"
+	[".config/ngrok"]="$HOME/.config/ngrok"
+	[".config/polybar/scripts/gmail/credentials.json"]="$HOME/.config/polybar/scripts/gmail/credentials.json"
+	[".config/wakatime/.wakatime.cfg"]="$HOME/.config/wakatime/.wakatime.cfg"
+)
 
-# Copy wakatime settings
-mv - "$backupDir/.config/wakatime/.wakatime.cfg" "$HOME/.config/wakatime/.wakatime.cfg"
-
-# Copy ssh settings
-mv -f "$backupDir/.ssh" "$HOME/.ssh"
-
-# Copy gmail key
-mv -f "$backupDir/.config/polybar/scripts/gmail/credentials.json" "$HOME/.config/polybar/scripts/gmail/credentials.json"
+for path in "${!paths[@]}"; do
+	mv "$backupDir/$path" "${paths[$path]}"
+done
 
 # Import gpg keys
 gpg --import "$HOME/.keys/backupkeys.pgp"
