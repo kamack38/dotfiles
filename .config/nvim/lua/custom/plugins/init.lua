@@ -170,6 +170,7 @@ return {
         filetype = {
           cpp = 'mkdir -p "$dir/bin" && cd "$dir/bin" && g++ "../$fileName" -o "$fileNameWithoutExt" -std=c++11 -fsanitize=address,undefined && "./$fileNameWithoutExt"',
           tex = 'mkdir -p "$dir/bin" && pdflatex -output-directory="$dir/bin" "$dir/$fileName"',
+          rust = 'cargo run "$dir/$fileName"',
         },
         startinsert = true,
       }
