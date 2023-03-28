@@ -1,40 +1,37 @@
-local overrides = require "custom.plugins.overrides"
+local overrides = require "custom.configs.overrides"
 
 return {
 
   ----------------------------------- default plugins -----------------------------------
 
-  -- Enable dashboard
-  ["goolord/alpha-nvim"] = {
-    override_options = overrides.alpha(),
-    disable = false,
-  },
-
   -- Show suggestions when executing snippets
-  ["folke/which-key.nvim"] = {
+  {
+    "folke/which-key.nvim",
     disable = false,
     cmd = "WhichKey",
   },
 
   -- Add more lsp servers
-  ["neovim/nvim-lspconfig"] = {
+  {
+    "neovim/nvim-lspconfig",
+    dependencies = {
+      -- Diagnostics, code actions and more
+      {
+        "jose-elias-alvarez/null-ls.nvim",
+        config = function()
+          require("custom.configs.null-ls").setup()
+        end,
+      },
+    },
     config = function()
       require "plugins.configs.lspconfig"
-      require "custom.plugins.lspconfig"
+      require "custom.configs.lspconfig"
     end,
   },
 
-  -- Load VSC snippets
-  ["L3MON4D3/LuaSnip"] = {
-    config = function()
-      require("plugins.configs.others").luasnip()
-      require("luasnip.loaders.from_vscode").lazy_load {
-        paths = { os.getenv "XDG_CONFIG_HOME" .. "/Code/User/snippets" },
-      }
-    end,
-  },
-
-  ["nvim-telescope/telescope-media-files.nvim"] = {
+  -- Preview media files in Telescope
+  {
+    "nvim-telescope/telescope-media-files.nvim",
     after = "telescope.nvim",
     config = function()
       require("telescope").setup {
@@ -50,41 +47,29 @@ return {
   },
 
   -- override default configs
-  ["nvim-tree/nvim-tree.lua"] = {
-    override_options = overrides.nvimtree,
-  },
+  { "nvim-tree/nvim-tree.lua", opts = overrides.nvimtree },
 
-  ["nvim-treesitter/nvim-treesitter"] = {
-    override_options = overrides.treesitter,
-  },
+  { "nvim-treesitter/nvim-treesitter", opts = overrides.treesitter },
 
-  ["williamboman/mason.nvim"] = {
-    override_options = overrides.mason,
-  },
-
-  -- ["NvChad/ui"] = {
-  --   override_options = {
-  --     tabufline = {
-  --       lazyload = false, -- to show tabufline by default
-  --       overriden_modules = function()
-  --         return require "custom.plugins.ui"
-  --       end,
-  --     },
-  --   },
-  -- },
+  { "williamboman/mason.nvim", opts = overrides.mason },
 
   ----------------------------------- syntax plugins -----------------------------------
 
   -- .rasi
-  ["Fymyte/rasi.vim"] = {},
+  { "Fymyte/rasi.vim" },
 
   -- yuck syntax
-  ["elkowar/yuck.vim"] = {},
+  {
+    "elkowar/yuck.vim",
+    config = function()
+      vim.opt.ft = "yuck"
+    end,
+  },
 
   -- Neorg
-  ["nvim-neorg/neorg"] = {
+  {
+    "nvim-neorg/neorg",
     ft = "norg",
-    after = "nvim-treesitter", -- You may want to specify Telescope here as well
     config = function()
       require("neorg").setup {
         load = {
@@ -93,46 +78,46 @@ return {
         },
       }
     end,
-    run = ":Neorg sync-parsers",
-    requires = "nvim-lua/plenary.nvim",
+    build = ":Neorg sync-parsers",
+    dependencies = { { "nvim-lua/plenary.nvim" } },
   },
 
   ----------------------------------- custom plugins -----------------------------------
 
   -- Track the time you're spending with your code
-  ["wakatime/vim-wakatime"] = {},
+  {
+    "wakatime/vim-wakatime",
+    lazy = false,
+  },
 
   -- Focus on your code
-  ["Pocco81/true-zen.nvim"] = {
+  {
+    "Pocco81/true-zen.nvim",
     config = function()
       require "custom.plugins.truezen"
     end,
   },
 
   -- Let everyone know your using NeoVim
-  ["andweeb/presence.nvim"] = {
+  {
+    "andweeb/presence.nvim",
     config = function()
       require("presence"):setup { main_image = "file" }
     end,
   },
 
   -- Smooth scrolling
-  ["karb94/neoscroll.nvim"] = {
+  {
+    "karb94/neoscroll.nvim",
+    lazy = false,
     config = function()
       require("neoscroll").setup()
     end,
   },
 
-  -- Diagnostics, code actions and more
-  ["jose-elias-alvarez/null-ls.nvim"] = {
-    after = "nvim-lspconfig",
-    config = function()
-      require("custom.plugins.null-ls").setup()
-    end,
-  },
-
   -- Organize your work with comments
-  ["folke/todo-comments.nvim"] = {
+  {
+    "folke/todo-comments.nvim",
     requires = "nvim-lua/plenary.nvim",
     config = function()
       require("todo-comments").setup()
@@ -140,7 +125,8 @@ return {
   },
 
   -- Delete without copying
-  ["gbprod/cutlass.nvim"] = {
+  {
+    "gbprod/cutlass.nvim",
     config = function()
       require("cutlass").setup {
         override_del = true,
@@ -150,7 +136,8 @@ return {
   },
 
   -- Show all problems in your code
-  ["folke/trouble.nvim"] = {
+  {
+    "folke/trouble.nvim",
     requires = "kyazdani42/nvim-web-devicons",
     config = function()
       require("trouble").setup()
@@ -158,12 +145,11 @@ return {
   },
 
   -- Apply code fixes swiftly
-  ["weilbith/nvim-code-action-menu"] = {
-    cmd = "CodeActionMenu",
-  },
+  { "weilbith/nvim-code-action-menu", cmd = "CodeActionMenu" },
 
   -- Run code inside NeoVim
-  ["CRAG666/code_runner.nvim"] = {
+  {
+    "CRAG666/code_runner.nvim",
     requires = "nvim-lua/plenary.nvim",
     config = function()
       require("code_runner").setup {
@@ -178,10 +164,11 @@ return {
   },
 
   -- Mark signatures
-  ["kshenoy/vim-signature"] = {},
+  { "kshenoy/vim-signature", lazy = false },
 
   -- Markdown browser preview
-  ["iamcco/markdown-preview.nvim"] = {
+  {
+    "iamcco/markdown-preview.nvim",
     run = "cd app && npm install",
     setup = function()
       vim.g.mkdp_filetypes = { "markdown" }
@@ -190,14 +177,17 @@ return {
   },
 
   -- Surround text with quotes
-  ["kylechui/nvim-surround"] = {
+  {
+    "kylechui/nvim-surround",
     config = function()
       require("nvim-surround").setup {}
     end,
   },
 
   -- Cheatsheet
-  ["sudormrfbin/cheatsheet.nvim"] = {
+  {
+    "sudormrfbin/cheatsheet.nvim",
+    lazy = false,
     requires = {
       { "nvim-telescope/telescope.nvim" },
       { "nvim-lua/popup.nvim" },
@@ -206,21 +196,21 @@ return {
   },
 
   -- Fast search plugin
-  ["ggandor/leap.nvim"] = {
-    requires = {
-      { "tpope/vim-repeat" },
-    },
-  },
+  { "ggandor/leap.nvim", requires = {
+    { "tpope/vim-repeat" },
+  } },
 
   -- Set project root correctly
-  ["ahmedkhalf/project.nvim"] = {
+  {
+    "ahmedkhalf/project.nvim",
     config = function()
-      require("project_nvim").setup {}
+      require("project_nvim").setup()
     end,
   },
 
   -- Line decorations
-  ["mvllow/modes.nvim"] = {
+  {
+    "mvllow/modes.nvim",
     config = function()
       require("modes").setup()
     end,

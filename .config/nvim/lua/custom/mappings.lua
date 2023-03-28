@@ -11,7 +11,7 @@ M.truzen = {
 
 M.dashboard = {
   n = {
-    ["<leader>db"] = { "<cmd> Alpha <CR>", "舘  Show dashboard" },
+    ["<leader>db"] = { "<cmd> Nvdash <CR>", "舘  Show dashboard" },
   },
 }
 
@@ -42,6 +42,7 @@ M.codeactions = {
 
 M.neovim = {
   n = {
+    ["<C-p>"] = { "<cmd> pu <CR>", "  Paste in line under" },
     ["<A-k>"] = { "<cmd> m-2 <CR>", "  Move curent line up" },
     ["<A-j>"] = { "<cmd> m+ <CR>", "  Move curent line down" },
     ["<A-S-j>"] = { "<cmd> t. <CR>", "  Copy curent line down" },
