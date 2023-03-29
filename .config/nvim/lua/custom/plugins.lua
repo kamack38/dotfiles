@@ -32,7 +32,7 @@ return {
   -- Preview media files in Telescope
   {
     "nvim-telescope/telescope-media-files.nvim",
-    after = "telescope.nvim",
+    event = "VeryLazy",
     config = function()
       require("telescope").setup {
         extensions = {
@@ -56,11 +56,12 @@ return {
   ----------------------------------- syntax plugins -----------------------------------
 
   -- .rasi
-  { "Fymyte/rasi.vim" },
+  { "Fymyte/rasi.vim", ft = "rasi" },
 
   -- yuck syntax
   {
     "elkowar/yuck.vim",
+    ft = "yuck",
     config = function()
       vim.opt.ft = "yuck"
     end,
@@ -93,14 +94,16 @@ return {
   -- Focus on your code
   {
     "Pocco81/true-zen.nvim",
+    cmd = { "TZAtaraxis", "TZMinimalist", "TZFocus", "TZNarrow" },
     config = function()
-      require "custom.plugins.truezen"
+      require "custom.configs.truezen"
     end,
   },
 
   -- Let everyone know your using NeoVim
   {
     "andweeb/presence.nvim",
+    lazy = false,
     config = function()
       require("presence"):setup { main_image = "file" }
     end,
@@ -109,7 +112,7 @@ return {
   -- Smooth scrolling
   {
     "karb94/neoscroll.nvim",
-    lazy = false,
+    event = "VeryLazy",
     config = function()
       require("neoscroll").setup()
     end,
@@ -118,7 +121,8 @@ return {
   -- Organize your work with comments
   {
     "folke/todo-comments.nvim",
-    requires = "nvim-lua/plenary.nvim",
+    dependencies = "nvim-lua/plenary.nvim",
+    event = "VeryLazy",
     config = function()
       require("todo-comments").setup()
     end,
@@ -127,6 +131,7 @@ return {
   -- Delete without copying
   {
     "gbprod/cutlass.nvim",
+    lazy = false,
     config = function()
       require("cutlass").setup {
         override_del = true,
@@ -138,7 +143,7 @@ return {
   -- Show all problems in your code
   {
     "folke/trouble.nvim",
-    requires = "kyazdani42/nvim-web-devicons",
+    cmd = "Trouble",
     config = function()
       require("trouble").setup()
     end,
@@ -150,7 +155,8 @@ return {
   -- Run code inside NeoVim
   {
     "CRAG666/code_runner.nvim",
-    requires = "nvim-lua/plenary.nvim",
+    dependecies = "nvim-lua/plenary.nvim",
+    cmd = { "RunCode", "RunFile", "RunProject" },
     config = function()
       require("code_runner").setup {
         filetype = {
@@ -179,6 +185,7 @@ return {
   -- Surround text with quotes
   {
     "kylechui/nvim-surround",
+    event = "VeryLazy",
     config = function()
       require("nvim-surround").setup {}
     end,
@@ -187,8 +194,8 @@ return {
   -- Cheatsheet
   {
     "sudormrfbin/cheatsheet.nvim",
-    lazy = false,
-    requires = {
+    cmd = "Cheatsheet",
+    dependencies = {
       { "nvim-telescope/telescope.nvim" },
       { "nvim-lua/popup.nvim" },
       { "nvim-lua/plenary.nvim" },
@@ -196,13 +203,14 @@ return {
   },
 
   -- Fast search plugin
-  { "ggandor/leap.nvim", requires = {
+  { "ggandor/leap.nvim", dependencies = {
     { "tpope/vim-repeat" },
   } },
 
   -- Set project root correctly
   {
     "ahmedkhalf/project.nvim",
+    lazy = false,
     config = function()
       require("project_nvim").setup()
     end,
@@ -211,8 +219,18 @@ return {
   -- Line decorations
   {
     "mvllow/modes.nvim",
+    event = "VeryLazy",
     config = function()
       require("modes").setup()
+    end,
+  },
+
+  -- Template string converter
+  {
+    "axelvc/template-string.nvim",
+    ft = { "typescript", "javascript", "typescriptreact", "javascriptreact", "python" },
+    config = function()
+      require("template-string").setup()
     end,
   },
 }

@@ -5,7 +5,10 @@ M.truzen = {
     ["<leader>ta"] = { "<cmd> TZAtaraxis <CR>", "  Truzen ataraxis" },
     ["<leader>tm"] = { "<cmd> TZMinimalist <CR>", "  Truzen minimal" },
     ["<leader>tf"] = { "<cmd> TZFocus <CR>", "  Truzen focus" },
-    ["<leader>tn"] = { "<cmd> TZNarrow <CR>", "  Truzen narrow" },
+  },
+
+  v = {
+    ["<leader>tn"] = { ":'<,'>TZNarrow <CR>", "  Truzen narrow" },
   },
 }
 
