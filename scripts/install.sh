@@ -611,12 +611,8 @@ if [[ "${SELECTED_DE}" != "" ]]; then
 		bash "$HOME/scripts/profiles/${DE}.sh"
 	done
 
-	# Enable services
-	if [[ $(systemctl is-enabled sddm-plymouth.service 2>/dev/null) == enabled ]]; then
-		echo "${YELLOW}:: ${BWHITE}It seems that you have sddm-plymouth service enabled${NC} -- skipping sddm service"
-	else
-		sudo systemctl enable sddm.service
-	fi
+	# Enable service
+	sudo systemctl enable sddm.service
 
 	# Enable spicetify
 	if [[ ! -f "$HOME/.config/spicetify/Backup/xpui.spa" ]]; then
@@ -650,82 +646,27 @@ EOT
 fi
 
 if [[ $(pacman -Q grub) ]]; then
-	# Detect login manager
-	ALL_SERVICES=$(systemctl list-unit-files)
-	if [[ $(echo "$ALL_SERVICES" | grep 'sddm.service' | awk '{ print $2 }') == enabled ]]; then
-		LOGIN_MANAGER="sddm"
-	elif [[ $(echo "$ALL_SERVICES" | grep 'lightdm.service' | awk '{ print $2 }') == enabled ]]; then
-		LOGIN_MANAGER="lightdm"
-	elif [[ $(echo "$ALL_SERVICES" | grep 'lxdm.service' | awk '{ print $2 }') == enabled ]]; then
-		LOGIN_MANAGER="lxdm"
+	echo "${BLUE}:: ${BWHITE}Installing plymouth...${NC}"
+
+	# Add archcraft repository
+	archcraft
+	sudo pacman -Sy
+	$HELPER -S --noconfirm --needed --quiet "${PLYMOUTH_PACKAGES[@]}"
+
+	# Set default plymouth theme
+	sudo plymouth-set-default-theme -R archcraft
+
+	# Plymouth hook
+	if ! grep -q "^HOOKS=.*plymouth.*" /etc/mkinitcpio.conf; then
+		echo "${YELLOW}:: ${BWHITE}Adding plymouth hook...${NC}"
+		sudo sed -i "s,\(^HOOKS=.*\)udev\(.*\),\1udev plymouth\2," "/etc/mkinitcpio.conf"
 	else
-		LOGIN_MANAGER="none"
+		echo "${YELLOW}:: ${BWHITE}plymouth hook already exists${NC} -- skipping"
 	fi
 
-	if [ "$LOGIN_MANAGER" == "none" ]; then
-		echo "${YELLOW}:: ${BWHITE}You're not using any login manager or plymouth is already installed${NC} -- skipping plymouth install"
-	else
-		echo "${BLUE}:: ${BWHITE}You're using ${BLUE}${LOGIN_MANAGER}${NC}"
-		echo "${BLUE}:: ${BWHITE}Installing plymouth...${NC}"
-
-		# Add archcraft repository
-		archcraft
-		sudo pacman -Sy
-		$HELPER -S --noconfirm --needed --quiet "${PLYMOUTH_PACKAGES[@]}"
-
-		# Set default plymouth theme
-		sudo plymouth-set-default-theme -R archcraft
-
-		# Correct hooks
-		if grep -q "^HOOKS=.*systemd.*" /etc/mkinitcpio.conf; then
-			echo "${BLUE}:: ${BWHITE}You're using ${BLUE} systemd hook${NC} -- correcting hooks"
-			PLYMOUTH_HOOK_PARENT="systemd"
-			PLYMOUTH_HOOK="sd-plymouth"
-			ENCRYPT_PLYMOUTH_HOOK="sd-encrypt"
-		else
-			PLYMOUTH_HOOK_PARENT="udev"
-			PLYMOUTH_HOOK="plymouth"
-			ENCRYPT_PLYMOUTH_HOOK="plymouth-encrypt"
-		fi
-
-		# Plymouth hook
-		if ! grep -q "^HOOKS=.*${PLYMOUTH_HOOK}.*" /etc/mkinitcpio.conf; then
-			echo "${YELLOW}:: ${BWHITE}Adding ${PLYMOUTH_HOOK} hook...${NC}"
-			sudo sed -i "s,\(^HOOKS=.*\)${PLYMOUTH_HOOK_PARENT}\(.*\),\1${PLYMOUTH_HOOK_PARENT} ${PLYMOUTH_HOOK}\2," "/etc/mkinitcpio.conf"
-
-		else
-			echo "${YELLOW}:: ${BWHITE}${PLYMOUTH_HOOK} hook already exists${NC} -- skipping"
-		fi
-
-		# Encrypt hook
-		if ! grep -q "^HOOKS=.*${ENCRYPT_PLYMOUTH_HOOK}.*" /etc/mkinitcpio.conf; then
-			echo "${YELLOW}:: ${BWHITE}Adding ${ENCRYPT_PLYMOUTH_HOOK} hook...${NC}"
-			sudo sed -i "s,\(^HOOKS=.*\)encrypt\(.*\),\1${ENCRYPT_PLYMOUTH_HOOK}\2," "/etc/mkinitcpio.conf"
-		else
-			echo "${YELLOW}:: ${BWHITE}${ENCRYPT_PLYMOUTH_HOOK} hook already exists${NC} -- skipping"
-		fi
-
-		# Zfs hook
-		if ! grep -q "^HOOKS=.*plymouth-zfs.*" /etc/mkinitcpio.conf; then
-			if grep -q "^HOOKS=.*zfs.*" /etc/mkinitcpio.conf; then
-				echo "${YELLOW}:: ${BWHITE}Adding plymouth-zfs hook...${NC}"
-				$HELPER -S --noconfirm --needed --quiet plymouth-zfs
-				sudo sed -i "s,\(^HOOKS=.*\)zfs\(.*\),\1plymouth-zfs\2," "/etc/mkinitcpio.conf"
-			else
-				echo "${YELLOW}:: ${BWHITE}Zfs hook not detected${NC} -- skipping"
-			fi
-		else
-			echo "${YELLOW}:: ${BWHITE}plymouth-zfs hook already exists${NC} -- skipping"
-		fi
-
-		# Update grub config
-		sudo sed -i "s,\(GRUB_CMDLINE_LINUX_DEFAULT=\".*\)\(\"\),\1 quiet splash vt.global_cursor_default=0\2," "/etc/default/grub"
-		sudo grub-mkconfig -o /boot/grub/grub.cfg
-
-		# Change login manager
-		sudo systemctl disable "${LOGIN_MANAGER}.service"
-		sudo systemctl enable "${LOGIN_MANAGER}-plymouth.service"
-	fi
+	# Update grub config
+	sudo sed -i "s,\(GRUB_CMDLINE_LINUX_DEFAULT=\".*\)\(\"\),\1 quiet splash vt.global_cursor_default=0\2," "/etc/default/grub"
+	sudo grub-mkconfig -o /boot/grub/grub.cfg
 fi
 
 # Create initial ramdisk
