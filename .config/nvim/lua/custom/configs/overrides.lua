@@ -8,6 +8,7 @@ M.treesitter = {
     "rust",
     "javascript",
     "typescript",
+    "tsx",
     "json",
     "yaml",
     "toml",
