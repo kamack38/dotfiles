@@ -170,7 +170,16 @@ return {
   },
 
   -- Mark signatures
-  { "kshenoy/vim-signature", lazy = false },
+  {
+    "yehuohan/marks.nvim",
+    lazy = false,
+    config = function()
+      require("marks").setup {
+        default_mappings = false,
+        force_write_shada = true,
+      }
+    end,
+  },
 
   -- Markdown browser preview
   {
@@ -232,5 +241,11 @@ return {
     config = function()
       require("template-string").setup()
     end,
+  },
+
+  -- Easily move lines
+  {
+    "fedepujol/move.nvim",
+    cmd = { "MoveLine", "MoveBlock", "MoveHChar", "MoveHBlock", "MoveWord" },
   },
 }
