@@ -26,3 +26,55 @@ create_cmd("TexPreview", function()
     end,
   })
 end, {})
+
+-- Cargo.toml keybindigs
+augroup("Cargo.toml", { clear = true })
+autocmd("BufRead", {
+  group = "Cargo.toml",
+  pattern = "*Cargo.toml",
+  callback = function(opts)
+    local crates = require "crates"
+    local wk = require "which-key"
+    wk.register({
+      ["<leader>c"] = {
+        name = "Crates",
+        ["t"] = { crates.toggle, "Toggle" },
+        ["r"] = { crates.reload, "Reload" },
+
+        ["v"] = { crates.show_versions_popup, "Versions popup" },
+        ["f"] = { crates.show_features_popup, "Features popup" },
+        ["d"] = { crates.show_dependencies_popup, "Dependencies popup" },
+
+        ["u"] = { crates.update_crate, "Update crate" },
+        ["U"] = { crates.upgrade_crate, "Upgrade crate" },
+        ["a"] = { crates.update_all_crates, "Update all crates" },
+        ["A"] = { crates.upgrade_all_crates, "Upgrade all crates" },
+
+        ["H"] = { crates.open_homepage, "Open homepage" },
+        ["R"] = { crates.open_repository, "Open repository" },
+        ["D"] = { crates.open_documentation, "Open documentation" },
+        ["C"] = { crates.open_crates_io, "Open crates.io" },
+      },
+    }, { buffer = opts.buf })
+  end,
+})
+
+-- package.json keybindigs
+augroup("package.json", { clear = true })
+autocmd("BufRead", {
+  group = "package.json",
+  pattern = "*package.json",
+  callback = function(opts)
+    local package = require "package-info"
+    local wk = require "which-key"
+    wk.register({
+      ["<leader>n"] = {
+        name = "Package info",
+        ["u"] = { package.update, "Update selected package" },
+        ["d"] = { package.delete, "Delete selected package" },
+        ["i"] = { package.install, "Install new package" },
+        ["p"] = { package.change_version, "Change package version" },
+      },
+    }, { buffer = opts.buf })
+  end,
+})

@@ -13,32 +13,33 @@ NC=$'\e[0m' # No Colour
 
 # Packages
 DEV_PROFILE=(
-	"jre-openjdk"                # Java Runtime Environment
-	"git-delta"                  # A syntax-highlighting pager for git, diff, and grep output
-	"onefetch"                   # Git repository summary cli
-	"neofetch-git"               # A command-line system information tool
-	"github-cli"                 # CLI for GitHub
-	"visual-studio-code-bin"     # IDE
-	"gnome-keyring"              # Fix vscode
-	"libsecret"                  # Fix vscode
-	"icu69-bin"                  # Fix live share
-	"tldr"                       # Collaborative cheatsheets for console commands
-	"dust"                       # A more intuitive version of du in rust
-	"shfmt"                      # A shell parser, formatter, and interpreter for bash
-	"ngrok"                      # A tunneling, reverse proxy for developing and understanding networked, HTTP services
-	"jq"                         # Command-line JSON processor
-	"gnupg"                      # Complete and free implementation of the OpenPGP standard
-	"unrar"                      # The RAR uncompression program
-	"gdb"                        # The GNU Debugger
-	"wakatime"                   # Command line interface used by all WakaTime text editor plugins
-	"ueberzug"                   # Command line util which allows to display images in combination with X11
-	"bash-completion"            # Programmable completion for the bash shell
-	"bash-language-server"       # Bash language server implementation based on Tree Sitter and its grammar for Bash
-	"typescript-language-server" # Language Server Protocol (LSP) implementation for TypeScript using tsserver
-	"prettierd"                  # prettier, as a daemon, for ludicrous formatting speed
-	"clang"                      # C language family frontend for LLVM
-	"typos"                      # Source code spell checker
-	"rustcat"                    # A modern port listener and reverse shell
+	"jre-openjdk"                 # Java Runtime Environment
+	"git-delta"                   # A syntax-highlighting pager for git, diff, and grep output
+	"onefetch"                    # Git repository summary cli
+	"neofetch-git"                # A command-line system information tool
+	"github-cli"                  # CLI for GitHub
+	"visual-studio-code-bin"      # IDE
+	"gnome-keyring"               # Fix vscode
+	"libsecret"                   # Fix vscode
+	"icu69-bin"                   # Fix live share
+	"tldr"                        # Collaborative cheatsheets for console commands
+	"dust"                        # A more intuitive version of du in rust
+	"shfmt"                       # A shell parser, formatter, and interpreter for bash
+	"ngrok"                       # A tunneling, reverse proxy for developing and understanding networked, HTTP services
+	"jq"                          # Command-line JSON processor
+	"gnupg"                       # Complete and free implementation of the OpenPGP standard
+	"unrar"                       # The RAR uncompression program
+	"gdb"                         # The GNU Debugger
+	"wakatime"                    # Command line interface used by all WakaTime text editor plugins
+	"ueberzug"                    # Command line util which allows to display images in combination with X11
+	"bash-completion"             # Programmable completion for the bash shell
+	"bash-language-server"        # Bash language server implementation based on Tree Sitter and its grammar for Bash
+	"typescript-language-server"  # Language Server Protocol (LSP) implementation for TypeScript using tsserver
+	"tailwindcss-language-server" # Tailwind CSS Language Server
+	"prettierd"                   # prettier, as a daemon, for ludicrous formatting speed
+	"clang"                       # C language family frontend for LLVM
+	"typos"                       # Source code spell checker
+	"rustcat"                     # A modern port listener and reverse shell
 )
 
 NORMAL_PROFILE=(

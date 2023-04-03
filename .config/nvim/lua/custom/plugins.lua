@@ -248,4 +248,32 @@ return {
     "fedepujol/move.nvim",
     cmd = { "MoveLine", "MoveBlock", "MoveHChar", "MoveHBlock", "MoveWord" },
   },
+
+  -- Easier crates.io dependency managing
+  {
+    "Saecki/crates.nvim",
+    event = { "BufRead Cargo.toml" },
+    dependencies = { "nvim-lua/plenary.nvim" },
+    config = function()
+      require("crates").setup {
+        popup = {
+          autofocus = true,
+        },
+        null_ls = {
+          enabled = true,
+          name = "crates.nvim",
+        },
+      }
+    end,
+  },
+
+  -- Quicker NPM package managing
+  {
+    "vuki656/package-info.nvim",
+    event = { "BufRead package.json" },
+    dependencies = { "MunifTanjim/nui.nvim" },
+    config = function()
+      require("package-info").setup()
+    end,
+  },
 }
