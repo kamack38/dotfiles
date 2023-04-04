@@ -14,6 +14,10 @@ NC=$'\e[0m' # No Colour
 firefoxConfigPath="$HOME/.mozilla/firefox"
 firefoxProfileName="Profile0"
 
+# Select backup path
+BACKUP_PATH="$(fd . '/run/media' ~ --type d | fzf)backup-$(date +%m-%Y).tar.gz"
+echo "${BLUE}:: ${BWHITE}Selected backup path is: ${BLUE}${BACKUP_PATH}${BWHITE}.${NC}"
+
 # Copy firefox settings
 echo "${BLUE}:: ${BWHITE}Finding default firefox profile path...${NC}"
 firefoxProfilePath=$(sed -nr "/^\[$firefoxProfileName\]/ { :l /^Path[ ]*=/ { s/[^=]*=[ ]*//; p; q;}; n; b l;}" "$firefoxConfigPath/profiles.ini")
@@ -38,7 +42,6 @@ DIR_TO_BACKUP=(
 )
 
 # Create a tar archive
-BACKUP_PATH="$HOME/backup-$(date +%m-%Y).tar.gz"
 if ! command -v crabz &>/dev/null || ! command -v pv &>/dev/null; then
 	echo "${YELLOW}:: ${BWHITE}It seems that you don't have ${BLUE}crabz${BWHITE} and/or ${BLUE}pv{$BWHITE} installed.${NC}"
 	echo "${YELLOW}:: ${BWHITE}Compression will be performed using only one core.${NC}"

@@ -313,6 +313,49 @@
         "description": "Find function"
     },
 
+    "union find": {
+        "prefix": "!unionfind"
+        "body": [
+            "template <size_t size>",
+            "struct UnionFind {",
+            "  struct Change {",
+            "    int element, previous_value;",
+            "    Change(int element, int previous_value)",
+            "      : element(element), previous_value(previous_value) {}",
+            "  };",
+            "",
+            "  array<int, size + 1> nodes;",
+            "  stack<Change> changes;",
+            "",
+            "  UnionFind() {",
+            "    for (int i = 1; i <= size; ++i) {",
+            "      nodes[i] = i;",
+            "    }",
+            "  }",
+            "",
+            "  int find(int x) {",
+            "    if (nodes[x] != x) return find(nodes[x]);",
+            "    return nodes[x];",
+            "  }",
+            "",
+            "  void merge(int x, int y) {",
+            "    if (y < x) swap(x, y);",
+            "    changes.push(Change(y, nodes[y]));",
+            "    nodes[y] = x;",
+            "  }",
+            "",
+            "  void revert() {",
+            "    Change last_change = changes.top();",
+            "    changes.pop();",
+            "    nodes[last_change.element] = last_change.previous_value;",
+            "  }",
+            "",
+            "  bool is_connected(int x, int y) { return find(x) == find(y); }",
+            "};",
+        ],
+        "description": "Union-Find struct with option to delete last added element"
+    },
+
     "binary search": {
         "prefix": "!binsrc",
         "body": [
