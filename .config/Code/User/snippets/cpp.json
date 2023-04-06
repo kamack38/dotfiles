@@ -314,7 +314,7 @@
     },
 
     "union find": {
-        "prefix": "!unionfind"
+        "prefix": "!unionfind",
         "body": [
             "template <size_t size>",
             "struct UnionFind {",
@@ -351,7 +351,7 @@
             "  }",
             "",
             "  bool is_connected(int x, int y) { return find(x) == find(y); }",
-            "};",
+            "};"
         ],
         "description": "Union-Find struct with option to delete last added element"
     },
