@@ -34,6 +34,7 @@ HYPRLAND_PACKAGES=(
 	"waybar-hyprland-git"             # Highly customizable Wayland bar for Wlroots based compositors, with workspaces support for Hyprland
 	"swaylock-effects"                # A fancier screen locker for Wayland.
 	"swaylockd"                       # A dumb launcher to spawn swaylock and ensure it runs no matter what
+	"swayidle"                        # Idle management daemon for Wayland
 	"xdg-desktop-portal"              # Desktop integration portals for sandboxed apps
 	"xdg-desktop-portal-hyprland-git" # xdg-desktop-portal backend for hyprland
 	"wev"                             # A tool for debugging wayland events, similar to xev
