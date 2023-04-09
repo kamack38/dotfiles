@@ -4,7 +4,17 @@ local capabilities = require("plugins.configs.lspconfig").capabilities
 capabilities.offsetEncoding = { "utf-16" }
 
 local lspconfig = require "lspconfig"
-local servers = { "html", "cssls", "clangd", "rust_analyzer", "emmet_ls", "tsserver", "tailwindcss", "texlab" }
+local servers = {
+  "html",
+  "cssls",
+  "jsonls",
+  "clangd",
+  "rust_analyzer",
+  "emmet_ls",
+  "tsserver",
+  "tailwindcss",
+  "texlab",
+}
 
 for _, lsp in ipairs(servers) do
   lspconfig[lsp].setup {
