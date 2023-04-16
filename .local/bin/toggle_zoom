@@ -1,0 +1,14 @@
+#!/bin/bash
+
+case "$XDG_CURRENT_DESKTOP" in
+"Hyprland")
+	if [ "$(hyprctl getoption misc:cursor_zoom_factor -j | jq .float)" == "1" ]; then
+		hyprctl keyword misc:cursor_zoom_factor 2
+	else
+		hyprctl keyword misc:cursor_zoom_factor 1
+	fi
+	;;
+*)
+	echo "Desktop not supported"
+	;;
+esac
