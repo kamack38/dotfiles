@@ -1,6 +1,6 @@
 [submodule ".config/polybar/scripts/gmail"]
 	path = .config/polybar/scripts/gmail
-	url = https://github.com/crabvk/polybar-gmail
+	url = https://github.com/kamack38/polybar-gmail
 	update = rebase
 [submodule ".config/awesome/revelation"]
 	path = .config/awesome/modules/revelation
