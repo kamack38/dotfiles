@@ -15,7 +15,9 @@ opt.foldmethod = "expr"
 opt.foldexpr = "nvim_treesitter#foldexpr()"
 opt.foldlevel = 20
 
-vim.g.vscode_snippets_path = os.getenv "XDG_CONFIG_HOME" .. "/Code/User/snippets"
+-- Snippets
+local config_path = ((os.getenv "XDG_CONFIG_HOME") or os.getenv "HOME" .. "/.config")
+vim.g.vscode_snippets_path = config_path .. "/Code/User/snippets"
 
 M.ui = {
   theme = "onedark",
