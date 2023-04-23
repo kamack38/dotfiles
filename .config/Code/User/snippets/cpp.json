@@ -543,6 +543,33 @@
         "description": "Strongly connected components - Trojan's implementation"
     },
 
+    "centroid": {
+        "prefix": "!centroid",
+        "body": [
+            "template <size_t root_node = 1>",
+            "vector<int> centroid(const vector<vector<int>> &graph) {",
+            "    int n = graph.size();",
+            "    vector<int> centroids;",
+            "    vector<int> subtree_size(n);",
+            "    function<void(int, int)> dfs = [&](int u, int parent) {",
+            "        subtree_size[u] = 1;",
+            "        bool is_centroid = true;",
+            "        for (auto v : graph[u])",
+            "            if (v != parent) {",
+            "                dfs(v, u);",
+            "                subtree_size[u] += subtree_size[v];",
+            "                if (subtree_size[v] > n / 2) is_centroid = false;",
+            "            }",
+            "        if (n - subtree_size[u] > n / 2) is_centroid = false;",
+            "        if (is_centroid) centroids.push_back(u);",
+            "    };",
+            "    dfs(root_node, -1);",
+            "    return centroids;",
+            "}"
+        ],
+        "description": "Function to get centroids of a tree"
+    },
+
     "interval set": {
         "prefix": "!IntervalSet",
         "body": [
