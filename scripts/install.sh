@@ -498,6 +498,7 @@ if [[ $SELECTED_PROFILES == *"RUST_DEV"* ]]; then
 	rustup install stable
 	rustup component add clippy
 	rustup component add rustfmt
+	rustup component add rust-analyzer
 fi
 
 # Install tweaks
