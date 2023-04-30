@@ -21,6 +21,7 @@ M.treesitter = {
     "lua",
     "rasi",
     "norg",
+    "python",
   },
 }
 

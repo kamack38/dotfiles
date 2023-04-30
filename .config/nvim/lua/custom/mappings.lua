@@ -1,14 +1,8 @@
 local M = {}
 
-M.truzen = {
+M.zenmode = {
   n = {
-    ["<leader>ta"] = { "<cmd> TZAtaraxis <CR>", "  Truzen ataraxis" },
-    ["<leader>tm"] = { "<cmd> TZMinimalist <CR>", "  Truzen minimal" },
-    ["<leader>tf"] = { "<cmd> TZFocus <CR>", "  Truzen focus" },
-  },
-
-  v = {
-    ["<leader>tn"] = { ":'<,'>TZNarrow <CR>", "  Truzen narrow" },
+    ["<leader>tz"] = { "<cmd> ZenMode <CR>", "  Toggle zen mode" },
   },
 }
 
@@ -74,6 +68,41 @@ M.neovim = {
     -- Duplicating lines
     ["<A-S-k>"] = { ":copy- <CR>", "  Duplicate curent line up" },
     -- ["<A-S-j>"] = { ":copy.  <CR>", "  Duplicate curent line down" },
+  },
+}
+
+M.dap = {
+  n = {
+    ["<F5>"] = {
+      function()
+        require("dap").continue()
+      end,
+      "Continue to another breakpoint",
+    },
+    ["<F10>"] = {
+      function()
+        require("dap").step_over()
+      end,
+      "Step over",
+    },
+    ["<F11>"] = {
+      function()
+        require("dap").step_into()
+      end,
+      "Step into",
+    },
+    ["<F12>"] = {
+      function()
+        require("dap").step_out()
+      end,
+      "Step out",
+    },
+    ["<leader>tb"] = {
+      function()
+        require("dap").toggle_breakpoint()
+      end,
+      "Toggle breakpoint",
+    },
   },
 }
 

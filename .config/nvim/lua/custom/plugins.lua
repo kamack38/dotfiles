@@ -4,10 +4,25 @@ return {
 
   ----------------------------------- default plugins -----------------------------------
 
+  -- Autocompletion
+  {
+    "hrsh7th/nvim-cmp",
+    opts = {
+      sources = {
+        -- trigger_characters is for unocss lsp
+        { name = "nvim_lsp" },
+        { name = "luasnip" },
+        { name = "buffer" },
+        { name = "nvim_lua" },
+        { name = "path" },
+        { name = "crates" },
+      },
+    },
+  },
+
   -- Show suggestions when executing snippets
   {
     "folke/which-key.nvim",
-    disable = false,
     cmd = "WhichKey",
   },
 
@@ -15,11 +30,11 @@ return {
   {
     "neovim/nvim-lspconfig",
     dependencies = {
-      -- Diagnostics, code actions and more
+      -- Diagnostics, code actions, format and more
       {
         "jose-elias-alvarez/null-ls.nvim",
         config = function()
-          require("custom.configs.null-ls").setup()
+          require "custom.configs.null-ls"
         end,
       },
     },
@@ -47,16 +62,11 @@ return {
   },
 
   -- override default configs
-  { "nvim-tree/nvim-tree.lua", opts = overrides.nvimtree },
-
+  { "nvim-tree/nvim-tree.lua",         opts = overrides.nvimtree },
   { "nvim-treesitter/nvim-treesitter", opts = overrides.treesitter },
-
-  { "williamboman/mason.nvim", opts = overrides.mason },
+  { "williamboman/mason.nvim",         opts = overrides.mason },
 
   ----------------------------------- syntax plugins -----------------------------------
-
-  -- .rasi
-  { "Fymyte/rasi.vim", ft = "rasi" },
 
   -- yuck syntax
   {
@@ -74,13 +84,69 @@ return {
     config = function()
       require("neorg").setup {
         load = {
-          ["core.defaults"] = {}, -- Loads default behaviour
-          ["core.norg.concealer"] = {}, -- Adds pretty icons to your documents
+          ["core.defaults"] = {},  -- Loads default behaviour
+          ["core.concealer"] = {}, -- Adds pretty icons to your documents
         },
       }
     end,
     build = ":Neorg sync-parsers",
     dependencies = { { "nvim-lua/plenary.nvim" } },
+  },
+
+  --------------------------------- language features ----------------------------------
+
+  -- Debugger
+  -- {
+  --   "mfussenegger/nvim-dap",
+  --   config = function()
+  --     require "custom.configs.dap"
+  --   end,
+  -- },
+  --
+  -- {
+  --   "theHamsta/nvim-dap-virtual-text",
+  --   config = function()
+  --     require("nvim-dap-virtual-text").setup()
+  --   end,
+  -- },
+  --
+  -- {
+  --   "rcarriga/nvim-dap-ui",
+  -- },
+  --
+  -- {
+  --   "nvim-telescope/telescope-dap.nvim",
+  --   config = function()
+  --     require("telescope").load_extension "dap"
+  --   end,
+  -- },
+
+  -- Easier crates.io dependency managing
+  {
+    "Saecki/crates.nvim",
+    event = { "BufRead Cargo.toml" },
+    dependencies = { "nvim-lua/plenary.nvim" },
+    config = function()
+      require("crates").setup {
+        popup = {
+          autofocus = true,
+        },
+        null_ls = {
+          enabled = true,
+          name = "crates.nvim",
+        },
+      }
+    end,
+  },
+
+  -- Quicker NPM package managing
+  {
+    "vuki656/package-info.nvim",
+    event = { "BufRead package.json" },
+    dependencies = { "MunifTanjim/nui.nvim" },
+    config = function()
+      require("package-info").setup()
+    end,
   },
 
   ----------------------------------- custom plugins -----------------------------------
@@ -93,10 +159,10 @@ return {
 
   -- Focus on your code
   {
-    "Pocco81/true-zen.nvim",
-    cmd = { "TZAtaraxis", "TZMinimalist", "TZFocus", "TZNarrow" },
+    "folke/zen-mode.nvim",
+    cmd = "ZenMode",
     config = function()
-      require "custom.configs.truezen"
+      require "custom.configs.zenmode"
     end,
   },
 
@@ -112,7 +178,7 @@ return {
   -- Smooth scrolling
   {
     "karb94/neoscroll.nvim",
-    event = "VeryLazy",
+    keys = { "<C-d>", "<C-u>" },
     config = function()
       require("neoscroll").setup()
     end,
@@ -155,12 +221,13 @@ return {
   -- Run code inside NeoVim
   {
     "CRAG666/code_runner.nvim",
-    dependecies = "nvim-lua/plenary.nvim",
+    dependencies = "nvim-lua/plenary.nvim",
     cmd = { "RunCode", "RunFile", "RunProject" },
     config = function()
       require("code_runner").setup {
         filetype = {
-          cpp = 'mkdir -p "$dir/bin" && cd "$dir/bin" && g++ "../$fileName" -o "$fileNameWithoutExt" -std=c++11 -fsanitize=address,undefined && "./$fileNameWithoutExt"',
+          cpp =
+          'mkdir -p "$dir/bin" && cd "$dir/bin" && g++ "../$fileName" -o "$fileNameWithoutExt" -std=c++11 -fsanitize=address,undefined && "./$fileNameWithoutExt"',
           tex = 'mkdir -p "$dir/bin" && pdflatex -output-directory="$dir/bin" "$dir/$fileName"',
           rust = 'cargo run "$dir/$fileName"',
         },
@@ -184,8 +251,8 @@ return {
   -- Markdown browser preview
   {
     "iamcco/markdown-preview.nvim",
-    run = "cd app && npm install",
-    setup = function()
+    build = "cd app && npm install",
+    init = function()
       vim.g.mkdp_filetypes = { "markdown" }
     end,
     ft = { "markdown" },
@@ -212,9 +279,12 @@ return {
   },
 
   -- Fast search plugin
-  { "ggandor/leap.nvim", dependencies = {
-    { "tpope/vim-repeat" },
-  } },
+  {
+    "ggandor/leap.nvim",
+    dependencies = {
+      { "tpope/vim-repeat" },
+    },
+  },
 
   -- Set project root correctly
   {
@@ -247,33 +317,5 @@ return {
   {
     "fedepujol/move.nvim",
     cmd = { "MoveLine", "MoveBlock", "MoveHChar", "MoveHBlock", "MoveWord" },
-  },
-
-  -- Easier crates.io dependency managing
-  {
-    "Saecki/crates.nvim",
-    event = { "BufRead Cargo.toml" },
-    dependencies = { "nvim-lua/plenary.nvim" },
-    config = function()
-      require("crates").setup {
-        popup = {
-          autofocus = true,
-        },
-        null_ls = {
-          enabled = true,
-          name = "crates.nvim",
-        },
-      }
-    end,
-  },
-
-  -- Quicker NPM package managing
-  {
-    "vuki656/package-info.nvim",
-    event = { "BufRead package.json" },
-    dependencies = { "MunifTanjim/nui.nvim" },
-    config = function()
-      require("package-info").setup()
-    end,
   },
 }

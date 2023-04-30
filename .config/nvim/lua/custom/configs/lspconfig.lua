@@ -7,8 +7,6 @@ local lspconfig = require "lspconfig"
 local servers = {
   "html",
   "cssls",
-  "jsonls",
-  "clangd",
   "rust_analyzer",
   "emmet_ls",
   "tsserver",
@@ -16,9 +14,24 @@ local servers = {
   "texlab",
 }
 
+local no_formatting = {
+  "jsonls",
+  "clangd",
+}
+
 for _, lsp in ipairs(servers) do
   lspconfig[lsp].setup {
     on_attach = on_attach,
     capabilities = capabilities,
+  }
+end
+
+for _, lsp in ipairs(no_formatting) do
+  lspconfig[lsp].setup {
+    on_attach = function(client)
+      client.server_capabilities.documentFormattingProvider = false
+      client.server_capabilities.documentRangeFormattingProvider = false
+      on_attach()
+    end,
   }
 end

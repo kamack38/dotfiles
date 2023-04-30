@@ -1,10 +1,8 @@
-local present, null_ls = pcall(require, "null-ls")
+local null_ls = require "null-ls"
 
-if not present then
-  return
-end
-
-local b = null_ls.builtins
+local actions = null_ls.builtins.code_actions
+local formatting = null_ls.builtins.formatting
+local lint = null_ls.builtins.diagnostics
 
 local sources = {
 
@@ -17,9 +15,9 @@ local sources = {
   -- },
   -- b.code_actions.cspell,
 
-  -- webdev stuff
-  b.code_actions.eslint,
-  b.formatting.prettierd.with {
+  -- WebDev
+  actions.eslint,
+  formatting.prettierd.with {
     filetypes = {
       "javascript",
       "javascriptreact",
@@ -38,44 +36,37 @@ local sources = {
   },
 
   -- Lua
-  b.formatting.stylua, --.with { extra_args = { "--indent-type Spaces" } },
-  -- b.diagnostics.luacheck.with { extra_args = { "--global vim" } },
+  formatting.stylua,
 
   -- Shell
-  b.formatting.shfmt,
-  b.diagnostics.shellcheck.with { diagnostics_format = "#{m} [#{c}]" },
-  b.diagnostics.fish,
+  formatting.shfmt,
+  lint.shellcheck.with { diagnostics_format = "#{m} [#{c}]" },
+  lint.fish,
 
   -- cpp
-  b.formatting.clang_format.with {
+  formatting.clang_format.with {
     extra_args = { "--style", "{ BasedOnStyle: Google, IndentWidth: 4, ColumnLimit: 100 }" },
   },
 
   -- Rust
-  b.formatting.rustfmt,
+  formatting.rustfmt,
 }
 
-local M = {}
-
-M.setup = function()
-  local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
-  null_ls.setup {
-    debug = true,
-    sources = sources,
-    -- format on save
-    on_attach = function(client, bufnr)
-      if client.supports_method "textDocument/formatting" then
-        vim.api.nvim_clear_autocmds { group = augroup, buffer = bufnr }
-        vim.api.nvim_create_autocmd("BufWritePre", {
-          group = augroup,
-          buffer = bufnr,
-          callback = function()
-            vim.lsp.buf.format { bufnr = bufnr }
-          end,
-        })
-      end
-    end,
-  }
-end
-
-return M
+local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
+null_ls.setup {
+  debug = true,
+  sources = sources,
+  -- format on save
+  on_attach = function(client, bufnr)
+    if client.supports_method "textDocument/formatting" then
+      vim.api.nvim_clear_autocmds { group = augroup, buffer = bufnr }
+      vim.api.nvim_create_autocmd("BufWritePre", {
+        group = augroup,
+        buffer = bufnr,
+        callback = function()
+          vim.lsp.buf.format { bufnr = bufnr }
+        end,
+      })
+    end
+  end,
+}
