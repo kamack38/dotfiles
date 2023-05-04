@@ -11,9 +11,10 @@ if vim.fn.has "win32" == 1 then
 end
 
 -- Folds
-opt.foldmethod = "expr"
-opt.foldexpr = "nvim_treesitter#foldexpr()"
-opt.foldlevel = 20
+-- opt.foldmethod = "expr"
+-- opt.foldexpr = "nvim_treesitter#foldexpr()"
+-- opt.foldlevel = 20
+-- opt.fillchars = { fold = " ", eob = " " }
 
 -- Snippets
 local config_path = ((os.getenv "XDG_CONFIG_HOME") or os.getenv "HOME" .. "/.config")
@@ -51,13 +52,13 @@ M.ui = {
     },
 
     buttons = {
-      { "  Find File", "Spc f f", "Telescope find_files" },
+      { "  Find File",    "Spc f f", "Telescope find_files" },
       { "  Recent Files", "Spc f o", "Telescope oldfiles" },
-      { "  Find Word", "Spc f w", "Telescope live_grep" },
-      { "  New Buffer", "Spc n f", "enew" },
-      { "  Bookmarks", "Spc b m", "Telescope marks" },
-      { "  Themes", "Spc t h", "Telescope themes" },
-      { "  Mappings", "Spc c h", "NvCheatsheet" },
+      { "  Find Word",    "Spc f w", "Telescope live_grep" },
+      { "  New Buffer",   "Spc n f", "enew" },
+      { "  Bookmarks",    "Spc b m", "Telescope marks" },
+      { "  Themes",       "Spc t h", "Telescope themes" },
+      { "  Mappings",     "Spc c h", "NvCheatsheet" },
     },
   },
 }
