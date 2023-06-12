@@ -149,6 +149,15 @@ return {
     end,
   },
 
+  -- Quick variable rename
+  {
+    "smjonas/inc-rename.nvim",
+    cmd = "IncRename",
+    config = function()
+      require("inc_rename").setup()
+    end,
+  },
+
   ----------------------------------- custom plugins -----------------------------------
 
   -- Track the time you're spending with your code
@@ -307,7 +316,7 @@ return {
   -- Template string converter
   {
     "axelvc/template-string.nvim",
-    ft = { "typescript", "javascript", "typescriptreact", "javascriptreact", "python" },
+    ft = { "typescript", "javascript", "typescriptreact", "javascriptreact", "python", "html" },
     config = function()
       require("template-string").setup()
     end,

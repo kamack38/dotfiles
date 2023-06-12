@@ -106,6 +106,12 @@ M.dap = {
   },
 }
 
+M.inc_rename = {
+  n = {
+    ["<leader>cn"] = { ":IncRename", "  LSP rename (change name)" },
+  },
+}
+
 M.marks = {
   n = {
     ["m"] = {
