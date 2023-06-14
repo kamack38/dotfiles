@@ -24,6 +24,7 @@ HYPR_PACKAGES=(
 	"autorandr"          # Auto-detect connected display hardware and load appropiate X11 setup using xrandr
 	"xdg-desktop-portal" # Desktop integration portals for sandboxed apps
 	"dunst"              # Customizable and lightweight notification-daemon
+	"clipster"           # Python clipboard manager
 )
 
 echo "${GREEN}:: ${BWHITE}Installing Hypr and its components...${NC}"

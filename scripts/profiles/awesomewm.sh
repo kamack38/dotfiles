@@ -24,6 +24,7 @@ AWESOMEWM_PACKAGES=(
 	"autorandr"        # Auto-detect connected display hardware and load appropiate X11 setup using xrandr
 	"polybar-git"      # Bar
 	"ulauncher"        # Application launcher for Linux
+	"clipster"         # Python clipboard manager
 )
 
 echo "${GREEN}:: ${BWHITE}Installing awesomeWM and its components...${NC}"
