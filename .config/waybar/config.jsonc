@@ -2,7 +2,6 @@
     "layer": "top",
     "position": "top",
     "height": 36,
-
     "modules-left": ["wlr/workspaces"],
     "modules-center": ["clock"],
     "modules-right": [
@@ -99,7 +98,7 @@
     "backlight": {
         "device": "intel_backlight",
         "format": "{icon} {percent}%",
-        "format-icons": ["", "", ""],
+        "format-icons": ["󰃞", "󰃟", "󰃠"],
         "on-scroll-up": "brightnessctl set 1%+",
         "on-scroll-down": "brightnessctl set 1%-",
         "on-click": "~/.config/waybar/scripts/toggle-wlsunset.sh",
@@ -116,11 +115,11 @@
         "format-charging": " {capacity}%",
         "format-plugged": " {capacity}%",
         "format-alt": "{time} {icon}",
-        "format-icons": ["", "", "", "", "", "", "", "", "", "", ""]
+        "format-icons": ["󱃍", "󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"]
     },
 
     "clock": {
-        "format": "{: %H:%M %p   %d/%m}",
+        "format": "{: %H:%M %p  %d/%m}",
         "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
         "calendar": {
             "mode": "year",
@@ -143,15 +142,16 @@
         "format-ethernet": "",
         "format-linked": "{ifname} (No IP) ",
         "format-disconnected": "睊 Disconnected",
-        "tooltip-format-wifi": "Signal Strenght: {signalStrength}% | Down Speed: {bandwidthDownBits}, Up Speed: {bandwidthUpBits}"
+        "tooltip-format-wifi": "Signal Strenght: {signalStrength}% | Down Speed: {bandwidthDownBits}, Up Speed: {bandwidthUpBits}",
+        "on-click": "kitty --class system_monitor -e nmtui"
     },
 
     "bluetooth": {
         "on-click-right": "~/.config/waybar/scripts/toggle-bluetooth.sh",
         "on-click-middle": "~/.config/waybar/scripts/toggle-bluetooth-block.sh",
-        // "format-icons": ["󰥇", "󰤾", "󰤿", "󰥀", "󰥁", "󰥂", "󰥃", "󰥄", "󰥅", "󰥆", "󰥈"],
-        "format-disabled": "",
-        "format-off": "",
+        "format-icons": ["󰥇", "󰤾", "󰤿", "󰥀", "󰥁", "󰥂", "󰥃", "󰥄", "󰥅", "󰥆", "󰥈"],
+        "format-disabled": "󰂲",
+        "format-off": "󰂯",
         "format-on": "",
         "format-connected": " <span color='#cdd6f4'>{device_alias}</span>",
         "format-connected-battery": " <span color='#cdd6f4'>{device_alias}</span> <span color='#a6adc8'>{device_battery_percentage}%</span>",
@@ -173,7 +173,7 @@
             "phone": "",
             "portable": "",
             "car": "",
-            "default": ["", "", "墳", ""]
+            "default": ["", "󰖀", "󰕾", ""]
         }
     }
 }
