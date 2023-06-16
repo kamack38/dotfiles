@@ -546,10 +546,7 @@ else
 	mv "$NEOVIM_CONFIG_DIR" "$HOME/.config/NVIM.BAK"
 	git clone "$NVCHAD_URL" "$NEOVIM_CONFIG_DIR" --depth 1
 
-	nvim \
-		+"autocmd User PackerComplete sleep 1000m | write $HOME/.packer.sync.result | qall" \
-		+PackerSync
-	grep -v 'Press' "$HOME/.packer.sync.result"
+	nvim --headless "+Lazy! sync" +qa
 fi
 
 # Enable custom tty colours
