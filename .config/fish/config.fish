@@ -245,6 +245,26 @@ function ffmpeg-extract-audio -d 'Extracts audio from video'
     command ffmpeg -i "$input" -vn -f mp3 "$output"
 end
 
+function ffmpeg-add-subs -d 'Adds soft subtitles to selected video file' -a video_file subtitles_file output_file
+  if test -z "$video_file"
+    echo "Video file not set"
+    return 1
+  end
+  if test -z "$subtitles_file"
+    echo "Subtitles file not set"
+    return 1
+  end
+  if test -z "$output_file"
+    echo "Output file not set"
+    return 1
+  end
+  if test -z "$output_file"
+    echo "Output file not set"
+    return 1
+  end
+  command ffmpeg -i "$video_file" -i "$subtitles_file" -c copy -c:s mov_text -metadata:s:s:1 language=eng "$output_file"
+end
+
 function ghget -d 'Download file from github'
     set -l url (echo $argv[1] | sed 's/https:\/\/github.com/https:\/\/raw.githubusercontent.com/' | sed 's/blob\///')
     wget $url
