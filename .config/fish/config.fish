@@ -265,6 +265,15 @@ function ffmpeg-add-subs -d 'Adds soft subtitles to selected video file' -a vide
   command ffmpeg -i "$video_file" -i "$subtitles_file" -c copy -c:s mov_text -metadata:s:s:1 language=eng "$output_file"
 end
 
+# Copying and pasting files
+function cpf -d 'Copy file contents to clipboard' -a file_name
+  cat "$file_name" | wl-copy
+end
+
+function psf -d 'Paste clipboard contents to file' -a file_name
+  wl-paste > $file_name
+end
+
 function ghget -d 'Download file from github'
     set -l url (echo $argv[1] | sed 's/https:\/\/github.com/https:\/\/raw.githubusercontent.com/' | sed 's/blob\///')
     wget $url
