@@ -54,7 +54,7 @@ complete -c hyprctl -n "__fish_seen_subcommand_from $infocommands" \
     -s j -d "Print output in JSON"
 
 ### dispatch
-set -l dispatchers exec execr pass killactive closewindow workspace movetoworkspace movetoworkspacesilent togglefloating fullscreen fakefullscreen dpms pin movefocus movewindow centerwindow resizeactive resizewindowpixel cyclenext swapnext focuswindow focusmonitor splitratio toggleopaque movecursortocorner workspaceopt renameworkspace exit forcerendererreload movecurrentworkspacetomonitor moveworkspacetomonitor swapactiveworkspaces bringactivetop togglespecialworkspace focussurgetolast togglegroup changegroupactive focuscurrentrolast lockgroups moveintogroup moveoutgroup
+set -l dispatchers exec execr pass killactive closewindow workspace movetoworkspace movetoworkspacesilent togglefloating fullscreen fakefullscreen dpms pin movefocus movewindow swapwindow centerwindow resizeactive moveactive resizewindowpixel movewindowpixel cyclenext swapnext focuswindow focusmonitor splitratio toggleopaque movecursortocorner movecursor workspaceopt renameworkspace exit forcerendererreload movecurrentworkspacetomonitor moveworkspacetomonitor swapactiveworkspaces bringactivetotop togglespecialworkspace focusurgentorlast togglegroup changegroupactive focuscurrentorlast lockgroups lockactivegroup moveintogroup moveoutofgroup movegroupwindow global submap
 complete -c hyprctl -n "__fish_seen_subcommand_from dispatch; and not __fish_seen_subcommand_from $dispatchers" -a "$dispatchers"
 
 ### getoption
