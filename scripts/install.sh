@@ -73,7 +73,7 @@ NORMAL_PROFILE=(
 	"reflector"               # Pacman mirror sorter
 	"crabz-bin"               # Like pigz, but in Rust
 	"garuda-hooks"            # Garuda pacman hooks
-	"mpdris2"                 # MPRIS2 support for MPD
+	"mpd-mpris"               # An implementation of the MPRIS protocol for MPD.
 	"mpd"                     # Flexible, powerful, server-side application for playing music
 	"mpc"                     # Minimalist command line interface to MPD
 	"ncmpcpp"                 # Almost exact clone of ncmpc with some new features
@@ -592,7 +592,7 @@ git --git-dir="$DOTFILES" --work-tree="$HOME" submodule update --init --remote
 # Enable services
 echo "${BLUE}:: ${BWHITE}Enabling services...${NC}"
 systemctl --user enable mpd.service
-systemctl --user enable mpDris2.service
+systemctl --user enable mpd-mpris.service
 systemctl --user enable playerctld.service
 
 # Desktop setup
