@@ -1,7 +1,7 @@
 local on_attach = require("plugins.configs.lspconfig").on_attach
 local capabilities = require("plugins.configs.lspconfig").capabilities
 
-capabilities.offsetEncoding = { "utf-16" }
+capabilities.offsetEncoding = "utf-16"
 
 local lspconfig = require "lspconfig"
 local servers = {
@@ -31,6 +31,7 @@ for _, lsp in ipairs(no_formatting) do
     on_attach = function(client)
       client.server_capabilities.documentFormattingProvider = false
       client.server_capabilities.documentRangeFormattingProvider = false
+      client.server_capabilities.offsetEncoding = "utf-16"
       on_attach()
     end,
   }

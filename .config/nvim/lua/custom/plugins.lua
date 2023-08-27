@@ -62,9 +62,9 @@ return {
   },
 
   -- override default configs
-  { "nvim-tree/nvim-tree.lua",         opts = overrides.nvimtree },
+  { "nvim-tree/nvim-tree.lua", opts = overrides.nvimtree },
   { "nvim-treesitter/nvim-treesitter", opts = overrides.treesitter },
-  { "williamboman/mason.nvim",         opts = overrides.mason },
+  { "williamboman/mason.nvim", opts = overrides.mason },
 
   ----------------------------------- syntax plugins -----------------------------------
 
@@ -84,7 +84,7 @@ return {
     config = function()
       require("neorg").setup {
         load = {
-          ["core.defaults"] = {},  -- Loads default behaviour
+          ["core.defaults"] = {}, -- Loads default behaviour
           ["core.concealer"] = {}, -- Adds pretty icons to your documents
         },
       }
@@ -149,12 +149,25 @@ return {
     end,
   },
 
-  -- Quick variable rename
+  -- LSP utils (rename, code actions, peek definition)
   {
-    "smjonas/inc-rename.nvim",
-    cmd = "IncRename",
+    "jinzhongjia/LspUI.nvim",
+    event = "VeryLazy",
     config = function()
-      require("inc_rename").setup()
+      require("LspUI").setup {
+        prompt = false,
+        code_action = {
+          enable = true,
+          command_enable = true,
+          icon = "💡",
+          keybind = {
+            exec = "<CR>",
+            prev = "k",
+            next = "j",
+            quit = "q",
+          },
+        },
+      }
     end,
   },
 
@@ -210,7 +223,6 @@ return {
     config = function()
       require("cutlass").setup {
         override_del = true,
-        exclude = { "ns", "nS" },
       }
     end,
   },
@@ -218,7 +230,7 @@ return {
   -- Show all problems in your code
   {
     "folke/trouble.nvim",
-    cmd = "Trouble",
+    cmd = { "Trouble", "TroubleToggle", "TroubleClose", "TroubleRefresh" },
     config = function()
       require("trouble").setup()
     end,
@@ -235,8 +247,7 @@ return {
     config = function()
       require("code_runner").setup {
         filetype = {
-          cpp =
-          'mkdir -p "$dir/bin" && cd "$dir/bin" && g++ "../$fileName" -o "$fileNameWithoutExt" -std=c++11 -fsanitize=address,undefined && "./$fileNameWithoutExt"',
+          cpp = 'mkdir -p "$dir/bin" && cd "$dir/bin" && g++ "../$fileName" -o "$fileNameWithoutExt" -std=c++11 -fsanitize=address,undefined && "./$fileNameWithoutExt"',
           tex = 'mkdir -p "$dir/bin" && pdflatex -output-directory="$dir/bin" "$dir/$fileName"',
           rust = 'cargo run "$dir/$fileName"',
         },
@@ -326,6 +337,12 @@ return {
   {
     "fedepujol/move.nvim",
     cmd = { "MoveLine", "MoveBlock", "MoveHChar", "MoveHBlock", "MoveWord" },
+  },
+
+  -- Move by subwords and skip insignificant punctuation
+  {
+    "chrisgrieser/nvim-spider",
+    lazy = true,
   },
 
   -- Syntax highlighted folds

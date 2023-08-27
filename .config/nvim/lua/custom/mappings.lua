@@ -31,26 +31,20 @@ M.trouble = {
   },
 }
 
-M.codeactions = {
-  n = {
-    ["<C-space>"] = { "<cmd> CodeActionMenu <CR>", "  Show code action menu" },
-  },
-}
-
 M.neovim = {
   n = {
     -- Pasting
     ["<C-p>"] = { "<cmd> pu <CR>", "  Paste in line under" },
 
     -- Moving lines/words
-    ["<A-k>"] = { "<cmd> MoveLine(-1) <CR>", "  Move curent line up" },
-    ["<A-j>"] = { "<cmd> MoveLine(1) <CR>", "  Move curent line down" },
-    ["<A-l>"] = { "<cmd> MoveWord(1) <CR>", "  Move curent word left" },
-    ["<A-h>"] = { "<cmd> MoveWord(-1) <CR>", "  Move curent word right" },
+    ["<A-k>"] = { "<cmd> MoveLine(-1) <CR>", "  Move current line up" },
+    ["<A-j>"] = { "<cmd> MoveLine(1) <CR>", "  Move current line down" },
+    ["<A-l>"] = { "<cmd> MoveWord(1) <CR>", "  Move current word left" },
+    ["<A-h>"] = { "<cmd> MoveWord(-1) <CR>", "  Move current word right" },
 
     -- Duplicating lines
-    ["<A-S-k>"] = { "<cmd> t- <CR>", "  Duplicate curent line up" },
-    ["<A-S-j>"] = { "<cmd> t.  <CR>", "  Duplicate curent line down" },
+    ["<A-S-k>"] = { "<cmd> t- <CR>", "  Duplicate current line up" },
+    ["<A-S-j>"] = { "<cmd> t.  <CR>", "  Duplicate current line down" },
 
     -- Saving files
     ["<C-S-s>"] = {
@@ -66,9 +60,41 @@ M.neovim = {
     ["<A-h>"] = { ":MoveHBlock(-1) <CR>", "  Move selected block down" },
 
     -- Duplicating lines
-    ["<A-S-k>"] = { ":copy- <CR>", "  Duplicate curent line up" },
-    -- ["<A-S-j>"] = { ":copy.  <CR>", "  Duplicate curent line down" },
+    ["<A-S-k>"] = { ":copy- <CR>", "  Duplicate current line up" },
+    -- ["<A-S-j>"] = { ":copy.  <CR>", "  Duplicate current line down" },
   },
+}
+
+local spider = {
+  ["w"] = {
+    function()
+      require("spider").motion "w"
+    end,
+    "spider-w",
+  },
+  ["e"] = {
+    function()
+      require("spider").motion "e"
+    end,
+    "spider-e",
+  },
+  ["b"] = {
+    function()
+      require("spider").motion "b"
+    end,
+    "spider-b",
+  },
+  ["ge"] = {
+    function()
+      require("spider").motion "ge"
+    end,
+    "spider-ge",
+  },
+}
+
+M.spider = {
+  n = spider,
+  v = spider,
 }
 
 M.dap = {
@@ -106,9 +132,10 @@ M.dap = {
   },
 }
 
-M.inc_rename = {
+M.LspUI = {
   n = {
-    ["<leader>cn"] = { ":IncRename", "  LSP rename (change name)" },
+    ["<leader>cn"] = { "<cmd> LspUI rename <CR>", "  LSP rename (change name)" },
+    ["<C-space>"] = { "<cmd> LspUI code_action <CR>", "  Show code action menu" },
   },
 }
 
