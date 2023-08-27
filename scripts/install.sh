@@ -144,6 +144,7 @@ DESKTOP_APPS=(
 	"python-google-auth-oauthlib"      # oauthlib integration for Google auth (Polybar Gmail)
 	"desktop-file-utils"               # Command line utilities for working with desktop entries
 	"breeze"                           # Artwork, styles and assets for the Breeze visual style for the Plasma Desktop
+	"ripdrag-git"                      # Drag and drop files to and from the terminal
 )
 
 PROFILES=(
@@ -531,6 +532,9 @@ xdg-user-dirs-update
 # Install fish plugins
 echo "${GREEN}:: ${BWHITE}Installing ${BLUE}fish${BWHITE} packages${NC}"
 echo "fisher install ${FISH_PACKAGES[*]}" | fish
+
+# Generate completions
+gh completion -s fish >"$HOME/.config/fish/completions/gh.fish"
 
 # Install node & npm packages
 echo "${GREEN}:: ${BWHITE}Installing ${BLUE}node${BWHITE} (${NODE_VERSION}) & ${BLUE}npm${BWHITE} packages${NC}"
