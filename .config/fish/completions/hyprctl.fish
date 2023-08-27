@@ -5,9 +5,13 @@ function __hyprctl_get_clients_addresses
   hyprctl clients -j | jq '.[]|[.address]|@tsv' -r | sed 's/^/address:/'
 end
 
+function __hyprctl_get_instances
+  hyprctl instances -j | jq '.[]|[.instance]|@tsv' -r
+end
+
 # Subcommands
-set -l subcommands monitors workspaces clients activewindow layers devices dispatch keyword version kill splash hyprpaper reload setcursor getoption cursorpos switchxkblayout seterror setprop plugin
-set -l infocommands monitors workspaces clients activewindow layers devices activewindow layers devices version splash getoption cursorpos
+set -l subcommands monitors workspaces clients activewindow layers devices dispatch keyword version kill splash hyprpaper reload setcursor getoption cursorpos switchxkblayout seterror setprop plugin animations instances
+set -l infocommands monitors workspaces clients activewindow layers devices activewindow layers devices version splash getoption cursorpos animations instances
 
 set -l hyprland_sections general decoration animations input input_touchpad input_touchdevice gestures misc binds xwayland debug
 
@@ -47,11 +51,15 @@ complete -c hyprctl -n "not __fish_seen_subcommand_from $subcommands" -a "switch
 complete -c hyprctl -n "not __fish_seen_subcommand_from $subcommands" -a "seterror" -d "sets the hyprctl error string"
 complete -c hyprctl -n "not __fish_seen_subcommand_from $subcommands" -a "setprop" -d "sets a window prop"
 complete -c hyprctl -n "not __fish_seen_subcommand_from $subcommands" -a "plugin" -d "lists, loads or unloads plugins"
+complete -c hyprctl -n "not __fish_seen_subcommand_from $subcommands" -a "animations" -d "gets info about animations"
+complete -c hyprctl -n "not __fish_seen_subcommand_from $subcommands" -a "instances" -d "lists all running Hyprland instances"
 
 ## Global options
 complete -c hyprctl -n "not __fish_seen_subcommand_from $subcommands" -l "batch" -d "specify a batch of commands to execute"
-complete -c hyprctl -n "__fish_seen_subcommand_from $infocommands" \
-    -s j -d "Print output in JSON"
+complete -c hyprctl -n "__fish_seen_subcommand_from $infocommands; not __fish_seen_subcommand_from -j" \
+  -s j -d "Print output in JSON"
+complete -c hyprctl -n "not __fish_seen_subcommand_from -i" \
+  -s i -r -d "Select instance" -a "(__hyprctl_get_instances)" -f
 
 ### dispatch
 set -l dispatchers exec execr pass killactive closewindow workspace movetoworkspace movetoworkspacesilent togglefloating fullscreen fakefullscreen dpms pin movefocus movewindow swapwindow centerwindow resizeactive moveactive resizewindowpixel movewindowpixel cyclenext swapnext focuswindow focusmonitor splitratio toggleopaque movecursortocorner movecursor workspaceopt renameworkspace exit forcerendererreload movecurrentworkspacetomonitor moveworkspacetomonitor swapactiveworkspaces bringactivetotop togglespecialworkspace focusurgentorlast togglegroup changegroupactive focuscurrentorlast lockgroups lockactivegroup moveintogroup moveoutofgroup movegroupwindow global submap
@@ -89,4 +97,3 @@ complete -c hyprctl -n "__fish_seen_subcommand_from plugin; and not __fish_seen_
 complete -c hyprctl -n "__fish_seen_subcommand_from plugin; and not __fish_seen_subcommand_from $plugin_args" -a "unload" -d "Unload plugin by path"
 
 complete -c hyprctl -n "__fish_seen_subcommand_from plugin; and __fish_seen_subcommand_from unload load" -F
-
