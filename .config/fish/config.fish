@@ -88,6 +88,21 @@ if command -v firefox-developer-edition &>/dev/null
     alias firefox="firefox-developer-edition"
 end
 
+# Open files and directories
+function r -a path
+  if test -f $path
+    if path extension $path | string match -raq '^(\.png|\.jpg|\.jpeg|\.webp|\.tiff)$'
+      icat $path
+    else
+    bat $path
+    end
+  else if test -d $path
+    ls $path
+else
+    echo "Object does not exist!"
+  end
+end
+
 alias makesrcinfo="makepkg --printsrcinfo > .SRCINFO"
 
 alias passwdgen="date +%s | sha256sum | base64 | head -c 64 ; echo"
