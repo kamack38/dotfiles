@@ -7,13 +7,13 @@ local lint = null_ls.builtins.diagnostics
 local sources = {
 
   -- spelling
-  -- b.diagnostics.cspell.with {
-  --   diagnostics_postprocess = function(diagnostic)
-  --     diagnostic.severity = vim.diagnostic.severity["INFO"]
-  --   end,
-  --   extra_args = { "--locale", "en-GB,pl" },
-  -- },
-  -- b.code_actions.cspell,
+  lint.cspell.with {
+    diagnostics_postprocess = function(diagnostic)
+      diagnostic.severity = vim.diagnostic.severity["INFO"]
+    end,
+    -- extra_args = { "--locale", "en-GB,pl" },
+  },
+  actions.cspell,
 
   -- WebDev
   actions.eslint,
