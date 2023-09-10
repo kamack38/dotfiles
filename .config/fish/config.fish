@@ -19,7 +19,7 @@ set Z_EXCLUDE "CPlusPlus/*/bin"
 # Set gpg tty
 export GPG_TTY=(tty)
 
-# Enable colored output
+# Enable coloured output
 export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 
 # ------------
@@ -44,11 +44,11 @@ bind \ch backward-char
 # Aliases
 # ------------
 # LS aliases
-alias ll='exa -alF --git'
-alias ls='exa --icons'
-alias la='exa -a --icons'
-alias lt='exa -T'
-alias le='exa -alTL 2'
+alias ll='eza -alF --git'
+alias ls='eza --icons'
+alias la='eza -a --icons'
+alias lt='eza -T'
+alias le='eza -alTL 2'
 
 # Easier navigation: .., ..., ...., ....., ~ and -
 alias ..="cd .."
@@ -220,7 +220,7 @@ function workspace_preview -a name
         end
     else
         if test -d $(string replace '~' "$HOME" $name)
-            exa $(string replace '~' "$HOME" $name)
+            eza $(string replace '~' "$HOME" $name)
         else
             echo -e "\033[0;31mDELETED\033[0m"
         end
@@ -250,7 +250,7 @@ function vsr -d "List recently opened files with vscode" -a serach
 end
 
 function fcd -d "cd into favourite your dir"
-    cd $(z -l | sed "s#$HOME#~#" | fzf --with-nth=2.. --preview 'exa -alF {2..}' --height 50% --layout=reverse | awk '{print substr($2, 1)}' | sed "s#~#$HOME#")
+    cd $(z -l | sed "s#$HOME#~#" | fzf --with-nth=2.. --preview 'eza -alF {2..}' --height 50% --layout=reverse | awk '{print substr($2, 1)}' | sed "s#~#$HOME#")
 end
 
 # ffmpeg

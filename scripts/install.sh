@@ -49,7 +49,7 @@ NORMAL_PROFILE=(
 	"python-gobject"          # Ui creation (polybar mpris support)
 	"flatpak"                 # Flatpak package manager
 	"bat"                     # Better cat
-	"exa"                     # Better ls
+	"eza"                     # Better ls
 	"croc"                    # File transfer utility
 	"mpv"                     # Image/Video player
 	"ffmpeg"                  # Audio/Image/Video file converter
