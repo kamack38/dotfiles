@@ -2,7 +2,7 @@
     "layer": "top",
     "position": "top",
     "height": 36,
-    "modules-left": ["wlr/workspaces"],
+    "modules-left": ["hyprland/workspaces"],
     "modules-center": ["clock"],
     "modules-right": [
         "custom/github",
@@ -21,7 +21,7 @@
         "battery"
     ],
 
-    "wlr/workspaces": {
+    "hyprland/workspaces": {
         "disable-scroll": true,
         "all-outputs": true,
         "on-click": "activate",
