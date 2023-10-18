@@ -280,6 +280,22 @@ function ffmpeg-add-subs -d 'Adds soft subtitles to selected video file' -a vide
   command ffmpeg -i "$video_file" -i "$subtitles_file" -c copy -c:s mov_text -metadata:s:s:1 language=eng "$output_file"
 end
 
+# Typst from stdin
+function tm -d 'Shows math expression in terminal' -a math output_file
+  set file "/tmp/math1010.typ"
+  echo -e "#set page(width: auto, height: auto, margin: 10pt)\n\$\n$math\n\$" > $file
+  if test -z "$output_file"
+    typst compile -f png "$file" /dev/stdout | icat
+  else
+    typst compile -f png "$file" "$output_file"
+    icat "$output_file"
+  end
+end
+
+function mp -a output_file
+  tm (wl-paste) "$output_file"
+end
+
 # Copying and pasting files
 function cpf -d 'Copy file contents to clipboard' -a file_name
   cat "$file_name" | wl-copy
