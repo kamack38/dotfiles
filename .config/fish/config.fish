@@ -39,6 +39,7 @@ bind \cj history-search-forward
 bind \ck history-search-backward
 bind \cl forward-char
 bind \ch backward-char
+bind \cd delete-char
 
 # ------------
 # Aliases
@@ -146,7 +147,7 @@ end
 
 # Paru
 function pas --description 'Search and install a package' -a pkg
-    command paru -Sl | fzf --with-nth=2 --multi --preview 'paru -Si {1}/{2}' --preview-window wrap -q$pkg | awk '{print $1"/"$2}' | xargs -ro paru -S --review
+    command paru -Sl --color=never | fzf --with-nth=2 --multi --preview 'paru -Si {1}/{2}' --preview-window wrap -q$pkg | awk '{print $1"/"$2}' | xargs -ro paru -S --review
 end
 function pasq --description 'Search and install a package' -a pkg
     command paru -Sl | fzf --with-nth=2 --multi --preview 'paru -Si {1}/{2}' --preview-window wrap -q$pkg | awk '{print $1"/"$2}' | xargs -ro paru -Si
