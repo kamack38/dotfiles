@@ -63,6 +63,9 @@ M.neovim = {
     ["<A-S-k>"] = { ":copy- <CR>", "  Duplicate current line up" },
     -- ["<A-S-j>"] = { ":copy.  <CR>", "  Duplicate current line down" },
   },
+  i = {
+    ["<A-;>"] = { "<ESC>", opts = { noremap = true, silent = true } },
+  },
 }
 
 local spider = {

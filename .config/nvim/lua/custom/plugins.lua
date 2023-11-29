@@ -153,6 +153,7 @@ return {
   {
     "jinzhongjia/LspUI.nvim",
     event = "VeryLazy",
+    branch = "legacy",
     config = function()
       require("LspUI").setup {
         prompt = false,
@@ -320,7 +321,13 @@ return {
     "mvllow/modes.nvim",
     event = "VeryLazy",
     config = function()
-      require("modes").setup()
+      require("modes").setup {
+        plugins = {
+          presets = {
+            operators = false,
+          },
+        },
+      }
     end,
   },
 

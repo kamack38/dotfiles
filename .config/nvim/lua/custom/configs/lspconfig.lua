@@ -12,6 +12,7 @@ local servers = {
   "tsserver",
   "tailwindcss",
   "texlab",
+  "pkgbuild_language_server",
 }
 
 local no_formatting = {
