@@ -202,9 +202,8 @@ INTEL_MODULES=(
 )
 
 FISH_PACKAGES=(
-	"PatrickF1/colored_man_pages.fish" # Coloured man pages
-	"jorgebucaran/nvm.fish"            # Node version manager
-	"jethrokuan/z"                     # Z implementation in fish
+	"jorgebucaran/nvm.fish" # Node version manager
+	"jethrokuan/z"          # Z implementation in fish
 )
 
 NPM_PACKAGES=(
