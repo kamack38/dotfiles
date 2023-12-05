@@ -16,6 +16,9 @@ end
 -- opt.foldlevel = 20
 -- opt.fillchars = { fold = " ", eob = " " }
 
+-- Other settings
+opt.conceallevel = 2
+
 -- Snippets
 local config_path = ((os.getenv "XDG_CONFIG_HOME") or os.getenv "HOME" .. "/.config")
 vim.g.vscode_snippets_path = config_path .. "/Code/User/snippets"
