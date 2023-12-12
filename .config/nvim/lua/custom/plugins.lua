@@ -152,7 +152,7 @@ return {
   -- LSP utils (rename, code actions, peek definition)
   {
     "jinzhongjia/LspUI.nvim",
-    event = "VeryLazy",
+    event = "LspAttach",
     branch = "legacy",
     config = function()
       require("LspUI").setup {
@@ -169,6 +169,17 @@ return {
           },
         },
       }
+    end,
+  },
+
+  -- Typst highlighting
+  {
+    "kaarmu/typst.vim",
+    ft = "typst",
+    config = function()
+      vim.g.typst_conceal_math = 1
+      vim.g.typst_conceal_emoji = 1
+      vim.g.typst_conceal = 1
     end,
   },
 

@@ -15,6 +15,7 @@ M.treesitter = {
     "markdown",
     "latex",
     "c",
+    "nix",
     "cpp",
     "bash",
     "fish",
