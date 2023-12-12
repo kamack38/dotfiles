@@ -50,6 +50,9 @@ local sources = {
 
   -- Rust
   formatting.rustfmt,
+
+  -- Nix
+  formatting.nixfmt,
 }
 
 local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
