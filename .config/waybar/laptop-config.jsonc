@@ -1,0 +1,4 @@
+{
+    "include": "$XDG_CONFIG_HOME/waybar/config.jsonc",
+    "output": "eDP-1"
+}

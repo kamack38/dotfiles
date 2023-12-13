@@ -44,23 +44,6 @@ return {
     end,
   },
 
-  -- Preview media files in Telescope
-  {
-    "nvim-telescope/telescope-media-files.nvim",
-    event = "VeryLazy",
-    config = function()
-      require("telescope").setup {
-        extensions = {
-          media_files = {
-            filetypes = { "png", "webp", "jpg", "jpeg" },
-            find_cmd = "fd", -- find command (defaults to `fd`)
-          },
-        },
-      }
-      require("telescope").load_extension "media_files"
-    end,
-  },
-
   -- override default configs
   { "nvim-tree/nvim-tree.lua", opts = overrides.nvimtree },
   { "nvim-treesitter/nvim-treesitter", opts = overrides.treesitter },
@@ -183,6 +166,16 @@ return {
     end,
   },
 
+  -- Markdown browser preview
+  {
+    "iamcco/markdown-preview.nvim",
+    cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
+    ft = { "markdown" },
+    build = function()
+      vim.fn["mkdp#util#install"]()
+    end,
+  },
+
   ----------------------------------- custom plugins -----------------------------------
 
   -- Track the time you're spending with your code
@@ -277,16 +270,6 @@ return {
         default_mappings = false,
         force_write_shada = true,
       }
-    end,
-  },
-
-  -- Markdown browser preview
-  {
-    "iamcco/markdown-preview.nvim",
-    cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
-    ft = { "markdown" },
-    build = function()
-      vim.fn["mkdp#util#install"]()
     end,
   },
 
