@@ -219,7 +219,6 @@ DESKTOP_ENVIRONMENTS=(
 	"KDE"
 	"AwesomeWM"
 	"Hyprland"
-	"Hypr"
 )
 
 CUSTOMIZATION_PACKAGES=(
