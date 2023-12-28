@@ -9,13 +9,15 @@ return {
     "hrsh7th/nvim-cmp",
     opts = {
       sources = {
-        -- trigger_characters is for unocss lsp
-        { name = "nvim_lsp" },
         { name = "luasnip" },
+        { name = "nvim_lsp" },
         { name = "buffer" },
         { name = "nvim_lua" },
         { name = "path" },
         { name = "crates" },
+      },
+      experimental = {
+        ghost_text = true,
       },
     },
   },

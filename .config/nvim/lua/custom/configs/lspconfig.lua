@@ -1,13 +1,10 @@
 local on_attach = require("plugins.configs.lspconfig").on_attach
 local capabilities = require("plugins.configs.lspconfig").capabilities
 
-capabilities.offsetEncoding = "utf-16"
-
 local lspconfig = require "lspconfig"
 local servers = {
   "html",
   "cssls",
-  "rust_analyzer",
   "emmet_ls",
   "tsserver",
   "tailwindcss",
@@ -18,6 +15,19 @@ local servers = {
 local no_formatting = {
   "jsonls",
   "clangd",
+}
+
+lspconfig.rust_analyzer.setup {
+  on_attach = on_attach,
+  capabilities = capabilities,
+  filetypes = { "rust" },
+  settings = {
+    ["rust_analyzer"] = {
+      cargo = {
+        allFeatures = true,
+      },
+    },
+  },
 }
 
 for _, lsp in ipairs(servers) do
