@@ -1,4 +1,3 @@
--f mp4
--f b
+-f mp4+m4a/bestvideo+bestaudio
 -o ~/Downloads/%(title)s-%(channel)s-%(resolution)s.%(ext)s
 --default-search "ytsearch"

@@ -1,0 +1,4 @@
+--format "mp4+m4a/bestvideo+bestaudio"
+--live-from-start
+--fragment-retries 50
+-o %(title)s-%(channel)s-%(resolution)s.%(ext)s
