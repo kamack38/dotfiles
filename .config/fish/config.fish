@@ -40,7 +40,6 @@ bind \cj history-search-forward
 bind \ck history-search-backward
 bind \cl forward-char
 bind \ch backward-char
-bind \cd delete-char
 
 # ------------
 # Aliases
@@ -256,10 +255,8 @@ function fcd -d "cd into favourite your dir"
 end
 
 # ffmpeg
-function ffmpeg-extract-audio -d 'Extracts audio from video'
-    set -l input $argv[1]
-    set -l output $argv[2]
-    command ffmpeg -i "$input" -vn -f mp3 "$output"
+function ffmpeg-extract-audio -d 'Extracts audio from video' -a input_file output_file
+    command ffmpeg -i "$input_file" -vn -f mp3 "$output_file"
 end
 
 function ffmpeg-add-subs -d 'Adds soft subtitles to selected video file' -a video_file subtitles_file output_file
@@ -323,3 +320,10 @@ if status is-interactive
     oh-my-posh --init --shell fish --config '~/.config/oh-my-posh/kamack.omp.json' | source
   end
 end
+
+# pnpm
+set -gx PNPM_HOME "/home/kamack38/.local/share/pnpm"
+if not string match -q -- $PNPM_HOME $PATH
+  set -gx PATH "$PNPM_HOME" $PATH
+end
+# pnpm end
