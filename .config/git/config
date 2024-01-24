@@ -30,6 +30,7 @@ cm = !git cz && git push
 cdf = diff --cached
 can = commit --amend --no-edit
 pon = !git push -u origin $(git rev-parse --abbrev-ref HEAD)
+pt = push --tags
 pr = pull --rebase
 quickhelp = "!{ \
             echo stash - create stash; \
