@@ -33,6 +33,8 @@ pon = !git push -u origin $(git rev-parse --abbrev-ref HEAD)
 pt = push --tags
 pf = push --force
 pr = pull --rebase
+d-rem-tags = !git push origin --delete $(git tag -l) 
+dtag = !git tag -d \"$1\" && git push --delete origin \"$1\" "#"
 quickhelp = "!{ \
             echo stash - create stash; \
             echo clean - revert file to current commit; \
@@ -106,3 +108,5 @@ helper = !/usr/bin/gh auth git-credential
 helper = !/usr/bin/gh auth git-credential
 [merge]
 	tool = nvimdiff
+[push]
+	followTags = true
