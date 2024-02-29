@@ -10,6 +10,7 @@ local servers = {
   "tailwindcss",
   "texlab",
   "pkgbuild_language_server",
+  "ruff_lsp",
 }
 
 local no_formatting = {
