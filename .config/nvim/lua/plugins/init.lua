@@ -1,4 +1,4 @@
-local overrides = require "custom.configs.overrides"
+local overrides = require "configs.overrides"
 
 return {
 
@@ -36,20 +36,30 @@ return {
       {
         "jose-elias-alvarez/null-ls.nvim",
         config = function()
-          require "custom.configs.null-ls"
+          require "configs.null-ls"
         end,
       },
     },
     config = function()
-      require "plugins.configs.lspconfig"
-      require "custom.configs.lspconfig"
+      require "nvchad.configs.lspconfig"
+      require "configs.lspconfig"
+    end,
+  },
+
+  -- Formatting
+  {
+    "stevearc/conform.nvim",
+    event = { "BufWritePre" },
+    cmd = { "ConformInfo" },
+    config = function()
+      require "configs.conform"
     end,
   },
 
   -- override default configs
-  { "nvim-tree/nvim-tree.lua",         opts = overrides.nvimtree },
+  { "nvim-tree/nvim-tree.lua", opts = overrides.nvimtree },
   { "nvim-treesitter/nvim-treesitter", opts = overrides.treesitter },
-  { "williamboman/mason.nvim",         opts = overrides.mason },
+  { "williamboman/mason.nvim", opts = overrides.mason },
 
   ----------------------------------- syntax plugins -----------------------------------
 
@@ -69,7 +79,7 @@ return {
     config = function()
       require("neorg").setup {
         load = {
-          ["core.defaults"] = {},  -- Loads default behaviour
+          ["core.defaults"] = {}, -- Loads default behaviour
           ["core.concealer"] = {}, -- Adds pretty icons to your documents
         },
       }
@@ -84,7 +94,7 @@ return {
   -- {
   --   "mfussenegger/nvim-dap",
   --   config = function()
-  --     require "custom.configs.dap"
+  --     require "configs.dap"
   --   end,
   -- },
   --
@@ -191,7 +201,7 @@ return {
     "folke/zen-mode.nvim",
     cmd = "ZenMode",
     config = function()
-      require "custom.configs.zenmode"
+      require "configs.zenmode"
     end,
   },
 
@@ -254,8 +264,7 @@ return {
     config = function()
       require("code_runner").setup {
         filetype = {
-          cpp =
-          'mkdir -p "$dir/bin" && cd "$dir/bin" && g++ "../$fileName" -o "$fileNameWithoutExt" -std=c++11 -fsanitize=address,undefined && "./$fileNameWithoutExt"',
+          cpp = 'mkdir -p "$dir/bin" && cd "$dir/bin" && g++ "../$fileName" -o "$fileNameWithoutExt" -std=c++11 -fsanitize=address,undefined && "./$fileNameWithoutExt"',
           tex = 'mkdir -p "$dir/bin" && pdflatex -output-directory="$dir/bin" "$dir/$fileName"',
           rust = 'cargo run "$dir/$fileName"',
         },

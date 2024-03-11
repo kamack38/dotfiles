@@ -17,42 +17,10 @@ local sources = {
 
   -- WebDev
   actions.eslint,
-  formatting.prettierd.with {
-    filetypes = {
-      "javascript",
-      "javascriptreact",
-      "typescript",
-      "typescriptreact",
-      "vue",
-      "css",
-      "scss",
-      "html",
-      "json",
-      "jsonc",
-      "yaml",
-      "markdown",
-      "markdown.mdx",
-    },
-  },
-
-  -- Lua
-  formatting.stylua,
 
   -- Shell
-  formatting.shfmt,
   lint.shellcheck.with { diagnostics_format = "#{m} [#{c}]" },
   lint.fish,
-
-  -- cpp
-  formatting.clang_format.with {
-    extra_args = { "--style", "{ BasedOnStyle: Google, IndentWidth: 4, ColumnLimit: 100 }" },
-  },
-
-  -- Rust
-  formatting.rustfmt,
-
-  -- Nix
-  formatting.nixfmt,
 }
 
 local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
