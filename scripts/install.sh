@@ -252,7 +252,6 @@ DOTFILES="$HOME/.dotfiles"
 REPO="https://github.com/kamack38/dotfiles"
 NEOVIM_CONFIG_DIR="$HOME/.config/nvim"
 SPOTIFY_PREFS="$HOME/.config/spotify/prefs"
-NVCHAD_URL="https://github.com/NvChad/NvChad"
 NODE_VERSION="lts"
 TIME_ZONE="Europe/Warsaw" # To get all timezones run `timedatectl list-timezones`
 MAIN_LOCALE="en_GB.UTF-8"
@@ -537,19 +536,6 @@ gh completion -s fish >"$HOME/.config/fish/completions/gh.fish"
 # Install node & npm packages
 echo "${GREEN}:: ${BWHITE}Installing ${BLUE}node${BWHITE} (${NODE_VERSION}) & ${BLUE}npm${BWHITE} packages${NC}"
 echo "nvm install ${NODE_VERSION} && npm i --location=global" "${NPM_PACKAGES[@]}" | fish
-
-# Install NvChad
-if [[ -d "$NEOVIM_CONFIG_DIR/.git" && $(git -C "$NEOVIM_CONFIG_DIR" ls-remote --get-url) == "$NVCHAD_URL"* ]]; then
-	echo "${YELLOW}:: ${BLUE}NvChad${BWHITE} is already installed${NC} -- updating"
-	git -C "$NEOVIM_CONFIG_DIR" fetch --all
-	git -C "$NEOVIM_CONFIG_DIR" pull
-else
-	echo "${BLUE}:: ${BWHITE}Installing ${BLUE}NvChad${NC}"
-	mv "$NEOVIM_CONFIG_DIR" "$HOME/.config/NVIM.BAK"
-	git clone "$NVCHAD_URL" "$NEOVIM_CONFIG_DIR" --depth 1
-
-	nvim --headless "+Lazy! sync" +qa
-fi
 
 # Enable custom tty colours
 sudo tee /etc/vconsole.conf >/dev/null <<EOT
