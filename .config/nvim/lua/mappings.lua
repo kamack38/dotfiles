@@ -1,4 +1,4 @@
-require("nvchad.mappings")
+require "nvchad.mappings"
 
 local map = vim.keymap.set
 
@@ -32,10 +32,10 @@ map("n", "<A-S-j>", "<cmd> t.  <CR>", { desc = "  Duplicate current line down
 
 -- Saving files
 map(
-	"n",
-	"<C-S-s>",
-	"<cmd> set eventignore+=BufWritePre | w | set eventignore-=BufWritePre <CR>",
-	{ desc = "󱪚  Save file without formatting" }
+  "n",
+  "<C-S-s>",
+  "<cmd> set eventignore+=BufWritePre | w | set eventignore-=BufWritePre <CR>",
+  { desc = "󱪚  Save file without formatting" }
 )
 -- Moving selection
 map("v", "<A-k>", ":MoveBlock(-1) <CR>", { desc = "  Move selected block up" })
@@ -50,16 +50,16 @@ map("i", "<A-;>", "<ESC>", { noremap = true, silent = true })
 
 -- Spider
 map({ "n", "v" }, "w", function()
-	require("spider").motion("w")
+  require("spider").motion "w"
 end, { desc = "spider-w" })
 map({ "n", "v" }, "e", function()
-	require("spider").motion("e")
+  require("spider").motion "e"
 end, { desc = "spider-e" })
 map({ "n", "v" }, "b", function()
-	require("spider").motion("b")
+  require("spider").motion "b"
 end, { desc = "spider-b" })
 map({ "n", "v" }, "ge", function()
-	require("spider").motion("ge")
+  require("spider").motion "ge"
 end, { desc = "spider-ge" })
 
 -- M.dap = {
@@ -97,40 +97,43 @@ end, { desc = "spider-ge" })
 -- 	},
 -- }
 
+-- Lsp
+map("n", "gr", "<cmd> Telescope lsp_references <CR>", { desc = "Lsp Show references", noremap = true })
+
 -- LspUI
 map("n", "<leader>cn", "<cmd> LspUI rename <CR>", { desc = "  LSP rename (change name)" })
 map("n", "<C-space>", "<cmd> LspUI code_action <CR>", { desc = "  Show code action menu" })
 
 -- Marks
 map("n", "m", function()
-	require("marks").toggle_mark()
+  require("marks").toggle_mark()
 end, { desc = "Toggle mark" })
 map("n", "m;", function()
-	require("marks").toggle()
+  require("marks").toggle()
 end, { desc = "Toggle next available mark" })
 map("n", "m:", function()
-	require("marks").preview()
+  require("marks").preview()
 end, { desc = "Preview mark" })
 map("n", "dm", function()
-	require("marks").delete()
+  require("marks").delete()
 end, { desc = "Delete mark" })
 map("n", "dm-", function()
-	require("marks").delete_line()
+  require("marks").delete_line()
 end, { desc = "Delete all marks on current line" })
 map("n", "dm<space>", function()
-	require("marks").delete_buf()
+  require("marks").delete_buf()
 end, { desc = "Delete all marks in current buffer" })
 map("n", "m]", function()
-	require("marks").next()
+  require("marks").next()
 end, { desc = "Go to the next mark" })
 map("n", "m[", function()
-	require("marks").prev()
+  require("marks").prev()
 end, { desc = "Go to the previous mark" })
 
 -- Leap
 map("n", "<leader>s", function()
-	require("leap").leap({ target_windows = { vim.fn.win_getid() } })
+  require("leap").leap { target_windows = { vim.fn.win_getid() } }
 end, { desc = "  Jump to search" })
 map("n", "<leader>S", function()
-	require("leap").leap({ offset = -1, target_windows = { vim.fn.win_getid() } })
+  require("leap").leap { offset = -1, target_windows = { vim.fn.win_getid() } }
 end, { desc = "  Jump till search" })

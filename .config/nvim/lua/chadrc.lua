@@ -27,8 +27,6 @@ M.ui = {
   theme = "onedark",
   transparency = true,
 
-  theme_toggle = { "onedark", "doomchad" },
-
   hl_override = {
     Comment = { italic = true },
   },
@@ -51,9 +49,8 @@ M.ui = {
   -- lazyload it when there are 1+ buffers
   tabufline = {
     enabled = true,
-    lazyload = true,
-    order = { "treeOffset", "buffers", "tabs", "btns" },
-    modules = nil,
+    lazyload = false,
+    order = { "treeOffset", "buffers", "tabs" },
   },
 
   nvdash = {
@@ -72,7 +69,7 @@ M.ui = {
 
   lsp = {
     signature = true,
-    semantic_tokens = false,
+    semantic_tokens = true,
   },
 }
 
