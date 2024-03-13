@@ -19,6 +19,8 @@ end
 -- Other settings
 opt.conceallevel = 2
 
+local highlights = require "highlights"
+
 -- Snippets
 local config_path = ((os.getenv "XDG_CONFIG_HOME") or os.getenv "HOME" .. "/.config")
 vim.g.vscode_snippets_path = config_path .. "/Code/User/snippets"
@@ -27,9 +29,7 @@ M.ui = {
   theme = "onedark",
   transparency = true,
 
-  hl_override = {
-    Comment = { italic = true },
-  },
+  hl_override = highlights.override,
 
   cmp = {
     icons = true,
