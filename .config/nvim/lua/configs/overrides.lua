@@ -24,6 +24,10 @@ M.treesitter = {
     "norg",
     "python",
   },
+
+  autotag = {
+    enable = true,
+  },
 }
 
 M.nvimtree = {

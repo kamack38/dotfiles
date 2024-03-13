@@ -69,7 +69,7 @@ M.ui = {
 
   lsp = {
     signature = true,
-    semantic_tokens = true,
+    semantic_tokens = false,
   },
 }
 

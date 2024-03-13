@@ -97,9 +97,6 @@ end, { desc = "spider-ge" })
 -- 	},
 -- }
 
--- Lsp
-map("n", "gr", "<cmd> Telescope lsp_references <CR>", { desc = "Lsp Show references", noremap = true })
-
 -- LspUI
 map("n", "<leader>cn", "<cmd> LspUI rename <CR>", { desc = "  LSP rename (change name)" })
 map("n", "<C-space>", "<cmd> LspUI code_action <CR>", { desc = "  Show code action menu" })

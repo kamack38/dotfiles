@@ -1,6 +1,16 @@
 local configs = require "nvchad.configs.lspconfig"
 
-local on_attach = configs.on_attach
+local map = vim.keymap.set
+
+on_attach = function(client, bufnr)
+  configs.on_attach(client, bufnr)
+  local function opts(desc)
+    return { buffer = bufnr, desc = desc }
+  end
+
+  map("n", "gr", "<cmd> Telescope lsp_references <CR>", opts " Lsp Show references")
+end
+
 local on_init = configs.on_init
 local capabilities = configs.capabilities
 
@@ -65,11 +75,11 @@ end
 for _, lsp in ipairs(no_formatting) do
   lspconfig[lsp].setup {
     on_init = on_init,
-    on_attach = function(client)
+    on_attach = function(client, bufnr)
       client.server_capabilities.documentFormattingProvider = false
       client.server_capabilities.documentRangeFormattingProvider = false
       client.server_capabilities.offsetEncoding = "utf-16"
-      on_attach()
+      on_attach(client, bufnr)
     end,
   }
 end

@@ -41,6 +41,7 @@ return {
       },
     },
     config = function()
+      dofile(vim.g.base46_cache .. "lsp")
       require "nvchad.configs.lspconfig"
       require "configs.lspconfig"
     end,
@@ -70,22 +71,6 @@ return {
     config = function()
       vim.opt.ft = "yuck"
     end,
-  },
-
-  -- Neorg
-  {
-    "nvim-neorg/neorg",
-    ft = "norg",
-    config = function()
-      require("neorg").setup {
-        load = {
-          ["core.defaults"] = {}, -- Loads default behaviour
-          ["core.concealer"] = {}, -- Adds pretty icons to your documents
-        },
-      }
-    end,
-    build = ":Neorg sync-parsers",
-    dependencies = { { "nvim-lua/plenary.nvim" } },
   },
 
   --------------------------------- language features ----------------------------------
@@ -318,7 +303,9 @@ return {
     "ahmedkhalf/project.nvim",
     lazy = false,
     config = function()
-      require("project_nvim").setup()
+      require("project_nvim").setup {
+        patterns = { ">.config" },
+      }
     end,
   },
 
