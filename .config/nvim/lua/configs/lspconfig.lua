@@ -24,6 +24,7 @@ local servers = {
   "texlab",
   "pkgbuild_language_server",
   "ruff_lsp",
+  "typst_lsp",
 }
 
 local no_formatting = {
