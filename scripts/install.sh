@@ -134,7 +134,7 @@ DESKTOP_APPS=(
 	"caprine"                          # Messenger app for Linux
 	"discord"                          # VoIP and instant messaging social platform
 	"firefox-developer-edition"        # Web browser for developers
-	"ff2mpv-native-messaging-host-git" # Open video in mpv
+	"ff2mpv-rust" # Open video in mpv
 	"spotify"                          # Music client
 	"spicetify-cli"                    # Cli for extending spotify
 	"kitty-git"                        # GPU accelerated terminal
