@@ -13,6 +13,8 @@ local options = {
     lua = { "stylua" },
     rust = { "rustfmt" },
     nix = { "nixfmt" },
+    json = { "biome" },
+    jsonc = { "biome" },
   },
 
   format_on_save = {

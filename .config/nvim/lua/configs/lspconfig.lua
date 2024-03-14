@@ -28,7 +28,6 @@ local servers = {
 }
 
 local no_formatting = {
-  "jsonls",
   "clangd",
 }
 
@@ -63,6 +62,13 @@ lspconfig.rust_analyzer.setup {
       },
     },
   },
+}
+
+lspconfig.biome.setup {
+  on_init = on_init,
+  on_attach = on_attach,
+  capabilities = capabilities,
+  single_file_support = true,
 }
 
 for _, lsp in ipairs(servers) do
