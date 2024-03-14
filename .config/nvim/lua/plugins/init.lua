@@ -9,7 +9,6 @@ return {
     "hrsh7th/nvim-cmp",
     opts = {
       sources = {
-        { name = "luasnip" },
         { name = "nvim_lsp" },
         { name = "buffer" },
         { name = "nvim_lua" },
@@ -356,7 +355,9 @@ return {
         return { "treesitter", "indent" }
       end,
       open_fold_hl_timeout = 200,
-      close_fold_kinds = { "imports", "comment" },
+      close_fold_kinds_for_ft = {
+        default = { "imports", "comment" },
+      },
       preview = {
         win_config = {
           border = { "", "─", "", "", "", "─", "", "" },
