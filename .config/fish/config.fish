@@ -104,6 +104,11 @@ else
   end
 end
 
+# See diff between .pacnew files
+function diff-pac -a path
+  delta "$path" "$path.pacnew"
+end
+
 alias makesrcinfo="makepkg --printsrcinfo > .SRCINFO"
 
 alias passwdgen="date +%s | sha256sum | base64 | head -c 64 ; echo"

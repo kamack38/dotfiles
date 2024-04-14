@@ -174,6 +174,19 @@ return {
   },
 
   ----------------------------------- custom plugins -----------------------------------
+  {
+    "pwntester/octo.nvim",
+    keys = require("configs.octo").keys,
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "nvim-telescope/telescope.nvim",
+      "nvim-tree/nvim-web-devicons",
+    },
+    cmd = { "Octo" },
+    config = function()
+      require("octo").setup()
+    end,
+  },
 
   -- Track the time you're spending with your code
   {
