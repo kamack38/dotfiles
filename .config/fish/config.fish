@@ -78,7 +78,7 @@ alias untar='tar -xvf '
 alias gzipnow='tar czf'
 
 alias of="onefetch"
-alias nf="neofetch"
+alias nf="fastfetch"
 alias icat="kitty +kitten icat"
 alias xterm-kitty="kitty"
 alias n="nvim"
@@ -315,7 +315,7 @@ function ghget -d 'Download file from github'
 end
 
 function fish_greeting
-    neofetch
+    fastfetch
 end
 
 if status is-interactive

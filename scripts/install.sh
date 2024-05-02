@@ -16,7 +16,7 @@ DEV_PROFILE=(
 	"jre-openjdk"                 # Java Runtime Environment
 	"git-delta"                   # A syntax-highlighting pager for git, diff, and grep output
 	"onefetch"                    # Git repository summary cli
-	"neofetch-git"                # A command-line system information tool
+	"fastfetch"                   # Like Neofetch, but much faster because written in C
 	"github-cli"                  # CLI for GitHub
 	"visual-studio-code-bin"      # IDE
 	"gnome-keyring"               # Fix vscode
