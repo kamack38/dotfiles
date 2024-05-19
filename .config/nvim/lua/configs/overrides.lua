@@ -20,7 +20,6 @@ M.treesitter = {
     "fish",
     "lua",
     "rasi",
-    "norg",
     "python",
   },
 
