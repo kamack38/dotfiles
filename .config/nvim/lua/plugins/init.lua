@@ -133,7 +133,7 @@ return {
   {
     "jinzhongjia/LspUI.nvim",
     event = "LspAttach",
-    branch = "legacy",
+    branch = "main",
     config = function()
       require("LspUI").setup {
         prompt = false,
