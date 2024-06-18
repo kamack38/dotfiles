@@ -1,5 +1,5 @@
 # Path
-PATH DEFAULT=${PATH}:/usr/local/sbin:/usr/local/bin:/usr/bin:@{HOME}/.local/bin/:@{HOME}/.local/share/cargo/bin:@{HOME}/.local/share/npm/bin
+PATH DEFAULT=${PATH}:/usr/local/sbin:/usr/local/bin:/usr/bin:@{HOME}/.local/bin/:@{HOME}/.local/share/cargo/bin:@{HOME}/.local/share/npm/bin:@{HOME}/.cache/.bun/bin
 
 # XDG
 XDG_CACHE_HOME DEFAULT=@{HOME}/.cache

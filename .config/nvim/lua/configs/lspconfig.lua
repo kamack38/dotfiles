@@ -25,6 +25,7 @@ local servers = {
   "pkgbuild_language_server",
   "ruff_lsp",
   "typst_lsp",
+  "nil_ls",
 }
 
 local no_formatting = {
