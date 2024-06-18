@@ -1,5 +1,4 @@
 {
-    "$schema": "https://github.com/fastfetch-cli/fastfetch/raw/dev/doc/json_schema.json",
     "logo": {
         "source": "~/.config/fastfetch/38.txt",
         "type": "file",
@@ -9,25 +8,32 @@
         }
     },
     "display": {
-        "separator": " \u001b[36m "
+        "separator": "  ",
+        "color": { "separator": "cyan" }
     },
     "modules": [
         { "type": "title", "color": { "user": "blue", "host": "blue" } },
         {
             "type": "custom",
-            "format": "\u001b[36m────────────────────────────────"
+            "format": "────────────────────────────────",
+            "outputColor": "cyan"
         },
-        { "type": "os", "key": "\u001b[33m " },
-        { "type": "host", "format": "{5} {2}", "key": "\u001b[35m " },
-        { "type": "kernel", "key": "\u001b[31m " },
-        { "type": "uptime", "key": "\u001b[36m祥" },
+        { "type": "os", "key": " ", "keyColor": "yellow" },
+        {
+            "type": "host",
+            "format": "{5} {2}",
+            "key": " ",
+            "keyColor": "magenta"
+        },
+        { "type": "kernel", "key": " ", "keyColor": "red" },
+        { "type": "uptime", "key": "祥", "keyColor": "blue" },
         {
             "type": "packages",
-            "key": "\u001b[32m ",
-            "format": "{2} (pacman)"
+            "key": " ",
+            "keyColor": "green"
         },
-        { "type": "shell", "key": "\u001b[34m " },
-        { "type": "memory", "key": "\u001b[35m " },
+        { "type": "shell", "key": " ", "keyColor": "blue" },
+        { "type": "memory", "key": " ", "keyColor": "magenta" },
         "break",
         "colors"
     ]
