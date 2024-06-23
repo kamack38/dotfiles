@@ -62,17 +62,6 @@ return {
   { "nvim-treesitter/nvim-treesitter", opts = overrides.treesitter },
   { "williamboman/mason.nvim", opts = overrides.mason },
 
-  ----------------------------------- syntax plugins -----------------------------------
-
-  -- yuck syntax
-  {
-    "elkowar/yuck.vim",
-    ft = "yuck",
-    config = function()
-      vim.opt.ft = "yuck"
-    end,
-  },
-
   --------------------------------- language features ----------------------------------
 
   -- Debugger
