@@ -112,7 +112,7 @@ end
 alias makesrcinfo="makepkg --printsrcinfo > .SRCINFO"
 
 alias passwdgen="date +%s | sha256sum | base64 | head -c 64 ; echo"
-alias passgen="strings /dev/urandom | grep -o '[^\\r\\n\\t\\f\\v `	\'~]' | head -n 32 | tr -d '\n'; echo"
+alias passgen="strings /dev/urandom | grep -o '[^~`[:space:]]' | head -n 32 | tr -d '\n'"
 
 # Cleanup orphaned packages
 alias cleanup='sudo pacman -Rns (pacman -Qtdq)'
@@ -312,6 +312,10 @@ end
 function ghget -d 'Download file from github'
     set -l url (echo $argv[1] | sed 's/https:\/\/github.com/https:\/\/raw.githubusercontent.com/' | sed 's/blob\///')
     wget $url
+end
+
+function rm-except -a file -d 'Remove all files except one'
+    rm -rf (ls | grep -v "$file")
 end
 
 function fish_greeting
