@@ -22,7 +22,6 @@ local servers = {
   "tsserver",
   "tailwindcss",
   "texlab",
-  "pkgbuild_language_server",
   "ruff_lsp",
   "typst_lsp",
   "nil_ls",
