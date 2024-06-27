@@ -32,6 +32,7 @@
   pon = !git push -u origin $(git rev-parse --abbrev-ref HEAD)
   pt = push --tags
   pf = push --force
+  pl = push --force-with-lease
   pr = pull --rebase
   d-rem-tags = !git push origin --delete $(git tag -l) 
   dtag = !git tag -d \"$1\" && git push --delete origin \"$1\" "#"

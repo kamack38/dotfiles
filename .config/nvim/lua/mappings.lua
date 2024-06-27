@@ -15,7 +15,7 @@ map("n", "<leader>wk", "<cmd> Telescope keymaps <CR>", { desc = "  Find keys"
 map("n", "<F7>", "<cmd> RunFile <CR>", { desc = "  Run code" })
 
 -- Trouble
-map("n", "<C-S-m>", "<cmd> TroubleToggle <CR>", { desc = "  Show diagnostics" })
+map("n", "<C-S-m>", "<cmd> Trouble diagnostics toggle<CR>", { desc = "  Show diagnostics" })
 
 -- Pasting
 map("n", "<C-p>", "<cmd> pu <CR>", { desc = "  Paste in line under" })
