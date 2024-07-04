@@ -215,6 +215,22 @@ return {
         enable = true,
         ignore = false,
       },
+      renderer = {
+        icons = {
+          git_placement = "after",
+          glyphs = {
+            git = {
+              unstaged = "",
+              staged = "",
+              unmerged = "M",
+              renamed = "",
+              untracked = "?",
+              deleted = "",
+              ignored = "",
+            },
+          },
+        },
+      },
       update_focused_file = {
         enable = true,
         update_cwd = true,
