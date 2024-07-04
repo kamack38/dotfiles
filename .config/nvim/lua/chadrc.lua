@@ -1,24 +1,4 @@
 local M = {}
-local opt = vim.opt
-
-if vim.fn.has "win32" == 1 then
-  opt.shell = "pwsh.exe -nol"
-  opt.shellcmdflag = "-nop -c"
-  opt.shellquote = '"'
-  opt.shellxquote = ""
-  opt.shellpipe = "| Out-File -Encoding UTF8 %s"
-  opt.shellredir = "| Out-File -Encoding UTF8 %s"
-end
-
--- Folds
--- opt.foldmethod = "expr"
--- opt.foldexpr = "nvim_treesitter#foldexpr()"
--- opt.foldlevel = 20
--- opt.fillchars = { fold = " ", eob = " " }
-
--- Other settings
-opt.conceallevel = 2
-
 local highlights = require "highlights"
 
 -- Snippets
@@ -46,7 +26,6 @@ M.ui = {
     modules = nil,
   },
 
-  -- lazyload it when there are 1+ buffers
   tabufline = {
     enabled = true,
     lazyload = false,

@@ -78,10 +78,3 @@ autocmd("BufRead", {
     }, { buffer = opts.buf })
   end,
 })
-
-autocmd({ "BufRead", "BufNewFile" }, {
-  pattern = "PKGBUILD",
-  callback = function(opts)
-    vim.bo[opts.buf].filetype = "PKGBUILD"
-  end,
-})

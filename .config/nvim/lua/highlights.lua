@@ -7,6 +7,7 @@ local M = {}
 ---@type Base46HLGroupsList
 M.override = {
   Comment = { italic = true },
+  ["@comment"] = { italic = true },
   TelescopeSelection = { bg = "#353A46", fg = "#abb2bf" },
 }
 
