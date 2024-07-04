@@ -1,30 +1,5 @@
 return {
-
-  ----------------------------------- default plugins -----------------------------------
-
-  -- Autocompletion
-  {
-    "hrsh7th/nvim-cmp",
-    opts = {
-      sources = {
-        { name = "luasnip" },
-        { name = "nvim_lsp" },
-        { name = "buffer" },
-        { name = "nvim_lua" },
-        { name = "path" },
-        { name = "crates" },
-      },
-      experimental = {
-        ghost_text = true,
-      },
-    },
-  },
-
-  -- Show suggestions when executing snippets
-  {
-    "folke/which-key.nvim",
-    cmd = "WhichKey",
-  },
+  ----------------------------------- LSP PLugins -----------------------------------
 
   -- Add more lsp servers
   {
@@ -46,20 +21,7 @@ return {
     end,
   },
 
-  -- override default configs
-  {
-    "nvim-tree/nvim-tree.lua",
-    opts = {
-      git = {
-        enable = true,
-        ignore = false,
-      },
-      update_focused_file = {
-        enable = true,
-        update_cwd = true,
-      },
-    },
-  },
+  -- Format parsing
   {
     "nvim-treesitter/nvim-treesitter",
     opts = {
@@ -99,6 +61,26 @@ return {
       },
     },
   },
+
+  -- Autocompletion
+  {
+    "hrsh7th/nvim-cmp",
+    opts = {
+      sources = {
+        { name = "luasnip" },
+        { name = "nvim_lsp" },
+        { name = "buffer" },
+        { name = "nvim_lua" },
+        { name = "path" },
+        { name = "crates" },
+      },
+      experimental = {
+        ghost_text = true,
+      },
+    },
+  },
+
+  -- LSP installer
   {
     "williamboman/mason.nvim",
     opts = {
@@ -123,33 +105,16 @@ return {
     },
   },
 
-  --------------------------------- language features ----------------------------------
+  -- Show all problems in your code
+  {
+    "folke/trouble.nvim",
+    cmd = { "Trouble", "TroubleToggle", "TroubleClose", "TroubleRefresh" },
+    config = function()
+      require("trouble").setup()
+    end,
+  },
 
-  -- Debugger
-  -- {
-  --   "mfussenegger/nvim-dap",
-  --   config = function()
-  --     require "configs.dap"
-  --   end,
-  -- },
-  --
-  -- {
-  --   "theHamsta/nvim-dap-virtual-text",
-  --   config = function()
-  --     require("nvim-dap-virtual-text").setup()
-  --   end,
-  -- },
-  --
-  -- {
-  --   "rcarriga/nvim-dap-ui",
-  -- },
-  --
-  -- {
-  --   "nvim-telescope/telescope-dap.nvim",
-  --   config = function()
-  --     require("telescope").load_extension "dap"
-  --   end,
-  -- },
+  -------------------------------- Language Features --------------------------------
 
   -- Easier crates.io dependency managing
   {
@@ -219,8 +184,54 @@ return {
     end,
   },
 
-  ----------------------------------- custom plugins -----------------------------------
+  -- Template string converter
+  {
+    "axelvc/template-string.nvim",
+    ft = { "typescript", "javascript", "typescriptreact", "javascriptreact", "python", "html" },
+    config = function()
+      require("template-string").setup()
+    end,
+  },
 
+  --------------------------------------- UI ----------------------------------------
+
+  -- Show suggestions when executing snippets
+  {
+    "folke/which-key.nvim",
+    cmd = "WhichKey",
+  },
+
+  -- File tree
+  {
+    "nvim-tree/nvim-tree.lua",
+    opts = {
+      git = {
+        enable = true,
+        ignore = false,
+      },
+      update_focused_file = {
+        enable = true,
+        update_cwd = true,
+      },
+    },
+  },
+
+  -- Line decorations
+  {
+    "mvllow/modes.nvim",
+    event = "VeryLazy",
+    config = function()
+      require("modes").setup {
+        plugins = {
+          presets = {
+            operators = false,
+          },
+        },
+      }
+    end,
+  },
+
+  -- Show whitespace symbols in visual mode
   {
     "mcauley-penney/visual-whitespace.nvim",
     event = "VeryLazy",
@@ -247,6 +258,106 @@ return {
       }
     end,
   },
+
+  -- Syntax highlighted folds
+  {
+    "kevinhwang91/nvim-ufo",
+    dependencies = { "kevinhwang91/promise-async" },
+    event = "VeryLazy",
+    opts = {
+      provider_selector = function()
+        return { "treesitter", "indent" }
+      end,
+      open_fold_hl_timeout = 200,
+      close_fold_kinds_for_ft = {
+        default = { "imports", "comment" },
+      },
+      preview = {
+        win_config = {
+          border = { "", "─", "", "", "", "─", "", "" },
+          -- winhighlight = "Normal:Folded",
+          winblend = 0,
+        },
+      },
+      enable_get_fold_virt_text = true,
+    },
+    init = function()
+      vim.o.fillchars = [[eob: ,fold: ,foldopen:,foldsep: ,foldclose:]]
+      vim.o.foldlevel = 40
+      vim.o.foldlevelstart = 99
+      vim.o.foldenable = true
+    end,
+    config = function(_, opts)
+      local handler = function(virtText, _, endLnum, _, _, ctx)
+        local endVirtText = ctx.get_fold_virt_text(endLnum)
+        endVirtText[1][1] = endVirtText[1][1]:gsub("^%s*(.-)%s*$", "%1")
+        table.insert(virtText, { " ⋯ ", "NonText" })
+        for _, chunk in ipairs(endVirtText) do
+          table.insert(virtText, chunk)
+        end
+        return virtText
+      end
+      opts["fold_virt_text_handler"] = handler
+      require("ufo").setup(opts)
+    end,
+  },
+
+  -- Mark signatures
+  {
+    "yehuohan/marks.nvim",
+    lazy = false,
+    config = function()
+      require("marks").setup {
+        default_mappings = false,
+        force_write_shada = true,
+      }
+    end,
+  },
+
+  ------------------------------------ Bindings -------------------------------------
+
+  -- Delete without copying
+  {
+    "gbprod/cutlass.nvim",
+    lazy = false,
+    config = function()
+      require("cutlass").setup {
+        override_del = true,
+      }
+    end,
+  },
+
+  -- Surround text with quotes
+  {
+    "kylechui/nvim-surround",
+    event = "VeryLazy",
+    config = function()
+      require("nvim-surround").setup {}
+    end,
+  },
+
+  -- Easily move lines
+  {
+    "fedepujol/move.nvim",
+    opts = {},
+    cmd = { "MoveLine", "MoveBlock", "MoveHChar", "MoveHBlock", "MoveWord" },
+  },
+
+  -- Move by subwords and skip insignificant punctuation
+  {
+    "chrisgrieser/nvim-spider",
+    lazy = true,
+  },
+
+  -- Fast search plugin
+  {
+    "ggandor/leap.nvim",
+    dependencies = {
+      { "tpope/vim-repeat" },
+    },
+  },
+
+  ------------------------------------- Other ---------------------------------------
 
   {
     "pwntester/octo.nvim",
@@ -305,29 +416,6 @@ return {
     end,
   },
 
-  -- Delete without copying
-  {
-    "gbprod/cutlass.nvim",
-    lazy = false,
-    config = function()
-      require("cutlass").setup {
-        override_del = true,
-      }
-    end,
-  },
-
-  -- Show all problems in your code
-  {
-    "folke/trouble.nvim",
-    cmd = { "Trouble", "TroubleToggle", "TroubleClose", "TroubleRefresh" },
-    config = function()
-      require("trouble").setup()
-    end,
-  },
-
-  -- Apply code fixes swiftly
-  { "weilbith/nvim-code-action-menu", cmd = "CodeActionMenu" },
-
   -- Run code inside NeoVim
   {
     "CRAG666/code_runner.nvim",
@@ -345,27 +433,6 @@ return {
     end,
   },
 
-  -- Mark signatures
-  {
-    "yehuohan/marks.nvim",
-    lazy = false,
-    config = function()
-      require("marks").setup {
-        default_mappings = false,
-        force_write_shada = true,
-      }
-    end,
-  },
-
-  -- Surround text with quotes
-  {
-    "kylechui/nvim-surround",
-    event = "VeryLazy",
-    config = function()
-      require("nvim-surround").setup {}
-    end,
-  },
-
   -- Cheatsheet
   {
     "sudormrfbin/cheatsheet.nvim",
@@ -377,14 +444,6 @@ return {
     },
   },
 
-  -- Fast search plugin
-  {
-    "ggandor/leap.nvim",
-    dependencies = {
-      { "tpope/vim-repeat" },
-    },
-  },
-
   -- Set project root correctly
   {
     "ahmedkhalf/project.nvim",
@@ -393,86 +452,6 @@ return {
       require("project_nvim").setup {
         patterns = { ">.config" },
       }
-    end,
-  },
-
-  -- Line decorations
-  {
-    "mvllow/modes.nvim",
-    event = "VeryLazy",
-    config = function()
-      require("modes").setup {
-        plugins = {
-          presets = {
-            operators = false,
-          },
-        },
-      }
-    end,
-  },
-
-  -- Template string converter
-  {
-    "axelvc/template-string.nvim",
-    ft = { "typescript", "javascript", "typescriptreact", "javascriptreact", "python", "html" },
-    config = function()
-      require("template-string").setup()
-    end,
-  },
-
-  -- Easily move lines
-  {
-    "fedepujol/move.nvim",
-    opts = {},
-    cmd = { "MoveLine", "MoveBlock", "MoveHChar", "MoveHBlock", "MoveWord" },
-  },
-
-  -- Move by subwords and skip insignificant punctuation
-  {
-    "chrisgrieser/nvim-spider",
-    lazy = true,
-  },
-
-  -- Syntax highlighted folds
-  {
-    "kevinhwang91/nvim-ufo",
-    dependencies = { "kevinhwang91/promise-async" },
-    event = "VeryLazy",
-    opts = {
-      provider_selector = function()
-        return { "treesitter", "indent" }
-      end,
-      open_fold_hl_timeout = 200,
-      close_fold_kinds_for_ft = {
-        default = { "imports", "comment" },
-      },
-      preview = {
-        win_config = {
-          border = { "", "─", "", "", "", "─", "", "" },
-          -- winhighlight = "Normal:Folded",
-          winblend = 0,
-        },
-      },
-      enable_get_fold_virt_text = true,
-    },
-    init = function()
-      vim.o.fillchars = [[eob: ,fold: ,foldopen:,foldsep: ,foldclose:]]
-      vim.o.foldlevel = 40
-      vim.o.foldlevelstart = 99
-      vim.o.foldenable = true
-    end,
-    config = function(_, opts)
-      local handler = function(virtText, _, endLnum, _, _, ctx)
-        local endVirtText = ctx.get_fold_virt_text(endLnum)
-        endVirtText[1][1] = endVirtText[1][1]:gsub("^%s*(.-)%s*$", "%1")
-        table.insert(virtText, { " ⋯ ", "NonText" })
-        for _, chunk in ipairs(endVirtText) do
-          table.insert(virtText, chunk)
-        end
-        return virtText
-      end
-      opts["fold_virt_text_handler"] = handler
-      require("ufo").setup(opts)
     end,
   },
 }
