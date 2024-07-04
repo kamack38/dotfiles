@@ -370,6 +370,15 @@ return {
   ------------------------------------- Other ---------------------------------------
 
   {
+    "2kabhishek/nerdy.nvim",
+    dependencies = {
+      "stevearc/dressing.nvim",
+      "nvim-telescope/telescope.nvim",
+    },
+    cmd = "Nerdy",
+  },
+
+  {
     "pwntester/octo.nvim",
     keys = require("configs.octo").keys,
     dependencies = {
