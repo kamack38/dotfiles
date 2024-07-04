@@ -18,9 +18,9 @@ local lspconfig = require "lspconfig"
 local servers = {
   "html",
   "cssls",
-  "emmet_ls",
+  -- "emmet_ls",
   "tsserver",
-  "tailwindcss",
+  -- "tailwindcss",
   "texlab",
   "ruff_lsp",
   "typst_lsp",

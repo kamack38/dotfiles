@@ -1,5 +1,3 @@
-local overrides = require "configs.overrides"
-
 return {
 
   ----------------------------------- default plugins -----------------------------------
@@ -31,15 +29,6 @@ return {
   -- Add more lsp servers
   {
     "neovim/nvim-lspconfig",
-    dependencies = {
-      -- Diagnostics, code actions, format and more
-      {
-        "jose-elias-alvarez/null-ls.nvim",
-        config = function()
-          require "configs.null-ls"
-        end,
-      },
-    },
     config = function()
       dofile(vim.g.base46_cache .. "lsp")
       require "nvchad.configs.lspconfig"
@@ -58,9 +47,81 @@ return {
   },
 
   -- override default configs
-  { "nvim-tree/nvim-tree.lua", opts = overrides.nvimtree },
-  { "nvim-treesitter/nvim-treesitter", opts = overrides.treesitter },
-  { "williamboman/mason.nvim", opts = overrides.mason },
+  {
+    "nvim-tree/nvim-tree.lua",
+    opts = {
+      git = {
+        enable = true,
+        ignore = false,
+      },
+      update_focused_file = {
+        enable = true,
+        update_cwd = true,
+      },
+    },
+  },
+  {
+    "nvim-treesitter/nvim-treesitter",
+    opts = {
+      ensure_installed = {
+        "vim",
+        "html",
+        "css",
+        "rust",
+        "javascript",
+        "typescript",
+        "tsx",
+        "json",
+        "yaml",
+        "toml",
+        "markdown",
+        "c",
+        "nix",
+        "cpp",
+        "bash",
+        "fish",
+        "lua",
+        "rasi",
+        "python",
+      },
+
+      autotag = {
+        enable = true,
+      },
+    },
+
+    dependencies = {
+      {
+        "windwp/nvim-ts-autotag",
+        config = function()
+          require("nvim-ts-autotag").setup()
+        end,
+      },
+    },
+  },
+  {
+    "williamboman/mason.nvim",
+    opts = {
+      ensure_installed = {
+        -- web dev
+        "css-lsp",
+        "html-lsp",
+        "typescript-language-server",
+        "emmet-ls",
+        "json-lsp",
+
+        -- shell
+        "shfmt",
+        "shellcheck",
+
+        -- cpp
+        "clangd",
+
+        -- lua
+        "stylua",
+      },
+    },
+  },
 
   --------------------------------- language features ----------------------------------
 
@@ -99,10 +160,6 @@ return {
       require("crates").setup {
         popup = {
           autofocus = true,
-        },
-        null_ls = {
-          enabled = true,
-          name = "crates.nvim",
         },
       }
     end,
@@ -163,6 +220,34 @@ return {
   },
 
   ----------------------------------- custom plugins -----------------------------------
+
+  {
+    "mcauley-penney/visual-whitespace.nvim",
+    event = "VeryLazy",
+    config = function()
+      get_hl_hex = function(opts, ns_id)
+        opts, ns_id = opts or {}, ns_id or 0
+        assert(opts.name or opts.id, "Error: must have hl group name or ID!")
+        opts.link = true
+
+        local hl = vim.api.nvim_get_hl(ns_id, opts)
+
+        return {
+          fg = hl.fg and ("#%06x"):format(hl.fg),
+          bg = hl.bg and ("#%06x"):format(hl.bg),
+        }
+      end
+      local ws_bg = get_hl_hex({ name = "ModesVisualVisual" })["bg"]
+      local ws_fg = get_hl_hex({ name = "Comment" })["fg"]
+
+      require("visual-whitespace").setup {
+        highlight = { bg = ws_bg, fg = ws_fg },
+        use_listchars = true,
+        nl_char = "¬",
+      }
+    end,
+  },
+
   {
     "pwntester/octo.nvim",
     keys = require("configs.octo").keys,

@@ -6,13 +6,22 @@ local options = {
       args = { "--style", "{ BasedOnStyle: Google, IndentWidth: 4, ColumnLimit: 100 }" },
     },
     shfmt = {},
-    prettierd = {},
+    -- prettierd = {},
   },
 
   formatters_by_ft = {
     lua = { "stylua" },
     rust = { "rustfmt" },
     nix = { "nixfmt" },
+
+    -- webdev
+    javascript = { "biome" },
+    javascriptreact = { "biome" },
+    typescript = { "biome" },
+    typescriptreact = { "biome" },
+
+    css = { "biome" },
+    html = { "biome" },
     json = { "biome" },
     jsonc = { "biome" },
   },
