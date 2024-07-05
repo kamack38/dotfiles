@@ -100,6 +100,7 @@ end, { desc = "spider-ge" })
 -- LspUI
 map("n", "<leader>cn", "<cmd> LspUI rename <CR>", { desc = "  LSP rename (change name)" })
 map("n", "<C-space>", "<cmd> LspUI code_action <CR>", { desc = "  Show code action menu" })
+-- map("n", "K", "<cmd> LspUI hover <CR>", { desc = "  LSP hover" })
 
 -- Marks
 map("n", "m", function()

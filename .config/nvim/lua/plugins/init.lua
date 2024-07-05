@@ -199,6 +199,12 @@ return {
     end,
   },
 
+  -- TS context aware comments
+  {
+    "JoosepAlviste/nvim-ts-context-commentstring",
+    event = { "VeryLazy" },
+  },
+
   --------------------------------------- UI ----------------------------------------
 
   -- Show suggestions when executing snippets
