@@ -1,3 +1,4 @@
+---@type NvPluginSpec[]
 return {
   ----------------------------------- LSP PLugins -----------------------------------
 
@@ -6,7 +7,7 @@ return {
     "neovim/nvim-lspconfig",
     config = function()
       dofile(vim.g.base46_cache .. "lsp")
-      require "nvchad.configs.lspconfig"
+      require("nvchad.configs.lspconfig").defaults()
       require "configs.lspconfig"
     end,
   },
@@ -264,7 +265,7 @@ return {
     "mcauley-penney/visual-whitespace.nvim",
     event = "VeryLazy",
     config = function()
-      get_hl_hex = function(opts, ns_id)
+      local get_hl_hex = function(opts, ns_id)
         opts, ns_id = opts or {}, ns_id or 0
         assert(opts.name or opts.id, "Error: must have hl group name or ID!")
         opts.link = true
@@ -413,7 +414,7 @@ return {
   -- Track the time you're spending with your code
   {
     "wakatime/vim-wakatime",
-    lazy = false,
+    event = { "BufReadPost" },
   },
 
   -- Focus on your code
@@ -428,7 +429,7 @@ return {
   -- Let everyone know your using NeoVim
   {
     "andweeb/presence.nvim",
-    lazy = false,
+    event = { "BufReadPost" },
     config = function()
       require("presence"):setup { main_image = "file" }
     end,
@@ -446,8 +447,8 @@ return {
   -- Organize your work with comments
   {
     "folke/todo-comments.nvim",
+    event = { "BufReadPost" },
     dependencies = "nvim-lua/plenary.nvim",
-    event = "VeryLazy",
     config = function()
       require("todo-comments").setup()
     end,

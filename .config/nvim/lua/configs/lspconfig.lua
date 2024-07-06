@@ -2,7 +2,7 @@ local configs = require "nvchad.configs.lspconfig"
 
 local map = vim.keymap.set
 
-on_attach = function(client, bufnr)
+local on_attach = function(client, bufnr)
   configs.on_attach(client, bufnr)
   local function opts(desc)
     return { buffer = bufnr, desc = desc }
