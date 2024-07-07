@@ -426,15 +426,6 @@ return {
     end,
   },
 
-  -- Let everyone know your using NeoVim
-  {
-    "andweeb/presence.nvim",
-    event = { "BufReadPost" },
-    config = function()
-      require("presence"):setup { main_image = "file" }
-    end,
-  },
-
   -- Smooth scrolling
   {
     "karb94/neoscroll.nvim",
