@@ -17,6 +17,15 @@ map("n", "<F7>", "<cmd> RunFile <CR>", { desc = "  Run code" })
 -- Trouble
 map("n", "<C-S-m>", "<cmd> Trouble diagnostics toggle<CR>", { desc = "  Show diagnostics" })
 
+-- Todo-comments
+map("n", "<leader>td", "<cmd> Trouble todo toggle <CR>", { desc = "  Show todo comments" })
+map("n", "]t", function()
+  require("todo-comments").jump_next()
+end, { desc = "Next todo comment" })
+map("n", "[t", function()
+  require("todo-comments").jump_prev()
+end, { desc = "Previous todo comment" })
+
 -- Pasting
 map("n", "<C-p>", "<cmd> pu <CR>", { desc = "  Paste in line under" })
 

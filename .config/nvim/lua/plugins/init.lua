@@ -229,9 +229,9 @@ return {
             git = {
               unstaged = "",
               staged = "",
-              unmerged = "M",
+              unmerged = "",
               renamed = "",
-              untracked = "?",
+              untracked = "",
               deleted = "",
               ignored = "",
             },
