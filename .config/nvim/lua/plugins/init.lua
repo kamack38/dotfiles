@@ -277,6 +277,9 @@ return {
           bg = hl.bg and ("#%06x"):format(hl.bg),
         }
       end
+
+      require("base46").load_all_highlights()
+
       local ws_bg = get_hl_hex({ name = "ModesVisualVisual" })["bg"]
       local ws_fg = get_hl_hex({ name = "Comment" })["fg"]
 
