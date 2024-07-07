@@ -56,7 +56,9 @@ map(
   { desc = "File save without formatting" }
 )
 
+-- Escaping modes
 map("i", "<A-;>", "<ESC>", { noremap = true, silent = true })
+map("t", "<A-;>", "<C-\\><C-N>", { desc = "terminal escape terminal mode" })
 
 -- Spider
 map({ "n", "v" }, "w", function()
