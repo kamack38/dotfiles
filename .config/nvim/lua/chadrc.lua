@@ -1,17 +1,11 @@
 ---@type ChadrcConfig
-local highlights = require "highlights"
-
--- Snippets
-local config_path = ((os.getenv "XDG_CONFIG_HOME") or os.getenv "HOME" .. "/.config")
-vim.g.vscode_snippets_path = config_path .. "/Code/User/snippets"
-
-local M = {
+return {
 
   ui = {
     theme = "onedark",
     transparency = true,
 
-    hl_override = highlights.override,
+    hl_override = require("highlights").override,
 
     cmp = {
       icons = true,
@@ -25,7 +19,13 @@ local M = {
       -- round and block will work for minimal theme only
       separator_style = "default",
       order = nil,
-      modules = nil,
+      -- modules = nil,
+      -- modules = {
+      --   -- The default cursor module is override
+      --   cursor = function()
+      --     return "%#BruhHl#" .. " bruh " -- the highlight group here is BruhHl,
+      --   end,
+      -- },
     },
 
     tabufline = {
@@ -79,5 +79,3 @@ local M = {
     },
   },
 }
-
-return M

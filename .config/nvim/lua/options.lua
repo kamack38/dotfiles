@@ -17,6 +17,10 @@ end
 -- opt.foldlevel = 20
 -- opt.fillchars = { fold = " ", eob = " " }
 
+-- Snippets
+local config_path = ((os.getenv "XDG_CONFIG_HOME") or os.getenv "HOME" .. "/.config")
+vim.g.vscode_snippets_path = config_path .. "/Code/User/snippets"
+
 opt.conceallevel = 2
 -- opt.cmdheight = 0
 opt.scrolloff = 5
@@ -35,10 +39,8 @@ if vim.g.neovide then
     return string.format("%x", math.floor(255 * (vim.g.transparency or 0.8)))
   end
 
+  vim.g.neovide_refresh_rate = 120
   vim.g.neovide_transparency = 0.8
   vim.g.transparency = 0.8
   vim.g.neovide_background_color = "#282c34" .. alpha()
-  vim.o.background = ""
-  -- vim.keymap.set("i", "<c-s-v>", "<c-r>+")
-  -- vim.keymap.set("i", "<c-r>", "<c-s-v>")
 end
