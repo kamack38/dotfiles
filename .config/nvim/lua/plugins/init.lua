@@ -203,7 +203,7 @@ return {
   -- TS context aware comments
   {
     "JoosepAlviste/nvim-ts-context-commentstring",
-    event = { "VeryLazy" },
+    lazy = true,
   },
 
   --------------------------------------- UI ----------------------------------------
@@ -414,7 +414,7 @@ return {
   -- Track the time you're spending with your code
   {
     "wakatime/vim-wakatime",
-    event = { "BufReadPost" },
+    event = { "VeryLazy" },
   },
 
   -- Focus on your code
@@ -438,7 +438,7 @@ return {
   -- Organize your work with comments
   {
     "folke/todo-comments.nvim",
-    event = { "BufReadPost" },
+    event = { "VeryLazy" },
     dependencies = "nvim-lua/plenary.nvim",
     config = function()
       require("todo-comments").setup()
