@@ -1,18 +1,8 @@
 local configs = require "nvchad.configs.lspconfig"
 
-local map = vim.keymap.set
-
-local on_attach = function(client, bufnr)
-  configs.on_attach(client, bufnr)
-  local function opts(desc)
-    return { buffer = bufnr, desc = desc }
-  end
-
-  map("n", "gr", "<cmd> Telescope lsp_references <CR>", opts " Lsp Show references")
-end
-
 local on_init = configs.on_init
 local capabilities = configs.capabilities
+local on_attach = configs.on_attach
 
 local lspconfig = require "lspconfig"
 local servers = {
@@ -29,25 +19,6 @@ local servers = {
 
 local no_formatting = {
   "clangd",
-}
-
-local function lspSymbol(name, icon)
-  local hl = "DiagnosticSign" .. name
-  vim.fn.sign_define(hl, { text = icon, numhl = hl, texthl = hl })
-end
-
-lspSymbol("Error", "󰅙")
-lspSymbol("Info", "󰋼")
-lspSymbol("Hint", "󰌵")
-lspSymbol("Warn", "")
-
-vim.diagnostic.config {
-  virtual_text = {
-    prefix = "",
-  },
-  signs = true,
-  underline = true,
-  update_in_insert = false,
 }
 
 lspconfig.rust_analyzer.setup {
