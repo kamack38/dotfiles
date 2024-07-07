@@ -27,25 +27,27 @@ return {
     "nvim-treesitter/nvim-treesitter",
     opts = {
       ensure_installed = {
-        "vim",
         "html",
         "css",
-        "rust",
         "javascript",
         "typescript",
         "tsx",
+
         "json",
         "yaml",
         "toml",
-        "markdown",
+
         "c",
-        "nix",
         "cpp",
+        "python",
+        "rust",
+        "nix",
         "bash",
         "fish",
+
         "lua",
-        "rasi",
-        "python",
+        "vim",
+        "markdown",
       },
 
       incremental_selection = {
@@ -97,11 +99,10 @@ return {
         "html-lsp",
         "typescript-language-server",
         "emmet-ls",
-        "json-lsp",
+        "biome",
 
         -- shell
         "shfmt",
-        "shellcheck",
 
         -- cpp
         "clangd",

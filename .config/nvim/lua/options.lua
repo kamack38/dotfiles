@@ -18,7 +18,7 @@ end
 -- opt.fillchars = { fold = " ", eob = " " }
 
 opt.conceallevel = 2
-opt.cmdheight = 0
+-- opt.cmdheight = 0
 opt.scrolloff = 5
 opt.updatetime = 100
 

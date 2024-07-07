@@ -5,16 +5,14 @@ local options = {
     clang_format = {
       args = { "--style", "{ BasedOnStyle: Google, IndentWidth: 4, ColumnLimit: 100 }" },
     },
-    shfmt = {},
-    -- prettierd = {},
+    shfmt = {
+      inherit = false,
+      command = "shfmt",
+      args = { "-i", "0", "-filename", "$FILENAME" },
+    },
   },
 
   formatters_by_ft = {
-    lua = { "stylua" },
-    rust = { "rustfmt" },
-    nix = { "nixfmt" },
-
-    -- webdev
     javascript = { "biome" },
     javascriptreact = { "biome" },
     typescript = { "biome" },
@@ -24,10 +22,17 @@ local options = {
     html = { "biome" },
     json = { "biome" },
     jsonc = { "biome" },
+
+    cpp = { "clang_format" },
+    rust = { "rustfmt" },
+    nix = { "nixfmt" },
+    lua = { "stylua" },
+
+    sh = { "shfmt" },
+    fish = { "fish_indent" },
   },
 
   format_on_save = {
-    -- These options will be passed to conform.format()
     timeout_ms = 500,
     lsp_format = "fallback",
   },
