@@ -287,7 +287,6 @@ return {
       require("visual-whitespace").setup {
         highlight = { bg = ws_bg, fg = ws_fg },
         use_listchars = true,
-        nl_char = "¬",
       }
     end,
   },
