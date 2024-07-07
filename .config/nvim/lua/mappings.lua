@@ -37,8 +37,8 @@ map("n", "<A-j>", "<cmd> MoveLine(1) <CR>", { desc = "Move current line down" })
 -- map("n", "<A-l>", "<cmd> MoveWord(1) <CR>", { desc = "Move current word left" })
 
 -- Moving selection
-map("v", "<A-k>", "<cmd> MoveBlock(-1) <CR>", { desc = "Move selected block up" })
-map("v", "<A-j>", "<cmd> MoveBlock(1) <CR>", { desc = "Move selected block down" })
+map("v", "<A-k>", ":MoveBlock(-1) <CR>", { desc = "Move selected block up" })
+map("v", "<A-j>", ":MoveBlock(1) <CR>", { desc = "Move selected block down" })
 
 -- Duplicating lines
 map("n", "<A-S-k>", "<cmd> t- <CR>", { desc = "Duplicate current line up" })
