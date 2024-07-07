@@ -264,6 +264,7 @@ return {
   -- Show whitespace symbols in visual mode
   {
     "mcauley-penney/visual-whitespace.nvim",
+    dependencies = { "mvllow/modes.nvim" },
     event = "VeryLazy",
     config = function()
       local get_hl_hex = function(opts, ns_id)
