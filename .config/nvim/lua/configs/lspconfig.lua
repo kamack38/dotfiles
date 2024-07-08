@@ -15,6 +15,7 @@ local servers = {
   "ruff_lsp",
   "typst_lsp",
   "nil_ls",
+  "typos_lsp",
 }
 
 local no_formatting = {
