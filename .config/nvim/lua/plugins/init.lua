@@ -106,6 +106,7 @@ return {
 
         -- cpp
         "clangd",
+        "clang-format",
 
         -- lua
         "stylua",
