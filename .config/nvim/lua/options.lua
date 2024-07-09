@@ -26,12 +26,6 @@ opt.conceallevel = 2
 opt.scrolloff = 5
 opt.updatetime = 100
 
-local get_option = vim.filetype.get_option
-vim.filetype.get_option = function(filetype, option)
-  return option == "commentstring" and require("ts_context_commentstring.internal").calculate_commentstring()
-    or get_option(filetype, option)
-end
-
 if vim.g.neovide then
   vim.o.guifont = "FiraCode Nerd Font Mono Med:h12"
 

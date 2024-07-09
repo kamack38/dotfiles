@@ -204,8 +204,9 @@ return {
 
   -- TS context aware comments
   {
-    "JoosepAlviste/nvim-ts-context-commentstring",
-    lazy = true,
+    "folke/ts-comments.nvim",
+    opts = {},
+    event = "VeryLazy",
   },
 
   --------------------------------------- UI ----------------------------------------
