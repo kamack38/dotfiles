@@ -26,6 +26,11 @@ opt.conceallevel = 2
 opt.scrolloff = 5
 opt.updatetime = 100
 
+-- Set hyprlang filetype
+vim.filetype.add {
+  pattern = { [".*/hypr/.*%.conf"] = "hyprlang" },
+}
+
 if vim.g.neovide then
   vim.o.guifont = "FiraCode Nerd Font Mono Med:h12"
 
