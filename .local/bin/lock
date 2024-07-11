@@ -2,7 +2,7 @@
 
 case "$XDG_SESSION_TYPE" in
 "wayland")
-	swaylockd \
+	swaylock \
 		--screenshots \
 		--indicator \
 		--clock \

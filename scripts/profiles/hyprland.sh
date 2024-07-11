@@ -26,27 +26,27 @@ else
 fi
 
 HYPRLAND_PACKAGES=(
-	"hyprpaper-git"                         # A blazing fast wayland wallpaper utility with IPC controls.
-	"wl-clipboard"                          # Command-line copy/paste utilities for Wayland
-	"cliphist"                              # clipboard history "manager" for wayland
-	"grimblast-git"                         # A helper for screenshots within Hyprland.
-	"wlogout"                               # Logout menu for wayland
-	"waybar-hyprland-git"                   # Highly customizable Wayland bar for Wlroots based compositors, with workspaces support for Hyprland
-	"swaylock-effects"                      # A fancier screen locker for Wayland.
-	"swaylockd"                             # A dumb launcher to spawn swaylock and ensure it runs no matter what
-	"swayidle"                              # Idle management daemon for Wayland
-	"xdg-desktop-portal"                    # Desktop integration portals for sandboxed apps
-	"xdg-desktop-portal-hyprland-git"       # xdg-desktop-portal backend for hyprland
-	"wev"                                   # A tool for debugging wayland events, similar to xev
-	"sddm"                                  # QML based X11 and Wayland display manager
-	"autorandr"                             # Auto-detect connected display hardware and load appropiate X11 setup using xrandr
-	"dunst"                                 # Customizable and lightweight notification-daemon
-	"qt5-wayland"                           # Provides APIs for Wayland
-	"libva"                                 # Video Acceleration (VA) API for Linux
-	"qt5ct"                                 # Qt5 Configuration Utility
-	"spotifywm-git"                         # Makes Spotify more friendly to window managers by settings a class name before opening the window
-	"xwaylandvideobridge-cursor-mode-2-git" # A tool to make it easy to stream wayland windows and screens to Xwayland applicatons that don't have native pipewire support
-	"wl-mpris-idle-inhibit"                 # Wayland Idle Inhibitor using MPRIS2 as a signal
+	"hyprpaper-git"                   # A blazing fast wayland wallpaper utility with IPC controls.
+	"wl-clipboard"                    # Command-line copy/paste utilities for Wayland
+	"wlsunset"                        # Day/night gamma adjustments for Wayland compositors
+	"cliphist"                        # clipboard history "manager" for wayland
+	"grimblast-git"                   # A helper for screenshots within Hyprland.
+	"wlogout"                         # Logout menu for wayland
+	"waybar-hyprland-git"             # Highly customizable Wayland bar for Wlroots based compositors, with workspaces support for Hyprland
+	"swaylock-effects"                # A fancier screen locker for Wayland.
+	"hypridle"                        # hyprland’s idle daemon
+	"xdg-desktop-portal"              # Desktop integration portals for sandboxed apps
+	"xdg-desktop-portal-hyprland-git" # xdg-desktop-portal backend for hyprland
+	"wev"                             # A tool for debugging wayland events, similar to xev
+	"sddm"                            # QML based X11 and Wayland display manager
+	"autorandr"                       # Auto-detect connected display hardware and load appropriate X11 setup using xrandr
+	"dunst"                           # Customizable and lightweight notification-daemon
+	"qt5-wayland"                     # Provides APIs for Wayland
+	"libva"                           # Video Acceleration (VA) API for Linux
+	"qt5ct"                           # Qt5 Configuration Utility
+	"spotifywm-git"                   # Makes Spotify more friendly to window managers by settings a class name before opening the window
+	"xwaylandvideobridge"             # Utility to allow streaming Wayland windows to X applications
+	"wl-mpris-idle-inhibit"           # Wayland Idle Inhibitor using MPRIS2 as a signal
 )
 
 echo "${GREEN}:: ${BWHITE}Installing Hyprland components...${NC}"
