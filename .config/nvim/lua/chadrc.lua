@@ -49,6 +49,12 @@ return {
     },
   },
 
+  term = {
+    sizes = {
+      vsp = 0.5,
+    },
+  },
+
   lsp = {
     signature = true,
   },
