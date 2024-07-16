@@ -10,6 +10,7 @@ map("n", "<leader>db", "<cmd> Nvdash <CR>", { desc = "Show dashboard" })
 
 -- Telescope
 map("n", "<leader>wk", "<cmd> Telescope keymaps <CR>", { desc = "Telescope find keys" })
+map("n", "<leader>fn", "<cmd> Nerdy <CR>", { desc = "Find NerdFonts" })
 
 -- CodeRunner
 map("n", "<F7>", "<cmd> RunFile <CR>", { desc = "Run code" })
@@ -41,11 +42,11 @@ map("v", "<A-k>", ":MoveBlock(-1) <CR>", { desc = "Move selected block up" })
 map("v", "<A-j>", ":MoveBlock(1) <CR>", { desc = "Move selected block down" })
 
 -- Duplicating lines
-map("n", "<A-S-k>", "<cmd> t- <CR>", { desc = "Duplicate current line up" })
-map("n", "<A-S-j>", "<cmd> t.  <CR>", { desc = "Duplicate current line down" })
+map({ "n", "v" }, "<A-S-k>", ":copy- <CR>", { desc = "Duplicate current line up" })
+map({ "n", "v" }, "<A-S-j>", ":copy.  <CR>", { desc = "Duplicate current line down" })
 
 -- Duplicating lines
-map("v", "<A-S-k>", "<cmd> copy- <CR>", { desc = "Duplicate current line up" })
+-- map("v", "<A-S-k>", "<cmd> copy- <CR>", { desc = "Duplicate current line up" })
 -- map("v", "<A-S-j>", ":copy.  <CR>", { desc = "Duplicate current line down" })
 
 -- Saving files
