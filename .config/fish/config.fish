@@ -42,6 +42,20 @@ bind \cl forward-char
 bind \ch backward-char
 
 # ------------
+# Abbreviations
+# ------------
+function last_history_item
+    echo $history[1]
+end
+
+function last_history_item_args
+    echo $history[1] | cut -f 2- -d " "
+end
+
+abbr -a !! --position anywhere --function last_history_item # Last command
+abbr -a \?\? --position anywhere --function last_history_item_args # Last command without the first word
+
+# ------------
 # Aliases
 # ------------
 # LS aliases
@@ -91,22 +105,22 @@ end
 
 # Open files and directories
 function r -a path
-  if test -f $path
-    if path extension $path | string match -raq '^(\.png|\.jpg|\.jpeg|\.webp|\.tiff)$'
-      icat $path
+    if test -f $path
+        if path extension $path | string match -raq '^(\.png|\.jpg|\.jpeg|\.webp|\.tiff)$'
+            icat $path
+        else
+            bat $path
+        end
+    else if test -d $path
+        ls $path
     else
-    bat $path
+        echo "Object does not exist!"
     end
-  else if test -d $path
-    ls $path
-else
-    echo "Object does not exist!"
-  end
 end
 
 # See diff between .pacnew files
 function diff-pac -a path
-  delta "$path" "$path.pacnew"
+    delta "$path" "$path.pacnew"
 end
 
 alias makesrcinfo="makepkg --printsrcinfo > .SRCINFO"
@@ -133,21 +147,21 @@ alias multiple-sinks="pactl load-module module-combine-sink sink_name=Simultaneo
 
 # Hyprland
 if test -d /tmp/hypr
-  alias hypr-log="bat /tmp/hypr/$(/usr/bin/ls -t /tmp/hypr/ | head -n 2 | tail -n 1)/hyprland.log"
-  alias hypr-log-tty="bat /tmp/hypr/$(/usr/bin/ls -t /tmp/hypr/ | head -n 1)/hyprland.log"
+    alias hypr-log="bat /tmp/hypr/$(/usr/bin/ls -t /tmp/hypr/ | head -n 2 | tail -n 1)/hyprland.log"
+    alias hypr-log-tty="bat /tmp/hypr/$(/usr/bin/ls -t /tmp/hypr/ | head -n 1)/hyprland.log"
 end
 
 # Virtual machine
 function remove-vm -a vm
-  sudo virsh shutdown --domain $vm
-  set -l pp (sudo virsh dumpxml --domain $vm | rg 'source file' | cut -d"'" -f 2)
-  sudo virsh undefine --domain $vm
-  sudo rm -rf $pp
+    sudo virsh shutdown --domain $vm
+    set -l pp (sudo virsh dumpxml --domain $vm | rg 'source file' | cut -d"'" -f 2)
+    sudo virsh undefine --domain $vm
+    sudo rm -rf $pp
 end
 
 # Dolphin
 function dolp -a path
-    command dolphin $path &> /dev/null & disown
+    command dolphin $path &>/dev/null & disown
 end
 
 # Paru
@@ -232,7 +246,7 @@ function workspace_preview -a name
         end
     end
 end
-function vsr -d "List recently opened files with vscode" -a serach
+function vsr -d "List recently opened files with vscode" -a search
     set -l vscode_path "$HOME/.config/Code"
     set -l grep
 
@@ -248,7 +262,7 @@ function vsr -d "List recently opened files with vscode" -a serach
         | string replace -a '"path": ' '' \
         | string trim -c '"'\
         | string replace -a "$HOME" '~'\
-        | fzf --exit-0 --height 50% --layout=reverse -q$serach --preview "workspace_preview {}"\
+        | fzf --exit-0 --height 50% --layout=reverse -q$search --preview "workspace_preview {}"\
         | string replace -a '~' "$HOME"
     )
 
@@ -265,48 +279,48 @@ function ffmpeg-extract-audio -d 'Extracts audio from video' -a input_file outpu
 end
 
 function ffmpeg-add-subs -d 'Adds soft subtitles to selected video file' -a video_file subtitles_file output_file
-  if test -z "$video_file"
-    echo "Video file not set"
-    return 1
-  end
-  if test -z "$subtitles_file"
-    echo "Subtitles file not set"
-    return 1
-  end
-  if test -z "$output_file"
-    echo "Output file not set"
-    return 1
-  end
-  if test -z "$output_file"
-    echo "Output file not set"
-    return 1
-  end
-  command ffmpeg -i "$video_file" -i "$subtitles_file" -c copy -c:s mov_text -metadata:s:s:1 language=eng "$output_file"
+    if test -z "$video_file"
+        echo "Video file not set"
+        return 1
+    end
+    if test -z "$subtitles_file"
+        echo "Subtitles file not set"
+        return 1
+    end
+    if test -z "$output_file"
+        echo "Output file not set"
+        return 1
+    end
+    if test -z "$output_file"
+        echo "Output file not set"
+        return 1
+    end
+    command ffmpeg -i "$video_file" -i "$subtitles_file" -c copy -c:s mov_text -metadata:s:s:1 language=eng "$output_file"
 end
 
 # Typst from stdin
 function tm -d 'Shows math expression in terminal' -a math output_file
-  set file "/tmp/math1010.typ"
-  echo -e "#set page(width: auto, height: auto, margin: 10pt)\n\$\n$math\n\$" > $file
-  if test -z "$output_file"
-    typst compile -f png "$file" /dev/stdout | icat
-  else
-    typst compile -f png "$file" "$output_file"
-    icat "$output_file"
-  end
+    set file "/tmp/math1010.typ"
+    echo -e "#set page(width: auto, height: auto, margin: 10pt)\n\$\n$math\n\$" >$file
+    if test -z "$output_file"
+        typst compile -f png "$file" /dev/stdout | icat
+    else
+        typst compile -f png "$file" "$output_file"
+        icat "$output_file"
+    end
 end
 
 function mp -a output_file
-  tm (wl-paste) "$output_file"
+    tm (wl-paste) "$output_file"
 end
 
 # Copying and pasting files
 function cpf -d 'Copy file contents to clipboard' -a file_name
-  cat "$file_name" | wl-copy
+    cat "$file_name" | wl-copy
 end
 
 function psf -d 'Paste clipboard contents to file' -a file_name
-  wl-paste > $file_name
+    wl-paste >$file_name
 end
 
 function ghget -d 'Download file from github'
@@ -323,16 +337,16 @@ function fish_greeting
 end
 
 if status is-interactive
-  if [ "$TERM" = "linux" ] && type -q starship
-    source (starship init fish --print-full-init | psub)
-  else if type -q oh-my-posh
-    oh-my-posh --init --shell fish --config '~/.config/oh-my-posh/kamack.omp.json' | source
-  end
+    if [ "$TERM" = linux ] && type -q starship
+        source (starship init fish --print-full-init | psub)
+    else if type -q oh-my-posh
+        oh-my-posh --init --shell fish --config '~/.config/oh-my-posh/kamack.omp.json' | source
+    end
 end
 
 # pnpm
 set -gx PNPM_HOME "/home/kamack38/.local/share/pnpm"
 if not string match -q -- $PNPM_HOME $PATH
-  set -gx PATH "$PNPM_HOME" $PATH
+    set -gx PATH "$PNPM_HOME" $PATH
 end
 # pnpm end
