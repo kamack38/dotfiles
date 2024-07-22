@@ -209,6 +209,12 @@ return {
     event = "VeryLazy",
   },
 
+  -- CS2 cfg syntax
+  {
+    "kamack38/cs2-cfg.vim",
+    lazy = false,
+  },
+
   --------------------------------------- UI ----------------------------------------
 
   -- Show suggestions when executing snippets
