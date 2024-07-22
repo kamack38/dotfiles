@@ -65,6 +65,9 @@ map("t", "<A-;>", "<C-\\><C-N>", { desc = "terminal escape terminal mode" })
 map("c", "<C-k>", "<Up>")
 map("c", "<C-j>", "<Down>")
 
+-- Reselect pasted text
+map("n", "gp", "`[v`]", { desc = "reselect pasted text" })
+
 -- Spider
 map({ "n", "v" }, "w", function()
   require("spider").motion "w"
