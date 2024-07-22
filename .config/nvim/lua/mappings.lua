@@ -61,6 +61,10 @@ map(
 map("i", "<A-;>", "<ESC>", { noremap = true, silent = true })
 map("t", "<A-;>", "<C-\\><C-N>", { desc = "terminal escape terminal mode" })
 
+-- History in command mode
+map("c", "<C-k>", "<Up>")
+map("c", "<C-j>", "<Down>")
+
 -- Spider
 map({ "n", "v" }, "w", function()
   require("spider").motion "w"
