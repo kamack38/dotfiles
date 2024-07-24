@@ -36,12 +36,6 @@
         "on-click": "xdg-open https://github.com/notifications"
     },
 
-    "custom/gmail": {
-        "exec": "~/.config/polybar/scripts/gmail/launch.py -c '' -p ''",
-        "format": "<span color='#be5046'></span>  {}",
-        "on-click": "xdg-open 'https://gmail.com'"
-    },
-
     "custom/updates": {
         "exec": "~/.config/polybar/scripts/updates-pacman-aurhelper.sh",
         "exec-on-event": true,
