@@ -46,8 +46,11 @@ HYPRLAND_PACKAGES=(
 	"qt5ct"                           # Qt5 Configuration Utility
 	"spotifywm-git"                   # Makes Spotify more friendly to window managers by settings a class name before opening the window
 	"xwaylandvideobridge"             # Utility to allow streaming Wayland windows to X applications
-	"wl-mpris-idle-inhibit"           # Wayland Idle Inhibitor using MPRIS2 as a signal
+	"wayland-pipewire-idle-inhibit"   # Inhibit wayland idle when computer is playing sound
 )
 
 echo "${GREEN}:: ${BWHITE}Installing Hyprland components...${NC}"
 $HELPER -S --noconfirm --needed --quiet "${HYPRLAND_PACKAGES[@]}"
+
+echo "${GREEN}:: ${BWHITE}Enabling Hyprland services...${NC}"
+systemctl enable --now --user wayland-pipewire-idle-inhibit.service
