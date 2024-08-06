@@ -26,6 +26,8 @@ get_source_info() {
 		echo -e "Chrome "
 	elif [[ "$trackid" == *"YoutubeMusic"* ]]; then
 		echo -e "YouTubeMusic "
+	elif [[ "$trackid" == *"mpd"* ]]; then
+		echo -e "MPD "
 	else
 		echo ""
 	fi
