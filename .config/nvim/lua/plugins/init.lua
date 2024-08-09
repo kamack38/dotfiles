@@ -213,6 +213,51 @@ return {
   {
     "OXY2DEV/markview.nvim",
     ft = "markdown",
+    branch = "dev",
+    lazy = false,
+
+    config = function()
+      vim.api.nvim_set_hl(0, "MarkviewHeadin1", { bg = "#453244", fg = "#f38ba8" })
+      vim.api.nvim_set_hl(0, "MarkviewHeadin1Label", { fg = "#f38ba8" })
+      vim.api.nvim_set_hl(0, "MarkviewHeading2", { bg = "#46393E", fg = "#fab387" })
+      vim.api.nvim_set_hl(0, "MarkviewHeading2Label", { fg = "#fab387" })
+      vim.api.nvim_set_hl(0, "MarkviewHeading3", { bg = "#464245", fg = "#f9e2af" })
+      vim.api.nvim_set_hl(0, "MarkviewHeading3Label", { fg = "#f9e2af" })
+      vim.api.nvim_set_hl(0, "MarkviewHeading4", { bg = "#374243", fg = "#a6e3a1" })
+      vim.api.nvim_set_hl(0, "MarkviewHeading4Label", { fg = "#a6e3a1" })
+      vim.api.nvim_set_hl(0, "MarkviewHeading5", { bg = "#2E3D51", fg = "#74c7ec" })
+      vim.api.nvim_set_hl(0, "MarkviewHeading5Label", { fg = "#74c7ec" })
+      vim.api.nvim_set_hl(0, "MarkviewHeading6", { bg = "#393B54", fg = "#b4befe" })
+      vim.api.nvim_set_hl(0, "MarkviewHeading6Label", { fg = "#b4befe" })
+      require("markview").setup {
+        headings = {
+          heading_1 = {
+            sign_hl = "MarkviewHeadin1Label",
+            hl = "MarkviewHeadin1",
+          },
+          heading_2 = {
+            sign_hl = "MarkviewHeading2Label",
+            hl = "MarkviewHeading2",
+          },
+          heading_3 = {
+            sign_hl = "MarkviewHeading3Label",
+            hl = "MarkviewHeading3",
+          },
+          heading_4 = {
+            sign_hl = "MarkviewHeading4Label",
+            hl = "MarkviewHeading4",
+          },
+          heading_5 = {
+            sign_hl = "MarkviewHeading5Label",
+            hl = "MarkviewHeading5",
+          },
+          heading_6 = {
+            sign_hl = "MarkviewHeading6Label",
+            hl = "MarkviewHeading6",
+          },
+        },
+      }
+    end,
 
     dependencies = {
       -- You may not need this if you don't lazy load

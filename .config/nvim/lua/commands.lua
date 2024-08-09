@@ -5,6 +5,11 @@ local autocmd = vim.api.nvim_create_autocmd -- Create autocommand
 -- Add alias for quit
 create_cmd("Q", "quit", {})
 
+-- Add alias for vertical resize
+create_cmd("Vres", function(opts)
+  vim.cmd("vertical resize " .. opts.args)
+end, { nargs = 1 })
+
 -- Tex preview
 function GeneratePDF(file)
   local dir = string.match(file, "(.*)/")
@@ -34,28 +39,20 @@ autocmd("BufRead", {
   pattern = "*Cargo.toml",
   callback = function(opts)
     local crates = require "crates"
-    local wk = require "which-key"
-    wk.register({
-      ["<leader>c"] = {
-        name = "Crates",
-        ["t"] = { crates.toggle, "Toggle" },
-        ["r"] = { crates.reload, "Reload" },
-
-        ["v"] = { crates.show_versions_popup, "Versions popup" },
-        ["f"] = { crates.show_features_popup, "Features popup" },
-        ["d"] = { crates.show_dependencies_popup, "Dependencies popup" },
-
-        ["u"] = { crates.update_crate, "Update crate" },
-        ["U"] = { crates.upgrade_crate, "Upgrade crate" },
-        ["a"] = { crates.update_all_crates, "Update all crates" },
-        ["A"] = { crates.upgrade_all_crates, "Upgrade all crates" },
-
-        ["H"] = { crates.open_homepage, "Open homepage" },
-        ["R"] = { crates.open_repository, "Open repository" },
-        ["D"] = { crates.open_documentation, "Open documentation" },
-        ["C"] = { crates.open_crates_io, "Open crates.io" },
-      },
-    }, { buffer = opts.buf })
+    local map = vim.keymap.set
+    map("n", "<leader>ct", crates.toggle, { buffer = opts.buf, desc = "Crates Toggle" })
+    map("n", "<leader>cr", crates.reload, { buffer = opts.buf, desc = "Crates Reload" })
+    map("n", "<leader>cv", crates.show_versions_popup, { buffer = opts.buf, desc = "Crates Versions popup" })
+    map("n", "<leader>cf", crates.show_features_popup, { buffer = opts.buf, desc = "Crates Features popup" })
+    map("n", "<leader>cd", crates.show_dependencies_popup, { buffer = opts.buf, desc = "Crates Dependencies popup" })
+    map("n", "<leader>cu", crates.update_crate, { buffer = opts.buf, desc = "Crates Update crate" })
+    map("n", "<leader>cU", crates.upgrade_crate, { buffer = opts.buf, desc = "Crates Upgrade crate" })
+    map("n", "<leader>ca", crates.update_all_crates, { buffer = opts.buf, desc = "Crates Update all crates" })
+    map("n", "<leader>cA", crates.upgrade_all_crates, { buffer = opts.buf, desc = "Crates Upgrade all crates" })
+    map("n", "<leader>cH", crates.open_homepage, { buffer = opts.buf, desc = "Crates Open homepage" })
+    map("n", "<leader>cR", crates.open_repository, { buffer = opts.buf, desc = "Crates Open repository" })
+    map("n", "<leader>cD", crates.open_documentation, { buffer = opts.buf, desc = "Crates Open documentation" })
+    map("n", "<leader>cC", crates.open_crates_io, { buffer = opts.buf, desc = "Crates Open crates.io" })
   end,
 })
 
@@ -66,15 +63,10 @@ autocmd("BufRead", {
   pattern = "*package.json",
   callback = function(opts)
     local package = require "package-info"
-    local wk = require "which-key"
-    wk.register({
-      ["<leader>n"] = {
-        name = "Package info",
-        ["u"] = { package.update, "Update selected package" },
-        ["d"] = { package.delete, "Delete selected package" },
-        ["i"] = { package.install, "Install new package" },
-        ["p"] = { package.change_version, "Change package version" },
-      },
-    }, { buffer = opts.buf })
+    local map = vim.keymap.set
+    map("n", "<leader>nu", package.update, { buffer = opts.buf, desc = "Package.json Update selected package" })
+    map("n", "<leader>nd", package.delete, { buffer = opts.buf, desc = "Package.json Delete selected package" })
+    map("n", "<leader>ni", package.install, { buffer = opts.buf, desc = "Package.json Install new package" })
+    map("n", "<leader>np", package.change_version, { buffer = opts.buf, desc = "Package.json Change package version" })
   end,
 })

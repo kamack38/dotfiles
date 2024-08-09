@@ -49,6 +49,9 @@ map({ "n", "v" }, "<A-S-j>", ":copy.  <CR>", { desc = "Duplicate current line do
 -- map("v", "<A-S-k>", "<cmd> copy- <CR>", { desc = "Duplicate current line up" })
 -- map("v", "<A-S-j>", ":copy.  <CR>", { desc = "Duplicate current line down" })
 
+-- Changing windows
+map({ "n" }, "<A-w>", "<C-w>")
+
 -- Saving files
 map(
   "n",
