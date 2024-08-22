@@ -52,8 +52,13 @@ function last_history_item_args
     echo $history[1] | cut -f 2- -d " "
 end
 
+function last_path
+    echo (commandline | cut -f 2 -d " " | xargs -0 dirname --zero)
+end
+
 abbr -a !! --position anywhere --function last_history_item # Last command
 abbr -a \?\? --position anywhere --function last_history_item_args # Last command without the first word
+abbr -a \*\* --position anywhere --function last_path # Last typed path in the commandline. Useful when moving files in the same directory
 
 # ------------
 # Aliases
@@ -98,6 +103,8 @@ alias xterm-kitty="kitty"
 alias n="nvim"
 alias btc="bluetoothctl"
 alias xo="xdg-open"
+
+alias gp="glow -p"
 
 if command -v firefox-developer-edition &>/dev/null
     alias firefox="firefox-developer-edition"
