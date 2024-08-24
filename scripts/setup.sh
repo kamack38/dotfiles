@@ -55,17 +55,6 @@ if [[ $erase_disk == n* ]]; then
 	fi
 fi
 
-# Check if drive is a ssd
-if [[ "$(cat /sys/block/"${DISK#/*/}"/queue/rotational)" == "0" ]]; then
-	echo "${YELLOW}:: ${BWHITE}Selected drive is a ssd...${NC}"
-	MOUNT_OPTIONS="noatime,compress=zstd,space_cache=v2,ssd,commit=120"
-	SWAP_MOUNT_OPTIONS="nodatacow,noatime,nospace_cache,ssd"
-else
-	echo "${YELLOW}:: ${BWHITE}Selected drive is NOT a ssd...${NC}"
-	MOUNT_OPTIONS="noatime,compress=zstd,space_cache=v2,commit=120"
-	SWAP_MOUNT_OPTIONS="nodatacow,noatime,nospace_cache"
-fi
-
 # Swap
 SWAP_OPTIONS=(
 	"swapfile"
@@ -148,64 +137,31 @@ if [[ $erase_disk != n* ]]; then
 	partx -u "${DISK}"
 fi
 
-# Get partition numbers
-echo "${YELLOW}:: ${BWHITE}Looking for free partition numbers...${NC}"
-PART_NUMBERS=()
-if [[ "${DISK}" =~ "nvme" ]]; then
-	TMP_DISK="${DISK}p"
-else
-	TMP_DISK="${DISK}"
-fi
-for ((i = 1, j = 0; j < 3; i++)); do
-	if [[ ! -e "${TMP_DISK}${i}" ]]; then
-		echo "${BLUE}:: ${BLUE}${i}${BWHITE} is free! ${NC}"
-		((j = j + 1))
-		PART_NUMBERS+=("$i")
-	fi
-done
-
 echo "${BLUE}:: ${BWHITE}Formatting disk...${NC}"
 if [[ ! -d "/sys/firmware/efi" ]]; then
-	sgdisk -n "${PART_NUMBERS[2]}"::+1M --typecode="${PART_NUMBERS[2]}":ef02 --change-name="${PART_NUMBERS[2]}":'BIOSBOOT' "${DISK}" # partition 3 (BIOS Boot Partition)
+	sgdisk -n "0::+1M" --typecode="0:ef02" --change-name="0:BIOSBOOT" "${DISK}" # BIOS Boot Partition
 fi
 if [[ $use_x_efi == n* ]]; then
-	sgdisk -n "${PART_NUMBERS[0]}"::+300M --typecode="${PART_NUMBERS[0]}":ef00 --change-name="${PART_NUMBERS[0]}":'EFIBOOT' "${DISK}" # partition 1 (UEFI Boot Partition)
-else
-	PART_NUMBERS[1]="${PART_NUMBERS[0]}"
+	sgdisk -n "0::+300M" --typecode="0:ef00" --change-name="0:EFIBOOT" "${DISK}" # UEFI Boot Partition
 fi
-sgdisk -N "${PART_NUMBERS[1]}" --typecode="${PART_NUMBERS[1]}":8300 --change-name="${PART_NUMBERS[1]}":'ROOT' "${DISK}" # partition 1/2 (Root), default start, remaining
+sgdisk -N "0" --typecode="0:8300" --change-name="0:Archlinux" "${DISK}" # Root Partition, default start, remaining
 
 echo "${BLUE}:: ${BWHITE}Rereading partition table...${NC}"
 partprobe "${DISK}"
 
-echo "${BLUE}:: ${BWHITE}Naming partitions...${NC}"
-if [[ "${DISK}" =~ "nvme" ]]; then
-	ROOT_PART="${DISK}p${PART_NUMBERS[1]}"
-
-	if [[ $use_x_efi == n* ]]; then
-		EFI_PART="${DISK}p${PART_NUMBERS[0]}"
-	fi
-else
-	ROOT_PART="${DISK}${PART_NUMBERS[1]}"
-
-	if [[ $use_x_efi == n* ]]; then
-		EFI_PART="${DISK}${PART_NUMBERS[0]}"
-	fi
-fi
-
 # Create boot partition
 if [[ $use_x_efi == n* ]]; then
 	echo "${BLUE}:: ${BWHITE}Formatting EFI partition...${NC}"
-	mkfs.vfat -F32 -n "EFIBOOT" "${EFI_PART}"
+	mkfs.vfat -F32 -n "EFIBOOT" "/dev/disk/by-partlabel/EFIBOOT"
 fi
 
 # Enter luks password to cryptsetup and format root partition
 echo "${BLUE}:: ${BWHITE}Encrypting root partition...${NC}"
-echo -n "${LUKS_PASSWORD}" | cryptsetup -v luksFormat "${ROOT_PART}" -
+echo -n "${LUKS_PASSWORD}" | cryptsetup -v luksFormat "/dev/disk/by-partlabel/Archlinux" -
 
 # Open luks container and ROOT will be place holder
 echo "${BLUE}:: ${BWHITE}Opening root partition...${NC}"
-echo -n "${LUKS_PASSWORD}" | cryptsetup open "${ROOT_PART}" cryptroot -
+echo -n "${LUKS_PASSWORD}" | cryptsetup open "/dev/disk/by-partlabel/Archlinux" cryptroot -
 
 # Format luks container
 mapper=/dev/mapper/cryptroot
@@ -231,6 +187,10 @@ mount -o ${MOUNT_OPTIONS},subvol=@ ${mapper} /mnt
 echo "${BLUE}:: ${BWHITE}Creating directories (home, var, tmp, swap, .snapshots)...${NC}"
 mkdir -p /mnt/{home,var,tmp,swap,.snapshots}
 
+# Set mount options
+MOUNT_OPTIONS="noatime,compress=zstd,commit=120"
+SWAP_MOUNT_OPTIONS="nodatacow,noatime,nospace_cache"
+
 # Mount all btrfs subvolumes
 echo "${BLUE}:: ${BWHITE}Mounting other btrfs subvolumes...${NC}"
 mount -o ${MOUNT_OPTIONS},subvol=@home ${mapper} /mnt/home
@@ -239,7 +199,7 @@ mount -o ${MOUNT_OPTIONS},subvol=@var ${mapper} /mnt/var
 mount -o ${MOUNT_OPTIONS},subvol=@.snapshots ${mapper} /mnt/.snapshots
 mount -o ${SWAP_MOUNT_OPTIONS},subvol=@swap ${mapper} /mnt/swap
 
-ENCRYPTED_PARTITION_UUID=$(blkid -s UUID -o value "${ROOT_PART}")
+ENCRYPTED_PARTITION_UUID=$(blkid -s UUID -o value "/dev/disk/by-partlabel/Archlinux")
 
 echo "${BLUE}:: ${BWHITE}Encrypted partition UUID is: ${BLUE}${ENCRYPTED_PARTITION_UUID}${NC}"
 
