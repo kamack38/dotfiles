@@ -12,7 +12,7 @@ local servers = {
   "tsserver",
   -- "tailwindcss",
   "texlab",
-  "ruff_lsp",
+  "ruff",
   "typst_lsp",
   "nil_ls",
   "typos_lsp",

@@ -31,6 +31,9 @@ vim.filetype.add {
   pattern = { [".*/hypr/.*%.conf"] = "hyprlang" },
 }
 
+-- Disable recommended markdown style
+vim.g.markdown_recommended_style = 0
+
 if vim.g.neovide then
   vim.o.guifont = "FiraCode Nerd Font Mono Med:h12"
 
