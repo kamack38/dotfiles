@@ -10,6 +10,9 @@ create_cmd("Vres", function(opts)
   vim.cmd("vertical resize " .. opts.args)
 end, { nargs = 1 })
 
+-- Add an alias for Markview plugin
+create_cmd("MV", "Markview", {})
+
 -- Tex preview
 function GeneratePDF(file)
   local dir = string.match(file, "(.*)/")

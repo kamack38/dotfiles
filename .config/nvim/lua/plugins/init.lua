@@ -213,7 +213,7 @@ return {
   {
     "OXY2DEV/markview.nvim",
     ft = "markdown",
-    branch = "dev",
+    branch = "main",
     lazy = false,
 
     config = function()
@@ -230,6 +230,8 @@ return {
       vim.api.nvim_set_hl(0, "MarkviewHeading6", { bg = "#393B54", fg = "#b4befe" })
       vim.api.nvim_set_hl(0, "MarkviewHeading6Label", { fg = "#b4befe" })
       require("markview").setup {
+        modes = { "n", "no", "i" },
+        hybrid_modes = { "i" },
         headings = {
           heading_1 = {
             sign_hl = "MarkviewHeadin1Label",
