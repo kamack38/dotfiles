@@ -9,7 +9,7 @@ local servers = {
   "html",
   "cssls",
   -- "emmet_ls",
-  "tsserver",
+  "ts_ls",
   -- "tailwindcss",
   "texlab",
   "ruff",
