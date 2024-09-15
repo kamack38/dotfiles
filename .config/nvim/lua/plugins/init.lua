@@ -404,7 +404,10 @@ return {
     lazy = false,
     config = function()
       require("marks").setup {
-        default_mappings = false,
+        mappings = {
+          set = false,
+          toggle_mark = "m",
+        },
         force_write_shada = true,
       }
     end,

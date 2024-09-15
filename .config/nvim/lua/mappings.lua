@@ -125,32 +125,6 @@ map("n", "<leader>cn", "<cmd> LspUI rename <CR>", { desc = "LSP rename (change n
 map("n", "<C-space>", "<cmd> LspUI code_action <CR>", { desc = "LSP show code action menu" })
 -- map("n", "K", "<cmd> LspUI hover <CR>", { desc = "  LSP hover" })
 
--- Marks
-map("n", "m", function()
-  require("marks").toggle_mark()
-end, { desc = "Mark toggle" })
-map("n", "m;", function()
-  require("marks").toggle()
-end, { desc = "Mark toggle next available" })
-map("n", "m:", function()
-  require("marks").preview()
-end, { desc = "Mark preview" })
-map("n", "dm", function()
-  require("marks").delete()
-end, { desc = "Mark delete" })
-map("n", "dm-", function()
-  require("marks").delete_line()
-end, { desc = "Mark delete all on current line" })
-map("n", "dm<space>", function()
-  require("marks").delete_buf()
-end, { desc = "Mark delete all in current buffer" })
-map("n", "m]", function()
-  require("marks").next()
-end, { desc = "Mark go to the next" })
-map("n", "m[", function()
-  require("marks").prev()
-end, { desc = "Mark go to the previous" })
-
 -- Leap
 map("n", "<leader>s", function()
   require("leap").leap { target_windows = { vim.fn.win_getid() } }
