@@ -85,6 +85,10 @@ map({ "n", "v" }, "ge", function()
   require("spider").motion "ge"
 end, { desc = "Spider ge" })
 
+-- Textobjects
+map({ "o", "x" }, "ac", '<cmd>lua require("various-textobjs").subword("outer")<CR>')
+map({ "o", "x" }, "ic", '<cmd>lua require("various-textobjs").subword("inner")<CR>')
+
 -- M.dap = {
 -- 	n = {
 -- 		["<F5>"] = {

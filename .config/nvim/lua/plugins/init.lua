@@ -456,6 +456,13 @@ return {
     },
   },
 
+  -- Bundle of more than 30 new text objects for Neovim.
+  {
+    "chrisgrieser/nvim-various-textobjs",
+    event = "UIEnter",
+    opts = { useDefaultKeymaps = true },
+  },
+
   ------------------------------------- Other ---------------------------------------
 
   {
