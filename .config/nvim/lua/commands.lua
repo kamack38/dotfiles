@@ -13,6 +13,29 @@ end, { nargs = 1 })
 -- Add an alias for Markview plugin
 create_cmd("MV", "Markview", {})
 
+-- Hide line numbers inside terminals
+autocmd("TermOpen", {
+  pattern = "*",
+  callback = function()
+    vim.wo.number = false
+    vim.wo.relativenumber = false
+  end,
+})
+
+-- Dynamic terminal padding
+autocmd("VimEnter", {
+  pattern = "*",
+  callback = function()
+    vim.cmd "silent !kitty @ set-spacing padding=0"
+  end,
+})
+autocmd("VimLeave", {
+  pattern = "*",
+  callback = function()
+    vim.cmd "silent !kitty @ set-spacing padding=default"
+  end,
+})
+
 -- Tex preview
 function GeneratePDF(file)
   local dir = string.match(file, "(.*)/")

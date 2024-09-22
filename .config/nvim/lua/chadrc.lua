@@ -52,6 +52,7 @@ return {
   term = {
     sizes = {
       vsp = 0.5,
+      sp = 0.3,
     },
   },
 

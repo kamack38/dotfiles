@@ -89,6 +89,9 @@ end, { desc = "Spider ge" })
 map({ "o", "x" }, "ac", '<cmd>lua require("various-textobjs").subword("outer")<CR>')
 map({ "o", "x" }, "ic", '<cmd>lua require("various-textobjs").subword("inner")<CR>')
 
+-- Terminal
+map({ "n" }, "<leader>tt", "<cmd>term<CR>")
+
 -- M.dap = {
 -- 	n = {
 -- 		["<F5>"] = {
