@@ -68,6 +68,9 @@ map("t", "<A-;>", "<C-\\><C-N>", { desc = "terminal escape terminal mode" })
 map("c", "<C-k>", "<Up>")
 map("c", "<C-j>", "<Down>")
 
+-- Cursor to beginning in command mode
+map("c", "<C-a>", "<C-b>")
+
 -- Reselect pasted text
 map("n", "gp", "`[v`]", { desc = "reselect pasted text" })
 
