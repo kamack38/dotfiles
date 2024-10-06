@@ -400,8 +400,8 @@ return {
 
   -- Mark signatures
   {
-    "yehuohan/marks.nvim",
-    lazy = false,
+    "kamack38/marks.nvim",
+    event = "VeryLazy",
     config = function()
       require("marks").setup {
         mappings = {
