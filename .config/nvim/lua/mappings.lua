@@ -8,6 +8,14 @@ map("n", "<leader>tz", "<cmd> ZenMode <CR>", { desc = "ZenMode toggle" })
 -- Dashboard
 map("n", "<leader>db", "<cmd> Nvdash <CR>", { desc = "Show dashboard" })
 
+-- Menu
+map("n", "<RightMouse>", function()
+  vim.cmd.exec '"normal! \\<RightMouse>"'
+
+  local options = vim.bo.ft == "NvimTree" and "nvimtree" or "default"
+  require("menu").open(options, { mouse = true })
+end, {})
+
 -- Telescope
 map("n", "<leader>wk", "<cmd> Telescope keymaps <CR>", { desc = "Telescope find keys" })
 map("n", "<leader>fn", "<cmd> Nerdy <CR>", { desc = "Find NerdFonts" })

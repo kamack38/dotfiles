@@ -1,12 +1,6 @@
 ---@type ChadrcConfig
 return {
-
   ui = {
-    theme = "onedark",
-    transparency = true,
-
-    hl_override = require("highlights").override,
-
     cmp = {
       icons = true,
       lspkind_text = true,
@@ -33,19 +27,33 @@ return {
       lazyload = false,
       order = { "treeOffset", "buffers", "tabs" },
     },
+  },
 
-    nvdash = {
-      load_on_startup = true,
+  nvdash = {
+    load_on_startup = true,
 
-      buttons = {
-        { "  Find File", "Spc f f", "Telescope find_files" },
-        { "  Recent Files", "Spc f o", "Telescope oldfiles" },
-        { "  Find Word", "Spc f w", "Telescope live_grep" },
-        { "  New Buffer", "Spc n f", "enew" },
-        { "  Bookmarks", "Spc b m", "Telescope marks" },
-        { "  Themes", "Spc t h", "Telescope themes" },
-        { "  Mappings", "Spc c h", "NvCheatsheet" },
+    buttons = {
+      { txt = "  Find File", keys = "Spc f f", cmd = "Telescope find_files" },
+      { txt = "  Recent Files", keys = "Spc f o", cmd = "Telescope oldfiles" },
+      { txt = "  Find Word", keys = "Spc f w", cmd = "Telescope live_grep" },
+      { txt = "  New Buffer", keys = "Spc n f", cmd = "enew" },
+      { txt = "  Bookmarks", keys = "Spc b m", cmd = "Telescope marks" },
+      { txt = "  Themes", keys = "Spc t h", cmd = "Telescope themes" },
+      { txt = "  Mappings", keys = "Spc c h", cmd = "NvCheatsheet" },
+
+      { txt = "─", hl = "NvDashLazy", no_gap = true, rep = true },
+
+      {
+        txt = function()
+          local stats = require("lazy").stats()
+          local ms = math.floor(stats.startuptime) .. " ms"
+          return "  Loaded " .. stats.loaded .. "/" .. stats.count .. " plugins in " .. ms
+        end,
+        hl = "NvDashLazy",
+        no_gap = true,
       },
+
+      { txt = "─", hl = "NvDashLazy", no_gap = true, rep = true },
     },
   },
 
@@ -54,6 +62,13 @@ return {
       vsp = 0.5,
       sp = 0.3,
     },
+  },
+
+  colorify = {
+    enabled = true,
+    mode = "virtual",
+    virt_text = "󱓻 ",
+    highlight = { hex = true, lspvars = true },
   },
 
   lsp = {
@@ -66,6 +81,10 @@ return {
   },
 
   base46 = {
+    theme = "onedark",
+    transparency = true,
+    hl_override = require("highlights").override,
+
     integrations = {
       "blankline",
       "cmp",

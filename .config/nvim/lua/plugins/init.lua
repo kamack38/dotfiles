@@ -89,31 +89,6 @@ return {
     },
   },
 
-  -- LSP installer
-  {
-    "williamboman/mason.nvim",
-    opts = {
-      ensure_installed = {
-        -- web dev
-        "css-lsp",
-        "html-lsp",
-        "typescript-language-server",
-        "emmet-ls",
-        "biome",
-
-        -- shell
-        "shfmt",
-
-        -- cpp
-        "clangd",
-        "clang-format",
-
-        -- lua
-        "stylua",
-      },
-    },
-  },
-
   -- Show all problems in your code
   {
     "folke/trouble.nvim",
