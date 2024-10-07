@@ -323,8 +323,7 @@ return {
   -- Show whitespace symbols in visual mode
   {
     "mcauley-penney/visual-whitespace.nvim",
-    event = "UIEnter",
-    config = true,
+    event = "VeryLazy",
     opts = {
       highlight = { link = "VisualWhitespace" },
     },
