@@ -41,9 +41,6 @@ map("n", "<C-p>", "<cmd> pu <CR>", { desc = "Paste in line under" })
 -- Moving lines/words
 map("n", "<A-k>", "<cmd> MoveLine(-1) <CR>", { desc = "Move current line up" })
 map("n", "<A-j>", "<cmd> MoveLine(1) <CR>", { desc = "Move current line down" })
--- Interferes with terminal toggle
--- map("n", "<A-h>", "<cmd> MoveWord(-1) <CR>", { desc = "Move current word right" })
--- map("n", "<A-l>", "<cmd> MoveWord(1) <CR>", { desc = "Move current word left" })
 
 -- Moving selection
 map("v", "<A-k>", ":MoveBlock(-1) <CR>", { desc = "Move selected block up" })
@@ -102,41 +99,6 @@ map({ "o", "x" }, "ic", '<cmd>lua require("various-textobjs").subword("inner")<C
 
 -- Terminal
 map({ "n" }, "<leader>tt", "<cmd>term<CR>")
-
--- M.dap = {
--- 	n = {
--- 		["<F5>"] = {
--- 			function()
--- 				require("dap").continue()
--- 			end,
--- 			"Continue to another breakpoint",
--- 		},
--- 		["<F10>"] = {
--- 			function()
--- 				require("dap").step_over()
--- 			end,
--- 			"Step over",
--- 		},
--- 		["<F11>"] = {
--- 			function()
--- 				require("dap").step_into()
--- 			end,
--- 			"Step into",
--- 		},
--- 		["<F12>"] = {
--- 			function()
--- 				require("dap").step_out()
--- 			end,
--- 			"Step out",
--- 		},
--- 		["<leader>tb"] = {
--- 			function()
--- 				require("dap").toggle_breakpoint()
--- 			end,
--- 			"Toggle breakpoint",
--- 		},
--- 	},
--- }
 
 -- LspUI
 map("n", "<leader>cn", "<cmd> LspUI rename <CR>", { desc = "LSP rename (change name)" })

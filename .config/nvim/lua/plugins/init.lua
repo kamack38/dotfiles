@@ -59,10 +59,41 @@ return {
           scope_incremental = "grc",
         },
       },
+
+      textobjects = {
+        select = {
+          enable = true,
+          lookahead = true,
+          keymaps = {
+            ["aa"] = "@parameter.outer",
+            ["ia"] = "@parameter.inner",
+            ["af"] = "@function.outer",
+            ["if"] = "@function.inner",
+          },
+          selection_modes = {
+            ["@parameter.outer"] = "v", -- charwise
+            ["@function.outer"] = "V", -- linewise
+            ["@class.outer"] = "<c-v>", -- blockwise
+          },
+          -- If you set this to `true` (default is `false`) then any textobject is
+          -- extended to include preceding or succeeding whitespace. Succeeding
+          -- whitespace has priority in order to act similarly to eg the built-in
+          -- `ap`.
+          --
+          -- Can also be a function which gets passed a table with the keys
+          -- * query_string: eg '@function.inner'
+          -- * selection_mode: eg 'v'
+          -- and should return true or false
+          include_surrounding_whitespace = true,
+        },
+      },
+    },
+    dependencies = {
+      "nvim-treesitter/nvim-treesitter-textobjects",
     },
   },
 
-  -- Autotags
+  -- Auto close and auto rename html tag
   {
     "windwp/nvim-ts-autotag",
     event = { "BufReadPre", "BufNewFile" },
@@ -189,7 +220,6 @@ return {
     "OXY2DEV/markview.nvim",
     ft = "markdown",
     branch = "main",
-    lazy = false,
 
     config = function()
       vim.api.nvim_set_hl(0, "MarkviewHeadin1", { bg = "#453244", fg = "#f38ba8" })
@@ -237,21 +267,12 @@ return {
     end,
 
     dependencies = {
-      -- You may not need this if you don't lazy load
-      -- Or if the parsers are in your $RUNTIMEPATH
       "nvim-treesitter/nvim-treesitter",
-
       "nvim-tree/nvim-web-devicons",
     },
   },
 
   --------------------------------------- UI ----------------------------------------
-
-  -- Show suggestions when executing snippets
-  {
-    "folke/which-key.nvim",
-    cmd = "WhichKey",
-  },
 
   -- File tree
   {
@@ -303,7 +324,7 @@ return {
   {
     "mcauley-penney/visual-whitespace.nvim",
     dependencies = { "mvllow/modes.nvim" },
-    event = "VeryLazy",
+    event = "UIEnter",
     config = function()
       local get_hl_hex = function(opts, ns_id)
         opts, ns_id = opts or {}, ns_id or 0
@@ -440,6 +461,7 @@ return {
 
   ------------------------------------- Other ---------------------------------------
 
+  -- Nerdfont symbol picker
   {
     "2kabhishek/nerdy.nvim",
     dependencies = {
@@ -449,6 +471,7 @@ return {
     cmd = "Nerdy",
   },
 
+  -- GitHub integration
   {
     "pwntester/octo.nvim",
     keys = require("configs.octo").keys,
@@ -512,17 +535,6 @@ return {
         startinsert = true,
       }
     end,
-  },
-
-  -- Cheatsheet
-  {
-    "sudormrfbin/cheatsheet.nvim",
-    cmd = "Cheatsheet",
-    dependencies = {
-      { "nvim-telescope/telescope.nvim" },
-      { "nvim-lua/popup.nvim" },
-      { "nvim-lua/plenary.nvim" },
-    },
   },
 
   -- Set project root correctly
