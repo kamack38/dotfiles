@@ -323,32 +323,11 @@ return {
   -- Show whitespace symbols in visual mode
   {
     "mcauley-penney/visual-whitespace.nvim",
-    dependencies = { "mvllow/modes.nvim" },
     event = "UIEnter",
-    config = function()
-      local get_hl_hex = function(opts, ns_id)
-        opts, ns_id = opts or {}, ns_id or 0
-        assert(opts.name or opts.id, "Error: must have hl group name or ID!")
-        opts.link = true
-
-        local hl = vim.api.nvim_get_hl(ns_id, opts)
-
-        return {
-          fg = hl.fg and ("#%06x"):format(hl.fg),
-          bg = hl.bg and ("#%06x"):format(hl.bg),
-        }
-      end
-
-      require("base46").load_all_highlights()
-
-      local ws_bg = get_hl_hex({ name = "ModesVisualVisual" })["bg"]
-      local ws_fg = get_hl_hex({ name = "Comment" })["fg"]
-
-      require("visual-whitespace").setup {
-        highlight = { bg = ws_bg, fg = ws_fg },
-        use_listchars = true,
-      }
-    end,
+    config = true,
+    opts = {
+      highlight = { link = "VisualWhitespace" },
+    },
   },
 
   -- Syntax highlighted folds

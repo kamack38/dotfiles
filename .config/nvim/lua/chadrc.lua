@@ -84,6 +84,7 @@ return {
     theme = "onedark",
     transparency = true,
     hl_override = require("highlights").override,
+    hl_add = require("highlights").add,
 
     integrations = {
       "blankline",

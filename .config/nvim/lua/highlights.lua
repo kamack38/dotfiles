@@ -12,4 +12,8 @@ M.override = {
   IblScopeChar = { fg = "#9196a1" },
 }
 
+M.add = {
+  VisualWhitespace = { fg = "#565c64", bg = "#170a1d" },
+}
+
 return M
