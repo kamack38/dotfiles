@@ -53,7 +53,7 @@ function last_history_item_args
 end
 
 function last_path
-    echo (commandline | cut -f 2 -d " " | xargs -0 dirname --zero)
+    echo (commandline | rev | cut -f 3 -d " " | rev | xargs -0 dirname --zero)
 end
 
 abbr -a !! --position anywhere --function last_history_item # Last command
