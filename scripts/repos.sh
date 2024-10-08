@@ -135,3 +135,9 @@ EOT
 		sudo pacman-key --lsign-key B1F96021DB62254D
 	fi
 }
+
+cachyos() {
+	curl https://mirror.cachyos.org/cachyos-repo.tar.xz -o cachyos-repo.tar.xz
+	tar xvf cachyos-repo.tar.xz && cd cachyos-repo
+	sudo ./cachyos-repo.sh
+}

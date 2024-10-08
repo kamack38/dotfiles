@@ -383,6 +383,7 @@ source "$HOME/scripts/repos.sh"
 multilib
 chaotic_aur
 garuda
+cachyos
 sudo $HELPER -Sy
 
 # Install CPU drivers
