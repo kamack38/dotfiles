@@ -13,6 +13,12 @@ end, { nargs = 1 })
 -- Add an alias for Markview plugin
 create_cmd("MV", "Markview", {})
 
+-- Cd To Buffer Root
+create_cmd("CdBufferRoot", function()
+  local dir = vim.fn.expand "%:h"
+  vim.cmd("cd " .. dir)
+end, {})
+
 -- Hide line numbers inside terminals
 autocmd("TermOpen", {
   pattern = "*",
