@@ -135,13 +135,8 @@ ForegroundNormal=252,252,252
 ForegroundPositive=39,174,96
 ForegroundVisited=155,89,182
 
-[DirSelect Dialog]
-DirSelectDialog Size=839,598
-History Items[$e]=file:$HOME/Downloads/vista_proba_free,file:///run/media/kamack38/OS/Windows/System32/config,file:$HOME/.local/share/Steam,file:$HOME/.local/share/Steam
-
 [General]
 BrowserApplication=firefoxdeveloperedition.desktop
-TerminalApplication=kitty
 ColorScheme=BreezeDark
 ColorSchemeHash=78952f1103f6f2c59b78c6ed5fa382c3f5ec18e7
 Name[en_GB]=Breeze Dark
@@ -188,6 +183,7 @@ View Style=DetailTree
 Dialog Size=600,480
 
 [PreviewSettings]
+EnableRemoteFolderThumbnail=false
 MaximumRemoteSize=0
 
 [WM]

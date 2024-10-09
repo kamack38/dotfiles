@@ -22,7 +22,6 @@ KDE_PACKAGES=(
 	"plasma5-wallpapers-wallpaper-engine" # Support for wallpaper engine wallpapers
 	"spectacle"                           # Screenshot tool
 	"latte-dock"                          # KDE dock
-	"touchegg"                            # Touchpad gestures support
 	"plasma-browser-integration"          # Integrate browser and plasma
 	"polybar-git"                         # Bar
 	"ulauncher"                           # Application launcher for Linux
