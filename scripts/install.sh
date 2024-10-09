@@ -142,6 +142,7 @@ DESKTOP_APPS=(
 	"desktop-file-utils"        # Command line utilities for working with desktop entries
 	"breeze"                    # Artwork, styles and assets for the Breeze visual style for the Plasma Desktop
 	"ripdrag-git"               # Drag and drop files to and from the terminal
+	"pika-backup"               # Easy to use backup tool to keep your data safe
 )
 
 PROFILES=(
