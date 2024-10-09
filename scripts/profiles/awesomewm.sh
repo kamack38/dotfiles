@@ -23,7 +23,7 @@ AWESOMEWM_PACKAGES=(
 	"betterlockscreen" # A simple, minimal lockscreen
 	"autorandr"        # Auto-detect connected display hardware and load appropiate X11 setup using xrandr
 	"polybar-git"      # Bar
-	"ulauncher"        # Application launcher for Linux
+	"rofi"             # Application launcher for Linux
 	"clipster"         # Python clipboard manager
 )
 

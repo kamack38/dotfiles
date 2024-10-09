@@ -19,9 +19,11 @@ return {
 		network_manager = term .. " -e nmtui",
 		--- Default lock screen cmd
 		lock_screen_cmd = term .. "-e 'betterlockscreen -l'",
+		-- Default app launcher
+		app_launcher = "rofi -show drun -no-default-config -config " .. os.getenv("HOME") .. "/.config/rofi/main.rasi",
 		--- Default bluetooth manager
 		-- bluetooth_manager = "blueman-manager",
 		--- Default power manager
 		-- power_manager = "xfce4-power-manager",
-	}
+	},
 }

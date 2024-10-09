@@ -24,7 +24,7 @@ KDE_PACKAGES=(
 	"latte-dock"                          # KDE dock
 	"plasma-browser-integration"          # Integrate browser and plasma
 	"polybar-git"                         # Bar
-	"ulauncher"                           # Application launcher for Linux
+	"rofi"                                # Application launcher for Linux
 	"clipster"                            # Python clipboard manager
 )
 

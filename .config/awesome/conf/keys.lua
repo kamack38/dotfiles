@@ -145,6 +145,9 @@ awful.keyboard.append_global_keybindings({
 	awful.key({ modkey }, "b", function()
 		awful.spawn(apps.default.web_browser)
 	end, { description = "open a web browser", group = "launcher" }),
+	awful.key({ alt }, "space", function()
+		awful.spawn(apps.default.app_launcher)
+	end, { description = "open an app launcher", group = "launcher" }),
 
 	-- awful.key({ modkey, shift }, "l", function() awful.spawn(apps.default.lock_screen_cmd) end,
 	--     { description = "launch lock screen", group = "launcher" }),
