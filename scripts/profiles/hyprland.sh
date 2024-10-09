@@ -14,18 +14,9 @@ NC=$'\e[0m' # No Colour
 
 # Default vars
 HELPER="paru"
-VGA_INFO=$(lspci -vnn | grep VGA)
-
-echo "${GREEN}:: ${BWHITE}Installing Hyprland...${NC}"
-if [[ $VGA_INFO == *"NVIDIA"* ]]; then
-	echo "${YELLOW}:: ${BLUE}NVIDIA${BWHITE} card detected!${NC}"
-	echo "${GREEN}:: ${BWHITE}Installing ${BLUE}hyprland-nvidia-git${BWHITE}...${NC}"
-	$HELPER -S --noconfirm --needed --quiet "hyprland-nvidia-git"
-else
-	$HELPER -S --noconfirm --needed --quiet "hyprland-git"
-fi
 
 HYPRLAND_PACKAGES=(
+	"hyprland"                        # A highly customizable dynamic tiling Wayland compositor
 	"hyprpaper-git"                   # A blazing fast wayland wallpaper utility with IPC controls.
 	"wl-clipboard"                    # Command-line copy/paste utilities for Wayland
 	"wlsunset"                        # Day/night gamma adjustments for Wayland compositors
@@ -49,7 +40,7 @@ HYPRLAND_PACKAGES=(
 	"wayland-pipewire-idle-inhibit"   # Inhibit wayland idle when computer is playing sound
 )
 
-echo "${GREEN}:: ${BWHITE}Installing Hyprland components...${NC}"
+echo "${GREEN}:: ${BWHITE}Installing Hyprland and its components...${NC}"
 $HELPER -S --noconfirm --needed --quiet "${HYPRLAND_PACKAGES[@]}"
 
 echo "${GREEN}:: ${BWHITE}Enabling Hyprland services...${NC}"
