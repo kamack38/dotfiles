@@ -14,6 +14,20 @@ M.override = {
 
 M.add = {
   VisualWhitespace = { fg = "#565c64", bg = "#170a1d" },
+
+  -- Markview
+  MarkviewHeading1 = { bg = "#453244", fg = "#f38ba8" },
+  MarkviewHeading1Sign = { fg = "#f38ba8" },
+  MarkviewHeading2 = { bg = "#46393E", fg = "#fab387" },
+  MarkviewHeading2Sign = { fg = "#fab387" },
+  MarkviewHeading3 = { bg = "#464245", fg = "#f9e2af" },
+  MarkviewHeading3Sign = { fg = "#f9e2af" },
+  MarkviewHeading4 = { bg = "#374243", fg = "#a6e3a1" },
+  MarkviewHeading4Sign = { fg = "#a6e3a1" },
+  MarkviewHeading5 = { bg = "#2E3D51", fg = "#74c7ec" },
+  MarkviewHeading5Sign = { fg = "#74c7ec" },
+  MarkviewHeading6 = { bg = "#393B54", fg = "#b4befe" },
+  MarkviewHeading6Sign = { fg = "#b4befe" },
 }
 
 return M
