@@ -393,11 +393,9 @@ return {
   {
     "gbprod/cutlass.nvim",
     lazy = false,
-    config = function()
-      require("cutlass").setup {
-        override_del = true,
-      }
-    end,
+    opts = {
+      override_del = true,
+    },
   },
 
   -- Surround text with quotes
