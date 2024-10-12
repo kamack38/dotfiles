@@ -96,6 +96,21 @@ end, { desc = "Spider ge" })
 -- Textobjects
 map({ "o", "x" }, "ac", '<cmd>lua require("various-textobjs").subword("outer")<CR>')
 map({ "o", "x" }, "ic", '<cmd>lua require("various-textobjs").subword("inner")<CR>')
+map("n", "gx", function()
+  -- select URL
+  require("various-textobjs").url()
+
+  -- plugin only switches to visual mode when textobj is found
+  local foundURL = vim.fn.mode():find "v"
+  if not foundURL then
+    return
+  end
+
+  -- retrieve URL with the z-register as intermediary
+  vim.cmd.normal { '"zy', bang = true }
+  local url = vim.fn.getreg "z"
+  vim.ui.open(url)
+end, { desc = "Open next available link" })
 
 -- Terminal
 map({ "n" }, "<leader>tt", "<cmd>term<CR>")
