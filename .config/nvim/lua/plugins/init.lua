@@ -105,6 +105,7 @@ return {
   -- Autocompletion
   {
     "hrsh7th/nvim-cmp",
+    url = "https://github.com/iguanacucumber/magazine.nvim",
     opts = {
       sources = {
         { name = "luasnip" },
