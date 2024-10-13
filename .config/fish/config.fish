@@ -79,23 +79,14 @@ alias ......="cd ../../../../.."
 
 alias cls="clear"
 
-# Reload aliases
-alias reload="source ~/.config/fish/config.fish"
-alias udev-reload="sudo udevadm control --reload-rules && sudo udevadm trigger"
-alias gpg-reload="gpg-connect-agent reloadagent /bye"
-alias systemctl-reload="sudo systemctl daemon-reload"
-alias sound-reload="systemctl --user restart wireplumber pipewire pipewire-pulse"
-
-alias list-sound-cards="cat /proc/asound/cards"
-
 alias logout="loginctl terminate-user $USER"
 
-alias si="su -s /bin/fish"
-
+# Archive aliases
 alias tarnow='tar -acf '
 alias untar='tar -xvf '
 alias gzipnow='tar czf'
 
+# Shorthands
 alias of="onefetch"
 alias nf="fastfetch"
 alias icat="kitty +kitten icat"
@@ -103,7 +94,7 @@ alias xterm-kitty="kitty"
 alias n="nvim"
 alias btc="bluetoothctl"
 alias xo="xdg-open"
-
+alias si="su -s /bin/fish"
 alias gp="glow -p"
 
 if command -v firefox-developer-edition &>/dev/null
@@ -130,8 +121,7 @@ function diff-pac -a path
     delta "$path" "$path.pacnew"
 end
 
-alias makesrcinfo="makepkg --printsrcinfo > .SRCINFO"
-
+# Generate passwords
 alias passwdgen="date +%s | sha256sum | base64 | head -c 64 ; echo"
 alias passgen="strings /dev/urandom | grep -o '[^~`[:space:]]' | head -n 32 | tr -d '\n'"
 
@@ -143,7 +133,6 @@ alias docker-clean-all='sudo docker system prune -af'
 alias jctl="journalctl -p 3 -xb"
 
 # Python
-alias pip-upgrade="pip install --upgrade pip"
 alias python-gen-deps="pipreqs"
 
 # Sudo edit
@@ -217,92 +206,8 @@ function nps --description 'Search and install a local npm package' -a pkg
     end
 end
 
-# Yarn
-function yas --description 'Search and install a local yarn package'
-    if type -q all-the-package-names
-        command all-the-package-names | fzf --multi --preview 'npm info {1}' --preview-window wrap -q$pkg | xargs -ro yarn add $argv
-    else
-        echo "This command requires npm package 'all-the-package-names' to be installed/"
-    end
-end
-
-# Nerd fonts
-# converted from https://code.envrm.info/src/nerdfonts
-function nfs --description 'Search nerdfonts gylphs' -a search_term
-    set URL "https://nerdfonts.com/cheat-sheet"
-    set ICONS 1
-    set PAGE "$(curl -s -q -L $URL | grep '<div class="codepoint">[^<]*</div>')"
-    echo "$PAGE" | sed 's/^.*<div class="class-name">//g; s/<\/div><div class="codepoint">/ /; s/<\/div>//' | fzf --with-nth=1 --preview "printf '\u{2}'"
-end
-
-# Visual Studio Code
-function workspace_preview -a name
-    if test -f $(string replace '~' "$HOME" $name)
-        if begin
-                [ $(string split -r -m1 . $(basename -- $(string replace '~' "$HOME" $name)))[2] = code-workspace ]; and type -q as-tree; and type -q jq
-            end
-            cat $(string replace '~' "$HOME" $name) | jq '.folders[] .path' | as-tree
-        else
-            bat --paging=never --color=always --style=plain $(string replace '~' "$HOME" $name)
-        end
-    else
-        if test -d $(string replace '~' "$HOME" $name)
-            eza $(string replace '~' "$HOME" $name)
-        else
-            echo -e "\033[0;31mDELETED\033[0m"
-        end
-    end
-end
-function vsr -d "List recently opened files with vscode" -a search
-    set -l vscode_path "$HOME/.config/Code"
-    set -l grep
-
-    if type -q rg
-        set grep rg -o --no-line-number
-    else
-        set grep grep -o
-    end
-
-
-    set -l selected (\
-        $grep '"path": "/.*[^/]"' "$vscode_path/User/globalStorage/storage.json" \
-        | string replace -a '"path": ' '' \
-        | string trim -c '"'\
-        | string replace -a "$HOME" '~'\
-        | fzf --exit-0 --height 50% --layout=reverse -q$search --preview "workspace_preview {}"\
-        | string replace -a '~' "$HOME"
-    )
-
-    [ -n "$selected" ]; and code "$selected"
-end
-
 function fcd -d "cd into favourite your dir"
     cd $(z -l | sed "s#$HOME#~#" | fzf --with-nth=2.. --preview 'eza -alF {2..}' --height 50% --layout=reverse | awk '{print substr($2, 1)}' | sed "s#~#$HOME#")
-end
-
-# ffmpeg
-function ffmpeg-extract-audio -d 'Extracts audio from video' -a input_file output_file
-    command ffmpeg -i "$input_file" -vn -f mp3 "$output_file"
-end
-
-function ffmpeg-add-subs -d 'Adds soft subtitles to selected video file' -a video_file subtitles_file output_file
-    if test -z "$video_file"
-        echo "Video file not set"
-        return 1
-    end
-    if test -z "$subtitles_file"
-        echo "Subtitles file not set"
-        return 1
-    end
-    if test -z "$output_file"
-        echo "Output file not set"
-        return 1
-    end
-    if test -z "$output_file"
-        echo "Output file not set"
-        return 1
-    end
-    command ffmpeg -i "$video_file" -i "$subtitles_file" -c copy -c:s mov_text -metadata:s:s:1 language=eng "$output_file"
 end
 
 # Typst from stdin
