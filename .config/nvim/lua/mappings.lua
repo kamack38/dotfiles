@@ -41,18 +41,14 @@ map("n", "<C-p>", "<cmd> pu <CR>", { desc = "Paste in line under" })
 -- Moving lines/words
 map("n", "<A-k>", "<cmd> MoveLine(-1) <CR>", { desc = "Move current line up" })
 map("n", "<A-j>", "<cmd> MoveLine(1) <CR>", { desc = "Move current line down" })
-
--- Moving selection
 map("v", "<A-k>", ":MoveBlock(-1) <CR>", { desc = "Move selected block up" })
 map("v", "<A-j>", ":MoveBlock(1) <CR>", { desc = "Move selected block down" })
 
 -- Duplicating lines
-map({ "n", "v" }, "<A-S-k>", ":copy- <CR>", { desc = "Duplicate current line up" })
-map({ "n", "v" }, "<A-S-j>", ":copy.  <CR>", { desc = "Duplicate current line down" })
-
--- Duplicating lines
--- map("v", "<A-S-k>", "<cmd> copy- <CR>", { desc = "Duplicate current line up" })
--- map("v", "<A-S-j>", ":copy.  <CR>", { desc = "Duplicate current line down" })
+map("n", "<A-S-k>", ":copy- <CR>", { desc = "Duplicate current line up" })
+map("n", "<A-S-j>", ":copy. <CR>", { desc = "Duplicate current line down" })
+map("v", "<A-S-k>", ":copy- <CR>", { desc = "Duplicate selected lines up" })
+map("v", "<A-S-j>", ":copy'> <CR>", { desc = "Duplicate selected lines down" })
 
 -- Changing windows
 map({ "n" }, "<A-w>", "<C-w>")
