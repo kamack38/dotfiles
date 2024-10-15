@@ -2,10 +2,10 @@
 
 case "$XDG_CURRENT_DESKTOP" in
 "Hyprland")
-	if [ "$(hyprctl getoption misc:cursor_zoom_factor -j | jq .float)" == "1.000000" ]; then
-		hyprctl keyword misc:cursor_zoom_factor 2
+	if [ "$(hyprctl getoption cursor:zoom_factor -j | jq .float)" == "1.000000" ]; then
+		hyprctl keyword cursor:zoom_factor 2
 	else
-		hyprctl keyword misc:cursor_zoom_factor 1
+		hyprctl keyword cursor:zoom_factor 1
 	fi
 	;;
 *)
