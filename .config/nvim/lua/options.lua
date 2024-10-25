@@ -26,6 +26,9 @@ opt.conceallevel = 2
 opt.scrolloff = 5
 opt.updatetime = 100
 
+-- Enable modes.nvim
+vim.o.cursorlineopt = "both"
+
 -- Set hyprlang filetype
 vim.filetype.add {
   pattern = { [".*/hypr/.*%.conf"] = "hyprlang" },

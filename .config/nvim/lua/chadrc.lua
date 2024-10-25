@@ -39,7 +39,7 @@ return {
       { txt = "  New Buffer", keys = "Spc b", cmd = "enew" },
       { txt = "  Bookmarks", keys = "Spc b m", cmd = "Telescope marks" },
       { txt = "  Themes", keys = "Spc t h", cmd = "Telescope themes" },
-      { txt = "  Mappings", keys = "Spc c h", cmd = "NvCheatsheet" },
+      { txt = "  Cheatsheet", keys = "Spc c h", cmd = "NvCheatsheet" },
 
       { txt = "─", hl = "NvDashLazy", no_gap = true, rep = true },
 

@@ -274,15 +274,9 @@ return {
   -- Line decorations
   {
     "mvllow/modes.nvim",
-    event = "VeryLazy",
+    event = { "ModeChanged", "BufWinEnter", "WinEnter" },
     config = function()
-      require("modes").setup {
-        plugins = {
-          presets = {
-            operators = false,
-          },
-        },
-      }
+      require("modes").setup {}
     end,
   },
 
