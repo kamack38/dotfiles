@@ -41,7 +41,7 @@ return {
       { txt = "  Themes", keys = "Spc t h", cmd = "Telescope themes" },
       { txt = "  Cheatsheet", keys = "Spc c h", cmd = "NvCheatsheet" },
 
-      { txt = "─", hl = "NvDashLazy", no_gap = true, rep = true },
+      { txt = "─", hl = "NvDashFooter", no_gap = true, rep = true },
 
       {
         txt = function()
@@ -49,11 +49,11 @@ return {
           local ms = math.floor(stats.startuptime) .. " ms"
           return "  Loaded " .. stats.loaded .. "/" .. stats.count .. " plugins in " .. ms
         end,
-        hl = "NvDashLazy",
+        hl = "NvDashFooter",
         no_gap = true,
       },
 
-      { txt = "─", hl = "NvDashLazy", no_gap = true, rep = true },
+      { txt = "─", hl = "NvDashFooter", no_gap = true, rep = true },
     },
   },
 
@@ -89,19 +89,22 @@ return {
     integrations = {
       "blankline",
       "cmp",
+      "codeactionmenu",
       "defaults",
       "devicons",
       "git",
       "lsp",
       "mason",
       "nvcheatsheet",
-      "nvdash",
       "nvimtree",
+      "semantic_tokens",
       "statusline",
       "syntax",
-      "treesitter",
       "tbline",
       "telescope",
+      "todo",
+      "treesitter",
+      "trouble",
       "whichkey",
     },
   },
