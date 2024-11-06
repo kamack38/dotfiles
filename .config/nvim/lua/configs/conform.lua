@@ -23,6 +23,7 @@ local options = {
     json = { "biome" },
     jsonc = { "biome" },
     markdown = { "deno_fmt" },
+    typst = { "typstyle" },
 
     cpp = { "clang_format" },
     rust = { "rustfmt" },

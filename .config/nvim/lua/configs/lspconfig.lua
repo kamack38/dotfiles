@@ -6,20 +6,16 @@ local on_attach = configs.on_attach
 
 local lspconfig = require "lspconfig"
 local servers = {
-  "html",
+  "clangd",
   "cssls",
   -- "emmet_ls",
-  "ts_ls",
+  "html",
+  "nil_ls",
+  "ruff",
   -- "tailwindcss",
   "texlab",
-  "ruff",
-  "typst_lsp",
-  "nil_ls",
+  "ts_ls",
   "typos_lsp",
-}
-
-local no_formatting = {
-  "clangd",
 }
 
 lspconfig.rust_analyzer.setup {
@@ -43,22 +39,21 @@ lspconfig.biome.setup {
   single_file_support = true,
 }
 
+lspconfig.tinymist.setup {
+  on_init = on_init,
+  on_attach = on_attach,
+  capabilities = capabilities,
+  single_file_support = true,
+  settings = {
+    exportPdf = "onType",
+    outputPath = "$root/target/$dir/$name",
+  },
+}
+
 for _, lsp in ipairs(servers) do
   lspconfig[lsp].setup {
     on_init = on_init,
     on_attach = on_attach,
     capabilities = capabilities,
-  }
-end
-
-for _, lsp in ipairs(no_formatting) do
-  lspconfig[lsp].setup {
-    on_init = on_init,
-    on_attach = function(client, bufnr)
-      client.server_capabilities.documentFormattingProvider = false
-      client.server_capabilities.documentRangeFormattingProvider = false
-      client.server_capabilities.offsetEncoding = "utf-16"
-      on_attach(client, bufnr)
-    end,
   }
 end
