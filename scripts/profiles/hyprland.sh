@@ -33,9 +33,9 @@ HYPRLAND_PACKAGES=(
 	"sddm"                            # QML based X11 and Wayland display manager
 	"autorandr"                       # Auto-detect connected display hardware and load appropriate X11 setup using xrandr
 	"dunst"                           # Customizable and lightweight notification-daemon
-	"qt5-wayland"                     # Provides APIs for Wayland
+	"qt6-wayland"                     # Provides APIs for Wayland
 	"libva"                           # Video Acceleration (VA) API for Linux
-	"qt5ct"                           # Qt5 Configuration Utility
+	"qt6ct-kde"                       # Qt 6 Configuration Utility, patched to work correctly with KDE applications
 	"spotifywm-git"                   # Makes Spotify more friendly to window managers by settings a class name before opening the window
 	"xwaylandvideobridge"             # Utility to allow streaming Wayland windows to X applications
 	"wayland-pipewire-idle-inhibit"   # Inhibit wayland idle when computer is playing sound
