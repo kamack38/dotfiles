@@ -22,6 +22,7 @@ local options = {
     html = { "biome" },
     json = { "biome" },
     jsonc = { "biome" },
+    toml = { "taplo" },
     markdown = { "deno_fmt" },
     typst = { "typstyle" },
 
