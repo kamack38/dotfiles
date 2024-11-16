@@ -154,10 +154,10 @@ Theme=Fluent-dark
 [KDE]
 ColorScheme=BreezeDark
 LookAndFeelPackage=org.kde.breezedark.desktop
-ShowDeleteCommand=false
+ShowDeleteCommand=true
 SingleClick=false
 contrast=4
-widgetStyle=Lightly
+widgetStyle=qt6ct-style
 
 [KFileDialog Settings]
 Allow Expansion=false
