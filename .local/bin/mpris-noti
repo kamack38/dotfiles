@@ -13,5 +13,5 @@ notify-send -r 69 \
 	-a "Music Player" "$(playerctl status): $(playerctl metadata xesam:artist) - $(playerctl metadata xesam:title)" \
 	"Vol: $(echo "scale=0; $(playerctl volume) * 100/1" | bc)%" \
 	-u low \
-	-t 888 \
+	-t 1000 \
 	-h "int:value:$POSTION"
