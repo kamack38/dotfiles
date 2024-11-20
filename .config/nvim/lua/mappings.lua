@@ -53,6 +53,24 @@ map("v", "<A-S-j>", ":copy'> <CR>", { desc = "Duplicate selected lines down" })
 -- Changing windows
 map({ "n" }, "<A-w>", "<C-w>")
 
+-- Toggle split height between its default and its max
+map({ "n", "t" }, "<A-e>", function()
+  local win_id = vim.api.nvim_get_current_win()
+  local current_height = vim.api.nvim_win_get_height(win_id)
+
+  if vim.b.max_height == nil then
+    vim.b.max_height = 100
+  end
+
+  if current_height ~= vim.b.max_height then
+    vim.b.default_height = current_height
+    vim.api.nvim_win_set_height(win_id, 100)
+    vim.b.max_height = vim.api.nvim_win_get_height(win_id)
+  else
+    vim.api.nvim_win_set_height(win_id, vim.b.default_height)
+  end
+end, { noremap = true, silent = true })
+
 -- Saving files
 map(
   "n",
