@@ -93,6 +93,7 @@ return {
       "defaults",
       "devicons",
       "git",
+      "leap",
       "lsp",
       "mason",
       "nvcheatsheet",
