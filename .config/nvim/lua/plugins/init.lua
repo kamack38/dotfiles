@@ -48,6 +48,7 @@ return {
         "lua",
         "vim",
         "markdown",
+        "typst",
       },
 
       incremental_selection = {
