@@ -274,17 +274,45 @@ return {
 
   -- Line decorations
   {
-    "mvllow/modes.nvim",
+    "svampkorg/moody.nvim",
     event = { "ModeChanged", "BufWinEnter", "WinEnter" },
-    config = function()
-      require("modes").setup {}
-    end,
+    dependencies = {
+      "NvChad/base46",
+    },
+    opts = {
+      blends = {
+        normal = 0.15,
+        insert = 0.15,
+        visual = 0.20,
+        command = 0.2,
+        operator = 0.2,
+        replace = 0.2,
+        select = 0.2,
+        terminal = 0.2,
+        terminal_n = 0.2,
+      },
+      colors = {
+        normal = "#00BFFF",
+        insert = "#78CCC5",
+        visual = "#AD6FF7",
+        command = "#EB788B",
+        operator = "#FF8F40",
+        replace = "#E66767",
+        select = "#AD6FF7",
+        terminal = "#4CD4BD",
+        terminal_n = "#00BBCC",
+      },
+      -- disable filetypes here. Add for example "TelescopePrompt" to
+      -- not have any coloured cursorline for the telescope prompt.
+      disabled_filetypes = { "TelescopePrompt" },
+      -- you can turn on or off bold characters for the line numbers
+      bold_nr = true,
+    },
   },
 
   -- Show whitespace symbols in visual mode
   {
     "mcauley-penney/visual-whitespace.nvim",
-    event = "VeryLazy",
     opts = {
       highlight = { link = "VisualWhitespace" },
     },

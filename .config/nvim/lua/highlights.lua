@@ -13,7 +13,7 @@ M.override = {
 }
 
 M.add = {
-  VisualWhitespace = { fg = "#565c64", bg = "#170a1d" },
+  VisualWhitespace = { fg = "#4a505b", bg = "#231631" },
 
   -- Markview
   MarkviewHeading1 = { bg = "#453244", fg = "#f38ba8" },
