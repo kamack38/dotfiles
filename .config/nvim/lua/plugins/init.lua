@@ -222,17 +222,14 @@ return {
     "OXY2DEV/markview.nvim",
     ft = "markdown",
     branch = "main",
-
     config = function()
       local presets = require "markview.presets"
-
       require("markview").setup {
         modes = { "n", "no", "i" },
         hybrid_modes = { "i" },
         checkboxes = presets.checkboxes.nerd,
       }
     end,
-
     dependencies = {
       "nvim-treesitter/nvim-treesitter",
       "nvim-tree/nvim-web-devicons",
@@ -471,7 +468,9 @@ return {
     "karb94/neoscroll.nvim",
     keys = { "<C-d>", "<C-u>" },
     config = function()
-      require("neoscroll").setup()
+      require("neoscroll").setup {
+        duration_multiplier = 0.6,
+      }
     end,
   },
 
@@ -493,7 +492,7 @@ return {
     config = function()
       require("code_runner").setup {
         filetype = {
-          cpp = 'mkdir -p "$dir/bin" && cd "$dir/bin" && g++ "../$fileName" -o "$fileNameWithoutExt" -std=c++11 -fsanitize=address,undefined && "./$fileNameWithoutExt"',
+          cpp = 'cd $dir && mkdir -p "$dir/bin" && g++ "$dir/$fileName" -o "$dir/bin/$fileNameWithoutExt" -std=c++11 -fsanitize=address,undefined && "$dir/bin/$fileNameWithoutExt"',
           tex = 'mkdir -p "$dir/bin" && pdflatex -output-directory="$dir/bin" "$dir/$fileName"',
           rust = 'cargo run "$dir/$fileName"',
         },

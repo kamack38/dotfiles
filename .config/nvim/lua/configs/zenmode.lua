@@ -7,6 +7,7 @@ require("zen-mode").setup {
   plugins = {
     options = {
       showcmd = false, -- disables the command in the last line of the screen
+      laststatus = 0, -- turn off the statusline in zen mode
     },
     gitsigns = { enabled = false },
     kitty = {
