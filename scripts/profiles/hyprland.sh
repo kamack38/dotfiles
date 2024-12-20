@@ -17,7 +17,8 @@ HELPER="paru"
 
 HYPRLAND_PACKAGES=(
 	"hyprland"                        # A highly customizable dynamic tiling Wayland compositor
-	"hyprpaper-git"                   # A blazing fast wayland wallpaper utility with IPC controls.
+	"hyprpaper"                       # A blazing fast wayland wallpaper utility with IPC controls.
+	"hyprlock"                        # hyprland’s GPU-accelerated screen locking utility
 	"rofi-lbonn-wayland-git"          # A window switcher, application launcher and dmenu replacement (fork with Wayland support)
 	"wl-clipboard"                    # Command-line copy/paste utilities for Wayland
 	"wlsunset"                        # Day/night gamma adjustments for Wayland compositors
