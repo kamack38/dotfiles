@@ -377,7 +377,7 @@ sudo pacman -Sy
 # Install helper
 if ! command -v $HELPER &>/dev/null; then
 	echo "${YELLOW}:: ${BWHITE}It seems that you don't have ${BLUE}$HELPER${BWHITE} installed${NC} -- installing"
-	sudo pacman -S $HELPER
+	sudo pacman -S --noconfirm $HELPER
 else
 	echo "${GREEN}:: ${BLUE}${HELPER}${BWHITE} is already installed${NC} -- skipping"
 fi
@@ -466,7 +466,7 @@ if [[ $SELECTED_PROFILES == *"VM"* ]]; then
 fi
 if [[ $SELECTED_PROFILES == *"SOUND"* ]]; then
 	echo "${BLUE}:: ${BWHITE}Adding ${BLUE}sound${BWHITE} support...${NC}"
-	yes | $HELPER -S --needed --quiet "${SOUND_PROFILE[@]}"
+	$HELPER -S --needed --quiet "${SOUND_PROFILE[@]}"
 	systemctl enable --user pipewire-pulse.service
 
 	# Create realtime group
@@ -484,7 +484,7 @@ if [[ $SELECTED_PROFILES == *"BLUETOOTH"* ]]; then
 fi
 if [[ $SELECTED_PROFILES == *"RUST_DEV"* ]]; then
 	echo "${BLUE}:: ${BWHITE}Installing rust profile...${NC}"
-	yes | $HELPER -S --needed --quiet "${RUST_DEV_PROFILE[@]}"
+	$HELPER -S --needed --quiet "${RUST_DEV_PROFILE[@]}"
 	rustup install stable
 	rustup component add clippy
 	rustup component add rustfmt
