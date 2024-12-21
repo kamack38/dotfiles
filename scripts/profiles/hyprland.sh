@@ -25,7 +25,7 @@ HYPRLAND_PACKAGES=(
 	"cliphist"                        # clipboard history "manager" for wayland
 	"grimblast-git"                   # A helper for screenshots within Hyprland.
 	"wlogout"                         # Logout menu for wayland
-	"waybar-hyprland-git"             # Highly customizable Wayland bar for Wlroots based compositors, with workspaces support for Hyprland
+	"waybar"                          # Highly customizable Wayland bar for Wlroots based compositors
 	"swaylock-effects"                # A fancier screen locker for Wayland.
 	"hypridle"                        # hyprland’s idle daemon
 	"xdg-desktop-portal"              # Desktop integration portals for sandboxed apps
