@@ -45,6 +45,7 @@ NORMAL_PROFILE=(
 	"python-gobject"          # Ui creation (polybar mpris support)
 	"flatpak"                 # Flatpak package manager
 	"bat"                     # Better cat
+	"less"                    # A terminal based program for viewing text files
 	"eza"                     # Better ls
 	"croc"                    # File transfer utility
 	"mpv"                     # Image/Video player
@@ -615,7 +616,9 @@ EOT
 	fi
 fi
 
-if [[ $(pacman -Q grub) ]]; then
+# Splash screen
+read -rp "${YELLOW}:: ${BWHITE}Do you want to install plymouth (splash screen)? [Y/n]${NC}: " plymouth_install
+if [[ $(pacman -Q grub) && $plymouth_install != n* ]]; then
 	echo "${BLUE}:: ${BWHITE}Installing plymouth...${NC}"
 
 	# Add archcraft repository
