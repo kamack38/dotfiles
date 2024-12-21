@@ -288,7 +288,6 @@ sudo pacman -S --noconfirm --needed base-devel wget git
 # Create dirs
 echo "${BLUE}:: ${BWHITE}Creating directories...${NC}"
 mkdir -p "$NEOVIM_CONFIG_DIR"
-mkdir -p "$HOME/.srcs"
 
 # Set time zone and enable time sync
 echo "${BLUE}:: ${BWHITE}Setting time zone to ${BLUE}${TIME_ZONE}${BWHITE}...${NC}"
