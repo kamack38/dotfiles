@@ -464,11 +464,10 @@ if [[ $SELECTED_PROFILES == *"VM"* ]]; then
 	$HELPER -S --noconfirm --needed --quiet "${VM_PROFILE[@]}"
 
 	# Enable services
-	sudo systemctl enable --now libvirtd.service
+	sudo systemctl enable --now libvirtd.socket
 
 	# Autostart bridge
 	sudo virsh net-autostart default
-	sudo virsh net-start default
 fi
 if [[ $SELECTED_PROFILES == *"SOUND"* ]]; then
 	echo "${BLUE}:: ${BWHITE}Adding ${BLUE}sound${BWHITE} support...${NC}"
