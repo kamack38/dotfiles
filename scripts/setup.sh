@@ -109,8 +109,8 @@ echo "${BLUE}:: ${BWHITE}Enabling time sync...${NC}"
 timedatectl set-ntp true
 
 # Setup faster mirrors
-read -rp "${BLUE}:: ${BWHITE}Do you want to setup faster mirrors? [Y/n]${NC}: " fonts_setup
-if [[ $fonts_setup != n* ]]; then
+read -rp "${BLUE}:: ${BWHITE}Do you want to setup faster mirrors? [Y/n]${NC}: " mirrors_setup
+if [[ $mirrors_setup != n* ]]; then
 	echo "${BLUE}:: ${BWHITE}Setting up faster mirrors using ${BLUE}reflector${BWHITE}...${NC}"
 	reflector -a 48 -f 10 -l 20 --sort rate --save /etc/pacman.d/mirrorlist
 fi
@@ -271,7 +271,7 @@ function chroot {
 
 	case $SWAP_TYPE in
 	swapfile)
-		echo "${BLUE}:: ${BWHITE}Creating swapfile...${NC}"
+		echo "${BLUE}:: ${BWHITE}Creating swapfile in ${SWAP_FILE_PATH} of size ${SWAP_SIZE}MB ...${NC}"
 		btrfs filesystem mkswapfile ${SWAP_FILE_PATH} -s "${SWAP_SIZE}m"
 		chown root $SWAP_FILE_PATH
 		swapon ${SWAP_FILE_PATH}
