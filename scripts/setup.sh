@@ -134,7 +134,7 @@ if [[ $erase_disk != n* ]]; then
 	echo "${YELLOW}:: ${BWHITE}All data from disk ${DISK} is being ${RED}ERASED${BWHITE}!${NC}"
 	sgdisk -Z "${DISK}"
 	sgdisk -a 2048 -o "${DISK}"
-	partx -u "${DISK}"
+	# partx -u "${DISK}"
 fi
 
 echo "${BLUE}:: ${BWHITE}Formatting disk...${NC}"
