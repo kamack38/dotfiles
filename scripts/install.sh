@@ -18,10 +18,6 @@ DEV_PROFILE=(
 	"onefetch"                    # Git repository summary cli
 	"fastfetch"                   # Like Neofetch, but much faster because written in C
 	"github-cli"                  # CLI for GitHub
-	"visual-studio-code-bin"      # IDE
-	"gnome-keyring"               # Fix vscode
-	"libsecret"                   # Fix vscode
-	"icu69-bin"                   # Fix live share
 	"tealdeer"                    # A fast tldr client in Rust
 	"dust"                        # A more intuitive version of du in rust
 	"shfmt"                       # A shell parser, formatter, and interpreter for bash
@@ -131,7 +127,6 @@ DESKTOP_APPS=(
 	"gwenview"                  # Image viewer
 	"polkit-kde-agent"          # Daemon providing a polkit authentication UI
 	"qt5-imageformats"          # Add more image formats (webp)
-	"caprine"                   # Messenger app for Linux
 	"discord"                   # VoIP and instant messaging social platform
 	"firefox-developer-edition" # Web browser for developers
 	"ff2mpv-rust"               # Open video in mpv
