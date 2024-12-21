@@ -308,7 +308,7 @@ EOT
 
 	# Add template
 	mkdir -p /etc/snapper/config-templates
-	sudo tee /etc/snapper/config-templates/garuda <<EOF
+	sudo tee /etc/snapper/config-templates/garuda >/dev/null <<EOF
 # subvolume to snapshot
 SUBVOLUME="/"
 
@@ -374,7 +374,7 @@ EOF
 
 	echo "${BLUE}:: ${BWHITE}Enabling automatic rebuild of grub-btrfs when snapshots are taken...${NC}"
 	# Add grub-btrfs service
-	sudo tee /usr/lib/systemd/system/grub-btrfs-snapper.service <<EOF
+	sudo tee /usr/lib/systemd/system/grub-btrfs-snapper.service >/dev/null <<EOF
 [Unit]
 Description=Regenerate grub-btrfs.cfg
 
@@ -388,7 +388,7 @@ EnvironmentFile=/etc/default/grub-btrfs/config
 ExecStart=bash -c 'if [[ -z \$(/usr/bin/findmnt -n / | /usr/bin/grep "\.snapshots") ]]; then if [ -s "\${GRUB_BTRFS_GRUB_DIRNAME:-/boot/grub}/grub-btrfs.cfg" ]; then /etc/grub.d/41_snapshots-btrfs; else \${GRUB_BTRFS_MKCONFIG:-grub-mkconfig} -o \${GRUB_BTRFS_GRUB_DIRNAME:-/boot/grub}/grub.cfg; fi; fi'
 EOF
 
-	sudo tee /usr/lib/systemd/system/grub-btrfs-snapper.path <<EOF
+	sudo tee /usr/lib/systemd/system/grub-btrfs-snapper.path >/dev/null <<EOF
 [Unit]
 Description=Monitors for new snapshots
 
