@@ -181,15 +181,15 @@ btrfs subvolume create /mnt/@.snapshots
 # unmount root to remount with subvolume
 umount /mnt
 
+# Set mount options
+MOUNT_OPTIONS="noatime,compress=zstd,commit=120"
+SWAP_MOUNT_OPTIONS="nodatacow,noatime,nospace_cache"
+
 echo "${BLUE}:: ${BWHITE}Mounting @ subvolume...${NC}"
 mount -o ${MOUNT_OPTIONS},subvol=@ ${mapper} /mnt
 
 echo "${BLUE}:: ${BWHITE}Creating directories (home, var, tmp, swap, .snapshots)...${NC}"
 mkdir -p /mnt/{home,var,tmp,swap,.snapshots}
-
-# Set mount options
-MOUNT_OPTIONS="noatime,compress=zstd,commit=120"
-SWAP_MOUNT_OPTIONS="nodatacow,noatime,nospace_cache"
 
 # Mount all btrfs subvolumes
 echo "${BLUE}:: ${BWHITE}Mounting other btrfs subvolumes...${NC}"
