@@ -25,10 +25,7 @@ sudo pacman -Syy
 # Install packages
 echo "${BLUE}:: ${BWHITE}Installing packages...${NC}"
 $HELPER -S --noconfirm --needed --quiet asusctl-git \
-	alsa-tools \
-	optimus-manager \
-	optimus-manager-qt \
-	polybar-git
+	nvidia-prime
 
 # Set keyboard light
 echo "${BLUE}:: ${BWHITE}Setting keyboard light...${NC}"
