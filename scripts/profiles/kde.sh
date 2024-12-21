@@ -23,6 +23,7 @@ KDE_PACKAGES=(
 	"latte-dock"                              # KDE dock
 	"plasma-browser-integration"              # Integrate browser and plasma
 	"polybar"                                 # A fast and easy-to-use status bar
+	"python-gobject"                          # Ui creation (polybar mpris support)
 	"rofi"                                    # Application launcher for Linux
 	"clipster"                                # Python clipboard manager
 )

@@ -15,34 +15,29 @@ NC=$'\e[0m' # No Colour
 DEV_PROFILE=(
 	"jre-openjdk"                 # Java Runtime Environment
 	"git-delta"                   # A syntax-highlighting pager for git, diff, and grep output
-	"onefetch"                    # Git repository summary cli
 	"fastfetch"                   # Like Neofetch, but much faster because written in C
 	"github-cli"                  # CLI for GitHub
 	"tealdeer"                    # A fast tldr client in Rust
 	"dust"                        # A more intuitive version of du in rust
 	"shfmt"                       # A shell parser, formatter, and interpreter for bash
-	"ngrok"                       # A tunneling, reverse proxy for developing and understanding networked, HTTP services
 	"jq"                          # Command-line JSON processor
 	"gnupg"                       # Complete and free implementation of the OpenPGP standard
 	"unrar"                       # The RAR uncompression program
-	"gdb"                         # The GNU Debugger
 	"wakatime"                    # Command line interface used by all WakaTime text editor plugins
-	"ueberzug"                    # Command line util which allows to display images in combination with X11
 	"bash-completion"             # Programmable completion for the bash shell
 	"bash-language-server"        # Bash language server implementation based on Tree Sitter and its grammar for Bash
 	"typescript-language-server"  # Language Server Protocol (LSP) implementation for TypeScript using tsserver
 	"tailwindcss-language-server" # Tailwind CSS Language Server
-	"prettierd"                   # prettier, as a daemon, for ludicrous formatting speed
+	"biome"                       # Formatter, linter, and more for Javascript, Typescript, JSON, and CSS
 	"clang"                       # C language family frontend for LLVM
 	"typos"                       # Source code spell checker
-	"rustcat"                     # A modern port listener and reverse shell
 )
 
 NORMAL_PROFILE=(
 	"ripgrep"                 # Better grep
+	"fd"                      # Simple, fast and user-friendly alternative to find
 	"python"                  # Programming language
 	"python-pip"              # Python package manager
-	"python-gobject"          # Ui creation (polybar mpris support)
 	"flatpak"                 # Flatpak package manager
 	"bat"                     # Better cat
 	"less"                    # A terminal based program for viewing text files
@@ -55,6 +50,7 @@ NORMAL_PROFILE=(
 	"fish"                    # New shell
 	"fisher"                  # Fish plugin manager
 	"oh-my-posh-bin"          # Shell prompt
+	"starship"                # The cross-shell prompt for astronauts
 	"mkinitcpio-colors-git"   # mkinitcpio hook to set VT console colors during early userspace
 	"fzf"                     # Fuzzy finder
 	"libqalculate"            # Calculator (qalc)
@@ -68,7 +64,6 @@ NORMAL_PROFILE=(
 	"update-grub"             # Utility for updating grub config
 	"btop"                    # System monitor tool
 	"reflector"               # Pacman mirror sorter
-	"crabz-bin"               # Like pigz, but in Rust
 	"garuda-hooks"            # Garuda pacman hooks
 	"mpd-mpris"               # An implementation of the MPRIS protocol for MPD.
 	"mpd"                     # Flexible, powerful, server-side application for playing music
@@ -216,7 +211,7 @@ DESKTOP_ENVIRONMENTS=(
 )
 
 CUSTOMIZATION_PACKAGES=(
-	"lightly-qt6"             # Bali10050's fork of Lightly (A modern style for qt applications)
+	"lightly-qt6-bin"         # Bali10050's fork of Lightly (A modern style for qt applications)
 	"archcraft-backgrounds"   # Desktop backgrounds
 	"fluent-icon-theme-git"   # A Fluent design icon theme
 	"fluent-cursor-theme-git" # An x-cursor theme inspired by Qogir theme and based on capitaine-cursors.
@@ -648,9 +643,7 @@ fi
 # Create initial ramdisk
 sudo mkinitcpio -P
 
-if [[ $(pacman -Q xorg-server) ]]; then
-	echo "${YELLOW}:: ${BWHITE}Xorg server detected${NC}"
-
+if [[ $(pacman -Q sddm) ]]; then
 	echo "${BLUE}:: ${BWHITE}Installing customization packages...${NC}"
 	$HELPER -S --noconfirm --needed --quiet "${CUSTOMIZATION_PACKAGES[@]}"
 
@@ -690,17 +683,16 @@ Section "InputClass"
 	Option "ScrollMethod" "twofinger"
 EndSection
 EOT
-	if [[ $(pacman -Q sddm) ]]; then
-		echo "${BLUE}:: ${BWHITE}Installing sddm theme...${NC}"
-		$HELPER -S --noconfirm --needed --quiet "sddm-theme-greenleaf"
 
-		echo "${BLUE}:: ${BWHITE}Configuring sddm...${NC}"
-		sudo tee /etc/sddm.conf.d/30-theme.conf >/dev/null <<EOF
+	echo "${BLUE}:: ${BWHITE}Installing sddm theme...${NC}"
+	$HELPER -S --noconfirm --needed --quiet "sddm-theme-greenleaf"
+
+	echo "${BLUE}:: ${BWHITE}Configuring sddm...${NC}"
+	sudo tee /etc/sddm.conf.d/30-theme.conf >/dev/null <<EOF
 [Theme]
 Current=greenleaf
 CursorTheme=Fluent-cursors
 EOF
-	fi
 fi
 
 # Enable password feedback and other options
