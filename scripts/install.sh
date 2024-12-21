@@ -461,7 +461,11 @@ if [[ $SELECTED_PROFILES == *"VM"* ]]; then
 fi
 if [[ $SELECTED_PROFILES == *"SOUND"* ]]; then
 	echo "${BLUE}:: ${BWHITE}Adding ${BLUE}sound${BWHITE} support...${NC}"
-	$HELPER -S --needed --quiet "${SOUND_PROFILE[@]}"
+	if [[ $(pacman -Q jack2) ]]; then
+		echo "${YELLOW}:: ${BWHITE}Removing ${BLUE}jack2${BWHITE} package...${NC}"
+		sudo pacman -R --noconfirm jack2
+	fi
+	$HELPER -S --needed --quiet --noconfirm "${SOUND_PROFILE[@]}"
 	systemctl enable --user pipewire-pulse.service
 
 	# Create realtime group
