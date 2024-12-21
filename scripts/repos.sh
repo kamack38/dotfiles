@@ -137,7 +137,12 @@ EOT
 }
 
 cachyos() {
-	curl https://mirror.cachyos.org/cachyos-repo.tar.xz -o cachyos-repo.tar.xz
-	tar xvf cachyos-repo.tar.xz && cd cachyos-repo
-	sudo ./cachyos-repo.sh
+	if grep -Fxq "[cachyos]" /etc/pacman.conf; then
+		echo "${YELLOW}:: ${BLUE}archcraft${BWHITE} repo already exists${NC} -- skipping"
+	else
+		echo "${BLUE}:: ${BWHITE}Adding ${BLUE}cachyos${BWHITE} repository${NC}"
+		curl https://mirror.cachyos.org/cachyos-repo.tar.xz -o cachyos-repo.tar.xz
+		tar xvf cachyos-repo.tar.xz && cd cachyos-repo
+		sudo ./cachyos-repo.sh
+	fi
 }
