@@ -509,10 +509,6 @@ for LOCALE in "${SPELLCHECK_LOCALES[@]}"; do
 	$HELPER -S --noconfirm --needed --quiet "aspell-${LOCALE}" "mythes-${LOCALE}"
 done
 
-# Install pip packages
-echo -e "${GREEN}:: ${BWHITE}Installing ${BLUE}pip${BWHITE} packages${NC}"
-pip install --no-warn-script-location --upgrade neovim
-
 # Add .local/bin to PATH
 export PATH="$HOME/.local/bin:$PATH"
 
