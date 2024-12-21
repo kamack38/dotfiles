@@ -478,7 +478,11 @@ if [[ $SELECTED_PROFILES == *"BLUETOOTH"* ]]; then
 fi
 if [[ $SELECTED_PROFILES == *"RUST_DEV"* ]]; then
 	echo "${BLUE}:: ${BWHITE}Installing rust profile...${NC}"
-	$HELPER -S --needed --quiet "${RUST_DEV_PROFILE[@]}"
+	if [[ $(pacman -Q rust) ]]; then
+		echo "${YELLOW}:: ${BWHITE}Removing ${BLUE}rust${BWHITE} package...${NC}"
+		sudo pacman -Rdd --noconfirm rust
+	fi
+	$HELPER -S --needed --quiet --noconfirm "${RUST_DEV_PROFILE[@]}"
 	rustup install stable
 	rustup component add clippy
 	rustup component add rustfmt
