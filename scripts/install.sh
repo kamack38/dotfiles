@@ -26,6 +26,7 @@ DEV_PROFILE=(
 	"wakatime"                    # Command line interface used by all WakaTime text editor plugins
 	"bash-completion"             # Programmable completion for the bash shell
 	"bash-language-server"        # Bash language server implementation based on Tree Sitter and its grammar for Bash
+	"lua-language-server"         # Lua Language Server coded by Lua
 	"typescript-language-server"  # Language Server Protocol (LSP) implementation for TypeScript using tsserver
 	"tailwindcss-language-server" # Tailwind CSS Language Server
 	"biome"                       # Formatter, linter, and more for Javascript, Typescript, JSON, and CSS
