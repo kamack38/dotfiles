@@ -16,23 +16,20 @@ NC=$'\e[0m' # No Colour
 HELPER="paru"
 
 KDE_PACKAGES=(
-	"xorg"                                # Display server
-	"plasma-meta"                         # Plasma meta package
-	"kdeplasma-addons"                    # Plasma addons
-	"plasma5-wallpapers-wallpaper-engine" # Support for wallpaper engine wallpapers
-	"spectacle"                           # Screenshot tool
-	"latte-dock"                          # KDE dock
-	"plasma-browser-integration"          # Integrate browser and plasma
-	"polybar"                             # A fast and easy-to-use status bar
-	"rofi"                                # Application launcher for Linux
-	"clipster"                            # Python clipboard manager
+	"xorg"                                    # Display server
+	"plasma-meta"                             # Plasma meta package
+	"kdeplasma-addons"                        # Plasma addons
+	"plasma6-wallpapers-wallpaper-engine-git" # Support for wallpaper engine wallpapers
+	"spectacle"                               # Screenshot tool
+	"latte-dock"                              # KDE dock
+	"plasma-browser-integration"              # Integrate browser and plasma
+	"polybar"                                 # A fast and easy-to-use status bar
+	"rofi"                                    # Application launcher for Linux
+	"clipster"                                # Python clipboard manager
 )
 
 echo "${GREEN}:: ${BWHITE}Installing KDE and its components...${NC}"
 $HELPER -S --noconfirm --needed --quiet "${KDE_PACKAGES[@]}"
-
-# Enable services
-sudo systemctl enable touchegg.service
 
 function installKDEPackage {
 	# $1 - package id
