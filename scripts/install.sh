@@ -547,7 +547,7 @@ FONT=ter-v20b
 KEYMAP=${KB_LAYOUT}
 EOT
 
-if grep -q "^HOOKS=.*colors.*" /etc/mkinitcpio.conf; then
+if ! grep -q "^HOOKS=.*colors.*" /etc/mkinitcpio.conf; then
 	if grep -q "^HOOKS=.*systemd.*" /etc/mkinitcpio.conf; then
 		sudo sed -i "s,\(^HOOKS=.*\)systemd\(.*\),\1systemd colors\2," "/etc/mkinitcpio.conf"
 	else
