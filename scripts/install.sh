@@ -458,7 +458,7 @@ if [[ $SELECTED_PROFILES == *"SOUND"* ]]; then
 	echo "${BLUE}:: ${BWHITE}Adding ${BLUE}sound${BWHITE} support...${NC}"
 	if [[ $(pacman -Q jack2) ]]; then
 		echo "${YELLOW}:: ${BWHITE}Removing ${BLUE}jack2${BWHITE} package...${NC}"
-		sudo pacman -R --noconfirm jack2
+		sudo pacman -Rdd --noconfirm jack2
 	fi
 	$HELPER -S --needed --quiet --noconfirm "${SOUND_PROFILE[@]}"
 	systemctl enable --user pipewire-pulse.service
