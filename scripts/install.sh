@@ -701,12 +701,12 @@ EndSection
 EOT
 	if [[ $(pacman -Q sddm) ]]; then
 		echo "${BLUE}:: ${BWHITE}Installing sddm theme...${NC}"
-		$HELPER -S --noconfirm --needed --quiet "sddm-theme-astronaut"
+		$HELPER -S --noconfirm --needed --quiet "sddm-theme-greenleaf"
 
 		echo "${BLUE}:: ${BWHITE}Configuring sddm...${NC}"
 		sudo tee /etc/sddm.conf.d/30-theme.conf >/dev/null <<EOF
 [Theme]
-Current=astronaut
+Current=greenleaf
 CursorTheme=Fluent-cursors
 EOF
 	fi
