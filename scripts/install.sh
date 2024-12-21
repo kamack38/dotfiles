@@ -345,19 +345,6 @@ sudo sed -i 's/^#Color/Color/' /etc/pacman.conf
 # Enable candy
 sudo sed -i 's/^#ILoveCandy/ILoveCandy/' /etc/pacman.conf
 
-# Install helper
-if ! command -v $HELPER &>/dev/null; then
-	echo "${YELLOW}:: ${BWHITE}It seems that you don't have ${BLUE}$HELPER${BWHITE} installed${NC} -- installing"
-	if [ -d "$HELPER_CLONE_PATH/$HELPER" ]; then
-		rm -rf "${HELPER_CLONE_PATH}/${HELPER}"
-	fi
-	mkdir -p "$HELPER_CLONE_PATH"
-	git clone https://aur.archlinux.org/$HELPER.git "$HELPER_CLONE_PATH/$HELPER"
-	(cd "$HELPER_CLONE_PATH/$HELPER" && makepkg --noconfirm -si)
-else
-	echo "${GREEN}:: ${BLUE}${HELPER}${BWHITE} is already installed${NC} -- skipping"
-fi
-
 # Install dotfiles
 if [[ -d "$DOTFILES" && "$(git -C "$DOTFILES" ls-remote --get-url)" == "$REPO"* ]]; then
 	echo "${YELLOW}:: ${BLUE}dotfiles${BWHITE} are already installed${NC} -- updating"
@@ -385,7 +372,15 @@ multilib
 chaotic_aur
 garuda
 cachyos
-sudo $HELPER -Sy
+sudo pacman -Sy
+
+# Install helper
+if ! command -v $HELPER &>/dev/null; then
+	echo "${YELLOW}:: ${BWHITE}It seems that you don't have ${BLUE}$HELPER${BWHITE} installed${NC} -- installing"
+	sudo pacman -S $HELPER
+else
+	echo "${GREEN}:: ${BLUE}${HELPER}${BWHITE} is already installed${NC} -- skipping"
+fi
 
 # Install CPU drivers
 proc_type=$(lscpu)
