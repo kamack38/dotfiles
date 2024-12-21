@@ -17,11 +17,10 @@ HELPER="paru"
 CURRENT_USER="$USER"
 
 AWESOMEWM_PACKAGES=(
-	"xorg"             # Display server
 	"awesome-git"      # Highly configurable framework window manager
 	"picom"            # A lightweight compositor for X11
 	"betterlockscreen" # A simple, minimal lockscreen
-	"autorandr"        # Auto-detect connected display hardware and load appropiate X11 setup using xrandr
+	"autorandr"        # Auto-detect connected display hardware and load appropriate X11 setup using xrandr
 	"polybar-git"      # Bar
 	"rofi"             # Application launcher for Linux
 	"clipster"         # Python clipboard manager

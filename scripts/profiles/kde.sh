@@ -16,7 +16,6 @@ NC=$'\e[0m' # No Colour
 HELPER="paru"
 
 KDE_PACKAGES=(
-	"xorg"                                    # Display server
 	"plasma-meta"                             # Plasma meta package
 	"kdeplasma-addons"                        # Plasma addons
 	"plasma6-wallpapers-wallpaper-engine-git" # Support for wallpaper engine wallpapers
