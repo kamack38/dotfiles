@@ -493,12 +493,21 @@ fi
 # Install tweaks
 TWEAKS=$(echo -e "performance-tweaks\npowersave-tweaks" | fzf --height=20% --layout=reverse || true)
 
+PERFOMANCE_PACKAGES=(
+	"btrfsmaintenance"      # Btrfs maintenance scripts
+	"profile-sync-daemon"   # Symlinks and syncs browser profile dirs to RAM
+	"systemd-oomd-defaults" # Configuration files for systemd-oomd
+)
+
 if [[ $TWEAKS != "" ]]; then
 	echo "${BLUE}:: ${BWHITE}Installing ${TWEAKS/-/ }...${NC}"
 	$HELPER -S --noconfirm --needed --quiet "$TWEAKS"
 
-	if [[ $TWEAKS == "performance-tweaks" ]] && ! grep -q 'mitigations=off' /etc/default/grub; then
-		sudo sed -i 's,\(^GRUB_CMDLINE_LINUX_DEFAULT=\".*\)quiet\(.*\"\),\1quiet mitigations=off\2,' /etc/default/grub
+	if [[ $TWEAKS == "performance-tweaks" ]]; then
+		if ! grep -q 'mitigations=off' /etc/default/grub; then
+			sudo sed -i 's,\(^GRUB_CMDLINE_LINUX_DEFAULT=\".*\)quiet\(.*\"\),\1quiet mitigations=off\2,' /etc/default/grub
+		fi
+		$HELPER -S --noconfirm --needed -quiet "${PERFOMANCE_PACKAGES[@]}"
 	fi
 fi
 
