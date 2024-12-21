@@ -431,7 +431,6 @@ EOF
 
 	echo "${BLUE}:: ${BWHITE}Hostname is set to ${BLUE}${MACHINE_NAME}${NC}"
 	echo "$MACHINE_NAME" >/etc/hostname
-	sed -i 's/filesystems/encrypt filesystems/g' /etc/mkinitcpio.conf
 
 	# Add encrypt hook
 	sed -i "s,\(^HOOKS=.*\)filesystems\(.*\),\1encrypt filesystems\2," /etc/mkinitcpio.conf
