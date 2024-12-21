@@ -23,7 +23,7 @@ KDE_PACKAGES=(
 	"spectacle"                           # Screenshot tool
 	"latte-dock"                          # KDE dock
 	"plasma-browser-integration"          # Integrate browser and plasma
-	"polybar-git"                         # Bar
+	"polybar"                             # A fast and easy-to-use status bar
 	"rofi"                                # Application launcher for Linux
 	"clipster"                            # Python clipboard manager
 )
