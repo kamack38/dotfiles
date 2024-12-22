@@ -216,7 +216,6 @@ DESKTOP_ENVIRONMENTS=(
 
 CUSTOMIZATION_PACKAGES=(
 	"lightly-qt6-bin"         # Bali10050's fork of Lightly (A modern style for qt applications)
-	"archcraft-backgrounds"   # Desktop backgrounds
 	"fluent-icon-theme-git"   # A Fluent design icon theme
 	"fluent-cursor-theme-git" # An x-cursor theme inspired by Qogir theme and based on capitaine-cursors.
 )
