@@ -20,7 +20,6 @@ HYPRLAND_PACKAGES=(
 	"hyprpaper"                       # A blazing fast wayland wallpaper utility with IPC controls.
 	"hyprlock"                        # hyprland’s GPU-accelerated screen locking utility
 	"rofi-lbonn-wayland-git"          # A window switcher, application launcher and dmenu replacement (fork with Wayland support)
-	"egl-wayland"                     # EGLStream-based Wayland external platform
 	"wl-clipboard"                    # Command-line copy/paste utilities for Wayland
 	"wlsunset"                        # Day/night gamma adjustments for Wayland compositors
 	"cliphist"                        # clipboard history "manager" for wayland

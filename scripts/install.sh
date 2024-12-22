@@ -151,7 +151,6 @@ PROFILES=(
 
 NVIDIA_DRIVERS=(
 	"garuda-nvidia-config"
-	"garuda-video-linux-config"
 	"nvidia-dkms"
 	"nvidia-utils"
 	"lib32-nvidia-utils"
