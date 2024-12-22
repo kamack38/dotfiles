@@ -32,6 +32,7 @@ DEV_PROFILE=(
 	"biome"                       # Formatter, linter, and more for Javascript, Typescript, JSON, and CSS
 	"clang"                       # C language family frontend for LLVM
 	"typos"                       # Source code spell checker
+	"base-devel"                  # Basic tools to build Arch Linux packages
 )
 
 NORMAL_PROFILE=(
@@ -279,7 +280,7 @@ sudo pacman --noconfirm -Syu
 
 echo "${BLUE}:: ${BWHITE}Installing basic packages...${NC}"
 yes | sudo pacman -S --needed iptables-nft
-sudo pacman -S --noconfirm --needed base-devel wget git
+sudo pacman -S --noconfirm --needed git
 
 # Create dirs
 echo "${BLUE}:: ${BWHITE}Creating directories...${NC}"
@@ -397,9 +398,6 @@ if [[ $VGA_INFO == *"NVIDIA"* ]]; then
 	done
 
 	sudo tee /etc/modprobe.d/nvidia.conf >/dev/null <<EOT
-options nouveau modeset=0
-EOT
-	sudo tee /etc/modprobe.d/blacklist-nvidia-nouveau.conf >/dev/null <<EOT
 blacklist nouveau
 options nouveau modeset=0
 EOT
