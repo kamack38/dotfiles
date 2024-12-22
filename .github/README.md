@@ -51,8 +51,3 @@ bash <(curl -sL https://github.com/kamack38/dotfiles/raw/main/scripts/setup.sh)
 ### KDE
 
 ![Apps screenshot](./../Pictures/Screenshots/Apps.png)
-
-## Submodules
-
-- .config/polybar/scripts/gmail -
-  [kamack38/polybar-gmail](https://github.com/kamack38/polybar-gmail)
