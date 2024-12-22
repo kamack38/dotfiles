@@ -507,7 +507,7 @@ if [[ $TWEAKS != "" ]]; then
 		if ! grep -q 'mitigations=off' /etc/default/grub; then
 			sudo sed -i 's,\(^GRUB_CMDLINE_LINUX_DEFAULT=\".*\)quiet\(.*\"\),\1quiet mitigations=off\2,' /etc/default/grub
 		fi
-		$HELPER -S --noconfirm --needed -quiet "${PERFORMANCE_PACKAGES[@]}"
+		$HELPER -S --noconfirm --needed --quiet "${PERFORMANCE_PACKAGES[@]}"
 	fi
 fi
 
