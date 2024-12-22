@@ -132,7 +132,6 @@ DESKTOP_APPS=(
 	"spotify"                   # Music client
 	"spicetify-cli"             # Cli for extending spotify
 	"kitty-git"                 # GPU accelerated terminal
-	"dbus-python"               # Python bindings for DBUS (Polybar ...)
 	"desktop-file-utils"        # Command line utilities for working with desktop entries
 	"breeze"                    # Artwork, styles and assets for the Breeze visual style for the Plasma Desktop
 	"ripdrag-git"               # Drag and drop files to and from the terminal
@@ -450,7 +449,7 @@ if [[ $SELECTED_PROFILES == *"VM"* ]]; then
 	$HELPER -S --noconfirm --needed --quiet "${VM_PROFILE[@]}"
 
 	# Enable services
-	sudo systemctl enable --now libvirtd.socket
+	sudo systemctl enable libvirtd.socket
 
 	# Autostart bridge
 	sudo virsh net-autostart default
@@ -522,6 +521,9 @@ export PATH="$HOME/.local/bin:$PATH"
 
 # Update xdg dirs
 xdg-user-dirs-update
+
+# Create mpd dirs so it doesn't crash
+mkdir -p $HOME/Music/playlists $HOME/.cache/mpd $HOME/.local/share/mpd
 
 # Install fish plugins
 echo "${GREEN}:: ${BWHITE}Installing ${BLUE}fish${BWHITE} packages${NC}"

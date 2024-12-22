@@ -21,7 +21,8 @@ AWESOMEWM_PACKAGES=(
 	"picom"            # A lightweight compositor for X11
 	"betterlockscreen" # A simple, minimal lockscreen
 	"autorandr"        # Auto-detect connected display hardware and load appropriate X11 setup using xrandr
-	"polybar-git"      # Bar
+	"polybar"          # A fast and easy-to-use status bar
+	"dbus-python"      # Python bindings for DBUS (Polybar ...)
 	"python-gobject"   # Ui creation (polybar mpris support)
 	"rofi"             # Application launcher for Linux
 	"clipster"         # Python clipboard manager
