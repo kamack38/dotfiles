@@ -400,6 +400,7 @@ if [[ $VGA_INFO == *"NVIDIA"* ]]; then
 	sudo tee /etc/modprobe.d/nvidia.conf >/dev/null <<EOT
 blacklist nouveau
 options nouveau modeset=0
+options nvidia_drm modeset=1 fbdev=1
 EOT
 else
 	echo "${YELLOW}:: ${BLUE}NVIDIA${BWHITE} GPU not detected${NC} -- skipping"
