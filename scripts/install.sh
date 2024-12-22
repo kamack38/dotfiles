@@ -479,7 +479,7 @@ if [[ $SELECTED_PROFILES == *"BLUETOOTH"* ]]; then
 fi
 if [[ $SELECTED_PROFILES == *"RUST_DEV"* ]]; then
 	echo "${BLUE}:: ${BWHITE}Installing rust profile...${NC}"
-	if [[ $(pacman -Q rust) ]]; then
+	if [[ $(pacman -Qq rust) == "rust" ]]; then
 		echo "${YELLOW}:: ${BWHITE}Removing ${BLUE}rust${BWHITE} package...${NC}"
 		sudo pacman -Rdd --noconfirm rust
 	fi
@@ -493,7 +493,7 @@ fi
 # Install tweaks
 TWEAKS=$(echo -e "performance-tweaks\npowersave-tweaks" | fzf --height=20% --layout=reverse || true)
 
-PERFOMANCE_PACKAGES=(
+PERFORMANCE_PACKAGES=(
 	"btrfsmaintenance"      # Btrfs maintenance scripts
 	"profile-sync-daemon"   # Symlinks and syncs browser profile dirs to RAM
 	"systemd-oomd-defaults" # Configuration files for systemd-oomd
@@ -507,7 +507,7 @@ if [[ $TWEAKS != "" ]]; then
 		if ! grep -q 'mitigations=off' /etc/default/grub; then
 			sudo sed -i 's,\(^GRUB_CMDLINE_LINUX_DEFAULT=\".*\)quiet\(.*\"\),\1quiet mitigations=off\2,' /etc/default/grub
 		fi
-		$HELPER -S --noconfirm --needed -quiet "${PERFOMANCE_PACKAGES[@]}"
+		$HELPER -S --noconfirm --needed -quiet "${PERFORMANCE_PACKAGES[@]}"
 	fi
 fi
 
