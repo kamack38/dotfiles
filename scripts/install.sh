@@ -76,6 +76,7 @@ NORMAL_PROFILE=(
 	"libfido2"                # Library functionality for FIDO 2.0, including communication with a device over USB
 	"yubikey-manager"         # Python library and command line tool for configuring a YubiKey
 	"xdg-user-dirs"           # Manages user directories
+	"snapper-support"         # Support package for enabling Snapper with snap-pac and grub-btrfs
 	"${DEV_PROFILE[@]}"
 )
 
