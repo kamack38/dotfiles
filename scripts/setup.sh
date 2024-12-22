@@ -226,9 +226,6 @@ PREREQUISITES=(
 	"modemmanager"
 	"networkmanager"
 	"dhclient"
-	"snapper"    # A tool for managing BTRFS and LVM snapshots. It can create, diff and restore snapshots and provides timelined auto-snapping.
-	"snap-pac"   # Pacman hooks that use snapper to create pre/post btrfs snapshots like openSUSE's YaST
-	"grub-btrfs" # Include btrfs snapshots in GRUB boot options
 )
 
 # Start arch installation
@@ -294,115 +291,6 @@ compression-algorithm = zstd
 EOT
 		;;
 	esac
-
-	echo "${BLUE}:: ${BWHITE}Setting up snapper...${NC}"
-	# Change grub snapshot submenu name
-	sed -i /etc/default/grub-btrfs/config \
-		-e 's,.*GRUB_BTRFS_SUBMENUNAME=.*,GRUB_BTRFS_SUBMENUNAME=\"BTRFS snapshots\",'
-
-	if [[ $(systemctl is-enabled grub-btrfs.path) == "enabled" ]]; then
-		systemctl disable --now grub-btrfs.path
-	fi
-
-	# Add template
-	mkdir -p /etc/snapper/config-templates
-	sudo tee /etc/snapper/config-templates/cachyos-root >/dev/null <<EOF
-# subvolume to snapshot
-SUBVOLUME="/"
-
-# filesystem type
-FSTYPE="btrfs"
-
-# btrfs qgroup for space aware cleanup algorithms
-QGROUP=""
-
-# fraction or absolute size of the filesystems space the snapshots may use
-SPACE_LIMIT="0.5"
-
-# fraction or absolute size of the filesystems space that should be free
-FREE_LIMIT="0.2"
-
-# users and groups allowed to work with config
-ALLOW_USERS=""
-ALLOW_GROUPS=""
-
-# sync users and groups from ALLOW_USERS and ALLOW_GROUPS to .snapshots
-# directory
-SYNC_ACL="no"
-
-# start comparing pre- and post-snapshot in background after creating
-# post-snapshot
-BACKGROUND_COMPARISON="yes"
-
-# run daily number cleanup
-NUMBER_CLEANUP="yes"
-
-# limit for number cleanup
-NUMBER_MIN_AGE="1800"
-NUMBER_LIMIT="50"
-NUMBER_LIMIT_IMPORTANT="15"
-
-# create hourly snapshots
-TIMELINE_CREATE="no"
-
-# cleanup hourly snapshots after some time
-TIMELINE_CLEANUP="yes"
-
-# limits for timeline cleanup
-TIMELINE_MIN_AGE="1800"
-TIMELINE_LIMIT_HOURLY="5"
-TIMELINE_LIMIT_DAILY="7"
-TIMELINE_LIMIT_WEEKLY="0"
-TIMELINE_LIMIT_MONTHLY="0"
-TIMELINE_LIMIT_YEARLY="0"
-
-# cleanup empty pre-post-pairs
-EMPTY_PRE_POST_CLEANUP="yes"
-
-# limits for empty pre-post-pair cleanup
-EMPTY_PRE_POST_MIN_AGE="1800"
-EOF
-
-	echo "${BLUE}:: ${BWHITE}Enabling automatic rebuild of grub-btrfs when snapshots are taken...${NC}"
-	# Add grub-btrfs service
-	sudo tee /usr/lib/systemd/system/grub-btrfs-snapper.service >/dev/null <<EOF
-[Unit]
-Description=Regenerate grub-btrfs.cfg
-
-[Service]
-Type=oneshot
-# Set the possible paths for \$(grub-mkconfig)
-Environment="PATH=/sbin:/bin:/usr/sbin:/usr/bin"
-# Load environment variables from the configuration
-EnvironmentFile=/etc/default/grub-btrfs/config
-# If we aren't booted off a snapshot, regenerate just '/boot/grub/grub-btrfs.cfg' if it exists and is not empty, else regenerate the whole grub menu
-ExecStart=bash -c 'if [[ -z \$(/usr/bin/findmnt -n / | /usr/bin/grep "\.snapshots") ]]; then if [ -s "\${GRUB_BTRFS_GRUB_DIRNAME:-/boot/grub}/grub-btrfs.cfg" ]; then /etc/grub.d/41_snapshots-btrfs; else \${GRUB_BTRFS_MKCONFIG:-grub-mkconfig} -o \${GRUB_BTRFS_GRUB_DIRNAME:-/boot/grub}/grub.cfg; fi; fi'
-EOF
-
-	sudo tee /usr/lib/systemd/system/grub-btrfs-snapper.path >/dev/null <<EOF
-[Unit]
-Description=Monitors for new snapshots
-
-[Path]
-PathModified=/.snapshots
-
-[Install]
-WantedBy=multi-user.target
-EOF
-
-	systemctl daemon-reload
-	systemctl enable grub-btrfs-snapper.path
-	systemctl enable snapper-cleanup.timer
-
-	echo "${BLUE}:: ${BWHITE}Creating snapper config...${NC}"
-	snapper -c root create-config --template cachyos-root /
-
-	if ! grep -qe "^HOOKS=.*grub-btrfs-overlayfs" /etc/mkinitcpio.conf; then
-		echo "${BLUE}:: ${BWHITE}Adding ${BLUE}grub-btrfs-overlayfs${BWHITE} hook...${NC}"
-		sed -re 's/(^HOOKS=\([^)]+)/\1 grub-btrfs-overlayfs/gi' -i /etc/mkinitcpio.conf
-	fi
-
-	grub-mkconfig -o /boot/grub/grub.cfg
 
 	echo "${BLUE}:: ${BWHITE}Creating user...${NC}"
 	groupadd libvirt
