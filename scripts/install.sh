@@ -399,12 +399,6 @@ if [[ $VGA_INFO == *"NVIDIA"* ]]; then
 		fi
 	done
 
-	sudo tee /etc/modprobe.d/nvidia.conf >/dev/null <<EOT
-blacklist nouveau
-options nouveau modeset=0
-options nvidia_drm modeset=1 fbdev=1
-EOT
-
 	sudo systemctl enable nvidia-suspend.service nvidia-hibernate.service nvidia-resume.service
 else
 	echo "${YELLOW}:: ${BLUE}NVIDIA${BWHITE} GPU not detected${NC} -- skipping"
@@ -657,8 +651,20 @@ if [[ $(pacman -Q grub) && $plymouth_install != n* ]]; then
 
 	# Update grub config
 	sudo sed -i "s,\(GRUB_CMDLINE_LINUX_DEFAULT=\".*\)\(\"\),\1 quiet splash vt.global_cursor_default=0\2," "/etc/default/grub"
-	sudo grub-mkconfig -o /boot/grub/grub.cfg
 fi
+
+# Disable watchdog
+sudo sed -i "s,\(GRUB_CMDLINE_LINUX_DEFAULT=\".*\)\(\"\),\1 nowatchdog\2," "/etc/default/grub"
+echo "${BLUE}:: ${BWHITE}Disabling watchdog...${NC}"
+sed -i "s,\(prefs_path.*=\).*,\1 $SPOTIFY_PREFS," "$HOME/.config/spicetify/config-xpui.ini"
+sudo tee /etc/modprobe.d/blacklist.conf >/dev/null <<EOF
+# Blacklist the Intel TCO Watchdog/Timer module
+blacklist iTCO_wdt
+
+# Blacklist the AMD SP5100 TCO Watchdog/Timer module (Required for Ryzen cpus)
+blacklist sp5100_tco
+EOF
+sudo grub-mkconfig -o /boot/grub/grub.cfg
 
 # Create initial ramdisk
 sudo mkinitcpio -P
