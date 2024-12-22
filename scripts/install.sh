@@ -155,6 +155,7 @@ NVIDIA_DRIVERS=(
 	"nvidia-settings"
 	"vulkan-icd-loader"
 	"lib32-vulkan-icd-loader"
+	"libva-nvidia-driver"
 )
 
 NVIDIA_MODULES=(
