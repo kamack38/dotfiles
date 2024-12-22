@@ -85,6 +85,7 @@ GAMING_PROFILE=(
 	"piper"                 # Mouse button configurer
 	"steam"                 # Game library
 	"proton-ge-custom"      # Custom layer for running Windows games on Linux
+	"xpadneo-dkms"          # Advanced Linux Driver for Xbox One Wireless Gamepad
 	"lutris-git"            # Open Gaming Platform
 	"wine"                  # A compatibility layer for running Windows programs
 )
