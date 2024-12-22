@@ -67,6 +67,7 @@ NORMAL_PROFILE=(
 	"btop"                    # System monitor tool
 	"reflector"               # Pacman mirror sorter
 	"garuda-hooks"            # Garuda pacman hooks
+	"wget"                    # Network utility to retrieve files from the Web
 	"mpd-mpris"               # An implementation of the MPRIS protocol for MPD.
 	"mpd"                     # Flexible, powerful, server-side application for playing music
 	"mpc"                     # Minimalist command line interface to MPD
@@ -137,6 +138,7 @@ DESKTOP_APPS=(
 	"breeze"                    # Artwork, styles and assets for the Breeze visual style for the Plasma Desktop
 	"ripdrag-git"               # Drag and drop files to and from the terminal
 	"pika-backup"               # Easy to use backup tool to keep your data safe
+	"btrfs-assistant"           # An application for managing BTRFS subvolumes and Snapper snapshots
 )
 
 PROFILES=(
@@ -403,6 +405,8 @@ blacklist nouveau
 options nouveau modeset=0
 options nvidia_drm modeset=1 fbdev=1
 EOT
+
+	sudo systemctl enable nvidia-suspend.service nvidia-hibernate.service nvidia-resume.service
 else
 	echo "${YELLOW}:: ${BLUE}NVIDIA${BWHITE} GPU not detected${NC} -- skipping"
 fi
