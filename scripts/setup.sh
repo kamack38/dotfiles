@@ -176,7 +176,6 @@ btrfs subvolume create /mnt/@home
 btrfs subvolume create /mnt/@var
 btrfs subvolume create /mnt/@tmp
 btrfs subvolume create /mnt/@swap
-btrfs subvolume create /mnt/@.snapshots
 
 # unmount root to remount with subvolume
 umount /mnt
@@ -188,15 +187,14 @@ SWAP_MOUNT_OPTIONS="nodatacow,noatime,nospace_cache"
 echo "${BLUE}:: ${BWHITE}Mounting @ subvolume...${NC}"
 mount -o ${MOUNT_OPTIONS},subvol=@ ${mapper} /mnt
 
-echo "${BLUE}:: ${BWHITE}Creating directories (home, var, tmp, swap, .snapshots)...${NC}"
-mkdir -p /mnt/{home,var,tmp,swap,.snapshots}
+echo "${BLUE}:: ${BWHITE}Creating directories (home, var, tmp, swap)...${NC}"
+mkdir -p /mnt/{home,var,tmp,swap}
 
 # Mount all btrfs subvolumes
 echo "${BLUE}:: ${BWHITE}Mounting other btrfs subvolumes...${NC}"
 mount -o ${MOUNT_OPTIONS},subvol=@home ${mapper} /mnt/home
 mount -o ${MOUNT_OPTIONS},nodev,nosuid,noexec,subvol=@tmp ${mapper} /mnt/tmp
 mount -o ${MOUNT_OPTIONS},subvol=@var ${mapper} /mnt/var
-mount -o ${MOUNT_OPTIONS},subvol=@.snapshots ${mapper} /mnt/.snapshots
 mount -o ${SWAP_MOUNT_OPTIONS},subvol=@swap ${mapper} /mnt/swap
 
 ENCRYPTED_PARTITION_UUID=$(blkid -s UUID -o value "/dev/disk/by-partlabel/Archlinux")
@@ -397,7 +395,7 @@ EOF
 	systemctl enable snapper-cleanup.timer
 
 	echo "${BLUE}:: ${BWHITE}Creating snapper config...${NC}"
-	snapper -c root create-config --template cachyos-root
+	snapper -c root create-config --template cachyos-root /
 
 	if ! grep -qe "^HOOKS=.*grub-btrfs-overlayfs" /etc/mkinitcpio.conf; then
 		echo "${BLUE}:: ${BWHITE}Adding ${BLUE}grub-btrfs-overlayfs${BWHITE} hook...${NC}"
