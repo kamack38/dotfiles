@@ -308,24 +308,21 @@ EOT
 
 	# Add template
 	mkdir -p /etc/snapper/config-templates
-	sudo tee /etc/snapper/config-templates/garuda >/dev/null <<EOF
+	sudo tee /etc/snapper/config-templates/cachyos-root >/dev/null <<EOF
 # subvolume to snapshot
 SUBVOLUME="/"
 
 # filesystem type
 FSTYPE="btrfs"
 
-
 # btrfs qgroup for space aware cleanup algorithms
 QGROUP=""
-
 
 # fraction or absolute size of the filesystems space the snapshots may use
 SPACE_LIMIT="0.5"
 
 # fraction or absolute size of the filesystems space that should be free
 FREE_LIMIT="0.2"
-
 
 # users and groups allowed to work with config
 ALLOW_USERS=""
@@ -335,20 +332,17 @@ ALLOW_GROUPS=""
 # directory
 SYNC_ACL="no"
 
-
 # start comparing pre- and post-snapshot in background after creating
 # post-snapshot
 BACKGROUND_COMPARISON="yes"
-
 
 # run daily number cleanup
 NUMBER_CLEANUP="yes"
 
 # limit for number cleanup
 NUMBER_MIN_AGE="1800"
-NUMBER_LIMIT="10"
-NUMBER_LIMIT_IMPORTANT="5"
-
+NUMBER_LIMIT="50"
+NUMBER_LIMIT_IMPORTANT="15"
 
 # create hourly snapshots
 TIMELINE_CREATE="no"
@@ -363,7 +357,6 @@ TIMELINE_LIMIT_DAILY="7"
 TIMELINE_LIMIT_WEEKLY="0"
 TIMELINE_LIMIT_MONTHLY="0"
 TIMELINE_LIMIT_YEARLY="0"
-
 
 # cleanup empty pre-post-pairs
 EMPTY_PRE_POST_CLEANUP="yes"
@@ -404,7 +397,7 @@ EOF
 	systemctl enable snapper-cleanup.timer
 
 	echo "${BLUE}:: ${BWHITE}Creating snapper config...${NC}"
-	snapper create-config --template garuda /
+	snapper -c root create-config --template cachyos-root
 
 	if ! grep -qe "^HOOKS=.*grub-btrfs-overlayfs" /etc/mkinitcpio.conf; then
 		echo "${BLUE}:: ${BWHITE}Adding ${BLUE}grub-btrfs-overlayfs${BWHITE} hook...${NC}"
