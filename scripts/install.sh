@@ -501,9 +501,6 @@ if [[ $TWEAKS != "" ]]; then
 	$HELPER -S --noconfirm --needed --quiet "$TWEAKS"
 
 	if [[ $TWEAKS == "performance-tweaks" ]]; then
-		if ! grep -q 'mitigations=off' /etc/default/grub; then
-			sudo sed -i 's,\(^GRUB_CMDLINE_LINUX_DEFAULT=\".*\)quiet\(.*\"\),\1quiet mitigations=off\2,' /etc/default/grub
-		fi
 		$HELPER -S --noconfirm --needed --quiet "${PERFORMANCE_PACKAGES[@]}"
 	fi
 fi
@@ -762,19 +759,20 @@ if [[ $harden == y* ]]; then
 	echo "${BLUE}:: ${BWHITE}Installing security packages...${NC}"
 	$HELPER -S --noconfirm --needed --quiet "${SECURITY_PACKAGES[@]}"
 
-	SSH_PATH="/etc/ssh/sshd_config"
+	SSH_PATH="/etc/ssh/sshd_config.d"
 	if [[ -f "$SSH_PATH" ]]; then
 		echo "${BLUE}:: ${BWHITE}Securing ${BLUE}${SSH_PATH}${BWHITE} permissions...${NC}"
 		sudo chmod 600 $SSH_PATH
 		if [[ ! $(sudo grep '^Protocol 2' $SSH_PATH) ]]; then
 			echo "${BLUE}:: ${BWHITE}Disabling SSH protocol v1...${NC}"
-			sudo tee -a $SSH_PATH >/dev/null <<EOT
+			sudo tee ${SSH_PATH}/99-protocol.conf >/dev/null <<EOT
+# Enable only protocol v2
 Protocol 2
 EOT
 		fi
 		if [[ ! $(sudo grep '^PermitRootLogin no' $SSH_PATH) ]]; then
 			echo "${BLUE}:: ${BWHITE}Disabling root login and passwords...${NC}"
-			sudo tee -a $SSH_PATH >/dev/null <<EOT
+			sudo tee ${SSH_PATH}/99-disable-root-login.conf >/dev/null <<EOT
 PermitRootLogin no
 PasswordAuthentication no
 PermitEmptyPasswords no
