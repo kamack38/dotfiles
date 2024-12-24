@@ -90,7 +90,7 @@ EOT
 	fi
 }
 
-asusctl() {
+g14() {
 	if grep -Fxq "[g14]" /etc/pacman.conf; then
 		echo "${YELLOW}:: ${BLUE}g14${BWHITE} repo already exists"
 	else

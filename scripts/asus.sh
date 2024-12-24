@@ -16,7 +16,7 @@ HELPER="paru"
 
 # Add asusctl repository
 source "$HOME/scripts/repos.sh"
-asusctl
+g14
 
 # Refresh repositories
 echo "${BLUE}:: ${BWHITE}Refreshing repositories...${NC}"
