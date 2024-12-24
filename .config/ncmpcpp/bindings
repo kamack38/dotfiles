@@ -4,6 +4,12 @@ def_key "k"
 def_key "j"
  scroll_down
 
+def_key "alt-k"
+  move_selected_items_up
+
+def_key "alt-j"
+  move_selected_items_down
+
 def_key "ctrl-u"
   page_up
 
@@ -16,5 +22,11 @@ def_key "g"
 def_key "G"
   move_end
 
-def_key "v"
-  select_range
+def_key "d"
+  delete_playlist_items
+
+def_key "d"
+  delete_browser_items
+
+def_key "space"
+  select_item
