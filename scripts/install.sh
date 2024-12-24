@@ -232,10 +232,12 @@ RAZER_PACKAGES=(
 )
 
 SECURITY_PACKAGES=(
-	"lynis"        # Security and system auditing tool to harden Unix/Linux systems
-	"rkhunter"     # Checks machines for the presence of rootkits and other unwanted tools
-	"libpwquality" # Library for password quality checking and generating random passwords
-	"ufw"          # Uncomplicated and easy to use CLI tool for managing a netfilter firewall
+	"lynis"                  # Security and system auditing tool to harden Unix/Linux systems
+	"rkhunter"               # Checks machines for the presence of rootkits and other unwanted tools
+	"libpwquality"           # Library for password quality checking and generating random passwords
+	"ufw"                    # Uncomplicated and easy to use CLI tool for managing a netfilter firewall
+	"apparmor"               # Mandatory Access Control (MAC) using Linux Security Module (LSM)
+	"cachyos/apparmor.d-git" # Full set of apparmor profiles
 )
 
 # Default vars
@@ -760,25 +762,22 @@ if [[ $harden == y* ]]; then
 	$HELPER -S --noconfirm --needed --quiet "${SECURITY_PACKAGES[@]}"
 
 	SSH_PATH="/etc/ssh/sshd_config.d"
-	if [[ -f "$SSH_PATH" ]]; then
-		echo "${BLUE}:: ${BWHITE}Securing ${BLUE}${SSH_PATH}${BWHITE} permissions...${NC}"
-		sudo chmod 600 $SSH_PATH
-		if [[ ! $(sudo grep '^Protocol 2' $SSH_PATH) ]]; then
-			echo "${BLUE}:: ${BWHITE}Disabling SSH protocol v1...${NC}"
-			sudo tee ${SSH_PATH}/99-protocol.conf >/dev/null <<EOT
+	echo "${BLUE}:: ${BWHITE}Securing ${BLUE}${SSH_PATH}${BWHITE} permissions...${NC}"
+	sudo mkdir -p $SSH_PATH
+	sudo chmod 600 "/etc/ssh/ssh_config"
+	sudo chmod 600 -R $SSH_PATH
+
+	echo "${BLUE}:: ${BWHITE}Disabling SSH protocol v1...${NC}"
+	sudo tee ${SSH_PATH}/99-protocol.conf >/dev/null <<EOT
 # Enable only protocol v2
 Protocol 2
 EOT
-		fi
-		if [[ ! $(sudo grep '^PermitRootLogin no' $SSH_PATH) ]]; then
-			echo "${BLUE}:: ${BWHITE}Disabling root login and passwords...${NC}"
-			sudo tee ${SSH_PATH}/99-disable-root-login.conf >/dev/null <<EOT
+	echo "${BLUE}:: ${BWHITE}Disabling root login and passwords...${NC}"
+	sudo tee ${SSH_PATH}/99-disable-root-login.conf >/dev/null <<EOT
 PermitRootLogin no
 PasswordAuthentication no
 PermitEmptyPasswords no
 EOT
-		fi
-	fi
 
 	echo "${BLUE}:: ${BWHITE}Securing ${BLUE}/boot${BWHITE} permissions...${NC}"
 	sudo chmod 700 /boot
@@ -802,15 +801,18 @@ EOT
 	sudo ufw default allow outgoing
 	sudo ufw enable
 
+	echo "${BLUE}:: ${BWHITE}Enabling ${BLUE}AppArmor${BWHITE} rules...${NC}"
+	systemctl enable --now apparmor.service
+	sudo sed -i 's/^#write-cache/write-cache/' /etc/apparmor/parser.conf
+	sudo sed -i 's/^#Optimize=compress-fast/Optimize=compress-fast/' /etc/apparmor/parser.conf
+
 	echo "${BLUE}:: ${BWHITE}Setting ${BLUE}umask${BWHITE} to 0077...${NC}"
 	sudo sed -i 's/umask 022/umask 077/' /etc/profile
 
-	if ! grep "^auth optional pam_faildelay.so" /etc/pam.d/system-login; then
-		echo "${BLUE}:: ${BWHITE}Setting ${BLUE}login delay${BWHITE} to 4 seconds...${NC}"
-		sudo tee -a /etc/pam.d/system-login >/dev/null <<EOT
+	echo "${BLUE}:: ${BWHITE}Setting ${BLUE}login delay${BWHITE} to 4 seconds...${NC}"
+	sudo tee -a /etc/pam.d/system-login >/dev/null <<EOT
 auth optional pam_faildelay.so delay=4000000
 EOT
-	fi
 
 	read -rp "${BLUE}:: ${BWHITE}Do you want to scan your device now? [y/N]${NC}: " SCAN
 	if [[ $SCAN == y* ]]; then
