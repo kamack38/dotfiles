@@ -121,24 +121,24 @@ RUST_DEV_PROFILE=(
 )
 
 DESKTOP_APPS=(
-	"sddm"                      # QML based X11 and Wayland display manager
-	"ark"                       # Archive Manager
-	"dolphin"                   # File Manager
-	"partitionmanager"          # Partition Manager
-	"gwenview"                  # Image viewer
-	"polkit-kde-agent"          # Daemon providing a polkit authentication UI
-	"qt5-imageformats"          # Add more image formats (webp)
-	"discord"                   # VoIP and instant messaging social platform
-	"firefox-developer-edition" # Web browser for developers
-	"ff2mpv-rust"               # Open video in mpv
-	"spotify"                   # Music client
-	"spicetify-cli"             # Cli for extending spotify
-	"kitty-git"                 # GPU accelerated terminal
-	"desktop-file-utils"        # Command line utilities for working with desktop entries
-	"breeze"                    # Artwork, styles and assets for the Breeze visual style for the Plasma Desktop
-	"ripdrag-git"               # Drag and drop files to and from the terminal
-	"pika-backup"               # Easy to use backup tool to keep your data safe
-	"btrfs-assistant"           # An application for managing BTRFS subvolumes and Snapper snapshots
+	"sddm"                             # QML based X11 and Wayland display manager
+	"ark"                              # Archive Manager
+	"dolphin"                          # File Manager
+	"partitionmanager"                 # Partition Manager
+	"gwenview"                         # Image viewer
+	"polkit-kde-agent"                 # Daemon providing a polkit authentication UI
+	"qt5-imageformats"                 # Add more image formats (webp)
+	"discord"                          # VoIP and instant messaging social platform
+	"firefox-developer-edition"        # Web browser for developers
+	"ff2mpv-native-messaging-host-git" # Open video in mpv
+	"spotify"                          # Music client
+	"spicetify-cli"                    # Cli for extending spotify
+	"kitty-git"                        # GPU accelerated terminal
+	"desktop-file-utils"               # Command line utilities for working with desktop entries
+	"breeze"                           # Artwork, styles and assets for the Breeze visual style for the Plasma Desktop
+	"ripdrag-git"                      # Drag and drop files to and from the terminal
+	"pika-backup"                      # Easy to use backup tool to keep your data safe
+	"btrfs-assistant"                  # An application for managing BTRFS subvolumes and Snapper snapshots
 )
 
 PROFILES=(
