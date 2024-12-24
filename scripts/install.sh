@@ -653,9 +653,8 @@ if [[ $(pacman -Q grub) && $plymouth_install != n* ]]; then
 fi
 
 # Disable watchdog
-sudo sed -i "s,\(GRUB_CMDLINE_LINUX_DEFAULT=\".*\)\(\"\),\1 nowatchdog\2," "/etc/default/grub"
 echo "${BLUE}:: ${BWHITE}Disabling watchdog...${NC}"
-sed -i "s,\(prefs_path.*=\).*,\1 $SPOTIFY_PREFS," "$HOME/.config/spicetify/config-xpui.ini"
+sudo sed -i "s,\(GRUB_CMDLINE_LINUX_DEFAULT=\".*\)\(\"\),\1 nowatchdog\2," "/etc/default/grub"
 sudo tee /etc/modprobe.d/blacklist.conf >/dev/null <<EOF
 # Blacklist the Intel TCO Watchdog/Timer module
 blacklist iTCO_wdt
