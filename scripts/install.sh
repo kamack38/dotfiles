@@ -60,6 +60,7 @@ NORMAL_PROFILE=(
 	"ttf-font-awesome"        # Font Awesome font
 	"ttf-firacode-nerd"       # Patched font Fira (Fura) Code from nerd-fonts library
 	"ttf-jetbrains-mono-nerd" # Patched font JetBrains Mono from nerd fonts library
+	"noto-fonts-cjk"          # Google Noto CJK fonts
 	"terminus-font"           # Monospace bitmap font (for X11 and console)
 	"playerctl"               # Command-line utility and library for controlling media players
 	"mpv-mpris"               # mpv mpris support
