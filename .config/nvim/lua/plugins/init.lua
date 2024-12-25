@@ -310,6 +310,7 @@ return {
   -- Show whitespace symbols in visual mode
   {
     "mcauley-penney/visual-whitespace.nvim",
+    event = "ModeChanged *:[vV]",
     opts = {
       highlight = { link = "VisualWhitespace" },
     },
