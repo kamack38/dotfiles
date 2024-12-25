@@ -19,6 +19,7 @@ HYPRLAND_PACKAGES=(
 	"hyprland"                        # A highly customizable dynamic tiling Wayland compositor
 	"hyprpaper"                       # A blazing fast wayland wallpaper utility with IPC controls.
 	"hyprlock"                        # hyprland’s GPU-accelerated screen locking utility
+	"hypridle"                        # hyprland’s idle daemon
 	"rofi-lbonn-wayland-git"          # A window switcher, application launcher and dmenu replacement (fork with Wayland support)
 	"wl-clipboard"                    # Command-line copy/paste utilities for Wayland
 	"wlsunset"                        # Day/night gamma adjustments for Wayland compositors
@@ -26,8 +27,6 @@ HYPRLAND_PACKAGES=(
 	"grimblast-git"                   # A helper for screenshots within Hyprland.
 	"wlogout"                         # Logout menu for wayland
 	"waybar"                          # Highly customizable Wayland bar for Wlroots based compositors
-	"swaylock-effects"                # A fancier screen locker for Wayland.
-	"hypridle"                        # hyprland’s idle daemon
 	"xdg-desktop-portal"              # Desktop integration portals for sandboxed apps
 	"xdg-desktop-portal-hyprland-git" # xdg-desktop-portal backend for hyprland
 	"wev"                             # A tool for debugging wayland events, similar to xev
