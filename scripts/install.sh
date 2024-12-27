@@ -121,6 +121,12 @@ RUST_DEV_PROFILE=(
 	"rustup" # The Rust toolchain installer
 )
 
+DOCKER_PROFILE=(
+	"docker"         # Pack, ship and run any application as a lightweight container
+	"docker-compose" # Fast, isolated development environments using Docker
+	"lazydocker"     # A simple terminal UI for docker and docker-compose, written in Go with the gocui library.
+)
+
 DESKTOP_APPS=(
 	"sddm"                             # QML based X11 and Wayland display manager
 	"ark"                              # Archive Manager
@@ -148,6 +154,7 @@ PROFILES=(
 	"VM"
 	"Bluetooth"
 	"Rust Dev"
+	"Docker"
 )
 
 NVIDIA_DRIVERS=(
@@ -488,6 +495,21 @@ if [[ $SELECTED_PROFILES == *"RUST_DEV"* ]]; then
 	rustup component add clippy
 	rustup component add rustfmt
 	rustup component add rust-analyzer
+fi
+if [[ $SELECTED_PROFILES == *"DOCKER"* ]]; then
+	echo "${BLUE}:: ${BWHITE}Installing ${BLUE}Docker${BWHITE} profile...${NC}"
+	if [[ $VGA_INFO == *"NVIDIA"* ]]; then
+		echo "${GREEN}:: ${BLUE}NVIDIA${BWHITE} GPU detected! Adding nvidia toolkit...${NC}"
+		DOCKER_PROFILE+=("nvidia-container-toolkit")
+
+		read -rp "${YELLOW}:: ${BWHITE}Do you want to install ${BLUE}cuda${BHWITE} packages? [y/N]${NC}: " cuda_packages
+		if [ $cuda_packages == y* ]; then
+			DOCKER_PROFILE+=("cuda" "cudnn")
+		fi
+	fi
+
+	$HELPER -S --noconfirm --needed --quiet "${DOCKER_PROFILE[@]}"
+	sudo systemctl enable docker.socket
 fi
 
 # Install tweaks
