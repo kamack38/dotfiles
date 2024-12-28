@@ -229,6 +229,13 @@ PREREQUISITES=(
 	"dhclient"
 )
 
+# Install GRUB
+if [[ ! -d "/sys/firmware/efi" ]]; then
+	grub-install --boot-directory=/mnt/boot "${DISK}"
+else
+	PREREQUISITES+=("efibootmgr")
+fi
+
 # Start arch installation
 echo "${BLUE}:: ${BWHITE}Installing prerequisites to ${BLUE}/mnt${BWHITE}...${NC}"
 pacstrap /mnt "${PREREQUISITES[@]}" --noconfirm --needed
@@ -239,13 +246,6 @@ genfstab -L /mnt >>/mnt/etc/fstab
 echo "${YELLOW}:: ${BWHITE}Generated /etc/fstab:${NC}"
 cat /mnt/etc/fstab
 sleep 2
-
-# Install GRUB
-if [[ ! -d "/sys/firmware/efi" ]]; then
-	grub-install --boot-directory=/mnt/boot "${DISK}"
-else
-	pacstrap /mnt efibootmgr --noconfirm --needed
-fi
 
 # Swap
 SWAP_SIZE=$TOTAL_RAM_MB
