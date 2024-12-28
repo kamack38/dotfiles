@@ -141,7 +141,7 @@ if [[ ! -d "/sys/firmware/efi" ]]; then
 	sgdisk -n "0::+1M" --typecode="0:ef02" --change-name="0:BIOSBOOT" "${DISK}" # BIOS Boot Partition
 fi
 if [[ $use_x_efi == n* ]]; then
-	sgdisk -n "0::+500M" --typecode="0:ef00" --change-name="0:EFIBOOT" "${DISK}" # UEFI Boot Partition
+	sgdisk -n "0::+512M" --typecode="0:ef00" --change-name="0:EFIBOOT" "${DISK}" # UEFI Boot Partition
 fi
 sgdisk -N "0" --typecode="0:8300" --change-name="0:Archlinux" "${DISK}" # Root Partition, default start, remaining
 
@@ -151,7 +151,7 @@ partprobe "${DISK}"
 # Create boot partition
 if [[ $use_x_efi == n* ]]; then
 	echo "${BLUE}:: ${BWHITE}Formatting EFI partition...${NC}"
-	mkfs.vfat -F32 -n "EFIBOOT" "/dev/disk/by-partlabel/EFIBOOT"
+	mkfs.fat -F32 -n "EFIBOOT" "/dev/disk/by-partlabel/EFIBOOT"
 	EFI_PART="/dev/disk/by-partlabel/EFIBOOT"
 fi
 
