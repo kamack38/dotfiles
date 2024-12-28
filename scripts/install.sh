@@ -148,6 +148,9 @@ DESKTOP_APPS=(
 	"ripdrag-git"                      # Drag and drop files to and from the terminal
 	"btrfs-assistant"                  # An application for managing BTRFS subvolumes and Snapper snapshots
 	"flatpak"                          # Linux application sandboxing and distribution framework (formerly xdg-app)
+	"lightly-qt6-git"                  # Bali10050's fork of Lightly (A modern style for qt applications)
+	"fluent-icon-theme-git"            # A Fluent design icon theme
+	"fluent-cursor-theme-git"          # An x-cursor theme inspired by Qogir theme and based on capitaine-cursors.
 )
 
 PROFILES=(
@@ -223,12 +226,6 @@ DESKTOP_ENVIRONMENTS=(
 	"KDE"
 	"AwesomeWM"
 	"Hyprland"
-)
-
-CUSTOMIZATION_PACKAGES=(
-	"lightly-qt6-git"         # Bali10050's fork of Lightly (A modern style for qt applications)
-	"fluent-icon-theme-git"   # A Fluent design icon theme
-	"fluent-cursor-theme-git" # An x-cursor theme inspired by Qogir theme and based on capitaine-cursors.
 )
 
 PLYMOUTH_PACKAGES=(
@@ -620,7 +617,7 @@ echo "${BLUE}:: ${BWHITE}Press ESCAPE to exit.${NC}"
 
 SELECTED_DE=$(printf "%s\n" "${DESKTOP_ENVIRONMENTS[@]}" | fzf --multi --height=20% --layout=reverse || true)
 
-if [[ "${SELECTED_DE}" != "" ]]; then
+if [[ "${SELECTED_DE}" != "" || $(pacman -Q sddm) ]]; then
 	$HELPER -S --noconfirm --needed --quiet "${DESKTOP_APPS[@]}"
 	for DE in $SELECTED_DE; do
 		DE=$(echo "$DE" | awk '{print tolower($0)}')
@@ -636,6 +633,53 @@ if [[ "${SELECTED_DE}" != "" ]]; then
 		sed -i "s,\(prefs_path.*=\).*,\1 $SPOTIFY_PREFS," "$HOME/.config/spicetify/config-xpui.ini"
 		echo "${YELLOW}:: ${BWHITE}Run ${BLUE}spicetify backup apply${BWHITE} to apply spicetify...${NC}"
 	fi
+
+	echo "${BLUE}:: ${BWHITE}Setting keyboard layout...${NC}"
+	sudo localectl set-x11-keymap $KB_LAYOUT
+
+	echo "${BLUE}:: ${BWHITE}Setting cursour...${NC}"
+	mkdir -p "/usr/share/icons/default"
+	sudo tee /usr/share/icons/default/index.theme >/dev/null <<EOT
+[Icon Theme]
+Inherits=Fluent-cursors
+EOT
+
+	echo "${BLUE}:: ${BWHITE}Disabling mouse acceleration...${NC}"
+	sudo touch /etc/X11/xorg.conf.d/50-mouse-acceleration.conf
+	sudo tee /etc/X11/xorg.conf.d/50-mouse-acceleration.conf >/dev/null <<EOT
+Section "InputClass"
+    Identifier "My Mouse"
+    MatchIsPointer "yes"
+    Option "AccelerationProfile" "-1"
+    Option "AccelerationScheme" "none"
+    Option "AccelSpeed" "-1"
+EndSection
+EOT
+	echo "${BLUE}:: ${BWHITE}Adding ${BLUE}libinput${BWHITE} support...${NC}"
+	$HELPER -S --noconfirm --needed --quiet libinput
+	sudo tee /etc/X11/xorg.conf.d/40-libinput.conf >/dev/null <<EOT
+Section "InputClass"
+	Identifier "libinput touchpad catchall"
+	MatchIsTouchpad "on"
+	MatchDevicePath "/dev/input/event*"
+	Driver "libinput"
+	# Enable left mouse button by tapping
+	Option "Tapping" "on"
+	Option "TappingButtonMap" "lrm"
+   	Option "NaturalScrolling" "on"
+	Option "ScrollMethod" "twofinger"
+EndSection
+EOT
+
+	echo "${BLUE}:: ${BWHITE}Installing sddm theme...${NC}"
+	$HELPER -S --noconfirm --needed --quiet "sddm-theme-greenleaf"
+
+	echo "${BLUE}:: ${BWHITE}Configuring sddm...${NC}"
+	sudo tee /etc/sddm.conf.d/30-theme.conf >/dev/null <<EOF
+[Theme]
+Current=greenleaf
+CursorTheme=Fluent-cursors
+EOF
 else
 	echo "${YELLOW}:: ${BWHITE}No desktop environment selected${NC} -- skipping"
 fi
@@ -701,58 +745,6 @@ sudo grub-mkconfig -o /boot/grub/grub.cfg
 # Create initial ramdisk
 sudo mkinitcpio -P
 
-if [[ $(pacman -Q sddm) ]]; then
-	echo "${BLUE}:: ${BWHITE}Installing customization packages...${NC}"
-	$HELPER -S --noconfirm --needed --quiet "${CUSTOMIZATION_PACKAGES[@]}"
-
-	echo "${BLUE}:: ${BWHITE}Setting keyboard layout...${NC}"
-	sudo localectl set-x11-keymap $KB_LAYOUT
-
-	echo "${BLUE}:: ${BWHITE}Setting cursour...${NC}"
-	mkdir -p "/usr/share/icons/default"
-	sudo tee /usr/share/icons/default/index.theme >/dev/null <<EOT
-[Icon Theme]
-Inherits=Fluent-cursors
-EOT
-
-	echo "${BLUE}:: ${BWHITE}Disabling mouse acceleration...${NC}"
-	sudo touch /etc/X11/xorg.conf.d/50-mouse-acceleration.conf
-	sudo tee /etc/X11/xorg.conf.d/50-mouse-acceleration.conf >/dev/null <<EOT
-Section "InputClass"
-    Identifier "My Mouse"
-    MatchIsPointer "yes"
-    Option "AccelerationProfile" "-1"
-    Option "AccelerationScheme" "none"
-    Option "AccelSpeed" "-1"
-EndSection
-EOT
-	echo "${BLUE}:: ${BWHITE}Adding ${BLUE}libinput${BWHITE} support...${NC}"
-	$HELPER -S --noconfirm --needed --quiet libinput
-	sudo tee /etc/X11/xorg.conf.d/40-libinput.conf >/dev/null <<EOT
-Section "InputClass"
-	Identifier "libinput touchpad catchall"
-	MatchIsTouchpad "on"
-	MatchDevicePath "/dev/input/event*"
-	Driver "libinput"
-	# Enable left mouse button by tapping
-	Option "Tapping" "on"
-	Option "TappingButtonMap" "lrm"
-   	Option "NaturalScrolling" "on"
-	Option "ScrollMethod" "twofinger"
-EndSection
-EOT
-
-	echo "${BLUE}:: ${BWHITE}Installing sddm theme...${NC}"
-	$HELPER -S --noconfirm --needed --quiet "sddm-theme-greenleaf"
-
-	echo "${BLUE}:: ${BWHITE}Configuring sddm...${NC}"
-	sudo tee /etc/sddm.conf.d/30-theme.conf >/dev/null <<EOF
-[Theme]
-Current=greenleaf
-CursorTheme=Fluent-cursors
-EOF
-fi
-
 # Enable password feedback and other options
 sudo mkdir -p /etc/sudoers.d
 sudo tee /etc/sudoers.d/01_pwfeedback >/dev/null <<EOT
@@ -809,6 +801,7 @@ if [[ $harden == y* ]]; then
 	SSH_PATH="/etc/ssh/sshd_config.d"
 	echo "${BLUE}:: ${BWHITE}Securing ${BLUE}${SSH_PATH}${BWHITE} permissions...${NC}"
 	sudo mkdir -p $SSH_PATH
+	sudo touch "/etc/ssh/ssh_config"
 	sudo chmod 600 "/etc/ssh/ssh_config"
 	sudo chmod 600 -R $SSH_PATH
 
