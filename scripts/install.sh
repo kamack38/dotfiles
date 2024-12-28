@@ -317,6 +317,12 @@ ${SECONDARY_LOCALE} UTF-8
 EOT
 sudo locale-gen
 
+# Install spellchecking
+echo "${GREEN}:: ${BWHITE}Adding ${BLUE}spellchecking${BWHITE} and ${BLUE}thesaurus${BWHITE} for ${BLUE}${SPELLCHECK_LOCALES[*]}${BWHITE}...${NC}"
+for LOCALE in "${SPELLCHECK_LOCALES[@]}"; do
+	NORMAL_PROFILE+=("aspell-${LOCALE}" "mythes-${LOCALE}")
+done
+
 # Set locale
 echo "${BLUE}:: ${BWHITE}Setting locales...${NC}"
 sudo tee /etc/locale.conf >/dev/null <<EOT
@@ -387,37 +393,36 @@ else
 	echo "${GREEN}:: ${BLUE}${HELPER}${BWHITE} is already installed${NC} -- skipping"
 fi
 
+DRIVERS=()
+
 # Install CPU drivers
 proc_type=$(lscpu)
 if grep -E "GenuineIntel" <<<"${proc_type}"; then
-	echo "${BLUE}:: ${BWHITE}Installing ${BLUE}Intel${BWHITE} microcode...${NC}"
-	echo "Installing Intel microcode"
-	sudo pacman -S --noconfirm --needed intel-ucode
+	echo "${BLUE}:: ${BWHITE}Adding ${BLUE}Intel${BWHITE} microcode...${NC}"
+	DRIVERS+=("intel-ucode")
 elif grep -E "AuthenticAMD" <<<"${proc_type}"; then
-	echo "${BLUE}:: ${BWHITE}Installing ${BLUE}AMD${BWHITE} microcode...${NC}"
-	sudo pacman -S --noconfirm --needed amd-ucode
+	echo "${BLUE}:: ${BWHITE}Adding ${BLUE}AMD${BWHITE} microcode...${NC}"
+	DRIVERS+=("amd-ucode")
 fi
 
 # Install GPU drivers
 VGA_INFO=$(lspci -vnn | grep VGA)
 if [[ $VGA_INFO == *"NVIDIA"* ]]; then
-	echo "${GREEN}:: ${BWHITE}Installing ${BLUE}NVIDIA${BWHITE} drivers${NC}"
-	$HELPER -S --noconfirm --needed --quiet "${NVIDIA_DRIVERS[@]}"
+	echo "${GREEN}:: ${BWHITE}Adding ${BLUE}NVIDIA${BWHITE} drivers...${NC}"
+	DRIVERS+=("${NVIDIA_DRIVERS[@]}")
 
 	for i in "${NVIDIA_MODULES[@]}"; do
 		if ! grep -q "\b$i\b" /etc/mkinitcpio.conf; then
 			sudo sed -i "s,\(MODULES=.*\)\()\),\1 $i\2," /etc/mkinitcpio.conf
 		fi
 	done
-
-	sudo systemctl enable nvidia-suspend.service nvidia-hibernate.service nvidia-resume.service
 else
 	echo "${YELLOW}:: ${BLUE}NVIDIA${BWHITE} GPU not detected${NC} -- skipping"
 fi
 
 if [[ $VGA_INFO == *"AMD"* ]]; then
-	echo "${GREEN}:: ${BWHITE}Installing ${BLUE}AMD${BWHITE} drivers${NC}"
-	$HELPER -S --noconfirm --needed --quiet "${AMD_DRIVERS[@]}"
+	echo "${GREEN}:: ${BWHITE}Adding ${BLUE}AMD${BWHITE} drivers...${NC}"
+	DRIVERS+=("${AMD_DRIVERS[@]}")
 
 	for i in "${AMD_MODULES[@]}"; do
 		if ! grep -q "\b$i\b" /etc/mkinitcpio.conf; then
@@ -429,8 +434,8 @@ else
 fi
 
 if [[ $VGA_INFO == *"INTEL"* ]]; then
-	echo "${GREEN}:: ${BWHITE}Installing ${BLUE}INTEL${BWHITE} drivers${NC}"
-	$HELPER -S --noconfirm --needed --quiet "${INTEL_DRIVERS[@]}"
+	echo "${GREEN}:: ${BWHITE}Adding ${BLUE}INTEL${BWHITE} drivers...${NC}"
+	DRIVERS+=("${INTEL_DRIVERS[@]}")
 
 	for i in "${INTEL_MODULES[@]}"; do
 		if ! grep -q "\b$i\b" /etc/mkinitcpio.conf; then
@@ -441,9 +446,16 @@ else
 	echo "${YELLOW}:: ${BLUE}INTEL${BWHITE} GPU not detected${NC} -- skipping"
 fi
 
+NORMAL_PROFILE+=("${DRIVERS[@]}")
+
 # Install packages
-echo "${GREEN}:: ${BWHITE}Installing ${BLUE}default${BWHITE} packages using ${BLUE}${HELPER}${NC}"
+echo "${GREEN}:: ${BWHITE}Installing ${BLUE}default${BWHITE} packages and ${BLUE}drivers${BWHITE} using ${BLUE}${HELPER}${NC}"
 $HELPER -S --noconfirm --needed --quiet "${NORMAL_PROFILE[@]}"
+
+if [[ $VGA_INFO == *"NVIDIA"* ]]; then
+	echo "${GREEN}:: ${BWHITE}Enabling ${BLUE}NVIDIA${BWHITE} services...${NC}"
+	sudo systemctl enable nvidia-suspend.service nvidia-hibernate.service nvidia-resume.service
+fi
 
 # Additional packages
 echo "${BLUE}:: ${BWHITE}Which profiles do you want to install?${NC}"
@@ -524,18 +536,12 @@ PERFORMANCE_PACKAGES=(
 
 if [[ $TWEAKS != "" ]]; then
 	echo "${BLUE}:: ${BWHITE}Installing ${TWEAKS/-/ }...${NC}"
+	if [[ $TWEAKS == "performance-tweaks" ]]; then
+		TWEAKS+=("${PERFORMANCE_PACKAGES[@]}")
+	fi
 	$HELPER -S --noconfirm --needed --quiet "$TWEAKS"
 
-	if [[ $TWEAKS == "performance-tweaks" ]]; then
-		$HELPER -S --noconfirm --needed --quiet "${PERFORMANCE_PACKAGES[@]}"
-	fi
 fi
-
-# Install spellchecking
-echo "${GREEN}:: ${BWHITE}Installing ${BLUE}spellchecking${BWHITE} and ${BLUE}thesaurus${BWHITE} for ${BLUE}${SPELLCHECK_LOCALES[*]}${BWHITE}...${NC}"
-for LOCALE in "${SPELLCHECK_LOCALES[@]}"; do
-	$HELPER -S --noconfirm --needed --quiet "aspell-${LOCALE}" "mythes-${LOCALE}"
-done
 
 # Add .local/bin to PATH
 export PATH="$HOME/.local/bin:$PATH"
