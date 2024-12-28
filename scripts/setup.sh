@@ -181,7 +181,7 @@ btrfs subvolume create /mnt/@swap
 umount /mnt
 
 # Set mount options
-MOUNT_OPTIONS="noatime,compress=zstd,commit=120"
+MOUNT_OPTIONS="defaults,noatime,compress=zstd,commit=60"
 SWAP_MOUNT_OPTIONS="nodatacow,noatime,nospace_cache"
 
 echo "${BLUE}:: ${BWHITE}Mounting @ subvolume...${NC}"
