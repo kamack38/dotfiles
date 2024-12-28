@@ -759,6 +759,18 @@ Defaults env_reset,pwfeedback,insults
 EOT
 sudo chmod 750 /etc/sudoers.d/01_pwfeedback
 
+# Load ~/.pam_environment on login
+if ! grep -Fxq "environment" /etc/pam.d/system-login; then
+	sudo tee -a /etc/pam.d/system-login >/dev/null <<EOT
+session    include   environment
+EOT
+fi
+sudo tee /etc/pam.d/environment >/dev/null <<EOT
+#%PAM-1.0
+
+session    required   pam_env.so readenv=1 user_readenv=1
+EOT
+
 read -rp "${BLUE}:: ${BWHITE}Do you want to add additional pacman repositories (archstrike, blackarch, archcraft)? [y/N]${NC}: " repos_script
 
 if [[ $repos_script == y* ]]; then
