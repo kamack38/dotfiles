@@ -101,7 +101,6 @@ return {
       "semantic_tokens",
       "statusline",
       "syntax",
-      "tbline",
       "telescope",
       "todo",
       "treesitter",
