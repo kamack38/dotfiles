@@ -549,6 +549,9 @@ export PATH="$HOME/.local/bin:$PATH"
 # Update xdg dirs
 xdg-user-dirs-update
 
+# Update tealdeer cache
+tldr --update
+
 # Create mpd dirs so it doesn't crash
 mkdir -p $HOME/Music/playlists $HOME/.cache/mpd $HOME/.local/share/mpd
 
