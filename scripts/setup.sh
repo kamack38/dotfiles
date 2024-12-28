@@ -260,7 +260,7 @@ esac
 function chroot {
 	echo "${BLUE}:: ${BWHITE}Setting up ${BLUE}GRUB${BWHITE}...${NC}"
 	if [[ -d "/sys/firmware/efi" ]]; then
-		grub-install --efi-directory=/boot --bootloader-id=GRUB
+		grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=GRUB
 	fi
 	sed -i "s%^GRUB_CMDLINE_LINUX_DEFAULT=\"%GRUB_CMDLINE_LINUX_DEFAULT=\"cryptdevice=UUID=${ENCRYPTED_PARTITION_UUID}:cryptroot root=/dev/mapper/cryptroot %" /etc/default/grub
 	sed -i "s/^#GRUB_ENABLE_CRYPTODISK=y/GRUB_ENABLE_CRYPTODISK=y/" /etc/default/grub
