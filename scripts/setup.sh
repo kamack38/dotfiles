@@ -141,7 +141,7 @@ if [[ ! -d "/sys/firmware/efi" ]]; then
 	sgdisk -n "0::+1M" --typecode="0:ef02" --change-name="0:BIOSBOOT" "${DISK}" # BIOS Boot Partition
 fi
 if [[ $use_x_efi == n* ]]; then
-	sgdisk -n "0::+300M" --typecode="0:ef00" --change-name="0:EFIBOOT" "${DISK}" # UEFI Boot Partition
+	sgdisk -n "0::+500M" --typecode="0:ef00" --change-name="0:EFIBOOT" "${DISK}" # UEFI Boot Partition
 fi
 sgdisk -N "0" --typecode="0:8300" --change-name="0:Archlinux" "${DISK}" # Root Partition, default start, remaining
 
@@ -152,6 +152,7 @@ partprobe "${DISK}"
 if [[ $use_x_efi == n* ]]; then
 	echo "${BLUE}:: ${BWHITE}Formatting EFI partition...${NC}"
 	mkfs.vfat -F32 -n "EFIBOOT" "/dev/disk/by-partlabel/EFIBOOT"
+	EFI_PART="/dev/disk/by-partlabel/EFIBOOT"
 fi
 
 # Enter luks password to cryptsetup and format root partition
@@ -202,7 +203,7 @@ echo "${BLUE}:: ${BWHITE}Encrypted partition UUID is: ${BLUE}${ENCRYPTED_PARTITI
 
 # Mount target
 mkdir -p /mnt/boot/efi
-mount -t vfat -L EFIBOOT /mnt/boot/
+mount -t vfat $EFI_PART /mnt/boot
 
 # Check if drive is mounted
 if ! grep -qs '/mnt' /proc/mounts; then
@@ -218,6 +219,7 @@ PREREQUISITES=(
 	"btrfs-progs"
 	"linux"
 	"linux-firmware"
+	"linux-headers"
 	"sudo"
 	"grub"
 	"archlinux-keyring"
@@ -258,7 +260,7 @@ esac
 function chroot {
 	echo "${BLUE}:: ${BWHITE}Setting up ${BLUE}GRUB${BWHITE}...${NC}"
 	if [[ -d "/sys/firmware/efi" ]]; then
-		grub-install --efi-directory=/boot --bootloader-id=GRUB "${DISK}"
+		grub-install --efi-directory=/boot --bootloader-id=GRUB
 	fi
 	sed -i "s%^GRUB_CMDLINE_LINUX_DEFAULT=\"%GRUB_CMDLINE_LINUX_DEFAULT=\"cryptdevice=UUID=${ENCRYPTED_PARTITION_UUID}:cryptroot root=/dev/mapper/cryptroot %" /etc/default/grub
 	sed -i "s/^#GRUB_ENABLE_CRYPTODISK=y/GRUB_ENABLE_CRYPTODISK=y/" /etc/default/grub
