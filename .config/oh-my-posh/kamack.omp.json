@@ -108,7 +108,7 @@
                         "fetch_package_manager": true
                     },
                     "style": "powerline",
-                    "template": "{{ if .PackageManagerIcon }}{{ .PackageManagerIcon }} {{else}} \uf898 {{ end }}{{ .Full }}",
+                    "template": "{{ if .PackageManagerIcon }}{{ .PackageManagerIcon }} {{else}} 󰎙 {{ end }}{{ .Full }}",
                     "foreground": "#ffffff",
                     "powerline_symbol": "\ue0b2",
                     "background": "#689f63",
