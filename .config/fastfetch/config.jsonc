@@ -22,14 +22,14 @@
         {
             "type": "host",
             "format": "{5} {2}",
-            "key": " ",
+            "key": "󰌢 ",
             "keyColor": "magenta"
         },
-        { "type": "kernel", "key": " ", "keyColor": "red" },
+        { "type": "kernel", "key": "󰍛 ", "keyColor": "red" },
         { "type": "uptime", "key": "󱑎 ", "keyColor": "blue" },
         {
             "type": "packages",
-            "key": " ",
+            "key": "󰏗 ",
             "keyColor": "green"
         },
         { "type": "shell", "key": " ", "keyColor": "blue" },
