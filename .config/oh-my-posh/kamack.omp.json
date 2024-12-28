@@ -38,17 +38,17 @@
                 },
                 {
                     "properties": {
-                        "home_icon": "\uf7db",
+                        "home_icon": "󰋜",
                         "mapped_locations": {
                             "~/.config": "\ue615",
-                            "~/Desktop": "\uf6c3",
-                            "~/Documents": "\uf718",
+                            "~/Desktop": "󰇄",
+                            "~/Documents": "󰈙",
                             "~/Documents/CPlusPlus": "\ue61d",
                             "~/Documents/GitHUB": "\uf408",
                             "~/Documents/cpp": "\ue61d",
                             "~/Downloads": "\uf019",
                             "~/Music": "\uf001",
-                            "~/Pictures": "\uf7ea",
+                            "~/Pictures": "󰋫",
                             "~/Videos": "\uf03d"
                         },
                         "style": "full"
