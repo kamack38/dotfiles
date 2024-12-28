@@ -27,7 +27,6 @@ HYPRLAND_PACKAGES=(
 	"grimblast-git"                 # A helper for screenshots within Hyprland.
 	"wlogout"                       # Logout menu for wayland
 	"waybar"                        # Highly customizable Wayland bar for Wlroots based compositors
-	"ttf-iosevka-nerd"              # Font for waybar
 	"xdg-desktop-portal"            # Desktop integration portals for sandboxed apps
 	"xdg-desktop-portal-hyprland"   # xdg-desktop-portal backend for hyprland
 	"wev"                           # A tool for debugging wayland events, similar to xev
