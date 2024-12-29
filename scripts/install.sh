@@ -63,6 +63,7 @@ NORMAL_PROFILE=(
 	"ttf-jetbrains-mono-nerd" # Patched font JetBrains Mono from nerd fonts library
 	"noto-fonts"              # Google Noto TTF fonts
 	"noto-fonts-cjk"          # Google Noto CJK fonts
+	"noto-fonts-emoji"        # Google Noto emoji fonts
 	"terminus-font"           # Monospace bitmap font (for X11 and console)
 	"playerctl"               # Command-line utility and library for controlling media players
 	"mpv-mpris"               # mpv mpris support
