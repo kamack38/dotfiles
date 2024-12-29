@@ -498,7 +498,7 @@ if [[ $SELECTED_PROFILES == *"BLUETOOTH"* ]]; then
 fi
 if [[ $SELECTED_PROFILES == *"RUST_DEV"* ]]; then
 	echo "${BLUE}:: ${BWHITE}Installing rust profile...${NC}"
-	if [[ $(pacman -Qq rust) == "rust" ]]; then
+	if [[ $(pacman -Qq rust 2>/dev/null) == "rust" ]]; then
 		echo "${YELLOW}:: ${BWHITE}Removing ${BLUE}rust${BWHITE} package...${NC}"
 		sudo pacman -Rdd --noconfirm rust
 	fi
