@@ -522,6 +522,7 @@ if [[ $SELECTED_PROFILES == *"DOCKER"* ]]; then
 
 	$HELPER -S --noconfirm --needed --quiet "${DOCKER_PROFILE[@]}"
 	sudo systemctl enable docker.socket
+	sudo usermod -a -G docker "$USER"
 fi
 
 # Install tweaks
