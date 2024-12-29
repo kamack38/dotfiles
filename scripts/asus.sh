@@ -24,7 +24,7 @@ sudo pacman -Syy
 
 # Install packages
 echo "${BLUE}:: ${BWHITE}Installing packages...${NC}"
-$HELPER -S --noconfirm --needed --quiet asusctl-git \
+$HELPER -S --noconfirm --needed --quiet asusctl \
 	nvidia-prime
 
 # Set keyboard light

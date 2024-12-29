@@ -148,7 +148,7 @@ DESKTOP_APPS=(
 	"ripdrag-git"                      # Drag and drop files to and from the terminal
 	"btrfs-assistant"                  # An application for managing BTRFS subvolumes and Snapper snapshots
 	"flatpak"                          # Linux application sandboxing and distribution framework (formerly xdg-app)
-	"lightly-qt6-git"                  # Bali10050's fork of Lightly (A modern style for qt applications)
+	"darkly-qt6-git"                   # Modern style for KF6/Qt6 applications (fork of Lightly)
 	"fluent-icon-theme-git"            # A Fluent design icon theme
 	"fluent-cursor-theme-git"          # An x-cursor theme inspired by Qogir theme and based on capitaine-cursors.
 )
