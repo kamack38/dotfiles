@@ -46,6 +46,30 @@ blacklist nouveau
 options nouveau modeset=0
 EOT
 
+echo "${BLUE}:: ${BWHITE}Fixing sound...${NC}"
+sudo tee /etc/modprobe.d/hda-jack-retask.conf >/dev/null <<EOF
+options snd-hda-intel patch=hda-jack-retask.fw,hda-jack-retask.fw,hda-jack-retask.fw,hda-jack-retask.fw
+EOF
+
+sudo tee /lib/firmware/hda-jack-retask.fw >/dev/null <<EOF
+[codec]
+0x10ec0285 0x10431602 0
+
+[pincfg]
+0x12 0x90a60140
+0x13 0x40000000
+0x14 0x90170152
+0x16 0x411111f0
+0x17 0x90170110
+0x18 0x411111f0
+0x19 0x03a19020
+0x1a 0x411111f0
+0x1b 0x411111f0
+0x1d 0x40663a45
+0x1e 0x90170151
+0x21 0x03211020
+EOF
+
 echo "${BLUE}:: ${BWHITE}Running mkinitcpio...${NC}"
 sudo mkinitcpio -P
 
