@@ -124,7 +124,7 @@
         "format-wifi": "󰖩 {essid}",
         "format-ethernet": "",
         "format-linked": "{ifname} (No IP) ",
-        "format-disconnected": "睊 Disconnected",
+        "format-disconnected": "󰖪 Disconnected",
         "tooltip-format-wifi": "Signal Strenght: {signalStrength}% | Down Speed: {bandwidthDownBits}, Up Speed: {bandwidthUpBits}",
         "on-click": "kitty --class system_monitor -e nmtui"
     },
