@@ -96,6 +96,7 @@ alias btc="bluetoothctl"
 alias xo="xdg-open"
 alias si="su -s /bin/fish"
 alias gp="glow -p"
+alias rd="ripdrag"
 
 if command -v firefox-developer-edition &>/dev/null
     alias firefox="firefox-developer-edition"
