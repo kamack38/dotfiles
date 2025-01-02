@@ -121,7 +121,8 @@ BLUETOOTH_PROFILE=(
 )
 
 RUST_DEV_PROFILE=(
-	"rustup" # The Rust toolchain installer
+	"rustup"    # The Rust toolchain installer
+	"taplo-cli" # TOML toolkit written in Rust
 )
 
 DOCKER_PROFILE=(
@@ -134,6 +135,7 @@ DESKTOP_APPS=(
 	"sddm"                             # QML based X11 and Wayland display manager
 	"ark"                              # Archive Manager
 	"dolphin"                          # File Manager
+	"archlinux-xdg-menu"               # Generate WM menu from xdg files (Fix dolphin no "open with" programs)
 	"partitionmanager"                 # Partition Manager
 	"gwenview"                         # Image viewer
 	"polkit-kde-agent"                 # Daemon providing a polkit authentication UI
