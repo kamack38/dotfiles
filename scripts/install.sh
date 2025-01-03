@@ -555,7 +555,7 @@ xdg-user-dirs-update
 tldr --update
 
 # Create mpd dirs so it doesn't crash
-mkdir -p $HOME/Music/playlists $HOME/.cache/mpd $HOME/.local/share/mpd
+mkdir -p $HOME/Music/playlists $HOME/.cache/mpd $HOME/.local/share/mpd $HOME/.local/state/mpd
 
 # Install fish plugins
 echo "${GREEN}:: ${BWHITE}Installing ${BLUE}fish${BWHITE} packages${NC}"
