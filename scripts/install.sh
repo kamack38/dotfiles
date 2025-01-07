@@ -844,12 +844,12 @@ EOT
 	sudo ufw enable
 
 	echo "${BLUE}:: ${BWHITE}Enabling ${BLUE}AppArmor${BWHITE} rules...${NC}"
-	systemctl enable --now apparmor.service
+	sudo systemctl enable --now apparmor.service
 	sudo sed -i 's/^#write-cache/write-cache/' /etc/apparmor/parser.conf
 	sudo sed -i 's/^#Optimize=compress-fast/Optimize=compress-fast/' /etc/apparmor/parser.conf
 
 	echo "${BLUE}:: ${BWHITE}Setting ${BLUE}umask${BWHITE} to 0077...${NC}"
-	sudo sed -i 's/umask 022/umask 077/' /etc/profile
+	sudo sed -i 's/umask 022/umask 027/' /etc/profile
 
 	echo "${BLUE}:: ${BWHITE}Setting ${BLUE}login delay${BWHITE} to 4 seconds...${NC}"
 	sudo tee -a /etc/pam.d/system-login >/dev/null <<EOT
