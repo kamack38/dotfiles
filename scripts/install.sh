@@ -147,6 +147,7 @@ DESKTOP_APPS=(
 	"spicetify-cli"                    # Cli for extending spotify
 	"kitty-git"                        # GPU accelerated terminal
 	"desktop-file-utils"               # Command line utilities for working with desktop entries
+	"yubico-authenticator"             # Yubico Authenticator for Desktop
 	"breeze"                           # Artwork, styles and assets for the Breeze visual style for the Plasma Desktop
 	"ripdrag-git"                      # Drag and drop files to and from the terminal
 	"btrfs-assistant"                  # An application for managing BTRFS subvolumes and Snapper snapshots
@@ -610,6 +611,7 @@ git --git-dir="$DOTFILES" --work-tree="$HOME" submodule update --init --remote
 
 # Enable services
 echo "${BLUE}:: ${BWHITE}Enabling services...${NC}"
+sudo systemctl enable pcscd.socket
 systemctl --user enable mpd.service
 systemctl --user enable mpd-mpris.service
 systemctl --user enable playerctld.service
