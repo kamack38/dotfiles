@@ -1,10 +1,10 @@
-#   ___  __    _____ ______   ________  ________
+#   ___  __  _____ ______   ________  ________
 #  |\  \|\  \ |\   _ \  _   \|\_____  \|\   __  \
-#  \ \  \/  /|\ \  \\\__\ \  \|_____\  \ \  \|\  \    Kamack38
+#  \ \  \/  /|\ \  \\\__\ \  \|_____\  \ \  \|\  \  Kamack38
 #   \ \   ___  \ \  \\|__| \  \|______  \ \   __  \   https://twitter.com/kamack38
-#    \ \  \\ \  \ \  \    \ \  \| ____\  \ \  \|\  \  https://github.com/kamack38
-#     \ \__\\ \__\ \__\    \ \__\|\_______\ \_______\
-#      \|__| \|__|\|__|     \|__|\|_______|\|_______|
+#  \ \  \\ \  \ \  \  \ \  \| ____\  \ \  \|\  \  https://github.com/kamack38
+#   \ \__\\ \__\ \__\  \ \__\|\_______\ \_______\
+#    \|__| \|__|\|__|   \|__|\|_______|\|_______|
 
 # ------------
 # Envs
@@ -238,7 +238,11 @@ end
 
 function ghget -d 'Download file from github'
     set -l url (echo $argv[1] | sed 's/https:\/\/github.com/https:\/\/raw.githubusercontent.com/' | sed 's/blob\///')
-    wget $url
+    if set -q argv[2]
+        wget $url -O $argv[2]
+    else
+        wget $url
+    end
 end
 
 function rm-except -a file -d 'Remove all files except one'
