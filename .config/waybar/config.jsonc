@@ -122,14 +122,16 @@
 
     "network": {
         "format-wifi": "󰖩 {essid}",
-        "format-ethernet": "",
+        "format-ethernet": "󰈀",
         "format-linked": "{ifname} (No IP) ",
         "format-disconnected": "󰖪 Disconnected",
         "tooltip-format-wifi": "Signal Strenght: {signalStrength}% | Down Speed: {bandwidthDownBits}, Up Speed: {bandwidthUpBits}",
+        "tooltip-format-ethernet": "{ifname}",
         "on-click": "kitty --class system_monitor -e nmtui"
     },
 
     "bluetooth": {
+        "on-click": "blueman-manager",
         "on-click-right": "~/.config/waybar/scripts/toggle-bluetooth.sh",
         "on-click-middle": "~/.config/waybar/scripts/toggle-bluetooth-block.sh",
         "format-icons": ["󰥇", "󰤾", "󰤿", "󰥀", "󰥁", "󰥂", "󰥃", "󰥄", "󰥅", "󰥆", "󰥈"],
