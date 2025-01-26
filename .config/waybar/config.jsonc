@@ -146,9 +146,10 @@
 
     "pulseaudio": {
         "format": "{icon} {volume}%",
-        "format-muted": " Muted",
+        "format-muted": "  Muted",
         "scroll-step": 2,
         "on-click": "pavucontrol",
+        "on-click-right": "pamixer -t",
         "format-icons": {
             "headphone": "",
             "hands-free": "",
