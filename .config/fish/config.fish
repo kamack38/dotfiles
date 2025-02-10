@@ -181,7 +181,7 @@ alias refresh-mirrorlist="sudo reflector --latest 200 --sort rate --save /etc/pa
 
 # Flatpak
 function flat --description 'Search for flatpak packages' -a pkg
-    command flatpak remote-ls --columns=application,origin,name | fzf --multi --with-nth=3.. --preview 'flatpak remote-info {2} {1}' --preview-window wrap -q$pkg | xargs -ro flatpak install # fzf package install prompt
+    command flatpak remote-ls --columns=application,origin,name | fzf --multi --with-nth=3.. --preview 'flatpak remote-info {2} {1}' --preview-window wrap -q$pkg | awk '{ print $1 }' | xargs -ro flatpak install # fzf package install prompt
 end
 
 # Bottles
