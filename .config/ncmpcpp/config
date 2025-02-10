@@ -24,14 +24,21 @@ lyrics_directory = ~/Music/lyrics
 #mpd_host = localhost
 
 #mpd_port = 6600
+
+#mpd_password = ""
+
 #mpd_connection_timeout = 5
+
 ## Needed for tag editor and file operations to work.
 ##
-# mpd_music_dir = ~/Music/New2
+mpd_music_dir = ~/Music
+
 mpd_crossfade_time = 5
+
 # Exclude pattern for random song action
 # http://www.boost.org/doc/libs/1_46_1/libs/regex/doc/html/boost_regex/syntax/perl_syntax.html
 #random_exclude_pattern = "^(temp|midi_songs).*"
+
 ##### music visualizer #####
 ##
 ## In order to make music visualizer work with MPD you need to use the fifo
@@ -61,26 +68,33 @@ mpd_crossfade_time = 5
 ## will make localhost:5555 available as a source of data for the stereo
 ## visualizer.
 ##
+
 visualizer_data_source = /tmp/mpd.fifo
+
 ##
 ## Note: Below parameter is needed for ncmpcpp to determine which output
 ## provides data for visualizer and reset it at the beginning of visualization
 ## to synchronize with audio.
 ##
+
 visualizer_output_name = "MPD Visualizer"
+
 ##
 ## If you set format to 44100:16:2, make it 'yes'.
 ##
 visualizer_in_stereo = "yes"
+
 ##
 ## Note: set below to >=10 only if you have synchronization issues with
 ## visualization and audio.
 ##
 #visualizer_sync_interval = 0
+
 ##
 ## Note: To enable spectrum frequency visualization you need to compile ncmpcpp
 ## with fftw3 support.
 ##
+
 ## Available values: spectrum, wave, wave_filled, ellipse.
 ##
 visualizer_type = "spectrum"
@@ -98,7 +112,17 @@ visualizer_autoscale = "yes"
 ## This will override the visualizer_look option. With transparent terminals
 ## and visualizer_in_stereo set, artifacts may be visible on the bottom half of
 ## the visualization.
+
 visualizer_spectrum_smooth_look = "yes"
+
+## Use unicode block characters from "symbols for legacy computing". This
+## improves the smooth look on transparent terminals by using special unicode
+## chars instead of reversing the background and foreground color on the bottom
+## edge of the spectrum. If it leads to a garbled output on the bottom edge of
+## the spectrum, you can either change the font or disable this option.
+
+#visualizer_spectrum_smooth_look_legacy_chars = yes
+
 ## A value between 1 and 5 inclusive. Specifying a larger value makes the
 ## visualizer look at a larger slice of time, which results in less jumpy
 ## visualizer output.
@@ -108,6 +132,12 @@ visualizer_spectrum_gain = 10
 #visualizer_spectrum_hz_min = 20
 ## Right-most frequency of visualizer in Hz, must be greater than HZ MIN
 #visualizer_spectrum_hz_max = 20000
+
+## Use log scaling for the frequency spectrum axes
+#
+#visualizer_spectrum_log_scale_x = yes
+#visualizer_spectrum_log_scale_y = yes
+
 ##### system encoding #####
 ##
 ## ncmpcpp should detect your charset encoding but if it failed to do so, you
@@ -134,6 +164,7 @@ visualizer_spectrum_gain = 10
 ##
 ## %l - length
 ## %f - filename
+## %F - full filepath
 ## %D - directory
 ## %a - artist
 ## %A - album artist
@@ -177,6 +208,7 @@ visualizer_spectrum_gain = 10
 ## - 9 - end of current color
 ## - b - bold text
 ## - u - underline text
+## - i - italic text
 ## - r - reverse colors
 ## - a - use alternative character set
 ##
@@ -331,8 +363,9 @@ connected_message_on_startup = "no"
 titles_visibility = "yes"
 #header_text_scrolling = yes
 cyclic_scrolling = "no"
-#lyrics_fetchers = azlyrics, genius, musixmatch, sing365, metrolyrics, justsomelyrics, jahlyrics, plyrics, tekstowo, zeneszoveg, internet
-lyrics_fetchers = "genius, tekstowo, internet"
+#lyrics_fetchers = tags, genius, tekstowo, plyrics, justsomelyrics, jahlyrics, zeneszoveg, internet
+# lyrics_fetchers = "tags, genius, plyrics, tekstowo, internet"
+lyrics_fetchers = "tags"
 follow_now_playing_lyrics = "yes"
 fetch_lyrics_for_current_song_in_background = "no"
 store_lyrics_in_song_dir = no
@@ -372,9 +405,27 @@ store_lyrics_in_song_dir = no
 ##
 ## Default width of locked screen (in %).  Acceptable values are from 20 to 80.
 ##
+
 locked_screen_width_part = 40
+
 #ask_for_locked_screen_width_part = yes
-jump_to_now_playing_song_at_start = "yes"
+
+##
+## Width of media_library screen columns
+##
+
+#media_library_column_width_ratio_two = 1:1
+
+#media_library_column_width_ratio_three = 1:1:1
+
+##
+## Width of playlist_editor screen columns
+##
+
+#playlist_editor_column_width_ratio = 1:2
+
+jump_to_now_playing_song_at_start = yes
+
 #ask_before_clearing_playlists = yes
 clock_display_seconds = "no"
 display_volume_level = "yes"
@@ -421,6 +472,7 @@ external_editor = nvim
 ## Note: set to yes if external editor is a console application.
 ##
 #use_console_editor = yes
+
 ##### colors definitions #####
 ##
 ## It is possible to set a background color by setting a color value
