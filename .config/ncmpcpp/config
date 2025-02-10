@@ -228,14 +228,14 @@ visualizer_spectrum_gain = 10
 ##
 #song_list_format = {%a - }{%t}|{$8%f$9}$R{$3%l$9}
 #song_list_format = "$6{%a »$4 %t$/r$R}|{%f}"
-song_list_format     = "$5{%t}|{%f} $9{$3$R %a} $9{$5$R  %l $9}"
+song_list_format     = "$5{%t}|{%f} $9{$3$R %a} $9{$5$R %l $9}"
 #song_status_format = {{%a{ "%b"{ (%y)}} - }{%t}}|{%f}
-song_status_format   = "{$2$b %t}|{%f}$/b$9 $b$2by$9$/b $2$b %a$/b$9 $b$2on$9$/b $2$b %b$/b$9"
+song_status_format   = "{$2$b󰎇%t}|{%f}$/b$9 $b$2by$9$/b $2$b %a$/b$9 $b$2on$9$/b $2$b %b$/b$9"
 #song_library_format = {%n - }{%t}|{%f}
 song_library_format	 = "{{%a - %t} (%b)}|{%f}"
 #alternative_header_first_line_format = $b$1$aqqu$/a$9 {%t}|{%f} $1$atqq$/a$9$/b
 #alternative_header_second_line_format = {{$4$b%a$/b$9}{ - $7%b$9}{ ($4%y$9)}}|{%D}
-alternative_header_first_line_format = "$8 Now Playing:$9 $b$4{%t}|{%f}$/b$/b "
+alternative_header_first_line_format = "$8󰎇 Now Playing:$9 $b$4{%t}|{%f}$/b$/b "
 alternative_header_second_line_format = "{$b{$8by $9$4 %a$9}{ $8on$9 $4 %b$9}}"
 #current_item_prefix = $(yellow)$r
 #current_item_suffix = $/r$(end)
@@ -245,7 +245,7 @@ current_item_inactive_column_prefix = "$3 "
 current_item_inactive_column_suffix = "$9"
 #now_playing_prefix = $b
 #now_playing_suffix = $/b
-now_playing_prefix = "$4 $b" 
+now_playing_prefix = "$4 $b" 
 #now_playing_suffix = "$/b$3 $9"
 now_playing_suffix = "$/b$9"
 #browser_playlist_prefix = "$2playlist$9 "
@@ -301,7 +301,7 @@ song_window_title_format = "{%a - }{%t}|{%f}"
 ##   available.
 ##
 #song_columns_list_format = (20)[]{a} (6f)[green]{NE} (50)[white]{t|f:Title} (20)[cyan]{b} (7f)[magenta]{l}
-song_columns_list_format     = "(60)[6]{t|f: Track} (35)[6]{ar: Artist} (5)[6]{lr:Time}"
+song_columns_list_format     = "(60)[6]{t|f:󰎇 Track} (35)[6]{ar: Artist} (5)[6]{lr:Time}"
 ##### various settings #####
 ##
 ## Note: Custom command that will be executed each time song changes. Useful for
@@ -336,7 +336,6 @@ volume_change_step = 2
 ## Note: You can specify third character which will be used to build 'empty'
 ## part of progressbar.
 ##
-#progressbar_look = =>
 progressbar_look = "━━"
 progressbar_color = "black"
 progressbar_elapsed_color = "blue"
