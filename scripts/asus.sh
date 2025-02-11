@@ -73,5 +73,19 @@ EOF
 echo "${BLUE}:: ${BWHITE}Running mkinitcpio...${NC}"
 sudo mkinitcpio -P
 
-# slow internet
+# Fix slow internet
 # sudo sysctl net.ipv4.tcp_ecn=0
+
+# Powersave Tweaks
+
+# Disable NMI Watchdog
+# - The NMI watchdog is a debugging feature to catch hardware hangs that cause a kernel panic. On some systems it can generate a lot of interrupts, causing a noticeable increase in power usag
+sudo tee /etc/sysctl.d/disable_nmi_watchdog.conf >/dev/null <<EOF
+kernel.nmi_watchdog = 0
+EOF
+
+# Suspend when battery is at 2%
+sudo tee /etc/udev/rules.d/50-powersave-suspend.rules >/dev/null <<EOF
+# Suspend when battery is at 2%
+SUBSYSTEM=="power_supply", ATTR{status}=="Discharging", ATTR{capacity}=="2", RUN+="/usr/bin/systemctl suspend"
+EOF
