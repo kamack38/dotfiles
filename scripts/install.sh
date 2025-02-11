@@ -846,12 +846,13 @@ EOT
 	sudo ufw enable
 
 	echo "${BLUE}:: ${BWHITE}Enabling ${BLUE}AppArmor${BWHITE} rules...${NC}"
-	sudo systemctl enable --now apparmor.service
+	sudo systemctl enable apparmor.service
 	sudo sed -i 's/^#write-cache/write-cache/' /etc/apparmor/parser.conf
 	sudo sed -i 's/^#Optimize=compress-fast/Optimize=compress-fast/' /etc/apparmor/parser.conf
+	sudo sed -i 's#\(^GRUB_CMDLINE_LINUX_DEFAULT=".*\)\(.*"\)#\1 lsm=landlock,lockdown,yama,integrity,apparmor,bpf\2#' /etc/default/grub
 
 	echo "${BLUE}:: ${BWHITE}Setting ${BLUE}umask${BWHITE} to 0077...${NC}"
-	sudo sed -i 's/umask 022/umask 027/' /etc/profile
+	sudo sed -i 's/UMASK\t\t022/UMASK\t\t027/' /etc/login.defs
 
 	echo "${BLUE}:: ${BWHITE}Setting ${BLUE}login delay${BWHITE} to 4 seconds...${NC}"
 	sudo tee -a /etc/pam.d/system-login >/dev/null <<EOT
