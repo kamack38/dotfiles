@@ -137,8 +137,7 @@ ForegroundVisited=155,89,182
 
 [General]
 BrowserApplication=firefoxdeveloperedition.desktop
-ColorScheme=BreezeDark
-ColorSchemeHash=78952f1103f6f2c59b78c6ed5fa382c3f5ec18e7
+ColorSchemeHash=babca25f3a5cf7ece26a85de212ab43d0a141257
 Name[en_GB]=Breeze Dark
 Name=Breeze Dark
 TerminalApplication=kitty
