@@ -14,6 +14,15 @@ NC=$'\e[0m' # No Colour
 # Default vars
 HELPER="paru"
 
+PACKAGES=(
+	"asusctl"      # Asus drivers and management
+	"nvidia-prime" # Offload to an NVIDIA GPU
+	"linux-g14"    # Custom kernel with patches for asus laptops
+	"linux-g14-headers"
+	# "rog-control-center" # GUI for asusctl
+	# "supergfxctl"        # Tool to change the optimus mode
+)
+
 # Add asusctl repository
 source "$HOME/scripts/repos.sh"
 g14
@@ -24,27 +33,15 @@ sudo pacman -Syy
 
 # Install packages
 echo "${BLUE}:: ${BWHITE}Installing packages...${NC}"
-$HELPER -S --noconfirm --needed --quiet asusctl \
-	nvidia-prime
-
-# Set keyboard light
-echo "${BLUE}:: ${BWHITE}Setting keyboard light...${NC}"
-asusctl led-mode rainbow -d right -s low
-
-# Install custom kernel
-echo "${BLUE}:: ${BWHITE}Installing g14 kernel...${NC}"
-$HELPER -S --noconfirm --needed --quiet linux-g14 \
-	linux-g14-headers
+$HELPER -S --noconfirm --needed --quiet "${PACKAGES[@]}"
 
 # Enable daemons
 echo "${BLUE}:: ${BWHITE}Enabling daemons...${NC}"
-systemctl --user enable --now asus-notify
+sudo systemctl enable --now asusd.service
 
-echo "${BLUE}:: ${BWHITE}Blacklisting ${BLUE}nouveau${BWHITE}...${NC}"
-sudo tee /etc/modprobe.d/blacklist-nvidia-nouveau.conf >/dev/null <<EOT
-blacklist nouveau
-options nouveau modeset=0
-EOT
+# Set keyboard light
+echo "${BLUE}:: ${BWHITE}Setting keyboard light...${NC}"
+asusctl aura rainbow-wave -d right -s low
 
 echo "${BLUE}:: ${BWHITE}Fixing sound...${NC}"
 sudo tee /etc/modprobe.d/hda-jack-retask.conf >/dev/null <<EOF
@@ -77,6 +74,7 @@ sudo mkinitcpio -P
 # sudo sysctl net.ipv4.tcp_ecn=0
 
 # Powersave Tweaks
+echo "${BLUE}:: ${BWHITE}Applying ${BLUE}powersave tweaks${BWHITE}...${NC}"
 
 # Disable NMI Watchdog
 # - The NMI watchdog is a debugging feature to catch hardware hangs that cause a kernel panic. On some systems it can generate a lot of interrupts, causing a noticeable increase in power usag
@@ -88,4 +86,30 @@ EOF
 sudo tee /etc/udev/rules.d/50-powersave-suspend.rules >/dev/null <<EOF
 # Suspend when battery is at 2%
 SUBSYSTEM=="power_supply", ATTR{status}=="Discharging", ATTR{capacity}=="2", RUN+="/usr/bin/systemctl suspend"
+EOF
+
+# Performance tweaks
+echo "${BLUE}:: ${BWHITE}Applying ${BLUE}performance tweaks${BWHITE}...${NC}"
+
+# Disable nouveau
+sudo tee /etc/modprobe.d/blacklist-nvidia-nouveau.conf >/dev/null <<EOT
+blacklist nouveau
+options nouveau modeset=0
+EOT
+
+# Improve disk performance
+sudo tee /etc/udev/rules.d/69-hdparm.rules >/dev/null <<EOF
+ACTION=="add|change", KERNEL=="sd[a-z]", ATTR{queue/rotational}=="1", RUN+="/usr/bin/hdparm -B 254 -S 0 /dev/%k"
+EOF
+sudo tee /etc/udev/rules.d/50-sata.rules >/dev/null <<EOF
+# SATA Active Link Power Management
+ACTION=="add", SUBSYSTEM=="scsi_host", KERNEL=="host*", ATTR{link_power_management_policy}="max_performance"
+EOF
+sudo tee /etc/udev/rules.d/60-ioschedulers.rules >/dev/null <<EOF
+# set scheduler for NVMe
+ACTION=="add|change", KERNEL=="nvme[0-9]n[0-9]", ATTR{queue/scheduler}="none"
+# set scheduler for SSD and eMMC
+ACTION=="add|change", KERNEL=="sd[a-z]|mmcblk[0-9]*", ATTR{queue/rotational}=="0", ATTR{queue/scheduler}="bfq"
+# set scheduler for rotating disks
+ACTION=="add|change", KERNEL=="sd[a-z]", ATTR{queue/rotational}=="1", ATTR{queue/scheduler}="bfq"
 EOF
