@@ -73,7 +73,7 @@ return {
           },
           selection_modes = {
             ["@parameter.outer"] = "v", -- charwise
-            ["@function.outer"] = "V", -- linewise
+            ["@function.outer"] = "V",  -- linewise
             ["@class.outer"] = "<c-v>", -- blockwise
           },
           -- If you set this to `true` (default is `false`) then any textobject is
@@ -220,13 +220,14 @@ return {
   -- Markdown previewer
   {
     "OXY2DEV/markview.nvim",
-    ft = "markdown",
-    branch = "main",
+    ft = { "markdown", "typst" },
     config = function()
       local presets = require "markview.presets"
       require("markview").setup {
-        modes = { "n", "no", "i" },
-        hybrid_modes = { "i" },
+        preview = {
+          modes = { "n", "no", "i" },
+          hybrid_modes = { "i" },
+        },
         checkboxes = presets.checkboxes.nerd,
       }
     end,
