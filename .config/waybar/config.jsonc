@@ -67,6 +67,7 @@
     },
 
     "custom/gpu-usage": {
+        "exec-if": "nvidia-smi",
         "exec": "nvidia-smi --query-gpu=utilization.gpu --format=csv,noheader,nounits",
         "format": "󰍹  {}%",
         "interval": 1
