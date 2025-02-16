@@ -229,9 +229,9 @@ NPM_PACKAGES=(
 )
 
 DESKTOP_ENVIRONMENTS=(
+	"Hyprland"
 	"KDE"
 	"AwesomeWM"
-	"Hyprland"
 )
 
 PLYMOUTH_PACKAGES=(

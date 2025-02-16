@@ -17,6 +17,7 @@ HELPER="paru"
 PACKAGES=(
 	"asusctl"      # Asus drivers and management
 	"nvidia-prime" # Offload to an NVIDIA GPU
+	"batsignal"    # A lightweight battery monitor daemon
 	# "rog-control-center" # GUI for asusctl
 	# "supergfxctl"        # Tool to change the optimus mode
 )
@@ -49,6 +50,7 @@ $HELPER -S --noconfirm --needed --quiet "${PACKAGES[@]}"
 # Enable daemons
 echo "${BLUE}:: ${BWHITE}Enabling daemons...${NC}"
 sudo systemctl enable --now asusd.service
+systemctl enable --now --user batsignal.service
 
 # Set keyboard light
 echo "${BLUE}:: ${BWHITE}Setting keyboard light...${NC}"
