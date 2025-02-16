@@ -1,6 +1,6 @@
 #!/bin/env bash
 
-# The icons are provided by the 'rog-control-center' package
+# The icons are provided by the 'g14/rog-control-center' package or 'cachyos/asusctl'
 
 # Switch to the next profile
 asusctl profile -n
