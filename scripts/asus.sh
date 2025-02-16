@@ -17,10 +17,13 @@ HELPER="paru"
 PACKAGES=(
 	"asusctl"      # Asus drivers and management
 	"nvidia-prime" # Offload to an NVIDIA GPU
-	"linux-g14"    # Custom kernel with patches for asus laptops
-	"linux-g14-headers"
 	# "rog-control-center" # GUI for asusctl
 	# "supergfxctl"        # Tool to change the optimus mode
+)
+
+KERNEL_PACKAGES=(
+	"linux-g14" # Custom kernel with patches for asus laptops
+	"linux-g14-headers"
 )
 
 # Add asusctl repository
@@ -30,6 +33,14 @@ g14
 # Refresh repositories
 echo "${BLUE}:: ${BWHITE}Refreshing repositories...${NC}"
 sudo pacman -Syy
+
+# Remove default kernel
+read -rp "${YELLOW}:: ${BWHITE}Do you want to install the ${BLUE}g14 kernel${BWHITE} and remove the default one? [Y/n]${NC}: " replace_kernel
+if [[ ! $replace_kernel == n* ]]; then
+	echo "${GREEN}:: ${BWHITE}Replacing ${BLUE}kernels${BWHITE}...${NC}"
+	sudo pacman -Rdd --noconfirm linux linux-headers
+	PACKAGES+=("${KERNEL_PACKAGES[@]}")
+fi
 
 # Install packages
 echo "${BLUE}:: ${BWHITE}Installing packages...${NC}"

@@ -149,10 +149,12 @@ DESKTOP_APPS=(
 	"desktop-file-utils"               # Command line utilities for working with desktop entries
 	"yubico-authenticator"             # Yubico Authenticator for Desktop
 	"breeze"                           # Artwork, styles and assets for the Breeze visual style for the Plasma Desktop
+	"catppuccin-gtk-theme-macchiato"   # Soothing pastel theme for GTK - Macchiato
 	"ripdrag-git"                      # Drag and drop files to and from the terminal
 	"btrfs-assistant"                  # An application for managing BTRFS subvolumes and Snapper snapshots
 	"flatpak"                          # Linux application sandboxing and distribution framework (formerly xdg-app)
 	"darkly-qt6-git"                   # Modern style for KF6/Qt6 applications (fork of Lightly)
+	"ttf-ms-fonts"                     # Core TTF Fonts from Microsoft
 	"fluent-icon-theme-git"            # A Fluent design icon theme
 	"fluent-cursor-theme-git"          # An x-cursor theme inspired by Qogir theme and based on capitaine-cursors.
 )
@@ -681,6 +683,7 @@ EOT
 	$HELPER -S --noconfirm --needed --quiet "sddm-theme-greenleaf"
 
 	echo "${BLUE}:: ${BWHITE}Configuring sddm...${NC}"
+	sudo mkdir -p /etc/sddm.conf.d
 	sudo tee /etc/sddm.conf.d/30-theme.conf >/dev/null <<EOF
 [Theme]
 Current=greenleaf
@@ -692,7 +695,6 @@ fi
 
 if [[ $(pacman -Q sddm) ]]; then
 	read -rp "${YELLOW}:: ${BWHITE}Do you want to enable automatic login? [y/N]${NC}: " auto_login
-	sudo mkdir -p /etc/sddm.conf.d
 
 	if [[ $auto_login == y* ]]; then
 		SESSIONS=$(find /usr/share/wayland-sessions/ /usr/share/xsessions/ -type f | sed 's,.*/\(.*\).desktop,\1,')
@@ -843,7 +845,7 @@ EOT
 
 	sudo ufw default deny incoming
 	sudo ufw default allow outgoing
-	sudo ufw enable
+	#sudo ufw enable
 
 	echo "${BLUE}:: ${BWHITE}Enabling ${BLUE}AppArmor${BWHITE} rules...${NC}"
 	sudo systemctl enable apparmor.service
