@@ -20,6 +20,7 @@ DEV_PROFILE=(
 	"tealdeer"                    # A fast tldr client in Rust
 	"dust"                        # A more intuitive version of du in rust
 	"shfmt"                       # A shell parser, formatter, and interpreter for bash
+	"deno"                        # A secure runtime for JavaScript and TypeScript (provides a markdown formatter)
 	"jq"                          # Command-line JSON processor
 	"gnupg"                       # Complete and free implementation of the OpenPGP standard
 	"unrar"                       # The RAR uncompression program

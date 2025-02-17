@@ -229,6 +229,16 @@ return {
           hybrid_modes = { "i" },
         },
         checkboxes = presets.checkboxes.nerd,
+        markdown_inline = {
+          hyperlinks = {
+            ["neovim%.io"] = {
+              priority = 9999,
+              icon = " ",
+              hl = "MarkviewPalette4Fg"
+            }
+          }
+        }
+
       }
     end,
     dependencies = {
