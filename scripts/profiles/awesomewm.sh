@@ -14,7 +14,6 @@ NC=$'\e[0m' # No Colour
 
 # Default vars
 HELPER="paru"
-CURRENT_USER="$USER"
 
 AWESOMEWM_PACKAGES=(
 	"awesome-git"      # Highly configurable framework window manager
@@ -32,4 +31,4 @@ echo "${GREEN}:: ${BWHITE}Installing awesomeWM and its components...${NC}"
 $HELPER -S --noconfirm --needed --quiet "${AWESOMEWM_PACKAGES[@]}"
 
 # Enable services
-sudo systemctl enable "betterlockscreen@$CURRENT_USER.service"
+systemctl enable --user betterlockscreen
