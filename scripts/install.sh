@@ -42,7 +42,6 @@ NORMAL_PROFILE=(
 	"man-db"                  # A utility for reading man pages
 	"python"                  # Programming language
 	"python-pip"              # Python package manager
-	"flatpak"                 # Flatpak package manager
 	"bat"                     # Better cat
 	"less"                    # A terminal based program for viewing text files
 	"eza"                     # Better ls
@@ -51,6 +50,7 @@ NORMAL_PROFILE=(
 	"ffmpeg"                  # Audio/Image/Video file converter
 	"yt-dlp"                  # Better YouTube downloader
 	"neovim"                  # Vim-like text editor
+	"glow"                    # Command-line markdown renderer
 	"fish"                    # New shell
 	"fisher"                  # Fish plugin manager
 	"oh-my-posh-bin"          # Shell prompt
@@ -139,6 +139,7 @@ DESKTOP_APPS=(
 	"archlinux-xdg-menu"               # Generate WM menu from xdg files (Fix dolphin no "open with" programs)
 	"partitionmanager"                 # Partition Manager
 	"gwenview"                         # Image viewer
+	"flatpak"                          # Flatpak package manager
 	"polkit-kde-agent"                 # Daemon providing a polkit authentication UI
 	"qt5-imageformats"                 # Add more image formats (webp)
 	"discord"                          # VoIP and instant messaging social platform
