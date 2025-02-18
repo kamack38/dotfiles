@@ -161,6 +161,13 @@ DESKTOP_APPS=(
 	"fluent-cursor-theme-git"          # An x-cursor theme inspired by Qogir theme and based on capitaine-cursors.
 )
 
+PERFORMANCE_TWEAKS_PROFILE=(
+	"btrfsmaintenance"      # Btrfs maintenance scripts
+	"profile-sync-daemon"   # Symlinks and syncs browser profile dirs to RAM
+	"systemd-oomd-defaults" # Configuration files for systemd-oomd
+	"performance-tweaks"    # Tweaks to improve performance
+)
+
 PROFILES=(
 	"Gaming"
 	"Sound"
@@ -168,6 +175,7 @@ PROFILES=(
 	"Bluetooth"
 	"Rust Dev"
 	"Docker"
+	"Performance tweaks"
 )
 
 NVIDIA_DRIVERS=(
@@ -260,7 +268,6 @@ HELPER="paru"
 HELPER_CLONE_PATH="$HOME/.cache/paru/clone"
 DOTFILES="$HOME/.dotfiles"
 REPO="https://github.com/kamack38/dotfiles"
-NEOVIM_CONFIG_DIR="$HOME/.config/nvim"
 SPOTIFY_PREFS="$HOME/.config/spotify/prefs"
 NODE_VERSION="lts"
 TIME_ZONE="Europe/Warsaw" # To get all timezones run `timedatectl list-timezones`
@@ -300,10 +307,6 @@ sudo pacman --noconfirm -Syu
 echo "${BLUE}:: ${BWHITE}Installing basic packages...${NC}"
 yes | sudo pacman -S --needed iptables-nft
 sudo pacman -S --noconfirm --needed git
-
-# Create dirs
-echo "${BLUE}:: ${BWHITE}Creating directories...${NC}"
-mkdir -p "$NEOVIM_CONFIG_DIR"
 
 # Set time zone and enable time sync
 echo "${BLUE}:: ${BWHITE}Setting time zone to ${BLUE}${TIME_ZONE}${BWHITE}...${NC}"
@@ -454,55 +457,23 @@ fi
 
 NORMAL_PROFILE+=("${DRIVERS[@]}")
 
-# Install packages
-echo "${GREEN}:: ${BWHITE}Installing ${BLUE}default${BWHITE} packages and ${BLUE}drivers${BWHITE} using ${BLUE}${HELPER}${NC}"
-$HELPER -S --noconfirm --needed --quiet "${NORMAL_PROFILE[@]}"
-
-if [[ $VGA_INFO == *"NVIDIA"* ]]; then
-	echo "${GREEN}:: ${BWHITE}Enabling ${BLUE}NVIDIA${BWHITE} services...${NC}"
-	sudo systemctl enable nvidia-suspend.service nvidia-hibernate.service nvidia-resume.service
-fi
-
-# Additional packages
+# Select profiles
 echo "${BLUE}:: ${BWHITE}Which profiles do you want to install?${NC}"
 SELECTED_PROFILES=$(printf "%s\n" "${PROFILES[@]}" | fzf --multi --height=20% --layout=reverse --header="Select profiles to install. Use TAB to select multiple." | awk '{print toupper($0)}' | sed 's/ /_/g' || true)
 
-if [[ $SELECTED_PROFILES == *"GAMING"* ]]; then
-	echo "${BLUE}:: ${BWHITE}Installing ${BLUE}gaming${BWHITE} packages...${NC}"
-	$HELPER -S --noconfirm --needed --quiet "${GAMING_PROFILE[@]}"
-fi
-if [[ $SELECTED_PROFILES == *"VM"* ]]; then
-	echo "${BLUE}:: ${BWHITE}Adding ${BLUE}virtual machine${BWHITE} support...${NC}"
-	$HELPER -S --noconfirm --needed --quiet "${VM_PROFILE[@]}"
+PROFILE_PACKAGES=()
+while IFS=\n read -r PROFILE_NAME; do
+	eval "PROFILE_PACKAGES+=(\"\${${PROFILE_NAME}_PROFILE[@]}\")"
+done <<<"$SELECTED_PROFILES"
+NORMAL_PROFILE+=("${PROFILE_PACKAGES[@]}")
 
-	# Enable services
-	sudo systemctl enable libvirtd.socket
-
-	# Autostart bridge
-	sudo virsh net-autostart default
+# Remove conflicts
+if [[ $(pacman -Q jack2) ]]; then
+	echo "${YELLOW}:: ${BWHITE}Removing ${BLUE}jack2${BWHITE} package...${NC}"
+	sudo pacman -Rdd --noconfirm jack2
 fi
-if [[ $SELECTED_PROFILES == *"SOUND"* ]]; then
-	echo "${BLUE}:: ${BWHITE}Adding ${BLUE}sound${BWHITE} support...${NC}"
-	if [[ $(pacman -Q jack2) ]]; then
-		echo "${YELLOW}:: ${BWHITE}Removing ${BLUE}jack2${BWHITE} package...${NC}"
-		sudo pacman -Rdd --noconfirm jack2
-	fi
-	$HELPER -S --needed --quiet --noconfirm "${SOUND_PROFILE[@]}"
-	systemctl enable --user pipewire-pulse.service
 
-	# Create realtime group
-	getent group "realtime" &>/dev/null || groupadd -r realtime
-
-	# Add all users to group realtime
-	echo "${BLUE}:: ${BWHITE}Adding users to realtime group...${NC}"
-	for ID in $(grep '/home' /etc/passwd | cut -d ':' -f1); do
-		(sudo usermod -aG realtime "$ID")
-	done
-fi
-if [[ $SELECTED_PROFILES == *"BLUETOOTH"* ]]; then
-	echo "${BLUE}:: ${BWHITE}Adding ${BLUE}bluetooth${BWHITE} support...${NC}"
-	$HELPER -S --noconfirm --needed --quiet "${BLUETOOTH_PROFILE[@]}"
-fi
+# Must be installed separately since it may be required by some packages
 if [[ $SELECTED_PROFILES == *"RUST_DEV"* ]]; then
 	echo "${BLUE}:: ${BWHITE}Installing rust profile...${NC}"
 	if [[ $(pacman -Qq rust 2>/dev/null) == "rust" ]]; then
@@ -515,39 +486,54 @@ if [[ $SELECTED_PROFILES == *"RUST_DEV"* ]]; then
 	rustup component add rustfmt
 	rustup component add rust-analyzer
 fi
-if [[ $SELECTED_PROFILES == *"DOCKER"* ]]; then
-	echo "${BLUE}:: ${BWHITE}Installing ${BLUE}Docker${BWHITE} profile...${NC}"
-	if [[ $VGA_INFO == *"NVIDIA"* ]]; then
-		echo "${GREEN}:: ${BLUE}NVIDIA${BWHITE} GPU detected! Adding nvidia toolkit...${NC}"
-		DOCKER_PROFILE+=("nvidia-container-toolkit")
 
-		read -rp "${YELLOW}:: ${BWHITE}Do you want to install ${BLUE}cuda${BHWITE} packages? [y/N]${NC}: " cuda_packages
-		if [ $cuda_packages == y* ]; then
-			DOCKER_PROFILE+=("cuda" "cudnn")
-		fi
+if [[ $SELECTED_PROFILES == *"DOCKER"* && $VGA_INFO == *"NVIDIA"* ]]; then
+	echo "${GREEN}:: ${BLUE}NVIDIA${BWHITE} GPU detected! Adding nvidia toolkit...${NC}"
+	DOCKER_PROFILE+=("nvidia-container-toolkit")
+
+	read -rp "${YELLOW}:: ${BWHITE}Do you want to install ${BLUE}cuda${BHWITE} packages? [y/N]${NC}: " cuda_packages
+	if [ $cuda_packages == y* ]; then
+		DOCKER_PROFILE+=("cuda" "cudnn")
 	fi
-
-	$HELPER -S --noconfirm --needed --quiet "${DOCKER_PROFILE[@]}"
-	sudo systemctl enable docker.socket
-	sudo usermod -a -G docker "$USER"
 fi
 
-# Install tweaks
-TWEAKS=$(echo -e "performance-tweaks\npowersave-tweaks" | fzf --height=20% --layout=reverse || true)
+# Install packages
+echo "${BLUE}:: ${BWHITE}The selected profiles are: ${BLUE}$(echo $SELECTED_PROFILES | sed 's/ /, /g')${BWHITE}.${NC}"
+echo "${GREEN}:: ${BWHITE}Installing ${BLUE}default${BWHITE} packages, ${BLUE}drivers${BWHITE} and ${BLUE}selected profiles${BWHITE} using ${BLUE}${HELPER}${NC}"
+$HELPER -S --noconfirm --needed --quiet "${NORMAL_PROFILE[@]}"
 
-PERFORMANCE_PACKAGES=(
-	"btrfsmaintenance"      # Btrfs maintenance scripts
-	"profile-sync-daemon"   # Symlinks and syncs browser profile dirs to RAM
-	"systemd-oomd-defaults" # Configuration files for systemd-oomd
-)
+if [[ $VGA_INFO == *"NVIDIA"* ]]; then
+	echo "${GREEN}:: ${BWHITE}Enabling ${BLUE}NVIDIA${BWHITE} services...${NC}"
+	sudo systemctl enable nvidia-suspend.service nvidia-hibernate.service nvidia-resume.service
+fi
 
-if [[ $TWEAKS != "" ]]; then
-	echo "${BLUE}:: ${BWHITE}Installing ${TWEAKS/-/ }...${NC}"
-	if [[ $TWEAKS == "performance-tweaks" ]]; then
-		TWEAKS+=("${PERFORMANCE_PACKAGES[@]}")
-	fi
-	$HELPER -S --noconfirm --needed --quiet "$TWEAKS"
+if [[ $SELECTED_PROFILES == *"VM"* ]]; then
+	echo "${BLUE}:: ${BWHITE}Configuring ${BLUE}virtual machine${BWHITE} support...${NC}"
+	# Enable services
+	sudo systemctl enable libvirtd.socket
 
+	# Autostart bridge
+	sudo virsh net-autostart default
+fi
+if [[ $SELECTED_PROFILES == *"SOUND"* ]]; then
+	echo "${BLUE}:: ${BWHITE}Adding ${BLUE}sound${BWHITE} support...${NC}"
+	systemctl enable --user pipewire-pulse.service
+
+	# Create realtime group
+	getent group "realtime" &>/dev/null || groupadd -r realtime
+
+	# Add all users to group realtime
+	echo "${BLUE}:: ${BWHITE}Adding users to realtime group...${NC}"
+	for ID in $(grep '/home' /etc/passwd | cut -d ':' -f1); do
+		(sudo usermod -aG realtime "$ID")
+	done
+fi
+if [[ $SELECTED_PROFILES == *"DOCKER"* ]]; then
+	echo "${BLUE}:: ${BWHITE}Configuring ${BLUE}Docker${BWHITE} profile...${NC}"
+
+	# Enable services
+	sudo systemctl enable docker.socket
+	sudo usermod -a -G docker "$USER"
 fi
 
 # Add .local/bin to PATH
