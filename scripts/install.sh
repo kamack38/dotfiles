@@ -828,6 +828,9 @@ EOT
 		sudo chmod 600 /etc/cron.deny
 	fi
 
+	echo "${BLUE}:: ${BWHITE}Securing ${BLUE}gpg${BWHITE} permissions...${NC}"
+	sudo chmod -R og= $HOME/.local/share/gnupg
+
 	echo "${BLUE}:: ${BWHITE}Setting up ${BLUE}firewall${BWHITE} using ${BLUE}ufw${BWHITE}...${NC}"
 	sudo systemctl disable --now ip6tables.service iptables.service
 
