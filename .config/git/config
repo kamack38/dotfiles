@@ -36,39 +36,35 @@
   pr = pull --rebase
   d-rem-tags = !git push origin --delete $(git tag -l) 
   dtag = !git tag -d \"$1\" && git push --delete origin \"$1\" "#"
-  quickhelp = "!{ \
-    echo stash - create stash; \
-    echo clean - revert file to current commit; \
-    };"
-  resign = rebase --exec 'GIT_COMMITTER_DATE=\"$(git log -n 1 --format=%aD)\" git commit --amend --no-edit -n -S'
+  resign = rebase --exec 'GIT_COMMITTER_DATE="$(git log -n 1 --format=%aD)" git commit --amend --no-edit -n -S'
 
 # URL shorthands
 
 # Github
-[url "git@github.com:"]
+[url "https://github.com/"]
   insteadOf = "gh:"
   pushInsteadOf = "github:"
   pushInsteadOf = "git://github.com/"
 
-[url "git://github.com/"]
+[url "git@github.com:"]
   insteadOf = "github:"
 
 # Gist
-[url "git@gist.github.com:"]
+[url "https://gist.github.com/"]
   insteadOf = "gst:"
   pushInsteadOf = "gist:"
   pushInsteadOf = "git://gist.github.com/"
 
-[url "git://gist.github.com/"]
+[url "git@gist.github.com:"]
   insteadOf = "gist:"
 
 # Gitlab
-[url "git@gitlab.com:"]
+[url "https://gitlab.com/"]
   insteadOf = "gl:"
   pushInsteadOf = "gitlab:"
   pushInsteadOf = "git://gitlab.com/"
 
-[url "git://gitlab.com/"]
+[url "git@gitlab.com:"]
   insteadOf = "gitlab:"
 
 # AUR
