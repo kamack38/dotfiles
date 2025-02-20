@@ -139,6 +139,7 @@ DESKTOP_APPS=(
 	"archlinux-xdg-menu"               # Generate WM menu from xdg files (Fix dolphin no "open with" programs)
 	"partitionmanager"                 # Partition Manager
 	"gwenview"                         # Image viewer
+	"kimageformats"                    # Additional formats for gwenview
 	"flatpak"                          # Flatpak package manager
 	"polkit-kde-agent"                 # Daemon providing a polkit authentication UI
 	"qt5-imageformats"                 # Add more image formats (webp)
