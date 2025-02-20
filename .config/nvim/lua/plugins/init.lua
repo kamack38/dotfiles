@@ -1,6 +1,6 @@
 ---@type NvPluginSpec[]
 return {
-  ----------------------------------- LSP PLugins -----------------------------------
+  ----------------------------------- LSP Plugins -----------------------------------
 
   -- Add more lsp servers
   {
@@ -72,9 +72,9 @@ return {
             ["if"] = "@function.inner",
           },
           selection_modes = {
-            ["@parameter.outer"] = "v", -- charwise
-            ["@function.outer"] = "V",  -- linewise
-            ["@class.outer"] = "<c-v>", -- blockwise
+            ["@parameter.outer"] = "v", -- char wise
+            ["@function.outer"] = "V",  -- line wise
+            ["@class.outer"] = "<c-v>", -- block wise
           },
           -- If you set this to `true` (default is `false`) then any textobject is
           -- extended to include preceding or succeeding whitespace. Succeeding
@@ -312,7 +312,7 @@ return {
       },
       -- disable filetypes here. Add for example "TelescopePrompt" to
       -- not have any coloured cursorline for the telescope prompt.
-      disabled_filetypes = { "TelescopePrompt" },
+      disabled_filetypes = { "TelescopePrompt", "nvdash" },
       -- you can turn on or off bold characters for the line numbers
       bold_nr = true,
     },
