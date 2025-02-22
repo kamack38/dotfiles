@@ -332,6 +332,7 @@ echo "${GREEN}:: ${BWHITE}Adding ${BLUE}spellchecking${BWHITE} and ${BLUE}thesau
 for LOCALE in "${SPELLCHECK_LOCALES[@]}"; do
 	NORMAL_PROFILE+=("aspell-${LOCALE}" "mythes-${LOCALE}")
 done
+NORMAL_PROFILE+=("hunspell-en_gb" "hunspell-pl")
 
 # Set locale
 echo "${BLUE}:: ${BWHITE}Setting locales...${NC}"
