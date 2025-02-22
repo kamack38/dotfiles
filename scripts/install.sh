@@ -40,6 +40,7 @@ NORMAL_PROFILE=(
 	"ripgrep"                 # Better grep
 	"fd"                      # Simple, fast and user-friendly alternative to find
 	"man-db"                  # A utility for reading man pages
+	"man-pages"               # Linux man pages
 	"python"                  # Programming language
 	"python-pip"              # Python package manager
 	"bat"                     # Better cat
