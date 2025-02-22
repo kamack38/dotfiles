@@ -9,7 +9,7 @@ else
 fi
 
 notify-send -r 69 \
-	-i "$(playerctl metadata mpris:artUrl | sed 's#file://##' | dunst-cache)" \
+	-i "$(fetch-thumb)" \
 	-a "Music Player" "$(playerctl status): $(playerctl metadata xesam:artist) - $(playerctl metadata xesam:title)" \
 	"Vol: $(echo "scale=0; $(playerctl volume) * 100/1" | bc)%" \
 	-u low \
