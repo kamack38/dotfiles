@@ -2,51 +2,54 @@
     background-image: none;
 }
 
+/* biome-ignore lint/nursery/noUnknownTypeSelector: This selector exists in wlogout */
 window {
     background-color: rgba(12, 12, 12, 0.9);
 }
 
 button {
-    font-weight: bold;
-    color: #ffffff;
-    background-color: #1e2127;
-    border-style: solid;
-    border-width: 2px;
-    border-radius: 10px;
+    color: #eceff4;
+    font-size: 20px;
+
     background-repeat: no-repeat;
     background-position: center;
     background-size: 25%;
-    margin: 1rem;
+
+    border-radius: 20px;
+    background-color: rgba(59, 66, 82, 1);
+    border: 3px solid rgba(59, 66, 82, 1);
+
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    margin: 10px;
 }
 
 button:focus,
 button:active,
 button:hover {
-    /* border-image: linear-gradient(0deg, #38a3a5, #57cc99) 30; */
-    border-color: #38a3a5;
-    outline-style: none;
+    background-color: rgba(76, 86, 106, 1);
+    border: 3px solid #88c0d0;
 }
 
 #lock {
-    background-image: image(url('./assets/lock.svg'));
+    background-image: image(url("./assets/lock.svg"));
 }
 
 #logout {
-    background-image: image(url('./assets/logout.svg'));
+    background-image: image(url("./assets/logout.svg"));
 }
 
 #suspend {
-    background-image: image(url('./assets/suspend.svg'));
+    background-image: image(url("./assets/suspend.svg"));
 }
 
 #hibernate {
-    background-image: image(url('./assets/hibernate.svg'));
+    background-image: image(url("./assets/hibernate.svg"));
 }
 
 #shutdown {
-    background-image: image(url('./assets/shutdown.svg'));
+    background-image: image(url("./assets/shutdown.svg"));
 }
 
 #reboot {
-    background-image: image(url('./assets/reboot.svg'));
+    background-image: image(url("./assets/reboot.svg"));
 }
