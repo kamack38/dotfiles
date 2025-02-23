@@ -1,20 +1,21 @@
 <h1 align="center">My .dotfiles for Arch Linux</h1>
 
-## ℹ️ System information
+## Programs
 
-| Component           | Main       | Backup/Xorg      |
-| ------------------- | ---------- | ---------------- |
-| OS                  | Arch Linux |                  |
-| WM/Compositor       | Hyprland   | AwesomeWM        |
-| Terminal            | kitty      | alacritty        |
-| Shell               | fish       |                  |
-| Prompt              | oh-my-posh | starship         |
-| Bar                 | waybar     | polybar          |
-| Editor              | neovim     | VSCode           |
-| Browser             | Firefox    |                  |
-| Notification daemon | dunst      |                  |
-| Session manager     | SDDM       |                  |
-| Lockscreen          | hyprlock   | betterlockscreen |
+- **Compositor** - Hyprland
+- **Terminal** - kitty
+- **Shell** - fish
+- **Prompt** - oh-my-posh / starship (for tty)
+- **Browser** - Firefox Developer Edition
+- **File manager** - Dolphin
+- **Bar** - waybar
+- **Editor** - neovim
+- **Notification daemon** - dunst
+- **Session manager** - SDDM
+- **Lockscreen** - hyprlock
+- **Idle manager** - hypridle
+- **Wallpaper manager** - hyprpaper
+- **Music player** - ncmpcpp
 
 ## Installation
 
