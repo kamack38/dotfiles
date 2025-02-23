@@ -48,3 +48,6 @@ bash <(curl -sL https://github.com/kamack38/dotfiles/raw/main/scripts/setup.sh)
 ### KDE
 
 ![Apps screenshot](./../Pictures/Screenshots/Apps.png)
+
+For some tips checkout
+[Essentials](https://github.com/kamack38/Essentials/wiki).
