@@ -1,8 +1,6 @@
 #!/bin/env bash
 
 THUMB=/tmp/hyde-mpris
-THUMB_BLURRED=/tmp/hyde-mpris-blurred
-THUMB_RECTANGLE=/tmp/blurred_rectangle.png
 
 fetch_thumb() {
 	artUrl=$(playerctl metadata --format '{{mpris:artUrl}}')
@@ -12,10 +10,6 @@ fetch_thumb() {
 
 	curl -so "${THUMB}.png" "$artUrl"
 	magick "${THUMB}.png" -quality 50 "${THUMB}.png"
-	# Create blurred version
-	magick "${THUMB}.png" -blur 200x7 -resize 1920x^ -gravity center -extent 1920x1080\! "${THUMB_BLURRED}.png"
-	magick -size 800x200 xc:none -fill black -draw "rectangle 0,0 800,200" -blur 0x3 "${THUMB_RECTANGLE}"
-	# fi
 	pkill -USR2 hyprlock
 }
 
