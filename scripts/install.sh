@@ -336,6 +336,7 @@ sudo sed -i '/# Locales enabled by dotfiles install script/,$d' /etc/locale.gen
 sudo tee -a /etc/locale.gen >/dev/null <<EOT
 #
 # Locales enabled by dotfiles install script
+# Any locales placed below will be removed after reinstall
 en_US.UTF-8 UTF-8
 ${MAIN_LOCALE} UTF-8
 ${SECONDARY_LOCALE} UTF-8
