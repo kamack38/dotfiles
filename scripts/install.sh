@@ -156,7 +156,7 @@ DESKTOP_APPS=(
 	"kimageformats"                    # Additional formats for gwenview
 	"flatpak"                          # Flatpak package manager
 	"polkit-kde-agent"                 # Daemon providing a polkit authentication UI
-	"qt5-imageformats"                 # Add more image formats (webp)
+	"qt6-imageformats"                 # Add more image formats (webp)
 	"discord"                          # VoIP and instant messaging social platform
 	"firefox-developer-edition"        # Web browser for developers
 	"ff2mpv-native-messaging-host-git" # Open video in mpv
