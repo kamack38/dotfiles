@@ -127,6 +127,19 @@ RUST_DEV_PROFILE=(
 	"taplo-cli" # TOML toolkit written in Rust
 )
 
+ANDROID_DEV_PROFILE=(
+	"jdk17-openjdk"                    # OpenJDK Java 17 development kit
+	"gradle"                           # Powerful build system for the JVM
+	"android-sdk"                      # Google Android SDK
+	"android-sdk-platform-tools"       # Platform-Tools for Google Android SDK (adb and fastboot)
+	"android-sdk-build-tools"          # Build-Tools for Google Android SDK (aapt, aidl, dexdump, dx, llvm-rs-cc)
+	"android-sdk-cmdline-tools-latest" # Android SDK Command-line Tools (latest)
+	"android-tools"                    # Android platform tools
+	"android-studio"                   # The official Android IDE (Stable branch)
+	"android-platform"                 # Android SDK Platform, latest API
+	"android-emulator"                 # Google Android Emulator
+)
+
 DOCKER_PROFILE=(
 	"docker"         # Pack, ship and run any application as a lightweight container
 	"docker-compose" # Fast, isolated development environments using Docker
@@ -176,6 +189,7 @@ PROFILES=(
 	"VM"
 	"Bluetooth"
 	"Rust Dev"
+	"Android Dev"
 	"Docker"
 	"Performance tweaks"
 )
@@ -530,6 +544,17 @@ if [[ $SELECTED_PROFILES == *"SOUND"* ]]; then
 	for ID in $(grep '/home' /etc/passwd | cut -d ':' -f1); do
 		(sudo usermod -aG realtime "$ID")
 	done
+fi
+if [[ $SELECTED_PROFILES == *"ANDROID_DEV"* ]]; then
+	echo "${BLUE}:: ${BWHITE}Adding ${BLUE}android dev${BWHITE} support...${NC}"
+
+	# Add current user to the android group
+	getent group "android" &>/dev/null || groupadd -r android
+	sudo usermod -a -G android "$CURRENT_USER"
+
+	# Fix permissions
+	sudo chown -R root:android /opt/android-sdk
+	sudo chmod -R g=u /opt/android-sdk
 fi
 if [[ $SELECTED_PROFILES == *"DOCKER"* ]]; then
 	echo "${BLUE}:: ${BWHITE}Configuring ${BLUE}Docker${BWHITE} profile...${NC}"
