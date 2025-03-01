@@ -110,7 +110,6 @@ SOUND_PROFILE=(
 	"wireplumber"                 # Session / policy manager implementation for PipeWire
 	"sof-firmware"                # Sound Open Firmware
 	"realtime-privileges"         # Realtime privileges for users
-	"pamixer"                     # Pulseaudio command-line mixer like amixer
 	"noise-suppression-for-voice" # A real-time noise suppression plugin for voice
 )
 

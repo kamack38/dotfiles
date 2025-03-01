@@ -1,11 +1,11 @@
 #!/bin/sh
-# source: https://github.com/rxyhn/dotfiles/blob/main/home/rxyhn/modules/desktop/dunst/default.nix
-pamixer="/bin/pamixer"
 ASSETS_PATH="$HOME/.config/dunst/assets"
 
-${pamixer} "$@"
-volume="$(${pamixer} --get-volume-human)"
-if [ "$volume" = "muted" ]; then
+wpctl "$@"
+INFO="$(wpctl get-volume @DEFAULT_AUDIO_SINK@)"
+VOLUME="$(echo $INFO | awk '{print $2*100 "%"}')"
+IS_MUTED=$(echo "$INFO" | rg -o 'MUTED')
+if [[ -n $IS_MUTED ]]; then
 	notify-send -r 69 \
 		-a "Volume" \
 		"Muted" \
@@ -14,8 +14,8 @@ if [ "$volume" = "muted" ]; then
 		-u low
 else
 	notify-send -r 69 \
-		-a "Volume" "Currently at $volume" \
-		-h int:value:"$volume" \
+		-a "Volume" "Currently at $VOLUME" \
+		-h int:value:"$VOLUME" \
 		-i "$ASSETS_PATH/volume.svg" \
 		-t 888 \
 		-u low
