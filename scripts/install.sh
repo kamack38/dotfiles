@@ -550,7 +550,7 @@ if [[ $SELECTED_PROFILES == *"ANDROID_DEV"* ]]; then
 
 	# Add current user to the android group
 	getent group "android" &>/dev/null || groupadd -r android
-	sudo usermod -a -G android "$CURRENT_USER"
+	sudo usermod -aG android "$CURRENT_USER"
 
 	# Fix permissions
 	sudo chown -R root:android /opt/android-sdk
