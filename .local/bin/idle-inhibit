@@ -1,0 +1,22 @@
+#!/bin/sh
+ASSETS_PATH="$HOME/.config/dunst/assets"
+
+IS_RUNNING=$(systemd-inhibit | rg 'sleep infinity')
+
+if [ -z "$IS_RUNNING" ]; then
+	systemd-inhibit --what=idle --why="User doesn't want the computer to idle" sleep infinity &
+	disown
+	notify-send -r 69 \
+		"Inhibiting idle state" \
+		-i "$ASSETS_PATH/notification.svg" \
+		-t 888 \
+		-u low
+else
+	PID="$(systemd-inhibit | rg 'sleep infinity' | awk '{ print $5 }')"
+	kill $PID
+	notify-send -r 69 \
+		"Stopped inhibiting idle state" \
+		-i "$ASSETS_PATH/notification.svg" \
+		-t 888 \
+		-u low
+fi

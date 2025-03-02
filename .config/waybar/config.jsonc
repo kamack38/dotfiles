@@ -86,6 +86,7 @@
         "on-scroll-up": "brightnessctl set 1%+",
         "on-scroll-down": "brightnessctl set 1%-",
         "on-click": "~/.config/waybar/scripts/toggle-wlsunset.sh",
+        "on-click-right": "idle-inhibit",
         "min-length": 6
     },
 
