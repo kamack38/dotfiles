@@ -34,6 +34,7 @@ return {
         "tsx",
 
         "json",
+        "jsonc",
         "yaml",
         "toml",
 
