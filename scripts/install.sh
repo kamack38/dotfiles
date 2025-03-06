@@ -756,7 +756,9 @@ fi
 
 # Disable watchdog
 echo "${BLUE}:: ${BWHITE}Disabling watchdog...${NC}"
-sudo sed -i "s,\(GRUB_CMDLINE_LINUX_DEFAULT=\".*\)\(\"\),\1 nowatchdog\2," "/etc/default/grub"
+if ! grep -q "^GRUB_CMDLINE_LINUX_DEFAULT=.*nowatchdog.*" /etc/default/grub.conf; then
+	sudo sed -i "s,\(GRUB_CMDLINE_LINUX_DEFAULT=\".*\)\(\"\),\1 nowatchdog\2," "/etc/default/grub"
+fi
 sudo tee /etc/modprobe.d/blacklist.conf >/dev/null <<EOF
 # Blacklist the Intel TCO Watchdog/Timer module
 blacklist iTCO_wdt
@@ -870,7 +872,9 @@ EOT
 	sudo systemctl enable apparmor.service
 	sudo sed -i 's/^#write-cache/write-cache/' /etc/apparmor/parser.conf
 	sudo sed -i 's/^#Optimize=compress-fast/Optimize=compress-fast/' /etc/apparmor/parser.conf
-	sudo sed -i 's#\(^GRUB_CMDLINE_LINUX_DEFAULT=".*\)\(.*"\)#\1 lsm=landlock,lockdown,yama,integrity,apparmor,bpf\2#' /etc/default/grub
+	if ! grep -q "^GRUB_CMDLINE_LINUX_DEFAULT=.*lsm.*" /etc/default/grub.conf; then
+		sudo sed -i 's#\(^GRUB_CMDLINE_LINUX_DEFAULT=".*\)\(.*"\)#\1 lsm=landlock,lockdown,yama,integrity,apparmor,bpf\2#' /etc/default/grub
+	fi
 
 	echo "${BLUE}:: ${BWHITE}Setting ${BLUE}umask${BWHITE} to 0077...${NC}"
 	sudo sed -i 's/UMASK\t\t022/UMASK\t\t027/' /etc/login.defs
