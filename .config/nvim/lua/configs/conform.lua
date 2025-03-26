@@ -25,6 +25,7 @@ local options = {
     toml = { "taplo" },
     markdown = { "deno_fmt" },
     typst = { "typstyle" },
+    -- sql = { "sqruff" },
 
     cpp = { "clang_format" },
     rust = { "rustfmt" },

@@ -10,7 +10,11 @@ local servers = {
   -- tailwindcss = {},
   texlab = {},
   ts_ls = {},
-  typos_lsp = {},
+  -- ltex_plus = {
+  --   settings = {
+  --     language = "pl-PL"
+  --   }
+  -- },
   rust_analyzer = {
     filetypes = { "rust" },
     settings = {

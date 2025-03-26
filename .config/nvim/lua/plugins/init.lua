@@ -373,15 +373,14 @@ return {
 
   -- Mark signatures
   {
-    "kamack38/marks.nvim",
-    event = "VeryLazy",
+    "2KAbhishek/markit.nvim",
+    event = { 'BufReadPre', 'BufNewFile' },
     config = function()
-      require("marks").setup {
+      require("markit").setup {
         mappings = {
           set = false,
           toggle_mark = "m",
         },
-        force_write_shada = true,
       }
     end,
   },
