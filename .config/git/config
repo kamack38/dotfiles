@@ -37,6 +37,7 @@
   d-rem-tags = !git push origin --delete $(git tag -l) 
   dtag = !git tag -d \"$1\" && git push --delete origin \"$1\" "#"
   resign = rebase --exec 'GIT_COMMITTER_DATE="$(git log -n 1 --format=%aD)" git commit --amend --no-edit -n -S'
+  largest-objects = !git rev-list --objects --all | git cat-file --batch-check='%(objecttype) %(objectname) %(objectsize) %(rest)' | sed -n 's/^blob //p' | sort --numeric-sort --key=2 | cut -c 1-12,41- | numfmt --field=2 --to=iec-i --suffix=B --padding=7 --round=nearest
 
 # URL shorthands
 
