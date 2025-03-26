@@ -522,6 +522,9 @@ return {
   {
     "ahmedkhalf/project.nvim",
     lazy = false,
+    enabled = function()
+      return vim.fn.has "win32" == 0
+    end,
     config = function()
       require("project_nvim").setup {
         patterns = { ">.config" },
