@@ -12,10 +12,54 @@ if vim.fn.has "win32" == 1 then
 end
 
 -- Folds
--- opt.foldmethod = "expr"
--- opt.foldexpr = "nvim_treesitter#foldexpr()"
--- opt.foldlevel = 20
--- opt.fillchars = { fold = " ", eob = " " }
+vim.o.foldenable = true
+vim.o.foldlevel = 40
+vim.o.foldlevelstart = 99
+vim.o.foldcolumn = "0" -- Change to 1 or auto to show fold levels
+vim.o.foldmethod = "expr"
+vim.o.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+vim.opt.fillchars = { eob = " ", fold = " ", foldopen = "", foldsep = " ", foldclose = "", lastline = " " }
+
+-- Enables folding with syntax highlight
+-- eg.: fucntion() { ⋯ }
+local function fold_virt_text(result, s, lnum, coloff)
+  if not coloff then
+    coloff = 0
+  end
+  local text = ""
+  local hl
+  for i = 1, #s do
+    local char = s:sub(i, i)
+    local hls = vim.treesitter.get_captures_at_pos(0, lnum, coloff + i - 1)
+    local _hl = hls[#hls]
+    if _hl then
+      local new_hl = "@" .. _hl.capture
+      if new_hl ~= hl then
+        table.insert(result, { text, hl })
+        text = ""
+        hl = nil
+      end
+      text = text .. char
+      hl = new_hl
+    else
+      text = text .. char
+    end
+  end
+  table.insert(result, { text, hl })
+end
+
+function _G.virtual_foldtext()
+  local start = vim.fn.getline(vim.v.foldstart):gsub("\t", string.rep(" ", vim.o.tabstop))
+  local end_str = vim.fn.getline(vim.v.foldend)
+  local end_ = vim.trim(end_str)
+  local result = {}
+  fold_virt_text(result, start, vim.v.foldstart - 1)
+  table.insert(result, { " ⋯ ", "Delimiter" })
+  fold_virt_text(result, end_, vim.v.foldend - 1, #(end_str:match("^(%s+)") or ""))
+  return result
+end
+
+vim.opt.foldtext = "v:lua.virtual_foldtext()"
 
 -- Snippets
 local config_path = ((os.getenv "XDG_CONFIG_HOME") or (os.getenv "APPDATA") or os.getenv "HOME" .. "/.config")

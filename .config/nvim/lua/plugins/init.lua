@@ -328,49 +328,6 @@ return {
     },
   },
 
-  -- Syntax highlighted folds
-  {
-    "kevinhwang91/nvim-ufo",
-    dependencies = { "kevinhwang91/promise-async" },
-    event = "VeryLazy",
-    opts = {
-      provider_selector = function()
-        return { "treesitter", "indent" }
-      end,
-      open_fold_hl_timeout = 200,
-      close_fold_kinds_for_ft = {
-        default = { "imports", "comment" },
-      },
-      preview = {
-        win_config = {
-          border = { "", "─", "", "", "", "─", "", "" },
-          -- winhighlight = "Normal:Folded",
-          winblend = 0,
-        },
-      },
-      enable_get_fold_virt_text = true,
-    },
-    init = function()
-      vim.o.fillchars = [[eob: ,fold: ,foldopen:,foldsep: ,foldclose:]]
-      vim.o.foldlevel = 40
-      vim.o.foldlevelstart = 99
-      vim.o.foldenable = true
-    end,
-    config = function(_, opts)
-      local handler = function(virtText, _, endLnum, _, _, ctx)
-        local endVirtText = ctx.get_fold_virt_text(endLnum)
-        endVirtText[1][1] = endVirtText[1][1]:gsub("^%s*(.-)%s*$", "%1")
-        table.insert(virtText, { " ⋯ ", "NonText" })
-        for _, chunk in ipairs(endVirtText) do
-          table.insert(virtText, chunk)
-        end
-        return virtText
-      end
-      opts["fold_virt_text_handler"] = handler
-      require("ufo").setup(opts)
-    end,
-  },
-
   -- Mark signatures
   {
     "2KAbhishek/markit.nvim",
