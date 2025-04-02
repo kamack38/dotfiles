@@ -15,13 +15,13 @@ end
 vim.o.foldenable = true
 vim.o.foldlevel = 40
 vim.o.foldlevelstart = 99
-vim.o.foldcolumn = "0" -- Change to 1 or auto to show fold levels
+vim.o.foldcolumn = "0" -- Change to "auto:9"
 vim.o.foldmethod = "expr"
 vim.o.foldexpr = "v:lua.vim.treesitter.foldexpr()"
 vim.opt.fillchars = { eob = " ", fold = " ", foldopen = "", foldsep = " ", foldclose = "", lastline = " " }
 
 -- Enables folding with syntax highlight
--- eg.: fucntion() { ⋯ }
+-- eg.: function() { ⋯ }
 local function fold_virt_text(result, s, lnum, coloff)
   if not coloff then
     coloff = 0
