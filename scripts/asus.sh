@@ -127,9 +127,10 @@ ACTION=="add|change", KERNEL=="sd[a-z]|mmcblk[0-9]*", ATTR{queue/rotational}=="0
 ACTION=="add|change", KERNEL=="sd[a-z]", ATTR{queue/rotational}=="1", ATTR{queue/scheduler}="bfq"
 EOF
 
-# Disable unessential services when on battery
 sudo tee /etc/udev/rules.d/99-disable-services-on-battery.rules >/dev/null <<EOF
+# Disable unessential services when on battery
+
 # Disable Profile-Sync-Daemon
-SUBSYSTEM=="power_supply", ATTR{status}=="Discharging", RUN+="/usr/bin/systemctl --user --machine kamack38@ stop psd.service"
-SUBSYSTEM=="power_supply", ATTR{status}=="Charging", RUN+="/usr/bin/systemctl --user --machine kamack38@ start psd.service"
+ACTION=="change", SUBSYSTEM=="power_supply", ATTRS{type}=="Mains", ATTRS{online}=="0", RUN+="/usr/bin/systemctl --user --machine kamack38@ stop psd.service"
+ACTION=="change", SUBSYSTEM=="power_supply", ATTRS{type}=="Mains", ATTRS{online}=="1", RUN+="/usr/bin/systemctl --user --machine kamack38@ start psd.service"
 EOF
