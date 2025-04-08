@@ -622,10 +622,6 @@ if [ ! "$(basename -- "$SHELL")" = "fish" ]; then
 	sudo chsh -s /bin/fish "$USER"
 fi
 
-# Update submodules
-echo "${BLUE}:: ${BWHITE}Updating ${BLUE}submodules${NC}"
-git --git-dir="$DOTFILES" --work-tree="$HOME" submodule update --init --remote
-
 # Enable services
 echo "${BLUE}:: ${BWHITE}Enabling services...${NC}"
 sudo systemctl enable pcscd.socket
