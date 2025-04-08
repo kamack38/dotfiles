@@ -161,7 +161,7 @@ DESKTOP_APPS=(
 	"ff2mpv-native-messaging-host-git" # Open video in mpv
 	"spotify"                          # Music client
 	"spicetify-cli"                    # Cli for extending spotify
-	"kitty-git"                        # GPU accelerated terminal
+	"kitty"                            # GPU accelerated terminal
 	"desktop-file-utils"               # Command line utilities for working with desktop entries
 	"yubico-authenticator"             # Yubico Authenticator for Desktop
 	"breeze"                           # Artwork, styles and assets for the Breeze visual style for the Plasma Desktop
@@ -256,7 +256,6 @@ NPM_PACKAGES=(
 DESKTOP_ENVIRONMENTS=(
 	"Hyprland"
 	"KDE"
-	"AwesomeWM"
 )
 
 PLYMOUTH_PACKAGES=(

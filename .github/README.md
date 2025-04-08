@@ -41,13 +41,16 @@ bash <(curl -sL https://github.com/kamack38/dotfiles/raw/main/scripts/setup.sh)
 
 ![Hyprland](./../Pictures/Screenshots/Hyprland.png)
 
-### AwesomeWM
-
-![AwesomeWM](./../Pictures/Screenshots/awesomewm.png)
-
 ### KDE
 
 ![Apps screenshot](./../Pictures/Screenshots/Apps.png)
+
+### AwesomeWM
+
+> [!WARNING]
+> This was removed and is only available on the `awesomewm` git tag.
+
+![AwesomeWM](./../Pictures/Screenshots/awesomewm.png)
 
 For some tips checkout
 [Essentials](https://github.com/kamack38/Essentials/wiki).
