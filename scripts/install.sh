@@ -175,13 +175,6 @@ DESKTOP_APPS=(
 	"fluent-cursor-theme-git"          # An x-cursor theme inspired by Qogir theme and based on capitaine-cursors.
 )
 
-PERFORMANCE_TWEAKS_PROFILE=(
-	"btrfsmaintenance"      # Btrfs maintenance scripts
-	"profile-sync-daemon"   # Symlinks and syncs browser profile dirs to RAM
-	"systemd-oomd-defaults" # Configuration files for systemd-oomd
-	"performance-tweaks"    # Tweaks to improve performance
-)
-
 PROFILES=(
 	"Gaming"
 	"Sound"
@@ -190,7 +183,6 @@ PROFILES=(
 	"Rust Dev"
 	"Android Dev"
 	"Docker"
-	"Performance tweaks"
 )
 
 NVIDIA_DRIVERS=(

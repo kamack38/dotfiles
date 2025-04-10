@@ -15,9 +15,16 @@ NC=$'\e[0m' # No Colour
 HELPER="paru"
 
 PACKAGES=(
-	"asusctl"      # Asus drivers and management
-	"nvidia-prime" # Offload to an NVIDIA GPU
-	"batsignal"    # A lightweight battery monitor daemon
+	"asusctl"                   # Asus drivers and management
+	"nvidia-prime"              # Offload to an NVIDIA GPU
+	"batsignal"                 # A lightweight battery monitor daemon
+	"preload"                   # Makes applications run faster by prefetching binaries and shared objects
+	"irqbalance"                # IRQ balancing daemon for SMP systems
+	"ananicy-cpp"               # Autonice daemon, featuring lower CPU and RAM usage.
+	"cachyos-ananicy-rules-git" # CachyOS - ananicy-rules
+	"btrfsmaintenance"          # Btrfs maintenance scripts
+	"profile-sync-daemon"       # Symlinks and syncs browser profile dirs to RAM
+	"systemd-oomd-defaults"     # Configuration files for systemd-oomd
 	# "rog-control-center" # GUI for asusctl
 	# "supergfxctl"        # Tool to change the optimus mode
 )
@@ -55,6 +62,7 @@ systemctl enable --now --user batsignal.service
 # Set keyboard light
 echo "${BLUE}:: ${BWHITE}Setting keyboard light...${NC}"
 asusctl aura rainbow-wave -d right -s low
+asusctl -k off
 
 echo "${BLUE}:: ${BWHITE}Fixing sound...${NC}"
 sudo tee /etc/modprobe.d/hda-jack-retask.conf >/dev/null <<EOF
@@ -101,6 +109,14 @@ sudo tee /etc/udev/rules.d/50-powersave-suspend.rules >/dev/null <<EOF
 SUBSYSTEM=="power_supply", ATTR{status}=="Discharging", ATTR{capacity}=="2", RUN+="/usr/bin/systemctl suspend"
 EOF
 
+sudo tee /etc/udev/rules.d/99-disable-services-on-battery.rules >/dev/null <<EOF
+# Disable unessential services when on battery
+
+# Disable Profile-Sync-Daemon
+ACTION=="change", SUBSYSTEM=="power_supply", ATTRS{type}=="Mains", ATTRS{online}=="0", RUN+="/usr/bin/systemctl --user --machine kamack38@ stop psd.service"
+ACTION=="change", SUBSYSTEM=="power_supply", ATTRS{type}=="Mains", ATTRS{online}=="1", RUN+="/usr/bin/systemctl --user --machine kamack38@ start psd.service"
+EOF
+
 # Performance tweaks
 echo "${BLUE}:: ${BWHITE}Applying ${BLUE}performance tweaks${BWHITE}...${NC}"
 
@@ -127,10 +143,9 @@ ACTION=="add|change", KERNEL=="sd[a-z]|mmcblk[0-9]*", ATTR{queue/rotational}=="0
 ACTION=="add|change", KERNEL=="sd[a-z]", ATTR{queue/rotational}=="1", ATTR{queue/scheduler}="bfq"
 EOF
 
-sudo tee /etc/udev/rules.d/99-disable-services-on-battery.rules >/dev/null <<EOF
-# Disable unessential services when on battery
-
-# Disable Profile-Sync-Daemon
-ACTION=="change", SUBSYSTEM=="power_supply", ATTRS{type}=="Mains", ATTRS{online}=="0", RUN+="/usr/bin/systemctl --user --machine kamack38@ stop psd.service"
-ACTION=="change", SUBSYSTEM=="power_supply", ATTRS{type}=="Mains", ATTRS{online}=="1", RUN+="/usr/bin/systemctl --user --machine kamack38@ start psd.service"
-EOF
+# Enable daemons
+echo "${BLUE}:: ${BWHITE}Enabling ${BLUE}daemons${BWHITE}...${NC}"
+systemctl enable --user psd
+sudo systemctl enable ananicy-cpp
+sudo systemctl enable irqbalance
+sudo systemctl enable preload
