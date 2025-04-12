@@ -139,6 +139,12 @@ ANDROID_DEV_PROFILE=(
 	"android-emulator"                 # Google Android Emulator
 )
 
+TYPST_DEV_PROFILE=(
+	"typst"        # A markup-based typesetting system for the sciences
+	"typstyle-bin" # Beautiful and reliable typst code formatter
+	"tinymist"     # An integrated language service for Typst
+)
+
 DOCKER_PROFILE=(
 	"docker"         # Pack, ship and run any application as a lightweight container
 	"docker-compose" # Fast, isolated development environments using Docker
@@ -182,6 +188,7 @@ PROFILES=(
 	"Bluetooth"
 	"Rust Dev"
 	"Android Dev"
+	"Typst Dev"
 	"Docker"
 )
 
