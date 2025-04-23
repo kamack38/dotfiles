@@ -274,9 +274,11 @@ return {
           },
         },
       },
+      sync_root_with_cwd = true,
+      respect_buf_cwd = true,
       update_focused_file = {
         enable = true,
-        update_cwd = true,
+        update_root = true,
       },
     },
   },
@@ -497,7 +499,7 @@ return {
 
   -- Set project root correctly
   {
-    "ahmedkhalf/project.nvim",
+    "DrKJeff16/project.nvim",
     lazy = false,
     enabled = function()
       return vim.fn.has "win32" == 0
