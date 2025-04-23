@@ -2,14 +2,15 @@ local options = {
   lsp_fallback = true,
 
   formatters = {
-    clang_format = {
-      args = { "--style", "{ BasedOnStyle: Google, IndentWidth: 4, ColumnLimit: 100 }" },
+    ["clang-format"] = {
+      append_args = { "--style", "{ BasedOnStyle: Google, IndentWidth: 4, ColumnLimit: 100 }" },
     },
     shfmt = {
-      inherit = false,
-      command = "shfmt",
-      args = { "-i", "0", "-filename", "$FILENAME" },
+      prepend_args = { "-i", "0" },
     },
+    biome = {
+      append_args = { "--indent-style=space" },
+    }
   },
 
   formatters_by_ft = {
@@ -25,9 +26,9 @@ local options = {
     toml = { "taplo" },
     markdown = { "deno_fmt" },
     typst = { "typstyle" },
-    -- sql = { "sqruff" },
+    sql = { "sqruff" },
 
-    cpp = { "clang_format" },
+    cpp = { "clang-format" },
     rust = { "rustfmt" },
     nix = { "nixfmt" },
     lua = { "stylua" },
