@@ -74,9 +74,8 @@
     },
 
     "custom/gpu-temperature": {
-        "exec": "nvidia-smi --query-gpu=temperature.gpu --format=csv,noheader,nounits && sensors asus-isa-0000 -A | awk '/gpu_fan/ {print $2, $3}'",
+        "exec": "nvidia-smi --query-gpu=temperature.gpu --format=csv,noheader,nounits && sensors asus-isa-0000 -A | awk '/gpu_fan/ {print \"󰈐 \" $2, $3}'",
         "format": " {}°",
-        "tooltip-format": "󰈐 {}",
         "interval": 5
     },
 
