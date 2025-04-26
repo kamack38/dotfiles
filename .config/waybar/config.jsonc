@@ -51,7 +51,7 @@
 
     "cpu": {
         "spacing": 10,
-        "format": " {usage}%",
+        "format": "  {usage}%",
         "interval": 1
     },
 
@@ -61,8 +61,8 @@
     },
 
     "custom/cpu-temperature": {
-        "exec": "sensors k10temp-pci-00c3 -u | rg '  temp1_input:' | awk '{print $2}' | sed 's/\\..*//'",
-        "format": " {}",
+        "exec": "sensors k10temp-pci-00c3 asus-isa-0000 -Aj | jq -s --unbuffered --compact-output '{text: (\" \" + (.[0][\"k10temp-pci-00c3\"].Tctl.temp1_input | floor | tostring) + \"°\"), tooltip: (\"󰈐 \" + (.[1][\"asus-isa-0000\"].cpu_fan.fan1_input | floor | tostring) + \" RPM\")}'",
+        "return-type": "json",
         "interval": 1
     },
 
@@ -70,13 +70,14 @@
         "exec-if": "nvidia-smi",
         "exec": "nvidia-smi --query-gpu=utilization.gpu --format=csv,noheader,nounits",
         "format": "󰍹  {}%",
-        "interval": 1
+        "interval": 5
     },
 
     "custom/gpu-temperature": {
-        "exec": "nvidia-smi --query-gpu=temperature.gpu --format=csv,noheader,nounits",
-        "format": " {}",
-        "interval": 1
+        "exec": "nvidia-smi --query-gpu=temperature.gpu --format=csv,noheader,nounits && sensors asus-isa-0000 -A | awk '/gpu_fan/ {print $2, $3}'",
+        "format": " {}°",
+        "tooltip-format": "󰈐 {}",
+        "interval": 5
     },
 
     "backlight": {
