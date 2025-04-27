@@ -97,6 +97,7 @@ alias xo="xdg-open"
 alias si="su -s /bin/fish"
 alias gp="glow -p"
 alias rd="ripdrag"
+alias g="git"
 
 if command -v firefox-developer-edition &>/dev/null
     alias firefox="firefox-developer-edition"

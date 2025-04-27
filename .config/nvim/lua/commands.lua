@@ -83,6 +83,7 @@ autocmd("BufReadPost", {
         line > 1
         and line <= vim.fn.line "$"
         and vim.bo.filetype ~= "commit"
+        and vim.bo.filetype ~= "gitcommit"
         and vim.fn.index({ "xxd", "gitrebase" }, vim.bo.filetype) == -1
     then
       vim.cmd 'normal! g`"'

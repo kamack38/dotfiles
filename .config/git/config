@@ -8,6 +8,8 @@
 
 [commit]
   gpgsign = true
+  template = ~/.config/git/template
+  status = true
 
 [tag]
   gpgSign = true
@@ -21,8 +23,10 @@
   uncommit = reset --soft HEAD^
   clean-remotes = remote prune origin
   repo-size = count-objects -vH
+  c = commit
   s = status -s
   u = add -u
+  p = add -p
   b = branch
   ba = branch -a
   co = checkout
@@ -49,6 +53,9 @@
 
 [url "git@github.com:"]
   insteadOf = "github:"
+
+[url "https://github.com/kamack38"]
+  insteadOf = "me:"
 
 # Gist
 [url "https://gist.github.com/"]
@@ -98,6 +105,7 @@
 
 [interactive]
   diffFilter = delta --color-only
+  singleKey = true
 
 [init]
   defaultBranch = main
@@ -112,4 +120,12 @@
   tool = nvimdiff
 
 [push]
+  autoSetupRemote = true
   followTags = true
+
+[pull]
+  rebase = true
+
+[rebase]
+  autoStash = true
+  missingCommitsCheck = warn
