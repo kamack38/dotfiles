@@ -23,16 +23,19 @@
   uncommit = reset --soft HEAD^
   clean-remotes = remote prune origin
   repo-size = count-objects -vH
-  c = commit
   s = status -s
   u = add -u
   p = add -p
+  ra = !git --git-dir=$GIT_DIR --work-tree=$GIT_WORK_TREE diff --name-only --cached | xargs git --git-dir=$GIT_DIR --work-tree=$GIT_WORK_TREE add
   b = branch
   ba = branch -a
   co = checkout
   cm = !git cz && git push
-  cdf = diff --cached
+  c = commit
+  ce = !git commit --edit --cleanup=strip -F $GIT_DIR/COMMIT_EDITMSG
+  ca = commit --amend
   can = commit --amend --no-edit
+  cdf = diff --cached
   pon = !git push -u origin $(git rev-parse --abbrev-ref HEAD)
   pt = push --tags
   pf = push --force
@@ -111,10 +114,10 @@
   defaultBranch = main
 
 [credential "https://github.com"]
-  helper = !/usr/bin/gh auth git-credential
+  helper = !gh auth git-credential
 
 [credential "https://gist.github.com"]
-  helper = !/usr/bin/gh auth git-credential
+  helper = !gh auth git-credential
 
 [merge]
   tool = nvimdiff
