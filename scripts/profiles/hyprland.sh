@@ -22,7 +22,7 @@ HYPRLAND_PACKAGES=(
 	"hypridle"                      # hyprland’s idle daemon
 	"rofi-lbonn-wayland-git"        # A window switcher, application launcher and dmenu replacement (fork with Wayland support)
 	"wl-clipboard"                  # Command-line copy/paste utilities for Wayland
-	"wlsunset"                      # Day/night gamma adjustments for Wayland compositors
+	"hyprsunset"                    # An application to enable a blue-light filter on Hyprland
 	"cliphist"                      # clipboard history "manager" for wayland
 	"grimblast-git"                 # A helper for screenshots within Hyprland.
 	"wlogout"                       # Logout menu for wayland
