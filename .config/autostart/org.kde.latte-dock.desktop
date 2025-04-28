@@ -13,6 +13,7 @@ StartupNotify=false
 StartupWMClass=latte-dock
 Terminal=false
 Type=Application
+OnlyShowIn=KDE;
 X-DBUS-ServiceName=org.kde.lattedock
 X-DBUS-StartupType=unique
 X-KDE-PluginInfo-Author=Michail Vourlakos, Smith Ar

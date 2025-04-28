@@ -5,4 +5,5 @@ Icon=dialog-scripts
 Hidden=false
 Name=Polybar Top Bar
 Comment=Run polybar top bar
+OnlyShowIn=KDE;
 X-KDE-AutostartScript=true

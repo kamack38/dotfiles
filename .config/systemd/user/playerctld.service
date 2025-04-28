@@ -1,6 +1,5 @@
 [Unit]
 Description=Keep track of media player activity
-Documentation=playerctld --help
 
 [Service]
 Type=oneshot
