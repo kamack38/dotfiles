@@ -35,7 +35,6 @@
     hide_duplicate_count = false
     show_indicators = no
     icon_position = left
-    icon_size = 48
     max_icon_size = 80
     corner_radius = 7
     mouse_left_click = "do_action"
