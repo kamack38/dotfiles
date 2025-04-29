@@ -33,6 +33,7 @@
   cm = !git cz && git push
   c = commit
   ce = !git commit --edit --cleanup=strip -F $GIT_DIR/COMMIT_EDITMSG
+  cv = commit --verbose
   ca = commit --amend
   can = commit --amend --no-edit
   cdf = diff --cached
