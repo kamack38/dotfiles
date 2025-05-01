@@ -162,7 +162,7 @@ DESKTOP_APPS=(
 	"flatpak"                          # Flatpak package manager
 	"polkit-kde-agent"                 # Daemon providing a polkit authentication UI
 	"qt6-imageformats"                 # Add more image formats (webp)
-	"discord"                          # VoIP and instant messaging social platform
+	"vesktop"                          # A standalone Electron-based Discord app with Vencord & improved Linux support
 	"firefox-developer-edition"        # Web browser for developers
 	"ff2mpv-native-messaging-host-git" # Open video in mpv
 	"spotify"                          # Music client
