@@ -38,7 +38,6 @@ HYPRLAND_PACKAGES=(
 	"libva"                         # Video Acceleration (VA) API for Linux
 	"qt6ct-kde"                     # Qt 6 Configuration Utility, patched to work correctly with KDE applications
 	"nwg-look"                      # GTK3 settings editor adapted to work on wlroots-based compositors
-	"spotifywm-git"                 # Makes Spotify more friendly to window managers by settings a class name before opening the window
 	"wayland-pipewire-idle-inhibit" # Inhibit wayland idle when computer is playing sound
 )
 

@@ -165,7 +165,7 @@ DESKTOP_APPS=(
 	"vesktop"                          # A standalone Electron-based Discord app with Vencord & improved Linux support
 	"firefox-developer-edition"        # Web browser for developers
 	"ff2mpv-native-messaging-host-git" # Open video in mpv
-	"spotify"                          # Music client
+	"spotify-launcher"                 # Client for spotify's apt repository in Rust for Arch Linux
 	"spicetify-cli"                    # Cli for extending spotify
 	"kitty"                            # GPU accelerated terminal
 	"desktop-file-utils"               # Command line utilities for working with desktop entries
@@ -281,7 +281,6 @@ HELPER="paru"
 HELPER_CLONE_PATH="$HOME/.cache/paru/clone"
 DOTFILES="$HOME/.dotfiles"
 REPO="https://github.com/kamack38/dotfiles"
-SPOTIFY_PREFS="$HOME/.config/spotify/prefs"
 NODE_VERSION="lts"
 TIME_ZONE="Europe/Warsaw" # To get all timezones run `timedatectl list-timezones`
 MAIN_LOCALE="en_GB.UTF-8"
@@ -644,13 +643,6 @@ if [[ "${SELECTED_DE}" != "" || $(pacman -Q sddm) ]]; then
 
 	# Enable service
 	sudo systemctl enable sddm.service
-
-	# Enable spicetify
-	if [[ ! -f "$HOME/.config/spicetify/Backup/xpui.spa" ]]; then
-		echo "${YELLOW}:: ${BWHITE}Fixing ${BLUE}spicetify${BWHITE}...${NC}"
-		sed -i "s,\(prefs_path.*=\).*,\1 $SPOTIFY_PREFS," "$HOME/.config/spicetify/config-xpui.ini"
-		echo "${YELLOW}:: ${BWHITE}Run ${BLUE}spicetify backup apply${BWHITE} to apply spicetify...${NC}"
-	fi
 
 	echo "${BLUE}:: ${BWHITE}Setting keyboard layout...${NC}"
 	sudo localectl set-x11-keymap $KB_LAYOUT
