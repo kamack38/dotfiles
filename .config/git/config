@@ -133,3 +133,7 @@
 [rebase]
   autoStash = true
   missingCommitsCheck = warn
+  updateRefs = true
+
+[filter "spacify"]
+  clean = expand --tabs=4 --initial
