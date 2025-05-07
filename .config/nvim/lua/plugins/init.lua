@@ -105,6 +105,7 @@ return {
   },
 
   -- Autocompletion
+  -- { import = "nvchad.blink.lazyspec" },
   {
     "hrsh7th/nvim-cmp",
     url = "https://github.com/iguanacucumber/magazine.nvim",
@@ -221,7 +222,7 @@ return {
   -- Markdown previewer
   {
     "OXY2DEV/markview.nvim",
-    ft = { "markdown", "typst" },
+    ft = { "markdown", "typst", "Avante" },
     config = function()
       local presets = require "markview.presets"
       require("markview").setup {
@@ -324,9 +325,12 @@ return {
   -- Show whitespace symbols in visual mode
   {
     "mcauley-penney/visual-whitespace.nvim",
-    event = "ModeChanged *:[vV]",
+    event = "ModeChanged *:[vV\22]",
     opts = {
-      highlight = { link = "VisualWhitespace" },
+      -- highlight = { link = "VisualWhitespace" },
+    },
+    dependencies = {
+      "NvChad/base46",
     },
   },
 
@@ -418,6 +422,25 @@ return {
   },
 
   ------------------------------------- Other ---------------------------------------
+
+  -- AI features
+  {
+    "yetone/avante.nvim",
+    event = "VeryLazy",
+    version = false,
+    config = function()
+      require("configs.avante")
+    end,
+    build = "make",
+    dependencies = {
+      "nvim-treesitter/nvim-treesitter",
+      "stevearc/dressing.nvim",
+      "nvim-lua/plenary.nvim",
+      "MunifTanjim/nui.nvim",
+      "hrsh7th/nvim-cmp",
+      "nvim-tree/nvim-web-devicons",
+    },
+  },
 
   -- Nerdfont symbol picker
   {

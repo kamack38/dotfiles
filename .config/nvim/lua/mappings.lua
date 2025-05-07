@@ -127,7 +127,7 @@ map("n", "gx", function()
 end, { desc = "Open next available link" })
 
 -- Terminal
-map({ "n" }, "<leader>tt", "<cmd>term<CR>")
+map({ "n" }, "<leader>tt", ":terminal<CR>i")
 
 -- LspUI
 map("n", "<leader>cn", "<cmd> LspUI rename <CR>", { desc = "LSP rename (change name)" })
