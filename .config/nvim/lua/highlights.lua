@@ -10,11 +10,9 @@ M.override = {
   Comment = { italic = true },
   TelescopeSelection = { bg = "#353A46", fg = "#abb2bf" },
   IblScopeChar = { fg = "#9196a1" },
-  VisualNonText = { fg = "#4a505b", bg = "#231631" },
 }
 
 M.add = {
-  VisualWhitespace = { fg = "#4a505b", bg = "#231631" },
   VisualNonText = { fg = "#4a505b", bg = "#231631" },
 
   -- Markview

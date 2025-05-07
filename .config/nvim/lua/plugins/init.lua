@@ -326,9 +326,6 @@ return {
   {
     "mcauley-penney/visual-whitespace.nvim",
     event = "ModeChanged *:[vV\22]",
-    opts = {
-      -- highlight = { link = "VisualWhitespace" },
-    },
     dependencies = {
       "NvChad/base46",
     },
