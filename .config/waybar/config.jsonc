@@ -18,6 +18,7 @@
         "custom/gpu-usage",
         "custom/gpu-temperature",
         "backlight",
+        "idle_inhibitor",
         "pulseaudio",
         "battery"
     ],
@@ -88,6 +89,14 @@
         "on-click": "~/.config/waybar/scripts/toggle-blue-light-filter.sh",
         "on-click-right": "idle-inhibit",
         "min-length": 6
+    },
+
+    "idle_inhibitor": {
+        "format": "{icon}",
+        "format-icons": {
+            "activated": "",
+            "deactivated": ""
+        }
     },
 
     "battery": {
