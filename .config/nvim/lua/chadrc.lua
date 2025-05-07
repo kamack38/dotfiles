@@ -87,13 +87,14 @@ return {
     hl_add = require("highlights").add,
 
     integrations = {
+      "avante",
       "blankline",
       "cmp",
-      "codeactionmenu",
       "defaults",
       "devicons",
+      "git-conflict",
       "git",
-      "leap",
+      -- "leap",
       "lsp",
       "mason",
       "nvcheatsheet",

@@ -129,6 +129,7 @@ return {
     "folke/trouble.nvim",
     cmd = { "Trouble", "TroubleToggle", "TroubleClose", "TroubleRefresh" },
     config = function()
+      dofile(vim.g.base46_cache .. "trouble")
       require("trouble").setup()
     end,
   },
@@ -240,7 +241,6 @@ return {
             }
           }
         }
-
       }
     end,
     dependencies = {
@@ -288,9 +288,6 @@ return {
   {
     "svampkorg/moody.nvim",
     event = { "ModeChanged", "BufWinEnter", "WinEnter" },
-    dependencies = {
-      "NvChad/base46",
-    },
     opts = {
       blends = {
         normal = 0.15,
@@ -326,9 +323,6 @@ return {
   {
     "mcauley-penney/visual-whitespace.nvim",
     event = "ModeChanged *:[vV\22]",
-    dependencies = {
-      "NvChad/base46",
-    },
   },
 
   -- Mark signatures
@@ -402,6 +396,10 @@ return {
   -- Fast search plugin
   {
     "ggandor/leap.nvim",
+    config = function()
+      dofile(vim.g.base46_cache .. "leap")
+      require("leap").setup {}
+    end,
     dependencies = {
       { "tpope/vim-repeat" },
     },
@@ -426,6 +424,7 @@ return {
     event = "VeryLazy",
     version = false,
     config = function()
+      dofile(vim.g.base46_cache .. "avante")
       require("configs.avante")
     end,
     build = "make",
@@ -496,6 +495,7 @@ return {
     event = { "VeryLazy" },
     dependencies = "nvim-lua/plenary.nvim",
     config = function()
+      dofile(vim.g.base46_cache .. "todo")
       require("todo-comments").setup()
     end,
   },
