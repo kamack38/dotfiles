@@ -83,13 +83,6 @@ vim.g.markdown_recommended_style = 0
 
 if vim.g.neovide then
   vim.o.guifont = "FiraCode Nerd Font Mono Med:h12"
-
-  local alpha = function()
-    return string.format("%x", math.floor(255 * (vim.g.transparency or 0.8)))
-  end
-
-  vim.g.neovide_refresh_rate = 120
-  vim.g.neovide_transparency = 0.8
-  vim.g.transparency = 0.8
-  vim.g.neovide_background_color = "#282c34" .. alpha()
+  vim.g.neovide_opacity = 0.8
+  vim.api.nvim_set_hl(0, "Normal", { bg = "#1e2127" })
 end
