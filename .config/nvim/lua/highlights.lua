@@ -10,6 +10,7 @@ M.override = {
   Comment = { italic = true },
   TelescopeSelection = { bg = "#353A46", fg = "#abb2bf" },
   IblScopeChar = { fg = "#9196a1" },
+  Normal = { bg = "#1e2127" }
 }
 
 M.add = {
