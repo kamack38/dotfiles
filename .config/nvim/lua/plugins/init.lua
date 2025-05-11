@@ -74,7 +74,7 @@ return {
           },
           selection_modes = {
             ["@parameter.outer"] = "v", -- char wise
-            ["@function.outer"] = "V",  -- line wise
+            ["@function.outer"] = "V", -- line wise
             ["@class.outer"] = "<c-v>", -- block wise
           },
           -- If you set this to `true` (default is `false`) then any textobject is
@@ -105,24 +105,24 @@ return {
   },
 
   -- Autocompletion
-  -- { import = "nvchad.blink.lazyspec" },
-  {
-    "hrsh7th/nvim-cmp",
-    url = "https://github.com/iguanacucumber/magazine.nvim",
-    opts = {
-      sources = {
-        { name = "luasnip" },
-        { name = "nvim_lsp" },
-        { name = "buffer" },
-        { name = "nvim_lua" },
-        { name = "path" },
-        { name = "crates" },
-      },
-      experimental = {
-        ghost_text = true,
-      },
-    },
-  },
+  { import = "nvchad.blink.lazyspec" },
+  -- {
+  --   "hrsh7th/nvim-cmp",
+  --   url = "https://github.com/iguanacucumber/magazine.nvim",
+  --   opts = {
+  --     sources = {
+  --       { name = "luasnip" },
+  --       { name = "nvim_lsp" },
+  --       { name = "buffer" },
+  --       { name = "nvim_lua" },
+  --       { name = "path" },
+  --       { name = "crates" },
+  --     },
+  --     experimental = {
+  --       ghost_text = true,
+  --     },
+  --   },
+  -- },
 
   -- Show all problems in your code
   {
@@ -140,14 +140,11 @@ return {
   {
     "Saecki/crates.nvim",
     event = { "BufRead Cargo.toml" },
-    dependencies = { "nvim-lua/plenary.nvim" },
-    config = function()
-      require("crates").setup {
-        popup = {
-          autofocus = true,
-        },
-      }
-    end,
+    opts = {
+      popup = {
+        autofocus = true,
+      },
+    },
   },
 
   -- Quicker NPM package managing
@@ -155,9 +152,7 @@ return {
     "vuki656/package-info.nvim",
     event = { "BufRead package.json" },
     dependencies = { "MunifTanjim/nui.nvim" },
-    config = function()
-      require("package-info").setup()
-    end,
+    opts = {},
   },
 
   -- LSP utils (rename, code actions, peek definition)
@@ -165,22 +160,20 @@ return {
     "jinzhongjia/LspUI.nvim",
     event = "LspAttach",
     branch = "main",
-    config = function()
-      require("LspUI").setup {
-        prompt = false,
-        code_action = {
-          enable = true,
-          command_enable = true,
-          icon = "💡",
-          keybind = {
-            exec = "<CR>",
-            prev = "k",
-            next = "j",
-            quit = "q",
-          },
+    opts = {
+      prompt = false,
+      code_action = {
+        enable = true,
+        command_enable = true,
+        icon = "💡",
+        keybind = {
+          exec = "<CR>",
+          prev = "k",
+          next = "j",
+          quit = "q",
         },
-      }
-    end,
+      },
+    },
   },
 
   -- Typst highlighting
@@ -208,9 +201,7 @@ return {
   {
     "axelvc/template-string.nvim",
     ft = { "typescript", "javascript", "typescriptreact", "javascriptreact", "python", "html" },
-    config = function()
-      require("template-string").setup()
-    end,
+    opts = {},
   },
 
   -- TS context aware comments
@@ -237,10 +228,10 @@ return {
             ["neovim%.io"] = {
               priority = 9999,
               icon = " ",
-              hl = "MarkviewPalette4Fg"
-            }
-          }
-        }
+              hl = "MarkviewPalette4Fg",
+            },
+          },
+        },
       }
     end,
     dependencies = {
@@ -328,17 +319,14 @@ return {
   -- Mark signatures
   {
     "2KAbhishek/markit.nvim",
-    event = { 'BufReadPre', 'BufNewFile' },
-    config = function()
-      require("markit").setup {
-        mappings = {
-          set = false,
-          toggle_mark = "m",
-        },
-      }
-    end,
+    event = { "BufReadPre", "BufNewFile" },
+    opts = {
+      mappings = {
+        set = false,
+        toggle_mark = "m",
+      },
+    },
   },
-
 
   -- Remove the press enter prompt
   {
@@ -357,7 +345,7 @@ return {
       -- always clear the cmdline after duration and key press.
       -- by default it will only happen when cmdheight changed.
       clear_always = false,
-    }
+    },
   },
 
   ------------------------------------ Bindings -------------------------------------
@@ -375,9 +363,7 @@ return {
   {
     "kylechui/nvim-surround",
     event = "VeryLazy",
-    config = function()
-      require("nvim-surround").setup {}
-    end,
+    opts = {},
   },
 
   -- Easily move lines
@@ -411,32 +397,32 @@ return {
     event = "UIEnter",
     opts = {
       keymaps = {
-        useDefaults = true
-      }
+        useDefaults = true,
+      },
     },
   },
 
   ------------------------------------- Other ---------------------------------------
 
   -- AI features
-  {
-    "yetone/avante.nvim",
-    event = "VeryLazy",
-    version = false,
-    config = function()
-      dofile(vim.g.base46_cache .. "avante")
-      require("configs.avante")
-    end,
-    build = "make",
-    dependencies = {
-      "nvim-treesitter/nvim-treesitter",
-      "stevearc/dressing.nvim",
-      "nvim-lua/plenary.nvim",
-      "MunifTanjim/nui.nvim",
-      "hrsh7th/nvim-cmp",
-      "nvim-tree/nvim-web-devicons",
-    },
-  },
+  -- {
+  --   "yetone/avante.nvim",
+  --   event = "VeryLazy",
+  --   version = false,
+  --   config = function()
+  --     dofile(vim.g.base46_cache .. "avante")
+  --     require("configs.avante")
+  --   end,
+  --   build = "make",
+  --   dependencies = {
+  --     "nvim-treesitter/nvim-treesitter",
+  --     "stevearc/dressing.nvim",
+  --     "nvim-lua/plenary.nvim",
+  --     "MunifTanjim/nui.nvim",
+  --     "hrsh7th/nvim-cmp",
+  --     "nvim-tree/nvim-web-devicons",
+  --   },
+  -- },
 
   -- Nerdfont symbol picker
   {
@@ -458,9 +444,7 @@ return {
       "nvim-tree/nvim-web-devicons",
     },
     cmd = { "Octo" },
-    config = function()
-      require("octo").setup()
-    end,
+    opts = {},
   },
 
   -- Track the time you're spending with your code
@@ -482,11 +466,9 @@ return {
   {
     "karb94/neoscroll.nvim",
     keys = { "<C-d>", "<C-u>" },
-    config = function()
-      require("neoscroll").setup {
-        duration_multiplier = 0.6,
-      }
-    end,
+    opts = {
+      duration_multiplier = 0.6,
+    },
   },
 
   -- Organize your work with comments
@@ -505,16 +487,14 @@ return {
     "CRAG666/code_runner.nvim",
     dependencies = "nvim-lua/plenary.nvim",
     cmd = { "RunCode", "RunFile", "RunProject" },
-    config = function()
-      require("code_runner").setup {
-        filetype = {
-          cpp = 'cd "$dir" && mkdir -p "$dir/bin" && g++ "$dir/$fileName" -o "$dir/bin/$fileNameWithoutExt" -std=c++11 -fsanitize=address,undefined && "$dir/bin/$fileNameWithoutExt"',
-          tex = 'mkdir -p "$dir/bin" && pdflatex -output-directory="$dir/bin" "$dir/$fileName"',
-          rust = 'cargo run "$dir/$fileName"',
-        },
-        startinsert = true,
-      }
-    end,
+    opts = {
+      filetype = {
+        cpp = 'cd "$dir" && mkdir -p "$dir/bin" && g++ "$dir/$fileName" -o "$dir/bin/$fileNameWithoutExt" -std=c++11 -fsanitize=address,undefined && "$dir/bin/$fileNameWithoutExt"',
+        tex = 'mkdir -p "$dir/bin" && pdflatex -output-directory="$dir/bin" "$dir/$fileName"',
+        rust = 'cargo run "$dir/$fileName"',
+      },
+      startinsert = true,
+    },
   },
 
   -- Set project root correctly
