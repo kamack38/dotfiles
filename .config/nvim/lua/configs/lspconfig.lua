@@ -32,7 +32,7 @@ local servers = {
       exportPdf = "onType",
       outputPath = "$root/target/$dir/$name",
     },
-  }
+  },
 }
 
 for name, opts in pairs(servers) do

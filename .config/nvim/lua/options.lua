@@ -55,7 +55,7 @@ function _G.virtual_foldtext()
   local result = {}
   fold_virt_text(result, start, vim.v.foldstart - 1)
   table.insert(result, { " ⋯ ", "Delimiter" })
-  fold_virt_text(result, end_, vim.v.foldend - 1, #(end_str:match("^(%s+)") or ""))
+  fold_virt_text(result, end_, vim.v.foldend - 1, #(end_str:match "^(%s+)" or ""))
   return result
 end
 

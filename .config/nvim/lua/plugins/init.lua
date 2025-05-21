@@ -105,24 +105,24 @@ return {
   },
 
   -- Autocompletion
-  { import = "nvchad.blink.lazyspec" },
-  -- {
-  --   "hrsh7th/nvim-cmp",
-  --   url = "https://github.com/iguanacucumber/magazine.nvim",
-  --   opts = {
-  --     sources = {
-  --       { name = "luasnip" },
-  --       { name = "nvim_lsp" },
-  --       { name = "buffer" },
-  --       { name = "nvim_lua" },
-  --       { name = "path" },
-  --       { name = "crates" },
-  --     },
-  --     experimental = {
-  --       ghost_text = true,
-  --     },
-  --   },
-  -- },
+  -- { import = "nvchad.blink.lazyspec" },
+  {
+    "hrsh7th/nvim-cmp",
+    url = "https://github.com/iguanacucumber/magazine.nvim",
+    opts = {
+      sources = {
+        { name = "luasnip" },
+        { name = "nvim_lsp" },
+        { name = "buffer" },
+        { name = "nvim_lua" },
+        { name = "path" },
+        { name = "crates" },
+      },
+      experimental = {
+        ghost_text = true,
+      },
+    },
+  },
 
   -- Show all problems in your code
   {
@@ -184,16 +184,6 @@ return {
       vim.g.typst_conceal_math = 1
       vim.g.typst_conceal_emoji = 1
       vim.g.typst_conceal = 1
-    end,
-  },
-
-  -- Markdown browser preview
-  {
-    "iamcco/markdown-preview.nvim",
-    cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
-    ft = { "markdown" },
-    build = function()
-      vim.fn["mkdp#util#install"]()
     end,
   },
 
