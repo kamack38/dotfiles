@@ -500,4 +500,12 @@ return {
       }
     end,
   },
+
+  -- Don't open Neovim inside Neovim
+  {
+    "willothy/flatten.nvim",
+    lazy = false,
+    priority = 1001,
+    opts = {},
+  },
 }

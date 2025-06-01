@@ -10,7 +10,10 @@ local options = {
     },
     biome = {
       append_args = { "--indent-style=space" },
-    }
+    },
+    ["deno_fmt"] = {
+      append_args = { "--line-width", "100" },
+    },
   },
 
   formatters_by_ft = {

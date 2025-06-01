@@ -1,4 +1,5 @@
 local servers = {
+  bashls = {},
   clangd = {},
   cssls = {},
   -- emmet_ls = {},
