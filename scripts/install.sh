@@ -245,11 +245,8 @@ FISH_PACKAGES=(
 
 NPM_PACKAGES=(
 	"npm"
-	"yarn"
 	"pm2"
 	"neovim"
-	"npm-check-updates"
-	"git-cz"
 )
 
 DESKTOP_ENVIRONMENTS=(
