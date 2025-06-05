@@ -16,13 +16,6 @@ local servers = {
   -- },
   rust_analyzer = {
     filetypes = { "rust" },
-    settings = {
-      ["rust_analyzer"] = {
-        cargo = {
-          allFeatures = true,
-        },
-      },
-    },
   },
   biome = {
     single_file_support = true,
