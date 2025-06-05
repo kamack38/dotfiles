@@ -16,6 +16,17 @@ local servers = {
   -- },
   rust_analyzer = {
     filetypes = { "rust" },
+    ["rust-analyzer"] = {
+      checkOnSave = true,
+      check = {
+        enable = true,
+        command = "clippy",
+        features = "all",
+      },
+      procMacro = {
+        enable = true,
+      },
+    },
   },
   biome = {
     single_file_support = true,
