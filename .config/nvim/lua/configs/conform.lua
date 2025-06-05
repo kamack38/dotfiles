@@ -2,9 +2,6 @@ local options = {
   lsp_fallback = true,
 
   formatters = {
-    ["clang-format"] = {
-      append_args = { "--style", "{ BasedOnStyle: Google, IndentWidth: 4, ColumnLimit: 100 }" },
-    },
     shfmt = {
       prepend_args = { "-i", "0" },
     },
@@ -31,7 +28,6 @@ local options = {
     typst = { "typstyle" },
     sql = { "sqruff" },
 
-    cpp = { "clang-format" },
     rust = { "rustfmt" },
     nix = { "nixfmt" },
     lua = { "stylua" },
