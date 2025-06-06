@@ -133,6 +133,7 @@ map({ "n" }, "<leader>tt", ":terminal<CR>i")
 map("n", "<leader>cn", "<cmd> LspUI rename <CR>", { desc = "LSP rename (change name)" })
 map("n", "<C-space>", "<cmd> LspUI code_action <CR>", { desc = "LSP show code action menu" })
 -- map("n", "K", "<cmd> LspUI hover <CR>", { desc = "  LSP hover" })
+map("n", "gl", vim.diagnostic.open_float, { desc = "Show diagnostics" })
 
 -- Leap
 map("n", "<leader>s", function()

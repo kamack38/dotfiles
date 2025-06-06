@@ -105,24 +105,7 @@ return {
   },
 
   -- Autocompletion
-  -- { import = "nvchad.blink.lazyspec" },
-  {
-    "hrsh7th/nvim-cmp",
-    url = "https://github.com/iguanacucumber/magazine.nvim",
-    opts = {
-      sources = {
-        { name = "luasnip" },
-        { name = "nvim_lsp" },
-        { name = "buffer" },
-        { name = "nvim_lua" },
-        { name = "path" },
-        { name = "crates" },
-      },
-      experimental = {
-        ghost_text = true,
-      },
-    },
-  },
+  { import = "nvchad.blink.lazyspec" },
 
   -- Show all problems in your code
   {
