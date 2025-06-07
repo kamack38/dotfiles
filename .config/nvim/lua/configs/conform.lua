@@ -34,6 +34,8 @@ local options = {
 
     sh = { "shfmt" },
     fish = { "fish_indent" },
+
+    kotlin = { "ktlint" },
   },
 
   format_on_save = {

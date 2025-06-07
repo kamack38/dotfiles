@@ -14,6 +14,7 @@ local servers = {
   --     language = "pl-PL"
   --   }
   -- },
+  kotlin_lsp = {},
   rust_analyzer = {
     filetypes = { "rust" },
     ["rust-analyzer"] = {
