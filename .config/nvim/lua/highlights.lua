@@ -8,7 +8,7 @@ local M = {}
 M.override = {
   ["@comment"] = { italic = true },
   Comment = { italic = true },
-  TelescopeSelection = { bg = "#353A46", fg = "#abb2bf" },
+  TelescopeSelection = { bg = "#231631", fg = "#abb2bf" },
   IblScopeChar = { fg = "#9196a1" },
   -- Normal = { bg = "#1e2127" }
 }
