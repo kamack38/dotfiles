@@ -224,6 +224,19 @@ function tm -d 'Shows math expression in terminal' -a math output_file
     end
 end
 
+# MD to PDF via typst
+function md2pdf -d "Compile MD to PDF" -a input_file
+    set tmp_file "/tmp/md2pdf1010.typ"
+    set typ_file "/tmp/md2pdf.typ"
+    set template "$HOME/Documents/Private/template.typ"
+    set output_file (string replace -r '(\.[^.]*)?$' '' $input_file)
+    pandoc $input_file -o $tmp_file
+    cat $template >$typ_file
+    cat $tmp_file >>$typ_file
+    typst compile $typ_file "$output_file.pdf"
+    rm $typ_file $tmp_file
+end
+
 function mp -a output_file
     tm (wl-paste) "$output_file"
 end
