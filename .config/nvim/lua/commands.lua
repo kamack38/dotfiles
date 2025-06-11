@@ -80,24 +80,24 @@ autocmd("BufReadPost", {
   callback = function()
     local line = vim.fn.line "'\""
     if
-        line > 1
-        and line <= vim.fn.line "$"
-        and vim.bo.filetype ~= "commit"
-        and vim.bo.filetype ~= "gitcommit"
-        and vim.fn.index({ "xxd", "gitrebase" }, vim.bo.filetype) == -1
+      line > 1
+      and line <= vim.fn.line "$"
+      and vim.bo.filetype ~= "commit"
+      and vim.bo.filetype ~= "gitcommit"
+      and vim.fn.index({ "xxd", "gitrebase" }, vim.bo.filetype) == -1
     then
       vim.cmd 'normal! g`"'
     end
   end,
 })
 
-local user_cmds = vim.api.nvim_create_augroup("user_cmds", { clear = true })
+local user_cmds = augroup("user.cmds", { clear = true })
 
 local function update_git_env_for_dotfiles()
   -- Auto change ENV variables to enable
   -- bare git repository for dotfiles after
   -- loading saved session
-  local home = vim.fn.expand("~")
+  local home = vim.fn.expand "~"
   local git_dir = home .. "/.dotfiles"
 
   if vim.env.GIT_DIR ~= nil and vim.env.GIT_DIR ~= git_dir then
@@ -128,7 +128,7 @@ local function update_git_env_for_dotfiles()
   end
 end
 
-vim.api.nvim_create_autocmd("DirChanged", {
+autocmd("DirChanged", {
   pattern = { "*" },
   group = user_cmds,
   desc = "Update git env for dotfiles after changing directory",
@@ -137,8 +137,7 @@ vim.api.nvim_create_autocmd("DirChanged", {
   end,
 })
 
-
-vim.api.nvim_create_autocmd("User", {
+autocmd("User", {
   pattern = { "SessionLoadPost" },
   group = user_cmds,
   desc = "Update git env for dotfiles after loading session",
