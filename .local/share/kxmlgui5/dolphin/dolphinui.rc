@@ -136,5 +136,7 @@
   <Action name="view_zoom_out" priority="0"/>
   <Action name="view_zoom_reset" priority="0"/>
   <Action name="editable_location" shortcut="F6; Ctrl+K"/>
+  <Action name="split_view_menu" shortcut="F3; Ctrl+B"/>
+  <Action name="add_bookmark" shortcut="; "/>
  </ActionProperties>
 </gui>
