@@ -25,7 +25,7 @@
   repo-size = count-objects -vH
   s = status -s
   u = add -u
-  p = add -p
+  ap = add -p
   ra = !git --git-dir=$GIT_DIR --work-tree=$GIT_WORK_TREE diff --name-only --cached | xargs git --git-dir=$GIT_DIR --work-tree=$GIT_WORK_TREE add
   b = branch
   ba = branch -a
@@ -38,6 +38,7 @@
   can = commit --amend --no-edit
   cdf = diff --cached
   pon = !git push -u origin $(git rev-parse --abbrev-ref HEAD)
+  p = push
   pt = push --tags
   pf = push --force
   pl = push --force-with-lease
