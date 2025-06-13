@@ -264,9 +264,11 @@ function rm-except -a file -d 'Remove all files except one'
 end
 
 function reboot-to-windows
-    set number (sudo rg -i "menuentry '" /boot/grub/grub.cfg | rg -n windows | cut -d: -f1)
-    echo "Rebooting to entry number '$number'"
-    sudo grub-reboot $number && reboot
+    set entry (grep -i windows /boot/grub/grub.cfg | cut -d"'" -f2)
+    sudo grub-reboot "$entry"
+    echo "Rebooting to '$entry'..."
+    sleep 3
+    reboot
 end
 
 function fish_greeting
