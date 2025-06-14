@@ -207,7 +207,7 @@ mount -o ${MOUNT_OPTIONS},nodev,nosuid,noexec,subvol=@tmp ${MAIN_DEV} /mnt/tmp
 mount -o ${MOUNT_OPTIONS},subvol=@var ${MAIN_DEV} /mnt/var
 mount -o ${SWAP_MOUNT_OPTIONS},subvol=@swap ${MAIN_DEV} /mnt/swap
 
-if [[ "$LUKS_PASSWORD" == "" ]]; then
+if [[ "$LUKS_PASSWORD" != "" ]]; then
 	ENCRYPTED_PARTITION_UUID=$(blkid -s UUID -o value "/dev/disk/by-partlabel/Archlinux")
 
 	echo "${BLUE}:: ${BWHITE}Encrypted partition UUID is: ${BLUE}${ENCRYPTED_PARTITION_UUID}${NC}"
@@ -274,7 +274,7 @@ function chroot {
 	if [[ -d "/sys/firmware/efi" ]]; then
 		grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=GRUB
 	fi
-	if [[ "$LUKS_PASSWORD" == "" ]]; then
+	if [[ "$LUKS_PASSWORD" != "" ]]; then
 		sed -i "s%^GRUB_CMDLINE_LINUX_DEFAULT=\"%GRUB_CMDLINE_LINUX_DEFAULT=\"cryptdevice=UUID=${ENCRYPTED_PARTITION_UUID}:cryptroot root=/dev/mapper/cryptroot %" /etc/default/grub
 		sed -i "s/^#GRUB_ENABLE_CRYPTODISK=y/GRUB_ENABLE_CRYPTODISK=y/" /etc/default/grub
 	fi
