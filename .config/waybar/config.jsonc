@@ -53,7 +53,8 @@
     "cpu": {
         "spacing": 10,
         "format": "  {usage}%",
-        "interval": 1
+        "interval": 1,
+        "min-length": 3
     },
 
     "memory": {
@@ -62,9 +63,9 @@
     },
 
     "custom/cpu-temperature": {
-        "exec": "sensors k10temp-pci-00c3 asus-isa-0000 -Aj | jq -s --unbuffered --compact-output '{text: (\" \" + (.[0][\"k10temp-pci-00c3\"].Tctl.temp1_input | floor | tostring) + \"°\"), tooltip: (\"󰈐 \" + (.[1][\"asus-isa-0000\"].cpu_fan.fan1_input | floor | tostring) + \" RPM\")}'",
+        "exec": "~/.config/waybar/scripts/cpu-temp.sh",
         "return-type": "json",
-        "interval": 1
+        "interval": 2
     },
 
     "custom/gpu-usage": {
@@ -75,7 +76,7 @@
     },
 
     "custom/gpu-temperature": {
-        "exec": "nvidia-smi --query-gpu=temperature.gpu --format=csv,noheader,nounits && sensors asus-isa-0000 -A | awk '/gpu_fan/ {print \"󰈐 \" $2, $3}'",
+        "exec": "nvidia-smi --query-gpu=temperature.gpu --format=csv,noheader,nounits && sensors asus-isa-000a -A | awk '/gpu_fan/ {print \"󰈐 \" $2, $3}'",
         "format": " {}°",
         "interval": 5
     },
@@ -87,8 +88,7 @@
         "on-scroll-up": "brightnessctl set 1%+",
         "on-scroll-down": "brightnessctl set 1%-",
         "on-click": "~/.config/waybar/scripts/toggle-blue-light-filter.sh",
-        "on-click-right": "idle-inhibit",
-        "min-length": 6
+        "on-click-right": "idle-inhibit"
     },
 
     "idle_inhibitor": {
