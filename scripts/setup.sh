@@ -68,7 +68,7 @@ SWAP_TYPE=$(printf "%s\n" "${SWAP_OPTIONS[@]}" | fzf --height=20% --layout=rever
 
 # Create luks password (encryption)
 while true; do
-	echo -n "${YELLOW}:: ${BWHITE}Please enter your luks password: ${NC}"
+	echo -n "${YELLOW}:: ${BWHITE}Please enter your luks password (empy = no encryption): ${NC}"
 	read -rs luks_password # read password without echo
 
 	echo -ne "\n${YELLOW}:: ${BWHITE}Please repeat your luks password: ${NC}"
@@ -82,6 +82,9 @@ while true; do
 		echo -e "\n${RED}:: ${BWHITE}Passwords do not match. Please try again.${NC}"
 	fi
 done
+if [[ "$LUKS_PASSWORD" == "" ]]; then
+	echo "${YELLOW}:: ${BWHITE}Luks password is empty - encryption will not be set up"
+fi
 
 # Create user credentials
 read -rp "${BLUE}:: ${BWHITE}Enter your username: ${NC}" USERNAME
@@ -155,21 +158,28 @@ if [[ $use_x_efi == n* ]]; then
 	EFI_PART="/dev/disk/by-partlabel/EFIBOOT"
 fi
 
-# Enter luks password to cryptsetup and format root partition
-echo "${BLUE}:: ${BWHITE}Encrypting root partition...${NC}"
-echo -n "${LUKS_PASSWORD}" | cryptsetup -v luksFormat "/dev/disk/by-partlabel/Archlinux" -
+if [[ "$LUKS_PASSWORD" != "" ]]; then
+	# Enter luks password to cryptsetup and format root partition
+	echo "${BLUE}:: ${BWHITE}Encrypting root partition...${NC}"
+	echo -n "${LUKS_PASSWORD}" | cryptsetup -v luksFormat "/dev/disk/by-partlabel/Archlinux" -
 
-# Open luks container and ROOT will be place holder
-echo "${BLUE}:: ${BWHITE}Opening root partition...${NC}"
-echo -n "${LUKS_PASSWORD}" | cryptsetup open "/dev/disk/by-partlabel/Archlinux" cryptroot -
+	# Open luks container and 'cryptroot' will be placeholder
+	echo "${BLUE}:: ${BWHITE}Opening root partition...${NC}"
+	echo -n "${LUKS_PASSWORD}" | cryptsetup open "/dev/disk/by-partlabel/Archlinux" cryptroot -
 
-# Format luks container
-mapper=/dev/mapper/cryptroot
-mkfs.btrfs -L root ${mapper}
+	# Set the main device to the LUKS container
+	MAIN_DEV=/dev/mapper/cryptroot
+else
+	# Set the main device to the archlinux partition
+	MAIN_DEV="/dev/disk/by-partlabel/Archlinux"
+fi
+
+# Format the main device
+mkfs.btrfs -L root ${MAIN_DEV}
 
 # Create subvolumes for btrfs
 echo "${BLUE}:: ${BWHITE}Creating BTRFS subvolumes...${NC}"
-mount ${mapper} /mnt
+mount ${MAIN_DEV} /mnt
 
 btrfs subvolume create /mnt/@
 btrfs subvolume create /mnt/@home
@@ -185,21 +195,23 @@ MOUNT_OPTIONS="defaults,noatime,compress=lzo,commit=60"
 SWAP_MOUNT_OPTIONS="nodatacow,noatime,nospace_cache"
 
 echo "${BLUE}:: ${BWHITE}Mounting @ subvolume...${NC}"
-mount -o ${MOUNT_OPTIONS},subvol=@ ${mapper} /mnt
+mount -o ${MOUNT_OPTIONS},subvol=@ ${MAIN_DEV} /mnt
 
 echo "${BLUE}:: ${BWHITE}Creating directories (home, var, tmp, swap)...${NC}"
 mkdir -p /mnt/{home,var,tmp,swap}
 
 # Mount all btrfs subvolumes
 echo "${BLUE}:: ${BWHITE}Mounting other btrfs subvolumes...${NC}"
-mount -o ${MOUNT_OPTIONS},subvol=@home ${mapper} /mnt/home
-mount -o ${MOUNT_OPTIONS},nodev,nosuid,noexec,subvol=@tmp ${mapper} /mnt/tmp
-mount -o ${MOUNT_OPTIONS},subvol=@var ${mapper} /mnt/var
-mount -o ${SWAP_MOUNT_OPTIONS},subvol=@swap ${mapper} /mnt/swap
+mount -o ${MOUNT_OPTIONS},subvol=@home ${MAIN_DEV} /mnt/home
+mount -o ${MOUNT_OPTIONS},nodev,nosuid,noexec,subvol=@tmp ${MAIN_DEV} /mnt/tmp
+mount -o ${MOUNT_OPTIONS},subvol=@var ${MAIN_DEV} /mnt/var
+mount -o ${SWAP_MOUNT_OPTIONS},subvol=@swap ${MAIN_DEV} /mnt/swap
 
-ENCRYPTED_PARTITION_UUID=$(blkid -s UUID -o value "/dev/disk/by-partlabel/Archlinux")
+if [[ "$LUKS_PASSWORD" == "" ]]; then
+	ENCRYPTED_PARTITION_UUID=$(blkid -s UUID -o value "/dev/disk/by-partlabel/Archlinux")
 
-echo "${BLUE}:: ${BWHITE}Encrypted partition UUID is: ${BLUE}${ENCRYPTED_PARTITION_UUID}${NC}"
+	echo "${BLUE}:: ${BWHITE}Encrypted partition UUID is: ${BLUE}${ENCRYPTED_PARTITION_UUID}${NC}"
+fi
 
 # Mount target
 mkdir -p /mnt/boot/efi
@@ -262,8 +274,10 @@ function chroot {
 	if [[ -d "/sys/firmware/efi" ]]; then
 		grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=GRUB
 	fi
-	sed -i "s%^GRUB_CMDLINE_LINUX_DEFAULT=\"%GRUB_CMDLINE_LINUX_DEFAULT=\"cryptdevice=UUID=${ENCRYPTED_PARTITION_UUID}:cryptroot root=/dev/mapper/cryptroot %" /etc/default/grub
-	sed -i "s/^#GRUB_ENABLE_CRYPTODISK=y/GRUB_ENABLE_CRYPTODISK=y/" /etc/default/grub
+	if [[ "$LUKS_PASSWORD" == "" ]]; then
+		sed -i "s%^GRUB_CMDLINE_LINUX_DEFAULT=\"%GRUB_CMDLINE_LINUX_DEFAULT=\"cryptdevice=UUID=${ENCRYPTED_PARTITION_UUID}:cryptroot root=/dev/mapper/cryptroot %" /etc/default/grub
+		sed -i "s/^#GRUB_ENABLE_CRYPTODISK=y/GRUB_ENABLE_CRYPTODISK=y/" /etc/default/grub
+	fi
 
 	case $SWAP_TYPE in
 	swapfile)
@@ -297,9 +311,8 @@ EOT
 	grub-mkconfig -o /boot/grub/grub.cfg
 
 	echo "${BLUE}:: ${BWHITE}Creating user...${NC}"
-	groupadd libvirt
-	useradd -mG wheel,libvirt -s /bin/bash "$USERNAME"
-	echo "${BLUE}:: ${BWHITE}$USERNAME added to wheel and libvirt group, default shell set to ${BLUE}/bin/bash${NC}"
+	useradd -mG wheel -s /bin/bash "$USERNAME"
+	echo "${BLUE}:: ${BWHITE}$USERNAME added to wheel group, default shell set to ${BLUE}/bin/bash${NC}"
 	echo "$USERNAME:$PASSWORD" | chpasswd
 	echo "${BLUE}:: ${BWHITE}${USERNAME} password set${NC}"
 

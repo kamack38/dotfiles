@@ -520,7 +520,8 @@ fi
 
 if [[ $SELECTED_PROFILES == *"VM"* ]]; then
 	echo "${BLUE}:: ${BWHITE}Configuring ${BLUE}virtual machine${BWHITE} support...${NC}"
-	# Enable services
+	# Enable services (only the socket)
+	sudo systemctl is-active libvirtd.service >/dev/null || systemctl disable libvirtd.service
 	sudo systemctl enable libvirtd.socket
 
 	# Autostart bridge
