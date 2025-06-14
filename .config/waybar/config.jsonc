@@ -31,6 +31,7 @@
 
     "custom/github": {
         "exec": "$HOME/.config/waybar/scripts/github.sh",
+        "exec-if": "test -f .keys/github-noti.token",
         "format": "<span color='#CDD9E5'></span>  {}",
         "return-type": "json",
         "interval": 60,
