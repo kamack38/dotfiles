@@ -88,8 +88,7 @@
         "format-icons": ["󰃞", "󰃟", "󰃠"],
         "on-scroll-up": "brightnessctl set 1%+",
         "on-scroll-down": "brightnessctl set 1%-",
-        "on-click": "~/.config/waybar/scripts/toggle-blue-light-filter.sh",
-        "on-click-right": "idle-inhibit"
+        "on-click": "~/.config/waybar/scripts/toggle-blue-light-filter.sh"
     },
 
     "idle_inhibitor": {
