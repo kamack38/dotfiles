@@ -143,10 +143,12 @@ fi
 
 echo "${BLUE}:: ${BWHITE}Formatting disk...${NC}"
 if [[ ! -d "/sys/firmware/efi" ]]; then
+	echo "${YELLOW}:: ${BWHITE}BIOS system detected...${NC}"
 	sgdisk -n "0::+1M" --typecode="0:ef02" --change-name="0:BIOSBOOT" "${DISK}" # BIOS Boot Partition
-fi
-if [[ $use_x_efi == n* ]]; then
-	sgdisk -n "0::+512M" --typecode="0:ef00" --change-name="0:EFIBOOT" "${DISK}" # UEFI Boot Partition
+else
+	if [[ $use_x_efi == n* ]]; then
+		sgdisk -n "0::+512M" --typecode="0:ef00" --change-name="0:EFIBOOT" "${DISK}" # UEFI Boot Partition
+	fi
 fi
 sgdisk -N "0" --typecode="0:8300" --change-name="0:Archlinux" "${DISK}" # Root Partition, default start, remaining
 
