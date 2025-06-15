@@ -563,7 +563,7 @@ fi
 export PATH="$HOME/.local/bin:$PATH"
 
 # Update xdg dirs
-xdg-user-dirs-update
+xdg-user-dirs-update --force
 
 # Update tealdeer cache
 tldr --update
