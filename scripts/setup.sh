@@ -67,6 +67,7 @@ echo "${YELLOW}:: ${BWHITE}Do you wish to create ${TOTAL_RAM_GB}GB swapfile or $
 SWAP_TYPE=$(printf "%s\n" "${SWAP_OPTIONS[@]}" | fzf --height=20% --layout=reverse || true)
 
 # Create luks password (encryption)
+ENCRYPT=true
 while true; do
 	echo -n "${YELLOW}:: ${BWHITE}Please enter your luks password (empy = no encryption): ${NC}"
 	read -rs luks_password # read password without echo
@@ -84,6 +85,7 @@ while true; do
 done
 if [[ "$LUKS_PASSWORD" == "" ]]; then
 	echo "${YELLOW}:: ${BWHITE}Luks password is empty - encryption will not be set up"
+	ENCRYPT=false
 fi
 
 # Create user credentials
@@ -158,7 +160,7 @@ if [[ $use_x_efi == n* ]]; then
 	EFI_PART="/dev/disk/by-partlabel/EFIBOOT"
 fi
 
-if [[ "$LUKS_PASSWORD" != "" ]]; then
+if [[ "$ENCRYPT" == true ]]; then
 	# Enter luks password to cryptsetup and format root partition
 	echo "${BLUE}:: ${BWHITE}Encrypting root partition...${NC}"
 	echo -n "${LUKS_PASSWORD}" | cryptsetup -v luksFormat "/dev/disk/by-partlabel/Archlinux" -
@@ -207,7 +209,7 @@ mount -o ${MOUNT_OPTIONS},nodev,nosuid,noexec,subvol=@tmp ${MAIN_DEV} /mnt/tmp
 mount -o ${MOUNT_OPTIONS},subvol=@var ${MAIN_DEV} /mnt/var
 mount -o ${SWAP_MOUNT_OPTIONS},subvol=@swap ${MAIN_DEV} /mnt/swap
 
-if [[ "$LUKS_PASSWORD" != "" ]]; then
+if [[ "$ENCRYPT" == true ]]; then
 	ENCRYPTED_PARTITION_UUID=$(blkid -s UUID -o value "/dev/disk/by-partlabel/Archlinux")
 
 	echo "${BLUE}:: ${BWHITE}Encrypted partition UUID is: ${BLUE}${ENCRYPTED_PARTITION_UUID}${NC}"
@@ -274,7 +276,7 @@ function chroot {
 	if [[ -d "/sys/firmware/efi" ]]; then
 		grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=GRUB
 	fi
-	if [[ "$LUKS_PASSWORD" != "" ]]; then
+	if [[ "$ENCRYPT" == true ]]; then
 		sed -i "s%^GRUB_CMDLINE_LINUX_DEFAULT=\"%GRUB_CMDLINE_LINUX_DEFAULT=\"cryptdevice=UUID=${ENCRYPTED_PARTITION_UUID}:cryptroot root=/dev/mapper/cryptroot %" /etc/default/grub
 		sed -i "s/^#GRUB_ENABLE_CRYPTODISK=y/GRUB_ENABLE_CRYPTODISK=y/" /etc/default/grub
 	fi
@@ -328,7 +330,7 @@ EOT
 	echo "${BLUE}:: ${BWHITE}Hostname is set to ${BLUE}${MACHINE_NAME}${NC}"
 	echo "$MACHINE_NAME" >/etc/hostname
 
-	if [[ "$LUKS_PASSWORD" != "" ]]; then
+	if [[ "$ENCRYPT" == true ]]; then
 		# Add encrypt hook
 		sed -i "s,\(^HOOKS=.*\)filesystems\(.*\),\1encrypt filesystems\2," /etc/mkinitcpio.conf
 	fi
@@ -343,6 +345,7 @@ export NC
 export DISK
 export USERNAME
 export PASSWORD
+export ENCRYPT
 export MACHINE_NAME
 export ENCRYPTED_PARTITION_UUID
 export SWAP_SIZE
