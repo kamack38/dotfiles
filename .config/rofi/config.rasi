@@ -1,5 +1,6 @@
 // Source: https://github.com/cxOrz/dotfiles-hyprland/blob/main/.config/rofi/config.rasi
 configuration {
+  modi: "run,emoji";
   font: "Source Code Pro 16px";
   location: 0;
   fixed-num-lines: true;

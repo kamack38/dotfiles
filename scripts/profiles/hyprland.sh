@@ -21,6 +21,7 @@ HYPRLAND_PACKAGES=(
 	"hyprlock"                      # hyprland’s GPU-accelerated screen locking utility
 	"hypridle"                      # hyprland’s idle daemon
 	"rofi-lbonn-wayland-git"        # A window switcher, application launcher and dmenu replacement (fork with Wayland support)
+	"rofi-emoji"                    # A Rofi plugin for selecting emojis
 	"wl-clipboard"                  # Command-line copy/paste utilities for Wayland
 	"hyprsunset"                    # An application to enable a blue-light filter on Hyprland
 	"cliphist"                      # clipboard history "manager" for wayland
