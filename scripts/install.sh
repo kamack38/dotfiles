@@ -231,6 +231,7 @@ INTEL_DRIVERS=(
 	"lib32-vulkan-intel"
 	"vulkan-icd-loader"
 	"lib32-vulkan-icd-loader"
+	"libva-intel-driver"
 )
 
 INTEL_MODULES=(
