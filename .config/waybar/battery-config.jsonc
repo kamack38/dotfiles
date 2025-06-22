@@ -1,0 +1,23 @@
+{
+    "include": "$XDG_CONFIG_HOME/waybar/config.jsonc",
+    "output": "eDP-1",
+    "modules-right": [
+        "tray",
+        "network",
+        "bluetooth",
+        "cpu",
+        "memory",
+        "backlight",
+        "idle_inhibitor",
+        "pulseaudio",
+        "battery"
+    ],
+
+    "cpu": {
+        "interval": 10
+    },
+
+    "memory": {
+        "interval": 5
+    }
+}
