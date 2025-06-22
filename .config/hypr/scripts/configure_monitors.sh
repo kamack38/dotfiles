@@ -3,7 +3,7 @@
 XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-~/.config}"
 
 killall waybar
-if hyprctl monitors -j | jq -e '.[] | select(.name == "DP-1") | length > 0'; then
+if hyprctl monitors -j | jq -e '. | length > 1'; then
 	waybar -c "$XDG_CONFIG_HOME/waybar/config.jsonc" &
 	disown
 else
