@@ -7,7 +7,6 @@
     "modules-center": ["clock"],
     "modules-right": [
         "custom/github",
-        "custom/gmail",
         "custom/updates",
         "tray",
         "network",
