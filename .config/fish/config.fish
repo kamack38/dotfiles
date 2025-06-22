@@ -208,7 +208,7 @@ function nps --description 'Search and install a local npm package' -a pkg
     end
 end
 
-function fcd -d "cd into favourite your dir"
+function zz -d "cd into your favourite dir"
     cd $(z -l | sed "s#$HOME#~#" | fzf --with-nth=2.. --preview 'eza -alF {2..}' --height 50% --layout=reverse | awk '{print substr($2, 1)}' | sed "s#~#$HOME#")
 end
 
