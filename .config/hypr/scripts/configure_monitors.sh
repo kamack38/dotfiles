@@ -3,7 +3,8 @@
 XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-~/.config}"
 
 killall waybar
-if hyprctl monitors -j | jq -e '. | length > 1'; then
+# Check if there are any other monitors than eDP-1
+if hyprctl monitors -j | jq -e 'any(.[]; .name != "eDP-1")'; then
 	waybar -c "$XDG_CONFIG_HOME/waybar/config.jsonc" &
 	disown
 else
