@@ -74,6 +74,7 @@ NORMAL_PROFILE=(
 	"reflector"               # Pacman mirror sorter
 	"garuda-hooks"            # Garuda pacman hooks
 	"wget"                    # Network utility to retrieve files from the Web
+	"bc"                      # An arbitrary precision calculator language (required for mpris-noti)
 	"mpd-mpris"               # An implementation of the MPRIS protocol for MPD.
 	"mpd"                     # Flexible, powerful, server-side application for playing music
 	"mpc"                     # Minimalist command line interface to MPD
