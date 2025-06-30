@@ -90,6 +90,7 @@ NORMAL_PROFILE=(
 
 GAMING_PROFILE=(
 	"mangohud"              # Hud for showing performance metrics
+	"gamescope"             # SteamOS session compositing window manager
 	"input-devices-support" # Meta package for input devices support
 	"piper"                 # Mouse button configurer
 	"steam"                 # Game library
