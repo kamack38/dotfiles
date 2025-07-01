@@ -153,6 +153,9 @@ map({ "n", "x" }, "<leader>ca", function()
   require("tiny-code-action").code_action()
 end, { noremap = true, silent = true, desc = "LSP Code actions" })
 map("n", "gl", vim.diagnostic.open_float, { desc = "LSP Show diagnostics" })
+map("n", "K", function()
+  vim.lsp.buf.hover({ border = "rounded" })
+end, { desc = "LSP Hover" })
 
 -- Leap
 map("n", "<leader>s", function()
