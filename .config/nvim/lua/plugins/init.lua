@@ -152,24 +152,21 @@ return {
     opts = {},
   },
 
-  -- LSP utils (rename, code actions, peek definition)
+  -- LSP utils (code actions)
   {
-    "jinzhongjia/LspUI.nvim",
+    "rachartier/tiny-code-action.nvim",
+    dependencies = {
+      { "nvim-lua/plenary.nvim" },
+    },
     event = "LspAttach",
-    branch = "main",
     opts = {
-      prompt = false,
-      code_action = {
-        enable = true,
-        command_enable = true,
-        icon = "💡",
-        keybind = {
-          exec = "<CR>",
-          prev = "k",
-          next = "j",
-          quit = "q",
-        },
-      },
+      picker = {
+        "buffer",
+        opts = {
+          hotkeys = true,
+          hotkeys_mode = "text_diff_based",
+        }
+      }
     },
   },
 

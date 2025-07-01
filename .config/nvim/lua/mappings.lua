@@ -147,11 +147,12 @@ end, { desc = "Open next available link" })
 -- Terminal
 map({ "n" }, "<leader>tt", ":terminal<CR>i")
 
--- LspUI
-map("n", "<leader>cn", "<cmd> LspUI rename <CR>", { desc = "LSP rename (change name)" })
-map("n", "<C-space>", "<cmd> LspUI code_action <CR>", { desc = "LSP show code action menu" })
--- map("n", "K", "<cmd> LspUI hover <CR>", { desc = "  LSP hover" })
-map("n", "gl", vim.diagnostic.open_float, { desc = "Show diagnostics" })
+-- Lsp
+map("n", "<leader>cn", require "nvchad.lsp.renamer", { desc = "LSP Rename" })
+map({ "n", "x" }, "<leader>ca", function()
+  require("tiny-code-action").code_action()
+end, { noremap = true, silent = true, desc = "LSP Code actions" })
+map("n", "gl", vim.diagnostic.open_float, { desc = "LSP Show diagnostics" })
 
 -- Leap
 map("n", "<leader>s", function()
