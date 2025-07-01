@@ -135,13 +135,13 @@ map("n", "gx", function()
   -- plugin only switches to visual mode when textobj is found
   local foundURL = vim.fn.mode():find "v"
   if not foundURL then
+    vim.cmd("tag " .. vim.fn.expand("<cword>"))
     return
   end
 
-  -- retrieve URL with the z-register as intermediary
-  vim.cmd.normal { '"zy', bang = true }
-  local url = vim.fn.getreg "z"
+  local url = vim.fn.getregion(vim.fn.getpos("."), vim.fn.getpos("v"), { type = "v" })[1]
   vim.ui.open(url)
+  vim.cmd.normal { "v", bang = true } -- leave visual mode
 end, { desc = "Open next available link" })
 
 -- Terminal
