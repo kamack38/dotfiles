@@ -451,7 +451,7 @@ return {
     "karb94/neoscroll.nvim",
     keys = { "<C-d>", "<C-u>" },
     opts = {
-      duration_multiplier = 0.6,
+      duration_multiplier = 0.3,
     },
   },
 
