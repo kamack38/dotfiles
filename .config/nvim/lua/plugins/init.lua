@@ -339,7 +339,11 @@ return {
     "gbprod/cutlass.nvim",
     lazy = false,
     opts = {
-      override_del = true,
+      registers = {
+        select = "s",
+        delete = "d",
+        change = "c",
+      },
     },
   },
 
