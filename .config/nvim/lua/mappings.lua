@@ -18,6 +18,12 @@ end, {})
 
 -- Telescope
 map("n", "<leader>wk", "<cmd> Telescope keymaps <CR>", { desc = "Telescope find keys" })
+map(
+  "n",
+  "<leader>fi",
+  "<cmd>Telescope find_files follow=true hidden=true<CR>",
+  { desc = "telescope find hidden files" }
+)
 map("n", "<leader>fn", "<cmd> Nerdy <CR>", { desc = "Find NerdFonts" })
 
 -- CodeRunner
