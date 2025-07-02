@@ -4,6 +4,9 @@
 
 local M = {}
 
+-- local colors = require("base46").get_theme_tb "base_30"
+local colors = dofile(vim.g.base46_cache .. "colors")
+
 ---@type Base46HLGroupsList
 M.override = {
   ["@comment"] = { italic = true },
@@ -29,6 +32,11 @@ M.add = {
   MarkviewHeading5Sign = { fg = "#74c7ec" },
   MarkviewHeading6 = { bg = "#393B54", fg = "#b4befe" },
   MarkviewHeading6Sign = { fg = "#b4befe" },
+
+  -- FzfLua
+  FzfLuaBorder = { fg = colors.one_bg3 },
+  FzfLuaTitle = { fg = colors.black, bg = colors.red, },
+  FzfLuaPreviewTitle = { fg = colors.black, bg = colors.green, },
 }
 
 return M

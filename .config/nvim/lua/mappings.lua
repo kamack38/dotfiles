@@ -16,15 +16,17 @@ map("n", "<RightMouse>", function()
   require("menu").open(options, { mouse = true })
 end, {})
 
--- Telescope
-map("n", "<leader>wk", "<cmd> Telescope keymaps <CR>", { desc = "Telescope find keys" })
-map(
-  "n",
-  "<leader>fi",
-  "<cmd>Telescope find_files follow=true hidden=true<CR>",
-  { desc = "telescope find hidden files" }
-)
-map("n", "<leader>fn", "<cmd> Nerdy <CR>", { desc = "Find NerdFonts" })
+-- FzfLua
+map("n", "<leader>wk", "<cmd> FzfLua keymaps <CR>", { desc = "FzfLua find keys" })
+-- map("n", "<leader>fn", "<cmd> Nerdy <CR>", { desc = "Find NerdFonts" })
+map("n", "<leader>fw", "<cmd>FzfLua live_grep<CR>", { desc = "FzfLua live grep" })
+map("n", "<leader>fb", "<cmd>FzfLua buffers<CR>", { desc = "FzfLua find buffers" })
+map("n", "<leader>fh", "<cmd>FzfLua help_tags<CR>", { desc = "FzfLua help page" })
+map("n", "<leader>ma", "<cmd>FzfLua marks<CR>", { desc = "FzfLua find marks" })
+map("n", "<leader>fo", "<cmd>FzfLua oldfiles<CR>", { desc = "FzfLua find oldfiles" })
+map("n", "<leader>fz", "<cmd>FzfLua current_buffer_fuzzy_find<CR>", { desc = "FzfLua find in current buffer" })
+map("n", "<leader>cm", "<cmd>FzfLua git_commits<CR>", { desc = "FzfLua git commits" })
+map("n", "<leader>gt", "<cmd>FzfLua git_status<CR>", { desc = "FzfLua git status" })
 
 -- CodeRunner
 map("n", "<F7>", "<cmd> RunFile <CR>", { desc = "Run code" })

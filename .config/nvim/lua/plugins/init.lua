@@ -412,15 +412,34 @@ return {
   --   },
   -- },
 
-  -- Nerdfont symbol picker
+  -- Picker
   {
-    "2kabhishek/nerdy.nvim",
-    dependencies = {
-      "stevearc/dressing.nvim",
-      "nvim-telescope/telescope.nvim",
+    "ibhagwan/fzf-lua",
+    cmd = { "FzfLua" },
+    dependencies = { "nvim-tree/nvim-web-devicons" },
+    opts = {
+      hls = { cursorline = "IncSearch" },
+      fzf_colors = {
+        ["fg+"] = { "fg", { "VisualNOS" }, "bold", "underline" },
+        ["bg+"] = { "bg", { "VisualNonText" }, "bold", "underline" },
+        ["gutter"] = "-1"
+      }
     },
-    cmd = "Nerdy",
   },
+  {
+    "nvim-telescope/telescope.nvim",
+    enabled = false,
+  },
+
+  -- Nerdfont symbol picker
+  -- {
+  --   "2kabhishek/nerdy.nvim",
+  --   dependencies = {
+  --     "stevearc/dressing.nvim",
+  --     "nvim-telescope/telescope.nvim",
+  --   },
+  --   cmd = "Nerdy",
+  -- },
 
   -- GitHub integration
   {
@@ -428,7 +447,7 @@ return {
     keys = require("configs.octo").keys,
     dependencies = {
       "nvim-lua/plenary.nvim",
-      "nvim-telescope/telescope.nvim",
+      "ibhagwan/fzf-lua",
       "nvim-tree/nvim-web-devicons",
     },
     cmd = { "Octo" },

@@ -5,6 +5,9 @@ local map = vim.keymap.set
 
 -- Add alias for quit
 create_cmd("Q", "quit", {})
+create_cmd("ReloadHighlights", function()
+  require("base46").load_all_highlights()
+end, {})
 
 -- Add alias for vertical resize
 create_cmd("Vres", function(opts)
