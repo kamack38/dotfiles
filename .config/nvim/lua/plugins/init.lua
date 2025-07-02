@@ -418,6 +418,15 @@ return {
     cmd = { "FzfLua" },
     dependencies = { "nvim-tree/nvim-web-devicons" },
     opts = {
+      keymap = {
+        builtin = {
+          ["<C-d>"] = "preview-page-down",
+          ["<C-u>"] = "preview-page-up",
+        },
+        fzf = {
+          ["alt-;"] = "abort",
+        }
+      },
       hls = { cursorline = "IncSearch" },
       fzf_colors = {
         ["fg+"] = { "fg", { "VisualNOS" }, "bold", "underline" },
