@@ -115,6 +115,10 @@ sudo tee /etc/udev/rules.d/99-disable-services-on-battery.rules >/dev/null <<EOF
 # Disable Profile-Sync-Daemon
 ACTION=="change", SUBSYSTEM=="power_supply", ATTRS{type}=="Mains", ATTRS{online}=="0", RUN+="/usr/bin/systemctl --user --machine kamack38@ stop psd.service"
 ACTION=="change", SUBSYSTEM=="power_supply", ATTRS{type}=="Mains", ATTRS{online}=="1", RUN+="/usr/bin/systemctl --user --machine kamack38@ start psd.service"
+
+# Optimise user settings via a service
+ACTION=="change", SUBSYSTEM=="power_supply", ATTRS{type}=="Mains", ATTRS{online}=="0", RUN+="/usr/bin/systemctl --user --machine kamack38@ start battery.service"
+ACTION=="change", SUBSYSTEM=="power_supply", ATTRS{type}=="Mains", ATTRS{online}=="1", RUN+="/usr/bin/systemctl --user --machine kamack38@ start ac.service"
 EOF
 
 # Performance tweaks

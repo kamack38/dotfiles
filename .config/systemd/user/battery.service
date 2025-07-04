@@ -1,0 +1,8 @@
+[Unit]
+Description=Change battery settings to battery
+ConditionACPower=false
+ConditionEnvironment=HYPRLAND_INSTANCE_SIGNATURE 
+
+[Service]
+Type=oneshot
+ExecStart=/home/kamack38/.config/hypr/scripts/gamemode.sh 1
