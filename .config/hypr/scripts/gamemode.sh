@@ -1,6 +1,7 @@
 #!/usr/bin/env sh
 HYPRGAMEMODE=${1:-$(hyprctl getoption animations:enabled | awk 'NR==1{print $2}')}
 if [ $HYPRGAMEMODE = 1 ]; then
+	# Disable unnecessary decorations
 	hyprctl --batch "\
 		keyword animations:enabled 0;\
 		keyword decoration:shadow:enabled 0;\
@@ -9,6 +10,9 @@ if [ $HYPRGAMEMODE = 1 ]; then
 		keyword general:gaps_out 0;\
 		keyword general:border_size 1;\
 		keyword decoration:rounding 0"
+
+	# Switch to a different bar
+	~/.config/hypr/scripts/configure_monitors.sh
 	notify-send "Enabled gamemode"
 	exit
 fi
