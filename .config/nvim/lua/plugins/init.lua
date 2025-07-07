@@ -165,6 +165,7 @@ return {
         opts = {
           hotkeys = true,
           hotkeys_mode = "text_diff_based",
+          auto_accept = true,
         }
       }
     },
