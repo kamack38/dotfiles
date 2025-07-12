@@ -522,6 +522,17 @@ if [[ $VGA_INFO == *"NVIDIA"* ]]; then
 	sudo systemctl enable nvidia-suspend.service nvidia-hibernate.service nvidia-resume.service
 fi
 
+if [[ $SELECTED_PROFILES == *"GAMING"* ]]; then
+	echo "${BLUE}:: ${BWHITE}Configuring ${BLUE}gaming${BWHITE} support...${NC}"
+	# Create a Big Picture session
+	sudo tee /usr/share/wayland-sessions/steam-big-picture.desktop >/dev/null <<EOT
+[Desktop Entry]
+Name=Steam Big Picture Mode
+Comment=Start Steam in Big Picture Mode
+Exec=/usr/bin/gamescope -e -- /usr/bin/steam -tenfoot
+Type=Application
+EOT
+fi
 if [[ $SELECTED_PROFILES == *"VM"* ]]; then
 	echo "${BLUE}:: ${BWHITE}Configuring ${BLUE}virtual machine${BWHITE} support...${NC}"
 	# Enable services (only the socket)
