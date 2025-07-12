@@ -183,7 +183,7 @@ Dialog Size=600,480
 
 [PreviewSettings]
 EnableRemoteFolderThumbnail=false
-MaximumRemoteSize=0
+MaximumRemoteSize=5242880
 
 [WM]
 activeBackground=49,54,59
