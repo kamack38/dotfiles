@@ -94,7 +94,7 @@ return {
       "devicons",
       "git-conflict",
       "git",
-      -- "leap",
+      "leap",
       "lsp",
       "mason",
       "nvcheatsheet",
