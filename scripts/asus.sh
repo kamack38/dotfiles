@@ -112,6 +112,11 @@ EOF
 sudo tee /etc/udev/rules.d/99-disable-services-on-battery.rules >/dev/null <<EOF
 # Disable unessential services when on battery
 
+# Disable irqbalance
+# Disabling distributing interrupts across multiple cores allows them to enter deeper sleep states, thus preserving battery
+ACTION=="change", SUBSYSTEM=="power_supply", ATTRS{type}=="Mains", ATTRS{online}=="0", RUN+="/usr/bin/systemctl stop irqbalance.service"
+ACTION=="change", SUBSYSTEM=="power_supply", ATTRS{type}=="Mains", ATTRS{online}=="1", RUN+="/usr/bin/systemctl start irqbalance.service"
+
 # Disable Profile-Sync-Daemon
 ACTION=="change", SUBSYSTEM=="power_supply", ATTRS{type}=="Mains", ATTRS{online}=="0", RUN+="/usr/bin/systemctl --user --machine kamack38@ stop psd.service"
 ACTION=="change", SUBSYSTEM=="power_supply", ATTRS{type}=="Mains", ATTRS{online}=="1", RUN+="/usr/bin/systemctl --user --machine kamack38@ start psd.service"
@@ -119,6 +124,12 @@ ACTION=="change", SUBSYSTEM=="power_supply", ATTRS{type}=="Mains", ATTRS{online}
 # Optimise user settings via a service
 ACTION=="change", SUBSYSTEM=="power_supply", ATTRS{type}=="Mains", ATTRS{online}=="0", RUN+="/usr/bin/systemctl --user --machine kamack38@ start battery.service"
 ACTION=="change", SUBSYSTEM=="power_supply", ATTRS{type}=="Mains", ATTRS{online}=="1", RUN+="/usr/bin/systemctl --user --machine kamack38@ start ac.service"
+EOF
+
+# Don't start irqbalance when on battery
+sudo tee /etc/systemd/system/irqbalance.service.d/override.conf >/dev/null <<EOF
+[Unit]
+ConditionACPower=true
 EOF
 
 # Performance tweaks
