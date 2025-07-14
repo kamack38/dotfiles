@@ -1,0 +1,14 @@
+#!/bin/bash
+
+ART_URL=$(playerctl metadata --format '{{mpris:artUrl}}')
+
+if echo "$ART_URL" | grep -Eq 'http://|https://'; then
+	FILE_PATH="$HOME/.cache/dunst/icons/$(echo -n "$ART_URL" | sha256sum | head -c 64).png"
+	mkdir -p ~/.cache/dunst/icons
+	if [ ! -f "$FILE_PATH" ]; then
+		curl -so "$FILE_PATH" "$ART_URL"
+	fi
+	echo -n "$FILE_PATH"
+else
+	echo -n "$ART_URL"
+fi
