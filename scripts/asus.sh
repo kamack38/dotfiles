@@ -127,6 +127,7 @@ ACTION=="change", SUBSYSTEM=="power_supply", ATTRS{type}=="Mains", ATTRS{online}
 EOF
 
 # Don't start irqbalance when on battery
+sudo mkdir -p /etc/systemd/system/irqbalance.service.d
 sudo tee /etc/systemd/system/irqbalance.service.d/override.conf >/dev/null <<EOF
 [Unit]
 ConditionACPower=true
