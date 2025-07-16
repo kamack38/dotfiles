@@ -1,0 +1,25 @@
+export GDK_BACKEND=wayland,x11,*
+export CLUTTER_BACKEND=wayland
+export SDL_VIDEODRIVER=wayland,x11
+export QT_QPA_PLATFORM="wayland;xcb"
+export QT_QPA_PLATFORMTHEME=qt6ct
+export ELECTRON_OZONE_PLATFORM_HINT=auto
+export XDG_MENU_PREFIX=arch-
+
+# #### Firefox
+export MOZ_ENABLE_WAYLAND=1
+export MOZ_DISABLE_RDD_SANDBOX=1
+
+if [ -d "/proc/driver/nvidia" ]; then
+	export LIBVA_DRIVER_NAME=nvidia
+	export NVD_BACKEND=direct
+	export GBM_BACKEND=nvidia-drm
+	export __GLX_VENDOR_LIBRARY_NAME=nvidia
+	export __NV_PRIME_RENDER_OFFLOAD=1
+	export __VK_LAYER_NV_optimus=NVIDIA_only
+# export __GL_VRR_ALLOWED=0 # Controls Adaptive Sync
+# export __GL_GSYNC_ALLOWED=1
+# export GSK_RENDERER=vulkan
+else
+	export LIBVA_DRIVER_NAME=radeonsi
+fi

@@ -28,6 +28,7 @@ HYPRLAND_PACKAGES=(
 	"grimblast-git"                 # A helper for screenshots within Hyprland.
 	"wlogout"                       # Logout menu for wayland
 	"waybar"                        # Highly customizable Wayland bar for Wlroots based compositors
+	"acpi"                          # Client for battery, power, and thermal readings
 	"xdg-desktop-portal"            # Desktop integration portals for sandboxed apps
 	"xdg-desktop-portal-hyprland"   # xdg-desktop-portal backend for hyprland
 	"wev"                           # A tool for debugging wayland events, similar to xev
@@ -40,6 +41,9 @@ HYPRLAND_PACKAGES=(
 	"qt6ct-kde"                     # Qt 6 Configuration Utility, patched to work correctly with KDE applications
 	"nwg-look"                      # GTK3 settings editor adapted to work on wlroots-based compositors
 	"wayland-pipewire-idle-inhibit" # Inhibit wayland idle when computer is playing sound
+	"uwsm"                          # A standalone Wayland session manager
+	"libnewt"                       # UWSM dependency
+	"runapp"                        # Application runner for Linux desktop environments that integrate with systemd
 )
 
 echo "${GREEN}:: ${BWHITE}Installing Hyprland and its components...${NC}"
@@ -47,3 +51,6 @@ $HELPER -S --noconfirm --needed --quiet "${HYPRLAND_PACKAGES[@]}"
 
 echo "${GREEN}:: ${BWHITE}Enabling Hyprland services...${NC}"
 systemctl enable --now --user wayland-pipewire-idle-inhibit.service
+systemctl enable --user hypridle.service
+systemctl enable --user hyprpaper.service
+systemctl enable --user waybar.service

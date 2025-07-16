@@ -1,0 +1,17 @@
+[Unit]
+Description=Highly customisable Wayland bar
+Documentation=https://github.com/Alexays/Waybar/wiki/
+PartOf=graphical-session.target
+After=graphical-session.target
+Requisite=graphical-session.target
+ConditionEnvironment=WAYLAND_DISPLAY
+ConditionEnvironment=XDG_SESSION_TYPE=wayland
+
+[Service]
+Type=simple
+ExecStart=/home/kamack38/scripts/start-waybar
+Slice=session.slice
+Restart=on-failure
+
+[Install]
+WantedBy=graphical-session.target

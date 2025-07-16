@@ -14,8 +14,8 @@ if [ $HYPRGAMEMODE = 1 ]; then
 		keyword general:border_size 1;\
 		keyword decoration:rounding 0"
 
-	# Switch to a different bar
-	~/.config/hypr/scripts/configure_monitors.sh
+	# Restart bar
+	systemctl restart --user waybar
 
 	# Disable transparency in kitty
 	sed -i 's/background_opacity 0.8/background_opacity 1/' "$KITTY_CONFIG"
