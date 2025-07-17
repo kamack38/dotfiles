@@ -133,6 +133,31 @@ sudo tee /etc/systemd/system/irqbalance.service.d/override.conf >/dev/null <<EOF
 ConditionACPower=true
 EOF
 
+# Disable dedicated gpu when on battery
+sudo tee /etc/systemd/system/gpu-switch.service >/dev/null <<EOF
+[Unit]
+Description=Set GPU mode before supergfxd
+Before=supergfxd.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/set-gpu-mode.sh
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
+sudo tee /usr/local/bin/set-gpu-mode.sh >/dev/null <<EOF
+#!/bin/bash
+if [ \$(cat /sys/class/power_supply/ADP0/online) == "0" ]; then
+	echo "Setting mode to Integrated"
+	sed -i 's/Hybrid/Integrated/' /etc/supergfxd.conf
+else
+	echo "Setting mode to Hybrid"
+	sed -i 's/Integrated/Hybrid/' /etc/supergfxd.conf
+fi
+EOF
+
 # Performance tweaks
 echo "${BLUE}:: ${BWHITE}Applying ${BLUE}performance tweaks${BWHITE}...${NC}"
 
@@ -165,3 +190,4 @@ systemctl enable --user psd
 sudo systemctl enable ananicy-cpp
 sudo systemctl enable irqbalance
 sudo systemctl enable preload
+sudo systemctl enable gpu-switch
