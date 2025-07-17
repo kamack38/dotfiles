@@ -401,6 +401,12 @@ while IFS="" read -r p || [ -n "$p" ]; do
 	fi
 done <~/.pam_environment
 
+# Set global env
+sudo mkdir -p /etc/environment.d
+sudo tee /etc/environment.d/30-editor.conf >/dev/null <<EOT
+EDITOR=nvim
+EOT
+
 # Add additional repositories
 source "$HOME/scripts/repos.sh"
 multilib
