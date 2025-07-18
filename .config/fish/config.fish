@@ -103,6 +103,8 @@ if command -v firefox-developer-edition &>/dev/null
     alias firefox="firefox-developer-edition"
 end
 
+alias live-server="bun --hot ./**/*.html"
+
 # Open files and directories
 function r -a path
     if test -f $path
