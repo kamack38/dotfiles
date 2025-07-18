@@ -196,13 +196,14 @@ PROFILES=(
 )
 
 NVIDIA_DRIVERS=(
-	"garuda-nvidia-config"
 	"nvidia-dkms"
 	"nvidia-utils"
 	"lib32-nvidia-utils"
 	"nvidia-settings"
 	"vulkan-icd-loader"
 	"lib32-vulkan-icd-loader"
+	"opencl-nvidia"
+	"lib32-opencl-nvidia"
 	"libva-nvidia-driver"
 )
 
@@ -214,12 +215,10 @@ NVIDIA_MODULES=(
 )
 
 AMD_DRIVERS=(
-	"garuda-video-linux-config"
+	"mesa"
 	"lib32-mesa"
 	"vulkan-radeon"
 	"lib32-vulkan-radeon"
-	"vulkan-icd-loader"
-	"lib32-vulkan-icd-loader"
 )
 
 AMD_MODULES=(
@@ -228,12 +227,10 @@ AMD_MODULES=(
 )
 
 INTEL_DRIVERS=(
-	"garuda-video-linux-config"
+	"mesa"
 	"lib32-mesa"
 	"vulkan-intel"
 	"lib32-vulkan-intel"
-	"vulkan-icd-loader"
-	"lib32-vulkan-icd-loader"
 	"libva-intel-driver"
 )
 
