@@ -25,8 +25,8 @@ PACKAGES=(
 	"btrfsmaintenance"          # Btrfs maintenance scripts
 	"profile-sync-daemon"       # Symlinks and syncs browser profile dirs to RAM
 	"systemd-oomd-defaults"     # Configuration files for systemd-oomd
-	# "rog-control-center" # GUI for asusctl
-	# "supergfxctl"        # Tool to change the optimus mode
+	"supergfxctl"               # A utility for Linux graphics switching on Intel/AMD iGPU + nVidia dGPU laptops
+	"rog-control-center"        # GUI for asusctl (required for notification icons)
 )
 
 KERNEL_PACKAGES=(
