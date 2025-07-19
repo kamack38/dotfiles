@@ -126,7 +126,7 @@ bioarch() {
 		echo "${YELLOW}:: ${BLUE}bioarchlinux${BWHITE} repo already exists${NC} -- skipping"
 	else
 		echo "${BLUE}:: ${BWHITE}Adding ${BLUE}bioarchlinux${BWHITE} repository${NC}"
-		sudo tee -a /etc/pacman.conf >/dev/null <<EOT
+		sudo tee -a /etc/pacman.conf >/dev/null <<'EOT'
 [bioarchlinux]
 Server = https://repo.bioarchlinux.org/$arch
 EOT
