@@ -17,9 +17,9 @@ if [ -d "/proc/driver/nvidia" ]; then
 	export __GLX_VENDOR_LIBRARY_NAME=nvidia
 	export __NV_PRIME_RENDER_OFFLOAD=1
 	export __VK_LAYER_NV_optimus=NVIDIA_only
-# export __GL_VRR_ALLOWED=0 # Controls Adaptive Sync
-# export __GL_GSYNC_ALLOWED=1
-# export GSK_RENDERER=vulkan
+	# export __GL_VRR_ALLOWED=0 # Controls Adaptive Sync
+	# export __GL_GSYNC_ALLOWED=1
+	# export GSK_RENDERER=vulkan
 else
 	export LIBVA_DRIVER_NAME=radeonsi
 fi
