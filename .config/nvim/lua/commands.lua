@@ -84,11 +84,11 @@ autocmd("BufReadPost", {
   callback = function()
     local line = vim.fn.line "'\""
     if
-        line > 1
-        and line <= vim.fn.line "$"
-        and vim.bo.filetype ~= "commit"
-        and vim.bo.filetype ~= "gitcommit"
-        and vim.fn.index({ "xxd", "gitrebase" }, vim.bo.filetype) == -1
+      line > 1
+      and line <= vim.fn.line "$"
+      and vim.bo.filetype ~= "commit"
+      and vim.bo.filetype ~= "gitcommit"
+      and vim.fn.index({ "xxd", "gitrebase" }, vim.bo.filetype) == -1
     then
       vim.cmd 'normal! g`"'
     end
@@ -184,5 +184,13 @@ autocmd("BufRead", {
     map("n", "<leader>nd", package.delete, { buffer = opts.buf, desc = "Package.json Delete selected package" })
     map("n", "<leader>ni", package.install, { buffer = opts.buf, desc = "Package.json Install new package" })
     map("n", "<leader>np", package.change_version, { buffer = opts.buf, desc = "Package.json Change package version" })
+  end,
+})
+
+-- fix fzf lua
+autocmd("FileType", {
+  pattern = "fzf",
+  callback = function(opts)
+    map("t", "<A-;>", "<A-;>", { buffer = opts.buf })
   end,
 })

@@ -74,7 +74,7 @@ return {
           },
           selection_modes = {
             ["@parameter.outer"] = "v", -- char wise
-            ["@function.outer"] = "V",  -- line wise
+            ["@function.outer"] = "V", -- line wise
             ["@class.outer"] = "<c-v>", -- block wise
           },
           -- If you set this to `true` (default is `false`) then any textobject is
@@ -113,12 +113,14 @@ return {
         providers = {
           snippets = {
             override = {
-              get_trigger_characters = function(_) return { '!' } end,
+              get_trigger_characters = function(_)
+                return { "!" }
+              end,
             },
           },
         },
       },
-    }
+    },
   },
 
   -- Show all problems in your code
@@ -166,8 +168,8 @@ return {
           hotkeys = true,
           hotkeys_mode = "text_diff_based",
           auto_accept = true,
-        }
-      }
+        },
+      },
     },
   },
 
@@ -426,14 +428,14 @@ return {
         },
         fzf = {
           ["alt-;"] = "abort",
-        }
+        },
       },
       hls = { cursorline = "IncSearch" },
       fzf_colors = {
         ["fg+"] = { "fg", { "VisualNOS" }, "bold", "underline" },
         ["bg+"] = { "bg", { "VisualNonText" }, "bold", "underline" },
-        ["gutter"] = "-1"
-      }
+        ["gutter"] = "-1",
+      },
     },
   },
   {
@@ -508,11 +510,9 @@ return {
       filetype = {
         cpp = function()
           if vim.fn.has "win32" == 1 then
-            return
-            'cd "$dir" && mkdir -p "$dir/bin" -Force > $null && g++ "$dir\\$fileName" -std=c++11 -o "$dir\\bin\\$fileNameWithoutExt.exe" && & "$dir\\bin\\$fileNameWithoutExt.exe"'
+            return 'cd "$dir" && mkdir -p "$dir/bin" -Force > $null && g++ "$dir\\$fileName" -std=c++11 -o "$dir\\bin\\$fileNameWithoutExt.exe" && & "$dir\\bin\\$fileNameWithoutExt.exe"'
           else
-            return
-            'cd "$dir" && mkdir -p "$dir/bin" && g++ "$dir/$fileName" -o "$dir/bin/$fileNameWithoutExt" -std=c++11 -fsanitize=address,undefined && "$dir/bin/$fileNameWithoutExt"'
+            return 'cd "$dir" && mkdir -p "$dir/bin" && g++ "$dir/$fileName" -o "$dir/bin/$fileNameWithoutExt" -std=c++11 -fsanitize=address,undefined && "$dir/bin/$fileNameWithoutExt"'
           end
         end,
         tex = 'mkdir -p "$dir/bin" && pdflatex -output-directory="$dir/bin" "$dir/$fileName"',
