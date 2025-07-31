@@ -783,9 +783,9 @@ EOT
 sudo chmod 750 /etc/sudoers.d/01_pwfeedback
 
 # Load ~/.pam_environment on login
-if ! grep -Fxq "environment" /etc/pam.d/system-login; then
+if ! grep -q "session.*include.*environment" /etc/pam.d/system-login; then
 	sudo tee -a /etc/pam.d/system-login >/dev/null <<EOT
-session    include   environment
+session    include    environment
 EOT
 fi
 sudo tee /etc/pam.d/environment >/dev/null <<EOT
