@@ -48,6 +48,9 @@ NORMAL_PROFILE=(
 	"eza"                     # Better ls
 	"croc"                    # File transfer utility
 	"mpv"                     # Image/Video player
+	"mpv-mpris"               # mpv mpris support
+	"mpv-thumbfast-git"       # High-performance on-the-fly thumbnailer for mpv
+	"mpv-modernz-git"         # A sleek and modern OSC for mpv
 	"ffmpeg"                  # Audio/Image/Video file converter
 	"yt-dlp"                  # Better YouTube downloader
 	"neovim"                  # Vim-like text editor
@@ -68,7 +71,6 @@ NORMAL_PROFILE=(
 	"noto-fonts-emoji"        # Google Noto emoji fonts
 	"terminus-font"           # Monospace bitmap font (for X11 and console)
 	"playerctl"               # Command-line utility and library for controlling media players
-	"mpv-mpris"               # mpv mpris support
 	"update-grub"             # Utility for updating grub config
 	"btop"                    # System monitor tool
 	"reflector"               # Pacman mirror sorter
