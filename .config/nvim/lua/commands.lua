@@ -23,6 +23,11 @@ create_cmd("CdBufferRoot", function()
   vim.cmd("cd " .. dir)
 end, {})
 
+-- Editor config reload
+create_cmd("EditorConfigReload", function()
+  vim.api.nvim_exec_autocmds("BufReadPost", { buffer = 0 })
+end, {})
+
 -- Hide line numbers inside terminals
 autocmd("TermOpen", {
   pattern = "*",
@@ -84,11 +89,11 @@ autocmd("BufReadPost", {
   callback = function()
     local line = vim.fn.line "'\""
     if
-      line > 1
-      and line <= vim.fn.line "$"
-      and vim.bo.filetype ~= "commit"
-      and vim.bo.filetype ~= "gitcommit"
-      and vim.fn.index({ "xxd", "gitrebase" }, vim.bo.filetype) == -1
+        line > 1
+        and line <= vim.fn.line "$"
+        and vim.bo.filetype ~= "commit"
+        and vim.bo.filetype ~= "gitcommit"
+        and vim.fn.index({ "xxd", "gitrebase" }, vim.bo.filetype) == -1
     then
       vim.cmd 'normal! g`"'
     end

@@ -3,6 +3,9 @@ local options = {
     shfmt = {
       prepend_args = { "-i", "0" },
     },
+    biome = {
+      append_args = { "--config-path", (os.getenv "XDG_CONFIG_HOME") .. "/biome.json" }
+    },
     ["deno_fmt"] = {
       append_args = { "--line-width", "100" },
     },

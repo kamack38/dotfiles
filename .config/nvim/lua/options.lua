@@ -78,6 +78,8 @@ vim.filetype.add {
   pattern = { [".*/hypr/.*%.conf"] = "hyprlang" },
 }
 
+vim.g.editorconfig = true
+
 -- Disable recommended markdown style
 vim.g.markdown_recommended_style = 0
 
