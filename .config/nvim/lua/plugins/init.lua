@@ -402,7 +402,7 @@ return {
   --   version = false,
   --   config = function()
   --     dofile(vim.g.base46_cache .. "avante")
-  --     require("configs.avante")
+  --     require "configs.avante"
   --   end,
   --   build = "make",
   --   dependencies = {

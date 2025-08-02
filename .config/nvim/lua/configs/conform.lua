@@ -1,12 +1,7 @@
 local options = {
-  lsp_fallback = true,
-
   formatters = {
     shfmt = {
       prepend_args = { "-i", "0" },
-    },
-    biome = {
-      append_args = { "--indent-style=space" },
     },
     ["deno_fmt"] = {
       append_args = { "--line-width", "100" },
@@ -40,7 +35,7 @@ local options = {
 
   format_on_save = {
     timeout_ms = 500,
-    lsp_format = "fallback",
+    lsp_format = "prefer",
   },
 }
 
