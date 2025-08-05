@@ -1,14 +1,28 @@
 let mapleader=" "
+set clipboard+=unnamedplus
 
 nmap <A-;> <Esc>
 imap <A-;> <Esc>
 cnoremap <A-;> <Esc>
 nnoremap <leader>x :bdelete<CR>
+
+" Language Features
 nmap <leader>cn <Action>(RenameElement)
 nmap <leader>ca <Action>(ShowIntentionActions)
+nmap <leader>fm <Action>(ReformatCode)
 map gl <Action>(ShowHoverInfo)
+nmap <leader>/ <Action>(CommentByLineComment)
+vmap <leader>/ :<C-u>action CommentByLineComment<CR>
+
 nnoremap <leader>r :action IdeaVim.ReloadVimRc.reload<CR>
+
+map <leader>rn :set relativenumber!<CR>
 
 " Moves
 nnoremap <A-k> :action MoveLineUp<CR>
 nnoremap <A-j> :action MoveLineDown<CR>
+
+" Cmdline
+cmap <C-S-V> <C-R>+
+cmap <C-j> <Down>
+cmap <C-k> <Up>
