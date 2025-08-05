@@ -1,0 +1,14 @@
+let mapleader=" "
+
+nmap <A-;> <Esc>
+imap <A-;> <Esc>
+cnoremap <A-;> <Esc>
+nnoremap <leader>x :bdelete<CR>
+nmap <leader>cn <Action>(RenameElement)
+nmap <leader>ca <Action>(ShowIntentionActions)
+map gl <Action>(ShowHoverInfo)
+nnoremap <leader>r :action IdeaVim.ReloadVimRc.reload<CR>
+
+" Moves
+nnoremap <A-k> :action MoveLineUp<CR>
+nnoremap <A-j> :action MoveLineDown<CR>
