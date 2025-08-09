@@ -5,6 +5,9 @@ nmap <A-;> <Esc>
 imap <A-;> <Esc>
 cnoremap <A-;> <Esc>
 nnoremap <leader>x :bdelete<CR>
+map x "_x
+map d "dd
+map c "cc
 
 " Language Features
 nmap <leader>cn <Action>(RenameElement)
