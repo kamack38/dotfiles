@@ -74,7 +74,7 @@ return {
           },
           selection_modes = {
             ["@parameter.outer"] = "v", -- char wise
-            ["@function.outer"] = "V", -- line wise
+            ["@function.outer"] = "V",  -- line wise
             ["@class.outer"] = "<c-v>", -- block wise
           },
           -- If you set this to `true` (default is `false`) then any textobject is
@@ -216,6 +216,21 @@ return {
               priority = 9999,
               icon = " ",
               hl = "MarkviewPalette4Fg",
+            },
+            ["youtube%.com"] = {
+              priority = 9999,
+              icon = " ",
+              hl = "red",
+            },
+            ["youtu%.be"] = {
+              priority = 9999,
+              icon = " ",
+              hl = "red",
+            },
+            ["jetbrains%.com"] = {
+              priority = 9999,
+              icon = " ",
+              hl = "DevIconKotlin",
             },
           },
         },
@@ -510,9 +525,11 @@ return {
       filetype = {
         cpp = function()
           if vim.fn.has "win32" == 1 then
-            return 'cd "$dir" && mkdir -p "$dir/bin" -Force > $null && g++ "$dir\\$fileName" -std=c++11 -o "$dir\\bin\\$fileNameWithoutExt.exe" && & "$dir\\bin\\$fileNameWithoutExt.exe"'
+            return
+            'cd "$dir" && mkdir -p "$dir/bin" -Force > $null && g++ "$dir\\$fileName" -std=c++11 -o "$dir\\bin\\$fileNameWithoutExt.exe" && & "$dir\\bin\\$fileNameWithoutExt.exe"'
           else
-            return 'cd "$dir" && mkdir -p "$dir/bin" && g++ "$dir/$fileName" -o "$dir/bin/$fileNameWithoutExt" -std=c++11 -fsanitize=address,undefined && "$dir/bin/$fileNameWithoutExt"'
+            return
+            'cd "$dir" && mkdir -p "$dir/bin" && g++ "$dir/$fileName" -o "$dir/bin/$fileNameWithoutExt" -std=c++11 -fsanitize=address,undefined && "$dir/bin/$fileNameWithoutExt"'
           end
         end,
         tex = 'mkdir -p "$dir/bin" && pdflatex -output-directory="$dir/bin" "$dir/$fileName"',
