@@ -8,12 +8,14 @@
     margin: 0px;
 }
 
+/* biome-ignore lint/correctness/noUnknownTypeSelector: This selector exists in waybar */
 window#waybar {
     background: transparent;
     color: #cdd6f4;
 }
 
-tooltip {
+/* biome-ignore lint/correctness/noUnknownTypeSelector: This selector exists in waybar */
+tooltip  {
     background: #1e1e2e;
     border-radius: 10px;
     border-width: 2px;

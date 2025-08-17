@@ -147,7 +147,7 @@
         "on-click-middle": "~/.config/waybar/scripts/toggle-bluetooth-block.sh",
         "format-icons": ["󰥇", "󰤾", "󰤿", "󰥀", "󰥁", "󰥂", "󰥃", "󰥄", "󰥅", "󰥆", "󰥈"],
         "format-disabled": "󰂲",
-        "format-off": "󰂯",
+        "format-off": "",
         "format-on": "",
         "format-connected": " <span color='#cdd6f4'>{device_alias}</span>",
         "format-connected-battery": " <span color='#cdd6f4'>{device_alias}</span> <span color='#a6adc8'>{device_battery_percentage}%</span>",
