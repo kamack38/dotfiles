@@ -547,7 +547,7 @@ return {
       return vim.fn.has "win32" == 0
     end,
     config = function()
-      require("project_nvim").setup {
+      require("project").setup {
         patterns = { ">.config" },
       }
     end,

@@ -9,6 +9,7 @@ local servers = {
   -- tailwindcss = {},
   -- texlab = {},
   ts_ls = {},
+  marksman = {},
   -- ltex_plus = {
   --   settings = {
   --     language = "pl-PL"

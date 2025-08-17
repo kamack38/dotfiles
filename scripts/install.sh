@@ -21,6 +21,7 @@ DEV_PROFILE=(
 	"dust"                        # A more intuitive version of du in rust
 	"shfmt"                       # A shell parser, formatter, and interpreter for bash
 	"deno"                        # A secure runtime for JavaScript and TypeScript (provides a markdown formatter)
+	"marksman"                    # Write Markdown with code assist and intelligence in the comfort of your favourite editor.
 	"jq"                          # Command-line JSON processor
 	"gnupg"                       # Complete and free implementation of the OpenPGP standard
 	"unrar"                       # The RAR uncompression program
