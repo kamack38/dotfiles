@@ -4,10 +4,10 @@ set clipboard+=unnamedplus
 nmap <A-;> <Esc>
 imap <A-;> <Esc>
 cnoremap <A-;> <Esc>
-nnoremap <leader>x :bdelete<CR>
-map x "_x
-map d "dd
-map c "cc
+noremap x "_x
+noremap d "dd
+noremap c "cc
+nmap <C-p> :pu<CR>
 
 " Language Features
 nmap <leader>cn <Action>(RenameElement)
@@ -16,6 +16,11 @@ nmap <leader>fm <Action>(ReformatCode)
 map gl <Action>(ShowHoverInfo)
 nmap <leader>/ <Action>(CommentByLineComment)
 vmap <leader>/ :<C-u>action CommentByLineComment<CR>
+
+" Editor
+nnoremap <Tab>:bnext<CR>
+nnoremap <S-Tab>:bprevious<CR>
+nnoremap <leader>x :bdelete<CR>
 
 nnoremap <leader>r :action IdeaVim.ReloadVimRc.reload<CR>
 
