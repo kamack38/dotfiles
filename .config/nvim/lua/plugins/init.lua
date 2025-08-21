@@ -253,6 +253,7 @@ return {
         ignore = false,
       },
       renderer = {
+        group_empty = true,
         icons = {
           git_placement = "after",
           glyphs = {
@@ -543,9 +544,6 @@ return {
   {
     "DrKJeff16/project.nvim",
     lazy = false,
-    enabled = function()
-      return vim.fn.has "win32" == 0
-    end,
     config = function()
       require("project").setup {
         patterns = { ">.config" },
