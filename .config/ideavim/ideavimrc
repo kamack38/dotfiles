@@ -16,13 +16,20 @@ nmap <leader>fm <Action>(ReformatCode)
 map gl <Action>(ShowHoverInfo)
 nmap <leader>/ <Action>(CommentByLineComment)
 vmap <leader>/ :<C-u>action CommentByLineComment<CR>
+nmap <leader>r :action Run<CR>
+
+" Navigating between splits
+nnoremap <C-h> <C-w>h
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
 
 " Editor
-nnoremap <Tab>:bnext<CR>
-nnoremap <S-Tab>:bprevious<CR>
+nnoremap <Tab> :bnext<CR>
+nnoremap <S-Tab> :bprevious<CR>
 nnoremap <leader>x :bdelete<CR>
 
-nnoremap <leader>r :action IdeaVim.ReloadVimRc.reload<CR>
+" nnoremap <leader>r :action IdeaVim.ReloadVimRc.reload<CR>
 
 map <leader>rn :set relativenumber!<CR>
 
