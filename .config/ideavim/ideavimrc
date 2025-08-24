@@ -1,5 +1,11 @@
+" Options: https://www.jetbrains.com/help/idea/using-product-as-the-vim-editor.html
+" List actions with :actionlist
 let mapleader=" "
+
 set clipboard+=unnamedplus
+set clipboard+=ideaput
+set scrolloff=5
+set incsearch
 
 nmap <A-;> <Esc>
 imap <A-;> <Esc>
@@ -9,6 +15,12 @@ noremap d "dd
 noremap c "cc
 nmap <C-p> :pu<CR>
 
+" Moving in insert mode
+imap <C-h> <Left>
+imap <C-l> <Right>
+imap <C-j> <Down>
+imap <C-k> <Up>
+
 " Language Features
 nmap <leader>cn <Action>(RenameElement)
 nmap <leader>ca <Action>(ShowIntentionActions)
@@ -17,6 +29,12 @@ map gl <Action>(ShowHoverInfo)
 nmap <leader>/ <Action>(CommentByLineComment)
 vmap <leader>/ :<C-u>action CommentByLineComment<CR>
 nmap <leader>r :action Run<CR>
+
+nnoremap [[ :action MethodUp<CR>
+nnoremap ]] :action MethodDown<CR>
+
+" Searching
+nmap <leader>ff <Action>(GotoFile)
 
 " Navigating between splits
 nnoremap <C-h> <C-w>h
@@ -29,7 +47,7 @@ nnoremap <Tab> :bnext<CR>
 nnoremap <S-Tab> :bprevious<CR>
 nnoremap <leader>x :bdelete<CR>
 
-" nnoremap <leader>r :action IdeaVim.ReloadVimRc.reload<CR>
+" nnoremap <leader>gr <Action>(IdeaVim.ReloadVimRc.reload)
 
 map <leader>rn :set relativenumber!<CR>
 
@@ -41,3 +59,6 @@ nnoremap <A-j> :action MoveLineDown<CR>
 cmap <C-S-V> <C-R>+
 cmap <C-j> <Down>
 cmap <C-k> <Up>
+
+" Plugins
+Plug 'tpope/vim-surround'
