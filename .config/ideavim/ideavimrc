@@ -10,9 +10,12 @@ set incsearch
 nmap <A-;> <Esc>
 imap <A-;> <Esc>
 cnoremap <A-;> <Esc>
-noremap x "_x
-noremap d "dd
-noremap c "cc
+nnoremap x "_x
+nnoremap d "dd
+nnoremap c "cc
+xnoremap x "_x
+xnoremap d "dd
+xnoremap c "cc
 nmap <C-p> :pu<CR>
 
 " Moving in insert mode
