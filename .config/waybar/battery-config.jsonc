@@ -3,7 +3,6 @@
     "output": "eDP-1",
     "modules-right": [
         "tray",
-        "network",
         "bluetooth",
         "cpu",
         "memory",

@@ -15,7 +15,7 @@ window#waybar {
 }
 
 /* biome-ignore lint/correctness/noUnknownTypeSelector: This selector exists in waybar */
-tooltip  {
+tooltip {
     background: #1e1e2e;
     border-radius: 10px;
     border-width: 2px;
@@ -128,6 +128,10 @@ tooltip  {
     color: #fab387;
     border-radius: 10px 0px 0px 10px;
     padding-right: 12px;
+}
+
+#bluetooth {
+    border-radius: 10px 0px 0px 10px;
 }
 
 #bluetooth.on,

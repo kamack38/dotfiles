@@ -9,7 +9,6 @@
         "custom/github",
         "custom/updates",
         "tray",
-        "network",
         "bluetooth",
         "cpu",
         "custom/cpu-temperature",
