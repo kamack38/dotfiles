@@ -155,6 +155,7 @@ DOCKER_PROFILE=(
 	"docker"         # Pack, ship and run any application as a lightweight container
 	"docker-compose" # Fast, isolated development environments using Docker
 	"lazydocker"     # A simple terminal UI for docker and docker-compose, written in Go with the gocui library.
+	"ufw-docker"     # To fix the Docker and UFW security flaw without disabling iptables
 )
 
 DESKTOP_APPS=(
@@ -871,7 +872,13 @@ EOT
 
 	sudo ufw default deny incoming
 	sudo ufw default allow outgoing
-	#sudo ufw enable
+	sudo ufw --force enable
+	sudo systemctl enable ufw
+
+	if [[ $SELECTED_PROFILES == *"DOCKER"* ]]; then
+		sudo ufw-docker install
+		sudo ufw reload
+	fi
 
 	echo "${BLUE}:: ${BWHITE}Enabling ${BLUE}AppArmor${BWHITE} rules...${NC}"
 	sudo systemctl enable apparmor.service
