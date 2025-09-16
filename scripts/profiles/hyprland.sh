@@ -20,7 +20,7 @@ HYPRLAND_PACKAGES=(
 	"hyprpaper"                     # A blazing fast wayland wallpaper utility with IPC controls.
 	"hyprlock"                      # hyprland’s GPU-accelerated screen locking utility
 	"hypridle"                      # hyprland’s idle daemon
-	"rofi-wayland"                  # A window switcher, application launcher and dmenu replacement (fork with Wayland support)
+	"rofi"                          # A window switcher, application launcher and dmenu replacement
 	"rofi-emoji"                    # A Rofi plugin for selecting emojis
 	"wl-clipboard"                  # Command-line copy/paste utilities for Wayland
 	"hyprsunset"                    # An application to enable a blue-light filter on Hyprland
