@@ -2,6 +2,18 @@ require "nvchad.mappings"
 
 local map = vim.keymap.set
 
+local function is_upper(char)
+  return (65 <= char:byte() and char:byte() <= 90)
+end
+
+local function is_lower(char)
+  return (97 <= char:byte() and char:byte() <= 122)
+end
+
+local function is_letter(char)
+  return is_upper(char) or is_lower(char)
+end
+
 -- ZenMode
 map("n", "<leader>tz", "<cmd> ZenMode <CR>", { desc = "ZenMode toggle" })
 
@@ -145,11 +157,11 @@ map("n", "gx", function()
   -- plugin only switches to visual mode when textobj is found
   local foundURL = vim.fn.mode():find "v"
   if not foundURL then
-    vim.cmd("tag " .. vim.fn.expand("<cword>"))
+    vim.cmd("tag " .. vim.fn.expand "<cword>")
     return
   end
 
-  local url = vim.fn.getregion(vim.fn.getpos("."), vim.fn.getpos("v"), { type = "v" })[1]
+  local url = vim.fn.getregion(vim.fn.getpos ".", vim.fn.getpos "v", { type = "v" })[1]
   vim.ui.open(url)
   vim.cmd.normal { "v", bang = true } -- leave visual mode
 end, { desc = "Open next available link" })
@@ -164,7 +176,7 @@ map({ "n", "x" }, "<leader>ca", function()
 end, { noremap = true, silent = true, desc = "LSP Code actions" })
 map("n", "gl", vim.diagnostic.open_float, { desc = "LSP Show diagnostics" })
 map("n", "K", function()
-  vim.lsp.buf.hover({ border = "rounded" })
+  vim.lsp.buf.hover { border = "rounded" }
 end, { desc = "LSP Hover" })
 
 -- Leap
@@ -174,3 +186,75 @@ end, { desc = "Jump to search" })
 map("n", "<leader>S", function()
   require("leap").leap { offset = -1, target_windows = { vim.fn.win_getid() } }
 end, { desc = "Jump till search" })
+
+-- Marks
+map("n", "m", function()
+  local input = vim.fn.getchar()
+  local char = vim.fn.nr2char(input)
+
+  if not is_letter(char) then
+    return
+  end
+
+  local line = vim.api.nvim_win_get_cursor(0)[1]
+  local pos = vim.api.nvim_buf_get_mark(0, char)
+  local row, _ = unpack(pos)
+  if row ~= line then
+    vim.api.nvim_feedkeys("m" .. char, "n", true)
+  else
+    vim.api.nvim_buf_del_mark(0, char)
+  end
+
+  vim.schedule(function()
+    require("guttermarks").refresh()
+  end)
+end, { desc = "Toggle mark under cursor" })
+map("n", "dm", function()
+    local input = vim.fn.getchar()
+    local char = vim.fn.nr2char(input)
+
+    if not is_letter(char) then
+      vim.api.nvim_feedkeys("dm" .. input, "n", true)
+      return
+    end
+
+    vim.api.nvim_buf_del_mark(0, char)
+    vim.schedule(function()
+      require("guttermarks").refresh()
+    end)
+  end,
+  { desc = "Delete mark", noremap = true }
+)
+map("n", "dm;", function()
+  local buf = vim.api.nvim_get_current_buf()
+  local line = vim.api.nvim_win_get_cursor(0)[1]
+
+  for _, m in ipairs(vim.fn.getmarklist(buf)) do
+    if m.pos[2] == line and is_lower(m.mark:sub(2)) then
+      vim.api.nvim_buf_del_mark(buf, m.mark:sub(2))
+    end
+  end
+
+  for _, m in ipairs(vim.fn.getmarklist()) do
+    if m.pos[1] == buf and m.pos[2] == line and is_upper(m.mark:sub(2)) then
+      vim.api.nvim_del_mark(m.mark:sub(2))
+    end
+  end
+  require("guttermarks").refresh()
+end, { desc = "Delete marks on the current line" })
+map("n", "dm<Space>", function()
+  local buf = vim.api.nvim_get_current_buf()
+
+  for _, m in ipairs(vim.fn.getmarklist(buf)) do
+    if is_lower(m.mark:sub(2)) then
+      vim.api.nvim_buf_del_mark(buf, m.mark:sub(2))
+    end
+  end
+
+  for _, m in ipairs(vim.fn.getmarklist()) do
+    if m.pos[1] == buf and is_upper(m.mark:sub(2)) then
+      vim.api.nvim_del_mark(m.mark:sub(2))
+    end
+  end
+  require("guttermarks").refresh()
+end, { desc = "Delete all marks in the current buffer" })

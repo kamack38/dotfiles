@@ -37,6 +37,10 @@ M.add = {
   FzfLuaBorder = { fg = colors.one_bg3 },
   FzfLuaTitle = { fg = colors.black, bg = colors.red, },
   FzfLuaPreviewTitle = { fg = colors.black, bg = colors.green, },
+
+  -- GutterMarks
+  GutterMarksLocal = { fg = "red" },
+  GutterMarksGlobal = { fg = "yellow" },
 }
 
 return M
