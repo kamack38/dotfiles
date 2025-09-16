@@ -33,13 +33,12 @@ return {
     load_on_startup = true,
 
     buttons = {
-      { txt = "  Find File", keys = "Spc f f", cmd = "FzfLua files" },
-      { txt = "󰈙  Recent Files", keys = "Spc f o", cmd = "FzfLua oldfiles" },
-      { txt = "󰈬  Find Word", keys = "Spc f w", cmd = "FzfLua live_grep" },
-      { txt = "  New Buffer", keys = "Spc b", cmd = "enew" },
-      { txt = "  Marks", keys = "Spc m a", cmd = "FzfLua marks" },
-      -- { txt = "  Themes", keys = "Spc t h", cmd = "Telescope themes" },
-      { txt = "  Cheatsheet", keys = "Spc c h", cmd = "NvCheatsheet" },
+      { txt = "  Find File", keys = "ff", cmd = "FzfLua files" },
+      { txt = "󰈙  Recent Files", keys = "fo", cmd = "FzfLua oldfiles" },
+      { txt = "󰈬  Find Word", keys = "fw", cmd = "FzfLua live_grep" },
+      { txt = "  Marks", keys = "ma", cmd = "FzfLua marks" },
+      { txt = "  Themes", keys = "th", cmd = ":lua require('nvchad.themes').open()" },
+      { txt = "  Cheatsheet", keys = "ch", cmd = "NvCheatsheet" },
 
       { txt = "─", hl = "NvDashFooter", no_gap = true, rep = true },
 
@@ -51,6 +50,7 @@ return {
         end,
         hl = "NvDashFooter",
         no_gap = true,
+        content = "fit",
       },
 
       { txt = "─", hl = "NvDashFooter", no_gap = true, rep = true },
