@@ -14,6 +14,17 @@ local function is_letter(char)
   return is_upper(char) or is_lower(char)
 end
 
+local function pick(a, b, cmp)
+  for i, v in ipairs(a) do
+    if cmp(v, b[i]) then
+      return a
+    elseif cmp(b[i], v) then
+      return b
+    end
+  end
+  return b
+end
+
 -- ZenMode
 map("n", "<leader>tz", "<cmd> ZenMode <CR>", { desc = "ZenMode toggle" })
 
@@ -210,21 +221,19 @@ map("n", "m", function()
   end)
 end, { desc = "Toggle mark under cursor" })
 map("n", "dm", function()
-    local input = vim.fn.getchar()
-    local char = vim.fn.nr2char(input)
+  local input = vim.fn.getchar()
+  local char = vim.fn.nr2char(input)
 
-    if not is_letter(char) then
-      vim.api.nvim_feedkeys("dm" .. input, "n", true)
-      return
-    end
+  if not is_letter(char) then
+    vim.api.nvim_feedkeys("dm" .. input, "n", true)
+    return
+  end
 
-    vim.api.nvim_buf_del_mark(0, char)
-    vim.schedule(function()
-      require("guttermarks").refresh()
-    end)
-  end,
-  { desc = "Delete mark", noremap = true }
-)
+  vim.api.nvim_buf_del_mark(0, char)
+  vim.schedule(function()
+    require("guttermarks").refresh()
+  end)
+end, { desc = "Delete mark", noremap = true })
 map("n", "dm;", function()
   local buf = vim.api.nvim_get_current_buf()
   local line = vim.api.nvim_win_get_cursor(0)[1]
@@ -258,3 +267,47 @@ map("n", "dm<Space>", function()
   end
   require("guttermarks").refresh()
 end, { desc = "Delete all marks in the current buffer" })
+map("n", "m]", function()
+  local buf = vim.api.nvim_get_current_buf()
+  local marks = vim.fn.getmarklist(buf)
+  local cursor_row, cursor_col = unpack(vim.api.nvim_win_get_cursor(0))
+  local function cmp(a, b)
+    return a < b
+  end
+  local next_mark = { math.huge, math.huge }
+  for _, mark in ipairs(marks) do
+    local _, mark_row, mark_col = unpack(mark.pos)
+    if is_lower(mark.mark:sub(2)) then
+      if mark_row > cursor_row then
+        next_mark = pick(next_mark, { mark_row, mark_col - 1 }, cmp)
+      elseif mark_row == cursor_row and mark_col > cursor_col + 1 then
+        next_mark = pick(next_mark, { mark_row, mark_col - 1 }, cmp)
+      end
+    end
+    if next_mark[1] ~= math.huge and next_mark[2] ~= math.huge then
+      vim.api.nvim_win_set_cursor(0, next_mark)
+    end
+  end
+end, { desc = "Jump to next lowercase mark" })
+map("n", "m[", function()
+  local buf = vim.api.nvim_get_current_buf()
+  local marks = vim.fn.getmarklist(buf)
+  local cursor_row, cursor_col = unpack(vim.api.nvim_win_get_cursor(0))
+  local next_mark = { -1, -1 }
+  local function cmp(a, b)
+    return a > b
+  end
+  for _, mark in ipairs(marks) do
+    local _, mark_row, mark_col = unpack(mark.pos)
+    if is_lower(mark.mark:sub(2)) then
+      if mark_row < cursor_row then
+        next_mark = pick(next_mark, { mark_row, mark_col - 1 }, cmp)
+      elseif mark_row == cursor_row and mark_col < cursor_col + 1 then
+        next_mark = pick(next_mark, { mark_row, mark_col - 1 }, cmp)
+      end
+    end
+    if next_mark[1] ~= -1 and next_mark[2] ~= -1 then
+      vim.api.nvim_win_set_cursor(0, next_mark)
+    end
+  end
+end, { desc = "Jump to previous lowercase mark" })
