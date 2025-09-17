@@ -1,0 +1,30 @@
+# Run `ghostty +show-config --default --docs` to view a list of
+# all available config options and their default values.
+#
+# Additionally, each config option is also explained in detail
+# on Ghostty's website, at https://ghostty.org/docs/config
+#
+# Ghostty can reload the configuration while running by using the menu
+# options or the bound key (Control + Shift + comma).
+
+font-family = "FiraCode Nerd Font Mono Med"
+font-family-bold = "FiraCode Nerd Font Mono Bold"
+font-family-italic = "JetBrainsMono Nerd Font Mono"
+font-family-bold-italic = "JetBrainsMono Nerd Font Mono"
+font-size = 12
+
+background-opacity = 0.8
+
+shell-integration-features = no-cursor
+cursor-style = block
+cursor-style-blink = false
+
+theme = One Half Dark
+background = #1e2127
+foreground = #abb2bf
+
+keybind = ctrl+t=new_tab
+keybind = ctrl+w=close_tab
+keybind = performable:ctrl+c=copy_to_clipboard
+
+custom-shader = ./shaders/cursor_smear.glsl
