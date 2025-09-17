@@ -325,8 +325,8 @@ return {
     opts = {
       special_mark = {
         enabled = true,
-        priority = 9
-      }
+        priority = 9,
+      },
     },
     event = { "BufReadPre", "BufNewFile" },
   },
@@ -544,11 +544,18 @@ return {
   {
     "DrKJeff16/project.nvim",
     lazy = false,
-    config = function()
-      require("project").setup {
-        patterns = { ">.config" },
-      }
-    end,
+    opts = {
+      patterns = {
+        ">.config",
+        ".git",
+        ".github",
+        "_darcs",
+        ".hg",
+        ".bzr",
+        ".svn",
+        "Pipfile",
+      },
+    },
   },
 
   -- Don't open Neovim inside Neovim
