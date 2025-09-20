@@ -328,7 +328,7 @@ return {
         priority = 9,
       },
     },
-    event = { "BufReadPre", "BufNewFile" },
+    event = { "BufReadPre", "BufNewFile", "BufWritePre" },
   },
 
   -- Remove the press enter prompt
@@ -509,7 +509,7 @@ return {
   -- Organize your work with comments
   {
     "folke/todo-comments.nvim",
-    event = { "VeryLazy" },
+    event = { "BufReadPost" },
     dependencies = "nvim-lua/plenary.nvim",
     config = function()
       dofile(vim.g.base46_cache .. "todo")

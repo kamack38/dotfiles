@@ -359,23 +359,6 @@
                 }
             ],
             "newline": true
-        },
-        {
-            "type": "rprompt",
-            "alignment": "right",
-            "segments": [
-                {
-                    "properties": {
-                        "track_separator": " - "
-                    },
-                    "style": "diamond",
-                    "leading_diamond": "\ue0b6",
-                    "trailing_diamond": "\ue0b4",
-                    "foreground": "#ffffff",
-                    "background": "#1BD760",
-                    "type": "spotify"
-                }
-            ]
         }
     ],
     "version": 3,
