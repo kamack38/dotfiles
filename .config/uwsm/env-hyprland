@@ -10,7 +10,7 @@ export XDG_MENU_PREFIX=arch-
 export MOZ_ENABLE_WAYLAND=1
 export MOZ_DISABLE_RDD_SANDBOX=1
 
-if [ -d "/proc/driver/nvidia" ]; then
+if [ -d "/proc/driver/nvidia" ] && [ "$(cat /sys/class/power_supply/ADP0/online)" -eq 1 ]; then
 	export LIBVA_DRIVER_NAME=nvidia
 	export NVD_BACKEND=direct
 	export GBM_BACKEND=nvidia-drm
