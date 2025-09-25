@@ -545,6 +545,9 @@ return {
     "DrKJeff16/project.nvim",
     lazy = false,
     opts = {
+      fzf_lua = {
+        enabled = true,
+      },
       patterns = {
         ">.config",
         ".git",
