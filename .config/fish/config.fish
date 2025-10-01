@@ -150,6 +150,7 @@ if test -d /tmp/hypr
     alias hypr-log="bat /tmp/hypr/$(/usr/bin/ls -t /tmp/hypr/ | head -n 2 | tail -n 1)/hyprland.log"
     alias hypr-log-tty="bat /tmp/hypr/$(/usr/bin/ls -t /tmp/hypr/ | head -n 1)/hyprland.log"
 end
+alias unlock-hyprland="hyprctl -i 0 keyword misc:allow_session_lock_restore 1 && hyprctl -i 0 dispatch exec hyprlock"
 
 # Virtual machine
 function remove-vm -a vm
