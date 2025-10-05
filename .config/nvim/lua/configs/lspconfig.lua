@@ -44,6 +44,6 @@ local servers = {
 }
 
 for name, opts in pairs(servers) do
-  vim.lsp.enable(name)
   vim.lsp.config(name, opts)
+  vim.lsp.enable(name)
 end

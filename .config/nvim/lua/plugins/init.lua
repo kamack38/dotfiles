@@ -524,6 +524,8 @@ return {
     cmd = { "RunCode", "RunFile", "RunProject" },
     opts = {
       filetype = {
+        c =
+        'cd "$dir" && mkdir -p "$dir/bin" && clang "$dir/$fileName" -o "$dir/bin/$fileNameWithoutExt" -std=c11 -Wall -Werror -fsanitize=address,undefined && "$dir/bin/$fileNameWithoutExt"',
         cpp = function()
           if vim.fn.has "win32" == 1 then
             return
@@ -540,7 +542,23 @@ return {
     },
   },
 
-  -- Set project root correctly
+  -- Leetcode plugin
+  {
+    "kawre/leetcode.nvim",
+    cmd = "Leet",
+    dependencies = {
+      -- include a picker of your choice, see picker section for more details
+      "nvim-lua/plenary.nvim",
+      "MunifTanjim/nui.nvim",
+    },
+    opts = {
+      picker = {
+        provider = "fzf-lua"
+      }
+    },
+  },
+
+  -- -- Set project root correctly
   {
     "DrKJeff16/project.nvim",
     lazy = false,
@@ -549,6 +567,8 @@ return {
         enabled = true,
       },
       patterns = {
+        "bin",
+        ">Documents",
         ">.config",
         ".git",
         ".github",
