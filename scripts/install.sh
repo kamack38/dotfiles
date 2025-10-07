@@ -171,6 +171,7 @@ DESKTOP_APPS=(
 	"qt6-imageformats"                 # Add more image formats (webp)
 	"vesktop"                          # A standalone Electron-based Discord app with Vencord & improved Linux support
 	"firefox-developer-edition"        # Web browser for developers
+	"ffmpeg4.4"                        # Codecs for Firefox
 	"ff2mpv-native-messaging-host-git" # Open video in mpv
 	"spotify-launcher"                 # Client for spotify's apt repository in Rust for Arch Linux
 	"spicetify-cli"                    # Cli for extending spotify
@@ -660,6 +661,9 @@ if [[ "${SELECTED_DE}" != "" || $(pacman -Q sddm) ]]; then
 		DE=$(echo "$DE" | awk '{print tolower($0)}')
 		bash "$HOME/scripts/profiles/${DE}.sh"
 	done
+
+	# Symlink Firefox
+	sudo ln -s /usr/bin/firefox-developer-edition /usr/bin/firefox
 
 	# Enable service
 	sudo systemctl enable sddm.service
