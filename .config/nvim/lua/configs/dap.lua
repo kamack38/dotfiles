@@ -2,12 +2,12 @@ return {
   {
     "mfussenegger/nvim-dap",
     keys = {
-      { "n", "<F8>",      "<cmd>DapContinue<cr>",         { desc = "Debug: Continue" } },
-      { "n", "<F10>",     "<cmd>DapStepOver<cr>",         { desc = "Debug: Step Over" } },
-      { "n", "<F11>",     "<cmd>DapStepInto<cr>",         { desc = "Debug: Step Into" } },
-      { "n", "<F12>",     "<cmd>DapStepOut<cr>",          { desc = "Debug: Step Out" } },
-      { "n", "<leader>b", "<cmd>DapToggleBreakpoint<cr>", { desc = "Debug: Toggle Breakpoint" } },
-      { "n", "<leader>B",
+      { "<F8>",      "<cmd>DapContinue<cr>",         { desc = "Debug: Continue" } },
+      { "<F10>",     "<cmd>DapStepOver<cr>",         { desc = "Debug: Step Over" } },
+      { "<F11>",     "<cmd>DapStepInto<cr>",         { desc = "Debug: Step Into" } },
+      { "<F12>",     "<cmd>DapStepOut<cr>",          { desc = "Debug: Step Out" } },
+      { "<leader>b", "<cmd>DapToggleBreakpoint<cr>", { desc = "Debug: Toggle Breakpoint" } },
+      { "<leader>B",
         function()
           local dap = require "dap"
           dap.set_breakpoint(vim.fn.input("Breakpoint condition: "))
@@ -53,9 +53,10 @@ return {
             local filename = vim.fn.expand("%:t:r")
             local bindir = filedir .. "bin/debug"
             local exepath = bindir .. "/" .. filename
-            vim.cmd("cd " ..
-              filedir ..
-              " && mkdir -p " .. bindir " && clang++ --debug " .. filepath .. " -o " .. exepath)
+            local command = "cd '" ..
+                filedir ..
+                "' && mkdir -p '" .. bindir .. "' && clang++ --debug '" .. filepath .. "' -o '" .. exepath .. "'"
+            vim.fn.system(command)
             return exepath
           end,
           cwd = "${workspaceFolder}",
