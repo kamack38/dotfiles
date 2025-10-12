@@ -542,6 +542,9 @@ return {
     },
   },
 
+  -- Debugger
+  { import = "configs.dap" },
+
   -- Leetcode plugin
   {
     "kawre/leetcode.nvim",

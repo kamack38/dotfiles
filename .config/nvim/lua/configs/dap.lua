@@ -14,7 +14,6 @@ return {
         end, { desc = "Debug: Set Conditional Breakpoint" }
       }
     },
-    event = "VeryLazy",
     config = function()
       local dap = require "dap"
 
@@ -70,21 +69,8 @@ return {
       vim.fn.sign_define("DapStopped", { text = "▶️", texthl = "", linehl = "", numhl = "" })
 
       dap.set_log_level("DEBUG")
-    end,
-  },
 
-  {
-    "rcarriga/nvim-dap-ui",
-    dependencies = {
-      "mfussenegger/nvim-dap",
-      "nvim-neotest/nvim-nio"
-    },
-    event = "VeryLazy",
-    config = function()
       local dapui = require "dapui"
-      local dap = require "dap"
-
-      dapui.setup()
       dap.listeners.before.attach.dapui_config = function()
         dapui.open()
       end
@@ -97,6 +83,15 @@ return {
       dap.listeners.before.event_exited.dapui_config = function()
         dapui.close()
       end
-    end
+    end,
+  },
+
+  {
+    "rcarriga/nvim-dap-ui",
+    dependencies = {
+      "mfussenegger/nvim-dap",
+      "nvim-neotest/nvim-nio"
+    },
+    opts = {},
   }
 }
