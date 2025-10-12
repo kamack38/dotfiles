@@ -26,14 +26,20 @@
             "keyColor": "magenta"
         },
         { "type": "kernel", "key": "󰍛 ", "keyColor": "red" },
-        { "type": "uptime", "key": "󱑎 ", "keyColor": "blue" },
         {
             "type": "packages",
             "key": "󰏗 ",
             "keyColor": "green"
         },
+        { "type": "memory", "key": " ", "keyColor": "magenta" },
         { "type": "shell", "key": " ", "keyColor": "blue" },
-        { "type": "memory", "key": " ", "keyColor": "magenta" },
+        { "type": "uptime", "key": "󱫐 ", "keyColor": "cyan" },
+        {
+            "type": "command",
+            "key": "󱦟 ",
+            "keyColor": "yellow",
+            "text": "birth_install=$(stat -c %W /); current=$(date +%s); time_progression=$((current - birth_install)); days_difference=$((time_progression / 86400)); echo $days_difference days"
+        },
         "break",
         "colors"
     ]
