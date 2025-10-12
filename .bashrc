@@ -21,6 +21,9 @@ esac
 # See bash(1) for more options
 HISTCONTROL=ignoreboth
 
+# Set inputrc path
+export INPUTRC="${XDG_CONFIG_HOME:-$HOME/.config}/bash/inputrc"
+
 # append to the history file, don't overwrite it
 shopt -s histappend
 
