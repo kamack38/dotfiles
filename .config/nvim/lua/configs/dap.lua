@@ -50,7 +50,7 @@ return {
             local filepath = vim.api.nvim_buf_get_name(0)
             local filedir = vim.fn.fnamemodify(filepath, ":p:h")
             local filename = vim.fn.expand("%:t:r")
-            local bindir = filedir .. "bin/debug"
+            local bindir = filedir .. "/bin/debug"
             local exepath = bindir .. "/" .. filename
             local command = "cd '" ..
                 filedir ..
