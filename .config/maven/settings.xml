@@ -1,0 +1,1 @@
+<localRepository>${env.XDG_CACHE_HOME}/maven/repository</localRepository> 

@@ -52,3 +52,6 @@ NPM_CONFIG_TMP DEFAULT="${XDG_RUNTIME_DIR}/npm"
 
 # python-tensorflow
 KERAS_HOME DEFAULT=${XDG_STATE_HOME}/keras
+
+# Maven
+MAVEN_ARGS DEFAULT=${XDG_CONFIG_HOME}/maven/settings.xml
