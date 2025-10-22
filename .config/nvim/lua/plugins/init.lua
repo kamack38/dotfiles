@@ -52,6 +52,11 @@ return {
         "typst",
       },
 
+      indent = {
+        enable = true,
+        disable = { "html" },
+      },
+
       incremental_selection = {
         enable = true,
         keymaps = {
