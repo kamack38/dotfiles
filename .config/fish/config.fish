@@ -281,6 +281,7 @@ end
 if status is-interactive
     if [ "$TERM" = linux ] && type -q starship
         source (starship init fish --print-full-init | psub)
+        enable_transience
     else if type -q oh-my-posh
         oh-my-posh init fish --config ~/.config/oh-my-posh/kamack.omp.json | source
     end
