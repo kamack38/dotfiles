@@ -187,7 +187,8 @@ mount ${MAIN_DEV} /mnt
 
 btrfs subvolume create /mnt/@
 btrfs subvolume create /mnt/@home
-btrfs subvolume create /mnt/@var
+btrfs subvolume create /mnt/@cache
+btrfs subvolume create /mnt/@log
 btrfs subvolume create /mnt/@tmp
 btrfs subvolume create /mnt/@swap
 
@@ -202,13 +203,14 @@ echo "${BLUE}:: ${BWHITE}Mounting @ subvolume...${NC}"
 mount -o ${MOUNT_OPTIONS},subvol=@ ${MAIN_DEV} /mnt
 
 echo "${BLUE}:: ${BWHITE}Creating directories (home, var, tmp, swap)...${NC}"
-mkdir -p /mnt/{home,var,tmp,swap}
+mkdir -p /mnt/{home,var/log,var/cache,tmp,swap}
 
 # Mount all btrfs subvolumes
 echo "${BLUE}:: ${BWHITE}Mounting other btrfs subvolumes...${NC}"
 mount -o ${MOUNT_OPTIONS},subvol=@home ${MAIN_DEV} /mnt/home
 mount -o ${MOUNT_OPTIONS},nodev,nosuid,noexec,subvol=@tmp ${MAIN_DEV} /mnt/tmp
-mount -o ${MOUNT_OPTIONS},subvol=@var ${MAIN_DEV} /mnt/var
+mount -o ${MOUNT_OPTIONS},nodev,nosuid,subvol=@cache ${MAIN_DEV} /mnt/var/cache
+mount -o ${MOUNT_OPTIONS},nodev,nosuid,noexec,subvol=@log ${MAIN_DEV} /mnt/var/log
 mount -o ${SWAP_MOUNT_OPTIONS},subvol=@swap ${MAIN_DEV} /mnt/swap
 
 if [[ "$ENCRYPT" == true ]]; then
