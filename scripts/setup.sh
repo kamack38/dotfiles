@@ -189,6 +189,8 @@ btrfs subvolume create /mnt/@
 btrfs subvolume create /mnt/@home
 btrfs subvolume create /mnt/@cache
 btrfs subvolume create /mnt/@log
+btrfs subvolume create /mnt/@libvirt
+btrfs subvolume create /mnt/@docker
 btrfs subvolume create /mnt/@tmp
 btrfs subvolume create /mnt/@swap
 
@@ -202,16 +204,16 @@ SWAP_MOUNT_OPTIONS="nodatacow,noatime,nospace_cache"
 echo "${BLUE}:: ${BWHITE}Mounting @ subvolume...${NC}"
 mount -o ${MOUNT_OPTIONS},subvol=@ ${MAIN_DEV} /mnt
 
-echo "${BLUE}:: ${BWHITE}Creating directories (home, var, tmp, swap)...${NC}"
-mkdir -p /mnt/{home,var/log,var/cache,tmp,swap}
-
 # Mount all btrfs subvolumes
 echo "${BLUE}:: ${BWHITE}Mounting other btrfs subvolumes...${NC}"
-mount -o ${MOUNT_OPTIONS},subvol=@home ${MAIN_DEV} /mnt/home
-mount -o ${MOUNT_OPTIONS},nodev,nosuid,noexec,subvol=@tmp ${MAIN_DEV} /mnt/tmp
-mount -o ${MOUNT_OPTIONS},nodev,nosuid,subvol=@cache ${MAIN_DEV} /mnt/var/cache
-mount -o ${MOUNT_OPTIONS},nodev,nosuid,noexec,subvol=@log ${MAIN_DEV} /mnt/var/log
-mount -o ${SWAP_MOUNT_OPTIONS},subvol=@swap ${MAIN_DEV} /mnt/swap
+mount --mkdir -o ${MOUNT_OPTIONS},subvol=@home ${MAIN_DEV} /mnt/home
+mount --mkdir -o ${MOUNT_OPTIONS},nodev,nosuid,noexec,subvol=@tmp ${MAIN_DEV} /mnt/tmp
+mount --mkdir -o ${MOUNT_OPTIONS},nodev,nosuid,subvol=@cache ${MAIN_DEV} /mnt/var/cache
+mount --mkdir -o ${MOUNT_OPTIONS},nodev,nosuid,noexec,subvol=@log ${MAIN_DEV} /mnt/var/log
+mount --mkdir -o ${SWAP_MOUNT_OPTIONS},subvol=@swap ${MAIN_DEV} /mnt/swap
+mount --mkdir -o ${MOUNT_OPTIONS},nodev,nosuid,subvol=@libvirt ${MAIN_DEV} /mnt/var/lib/libvirt
+mount --mkdir -o ${MOUNT_OPTIONS},nodev,nosuid,subvol=@docker ${MAIN_DEV} /mnt/var/lib/docker
+chattr +C /mnt/var/lib/{docker,libvirt}
 
 if [[ "$ENCRYPT" == true ]]; then
 	ENCRYPTED_PARTITION_UUID=$(blkid -s UUID -o value "/dev/disk/by-partlabel/Archlinux")
