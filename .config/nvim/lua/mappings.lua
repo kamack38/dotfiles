@@ -25,6 +25,9 @@ local function pick(a, b, cmp)
   return b
 end
 
+-- Lazy
+map("n", "<leader>uu", "<cmd> Lazy sync <CR>", { desc = "Lazy sync" })
+
 -- ZenMode
 map("n", "<leader>tz", "<cmd> ZenMode <CR>", { desc = "ZenMode toggle" })
 
