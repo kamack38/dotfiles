@@ -149,6 +149,7 @@ TYPST_DEV_PROFILE=(
 	"typst"        # A markup-based typesetting system for the sciences
 	"typstyle-bin" # Beautiful and reliable typst code formatter
 	"tinymist"     # An integrated language service for Typst
+	"websocat"     # Command-line client for web sockets (required for typst-preview.nvim)
 )
 
 DOCKER_PROFILE=(

@@ -37,7 +37,7 @@ local servers = {
   tinymist = {
     single_file_support = true,
     settings = {
-      exportPdf = "onType",
+      exportPdf = "onSave",
       outputPath = "$root/target/$dir/$name",
     },
   },
