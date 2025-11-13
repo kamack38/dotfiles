@@ -1,3 +1,5 @@
+@define-color bg #1e1e2e;
+
 * {
     border: none;
     border-radius: 10px;
@@ -17,7 +19,7 @@ window#waybar {
 
 /* biome-ignore lint/correctness/noUnknownTypeSelector: This selector exists in waybar */
 tooltip {
-    background: #1e1e2e;
+    background: @bg;
     border-radius: 10px;
     padding: 8px;
     opacity: 0.95;
@@ -77,7 +79,7 @@ tooltip {
 #custom-cpu-temperature,
 #custom-gpu-usage,
 #custom-gpu-temperature {
-    background: #1e1e2e;
+    background: @bg;
     padding: 0px 8px;
     border-radius: 0px;
 }
@@ -89,7 +91,7 @@ tooltip {
 }
 
 #workspaces {
-    background: #1e1e2e;
+    background: @bg;
     border-radius: 10px;
     padding-right: 0px;
     padding-left: 5px;
