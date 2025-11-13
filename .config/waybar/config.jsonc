@@ -38,7 +38,7 @@
     },
 
     "custom/updates": {
-        "exec": "~/.config/polybar/scripts/updates-pacman-aurhelper.sh",
+        "exec": "~/.config/waybar/scripts/updates.sh",
         "exec-on-event": true,
         "format": "  {}",
         "on-click": "kitty --class package_update -e \"paru\" && notify-send -t 2000 'All packages have been updated!'",

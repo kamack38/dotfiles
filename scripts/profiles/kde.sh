@@ -22,9 +22,6 @@ KDE_PACKAGES=(
 	"spectacle"                               # Screenshot tool
 	"latte-dock"                              # KDE dock
 	"plasma-browser-integration"              # Integrate browser and plasma
-	"polybar"                                 # A fast and easy-to-use status bar
-	"dbus-python"                             # Python bindings for DBUS (Polybar ...)
-	"python-gobject"                          # Ui creation (polybar mpris support)
 	"rofi"                                    # Application launcher for Linux
 	"clipster"                                # Python clipboard manager
 )
