@@ -8,10 +8,6 @@ echo "Config home set to: $XDG_CONFIG_HOME"
 if hyprctl monitors -j | jq -e 'any(.[]; .name != "eDP-1")'; then
 	waybar -c "$XDG_CONFIG_HOME/waybar/config.jsonc"
 else
-	# Leave empty space for the bar
-	hyprctl keyword workspace w[t1] m[0], gapsout:5 0 0 0
-	hyprctl keyword workspace f[1] m[0], gapsout:5 0 0 0
-
 	if acpi -a | grep -qi "off-line"; then
 		waybar -c "$XDG_CONFIG_HOME/waybar/battery-config.jsonc"
 	else
