@@ -205,6 +205,22 @@ return {
     event = "VeryLazy",
   },
 
+  -- Typescript tools
+  {
+    "pmizio/typescript-tools.nvim",
+    dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
+    ft = { "typescript", "javascript", "typescriptreact", "javascriptreact" },
+    opts = {
+      settings = {
+        tsserver_file_preferences = {
+          includeInlayParameterNameHints = "all",
+          includeCompletionsForModuleExports = true,
+          quotePreference = "auto",
+        },
+      }
+    },
+  },
+
   -- Markdown previewer
   {
     "OXY2DEV/markview.nvim",

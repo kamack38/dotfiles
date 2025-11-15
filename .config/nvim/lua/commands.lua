@@ -195,9 +195,33 @@ autocmd("FileType", {
 autocmd("LspAttach", {
   callback = function(args)
     local client = vim.lsp.get_client_by_id(args.data.client_id)
+    if not client then return end
     if client:supports_method('textDocument/foldingRange') then
       local win = vim.api.nvim_get_current_win()
       vim.wo[win][0].foldexpr = 'v:lua.vim.lsp.foldexpr()'
+    end
+    if client.name == "biome" then
+      vim.api.nvim_create_autocmd("BufWritePre", {
+        pattern = { "*.js", "*.jsx", "*.ts", "*.tsx", "*.json", "*.jsonc" },
+        group = vim.api.nvim_create_augroup("BiomeFixAll", { clear = true }),
+        callback = function()
+          vim.lsp.buf.code_action({
+            context = {
+              only = {
+                ---@diagnostic disable-next-line: assign-type-mismatch
+                "source.fixAll.biome",
+                ---@diagnostic disable-next-line: assign-type-mismatch
+                "source.organizeImports.biome",
+                ---@diagnostic disable-next-line: assign-type-mismatch
+                "quickfix.biome.nursery.useSortedClasses"
+              },
+              diagnostics = {}
+            },
+            apply = true,
+            silent = true,
+          })
+        end,
+      })
     end
   end,
 })
