@@ -88,20 +88,24 @@ NORMAL_PROFILE=(
 	"yubikey-manager"         # Python library and command line tool for configuring a YubiKey
 	"xdg-user-dirs"           # Manages user directories
 	"snapper-support"         # Support package for enabling Snapper with snap-pac and grub-btrfs
+	"android-udev"            # Udev rules to connect Android devices to your linux box
 	"${DEV_PROFILE[@]}"
 )
 
 GAMING_PROFILE=(
-	"mangohud"              # Hud for showing performance metrics
-	"gamescope"             # SteamOS session compositing window manager
-	"gamemode"              # A daemon/lib combo that allows games to request a set of optimisations be temporarily applied to the host OS
-	"input-devices-support" # Meta package for input devices support
-	"piper"                 # Mouse button configurer
-	"steam"                 # Game library
-	"proton-ge-custom"      # Custom layer for running Windows games on Linux
-	"xpadneo-dkms"          # Advanced Linux Driver for Xbox One Wireless Gamepad
-	"lutris-git"            # Open Gaming Platform
-	"wine"                  # A compatibility layer for running Windows programs
+	"mangohud"          # Hud for showing performance metrics
+	"gamescope"         # SteamOS session compositing window manager
+	"gamemode"          # A daemon/lib combo that allows games to request a set of optimisations be temporarily applied to the host OS
+	"piper"             # Mouse button configurer
+	"steam"             # Game library
+	"proton-ge-custom"  # Custom layer for running Windows games on Linux
+	"xpadneo-dkms"      # Advanced Linux Driver for Xbox One Wireless Gamepad
+	"game-devices-udev" # Udev rules for controllers
+	"linuxconsole"      # Set of utilities for joysticks and serial devices
+	"iio-sensor-proxy"  # IIO accelerometer sensor to input device proxy
+	"lutris-git"        # Open Gaming Platform
+	"wine"              # A compatibility layer for running Windows programs
+	# "bolt" (If you're using thunderbolt)
 )
 
 SOUND_PROFILE=(
@@ -541,6 +545,12 @@ Comment=Start Steam in Big Picture Mode
 Exec=/usr/bin/gamescope -e -- /usr/bin/steam -tenfoot
 Type=Application
 EOT
+
+	# Add input and video groups
+	getent group "input" &>/dev/null || sudo groupadd -r input -g 97
+	getent group "video" &>/dev/null || sudo groupadd -r video -g 91
+	sudoe usermod -a -G input "$USER"
+	sudo usermod -a -G video "$USER"
 fi
 if [[ $SELECTED_PROFILES == *"VM"* ]]; then
 	echo "${BLUE}:: ${BWHITE}Configuring ${BLUE}virtual machine${BWHITE} support...${NC}"
