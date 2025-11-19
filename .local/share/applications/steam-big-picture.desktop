@@ -1,0 +1,11 @@
+[Desktop Entry]
+Name=Steam Big Picture
+Comment=Opens Steam in Big Picture mode
+Exec=/usr/bin/steam -tenfoot -steamos3 %U
+Icon=gamepad-symbolic
+Terminal=false
+Type=Application
+Categories=Network;FileTransfer;Game;
+MimeType=x-scheme-handler/steam;x-scheme-handler/steamlink;
+PrefersNonDefaultGPU=true
+X-KDE-RunOnDiscreteGpu=true
