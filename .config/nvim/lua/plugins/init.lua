@@ -460,6 +460,7 @@ return {
     cmd = { "FzfLua" },
     dependencies = { "nvim-tree/nvim-web-devicons" },
     config = function()
+      local actions = require("fzf-lua.actions")
       require("fzf-lua").setup({
         keymap = {
           builtin = {
@@ -476,8 +477,9 @@ return {
         },
         actions = {
           files = {
-            ["ctrl-h"] = FzfLua.actions.toggle_hidden,
-          }
+            true,
+            ["ctrl-h"] = { actions.toggle_hidden },
+          },
         },
         fzf_colors = {
           ["fg+"] = { "fg", { "VisualNOS" }, "bold", "underline" },
