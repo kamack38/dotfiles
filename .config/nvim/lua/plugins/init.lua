@@ -459,23 +459,34 @@ return {
     "ibhagwan/fzf-lua",
     cmd = { "FzfLua" },
     dependencies = { "nvim-tree/nvim-web-devicons" },
-    opts = {
-      keymap = {
-        builtin = {
-          ["<C-d>"] = "preview-page-down",
-          ["<C-u>"] = "preview-page-up",
+    config = function()
+      require("fzf-lua").setup({
+        keymap = {
+          builtin = {
+            ["<C-d>"] = "preview-page-down",
+            ["<C-u>"] = "preview-page-up",
+          },
+          fzf = {
+            ["alt-;"] = "abort",
+          },
         },
-        fzf = {
-          ["alt-;"] = "abort",
+        hls = { cursorline = "IncSearch" },
+        defaults = {
+          hidden = false,
         },
-      },
-      hls = { cursorline = "IncSearch" },
-      fzf_colors = {
-        ["fg+"] = { "fg", { "VisualNOS" }, "bold", "underline" },
-        ["bg+"] = { "bg", { "VisualNonText" }, "bold", "underline" },
-        ["gutter"] = "-1",
-      },
-    },
+        actions = {
+          files = {
+            ["ctrl-h"] = FzfLua.actions.toggle_hidden,
+          }
+        },
+        fzf_colors = {
+          ["fg+"] = { "fg", { "VisualNOS" }, "bold", "underline" },
+          ["bg+"] = { "bg", { "VisualNonText" }, "bold", "underline" },
+          ["gutter"] = "-1",
+        },
+      }
+      )
+    end,
   },
   {
     "nvim-telescope/telescope.nvim",
