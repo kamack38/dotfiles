@@ -548,7 +548,7 @@ return {
     opts = {
       filetype = {
         c =
-        'cd "$dir" && mkdir -p "$dir/bin" && gcc "$dir/$fileName" -o "$dir/bin/$fileNameWithoutExt" -std=c11 -Wall -Werror -fsanitize=address,undefined && "$dir/bin/$fileNameWithoutExt"',
+        'cd "$dir" && mkdir -p "$dir/bin" && gcc "$dir/$fileName" -o "$dir/bin/$fileNameWithoutExt" -std=c11 -Wall -Wextra -fsanitize=address,undefined && "$dir/bin/$fileNameWithoutExt"',
         cpp = function()
           if vim.fn.has "win32" == 1 then
             return
@@ -588,10 +588,14 @@ return {
   {
     "DrKJeff16/project.nvim",
     lazy = false,
+    init = function()
+      vim.g.project_lsp_nowarn = 1
+    end,
     opts = {
       fzf_lua = {
         enabled = true,
       },
+      detection_methods = { "lsp", "pattern" },
       patterns = {
         "bin",
         ">Documents",
