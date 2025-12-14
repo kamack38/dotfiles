@@ -99,6 +99,8 @@ alias gp="glow -p"
 alias rd="ripdrag"
 alias g="git"
 
+alias gccr='mkdir -p "./bin" && gcc  -Wall -Wextra -std=c11 -fsanitize=address,undefined *.c -o "./bin/main" -lm && "./bin/main"'
+
 if command -v firefox-developer-edition &>/dev/null
     alias firefox="firefox-developer-edition"
 end
