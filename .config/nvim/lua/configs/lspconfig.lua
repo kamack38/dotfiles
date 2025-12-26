@@ -43,6 +43,20 @@ local servers = {
   },
 }
 
+-- Check if clang-format has extend fallback-style support
+local lines = vim.fn.systemlist({ "clang-format", "--help" })
+local count = 0
+
+for _, line in ipairs(lines) do
+  if line:match("%-%-fallback%-style") then
+    count = count + 1
+  end
+end
+
+if count >= 5 then
+  servers.clangd.cmd = { "clangd", "--fallback-style=file:" .. os.getenv("HOME") .. "/.config/clang-format" }
+end
+
 for name, opts in pairs(servers) do
   vim.lsp.config(name, opts)
   vim.lsp.enable(name)
