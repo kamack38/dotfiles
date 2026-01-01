@@ -3,8 +3,8 @@ require "nvchad.options"
 local opt = vim.opt
 
 if vim.fn.has "win32" == 1 then
-  opt.shell = "pwsh.exe -nol"
-  opt.shellcmdflag = "-nop -c"
+  opt.shell = "pwsh.exe"
+  opt.shellcmdflag = "-nol -nop -c"
   opt.shellquote = '"'
   opt.shellxquote = ""
   opt.shellpipe = "| Out-File -Encoding UTF8 %s"
