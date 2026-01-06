@@ -338,7 +338,11 @@ EOT
 
 	if [[ "$ENCRYPT" == true ]]; then
 		# Add encrypt hook
-		sed -i "s,\(^HOOKS=.*\)filesystems\(.*\),\1encrypt filesystems\2," /etc/mkinitcpio.conf
+		if grep -q "^HOOKS=.*systemd.*" /etc/mkinitcpio.conf; then
+			sed -i "s,\(^HOOKS=.*\)filesystems\(.*\),\1sd-encrypt filesystems\2," /etc/mkinitcpio.conf
+		else
+			sed -i "s,\(^HOOKS=.*\)filesystems\(.*\),\1encrypt filesystems\2," /etc/mkinitcpio.conf
+		fi
 	fi
 	mkinitcpio -P
 }
