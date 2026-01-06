@@ -302,7 +302,11 @@ function chroot {
 		echo "${BLUE}:: ${BWHITE}Adding hibernation...${NC}"
 		SWAP_FILE_DEV_UUID=$(findmnt -no UUID -T $SWAP_FILE_PATH)
 		SWAP_FILE_OFFSET=$(btrfs inspect-internal map-swapfile -r "$SWAP_FILE_PATH")
-		sed -i "s,\(^HOOKS=.*\)filesystems\(.*\),\1filesystems resume\2," /etc/mkinitcpio.conf
+
+		# Add only when not using systemd hook
+		if ! grep -q "^HOOKS=.*systemd.*" /etc/mkinitcpio.conf; then
+			sed -i "s,\(^HOOKS=.*\)filesystems\(.*\),\1filesystems resume\2," /etc/mkinitcpio.conf
+		fi
 		sed -i "s,\(^GRUB_CMDLINE_LINUX_DEFAULT=\".*\)\(.*\"\),\1 resume=UUID=${SWAP_FILE_DEV_UUID} resume_offset=${SWAP_FILE_OFFSET}\2," /etc/default/grub
 		;;
 	zram)
