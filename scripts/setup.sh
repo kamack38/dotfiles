@@ -344,6 +344,9 @@ EOT
 			sed -i "s,\(^HOOKS=.*\)filesystems\(.*\),\1encrypt filesystems\2," /etc/mkinitcpio.conf
 		fi
 	fi
+
+	# Make sd-vconsole error go away
+	touch /etc/vconsole.conf
 	mkinitcpio -P
 }
 export -f chroot
