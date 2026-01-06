@@ -283,7 +283,11 @@ function chroot {
 		grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=GRUB
 	fi
 	if [[ "$ENCRYPT" == true ]]; then
-		sed -i "s%^GRUB_CMDLINE_LINUX_DEFAULT=\"%GRUB_CMDLINE_LINUX_DEFAULT=\"cryptdevice=UUID=${ENCRYPTED_PARTITION_UUID}:cryptroot root=/dev/mapper/cryptroot %" /etc/default/grub
+		if grep -q "^HOOKS=.*systemd.*" /etc/mkinitcpio.conf; then
+			sed -i "s%^GRUB_CMDLINE_LINUX_DEFAULT=\"%GRUB_CMDLINE_LINUX_DEFAULT=\"rd.luks.name=${ENCRYPTED_PARTITION_UUID}=cryptroot root=/dev/mapper/cryptroot %" /etc/default/grub
+		else
+			sed -i "s%^GRUB_CMDLINE_LINUX_DEFAULT=\"%GRUB_CMDLINE_LINUX_DEFAULT=\"cryptdevice=UUID=${ENCRYPTED_PARTITION_UUID}:cryptroot root=/dev/mapper/cryptroot %" /etc/default/grub
+		fi
 		sed -i "s/^#GRUB_ENABLE_CRYPTODISK=y/GRUB_ENABLE_CRYPTODISK=y/" /etc/default/grub
 	fi
 
