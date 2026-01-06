@@ -327,7 +327,7 @@ cd "$HOME"
 
 echo "${BLUE}:: ${BWHITE}Installing basic packages...${NC}"
 yes | sudo pacman -S --needed iptables-nft
-sudo pacman -S --noconfirm --needed git
+sudo pacman -S --noconfirm --needed git fzf
 
 # Set time zone and enable time sync
 echo "${BLUE}:: ${BWHITE}Setting time zone to ${BLUE}${TIME_ZONE}${BWHITE}...${NC}"
