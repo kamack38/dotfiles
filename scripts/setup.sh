@@ -69,7 +69,7 @@ SWAP_TYPE=$(printf "%s\n" "${SWAP_OPTIONS[@]}" | fzf --height=20% --layout=rever
 # Create luks password (encryption)
 ENCRYPT=true
 while true; do
-	echo -n "${YELLOW}:: ${BWHITE}Please enter your luks password (empy = no encryption): ${NC}"
+	echo -n "${YELLOW}:: ${BWHITE}Please enter your luks password (empty = no encryption): ${NC}"
 	read -rs luks_password # read password without echo
 
 	echo -ne "\n${YELLOW}:: ${BWHITE}Please repeat your luks password: ${NC}"
@@ -145,10 +145,10 @@ echo "${BLUE}:: ${BWHITE}Formatting disk...${NC}"
 if [[ ! -d "/sys/firmware/efi" ]]; then
 	echo "${YELLOW}:: ${BWHITE}BIOS system detected...${NC}"
 	sgdisk -n "0::+1M" --typecode="0:ef02" --change-name="0:BIOSBOOT" "${DISK}" # BIOS Boot Partition
-else
-	if [[ $use_x_efi == n* ]]; then
-		sgdisk -n "0::+512M" --typecode="0:ef00" --change-name="0:EFIBOOT" "${DISK}" # UEFI Boot Partition
-	fi
+fi
+
+if [[ $use_x_efi == n* ]]; then
+	sgdisk -n "0::+512M" --typecode="0:ef00" --change-name="0:EFIBOOT" "${DISK}" # UEFI Boot Partition
 fi
 sgdisk -N "0" --typecode="0:8300" --change-name="0:Archlinux" "${DISK}" # Root Partition, default start, remaining
 
