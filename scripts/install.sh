@@ -323,6 +323,7 @@ echo "		${RED}Thank you for using my script! ${NC}"
 
 echo "${BLUE}:: ${BWHITE}Doing a system update, cause stuff may break if it's not the latest version...${NC}"
 sudo pacman --noconfirm -Syu
+cd "$HOME"
 
 echo "${BLUE}:: ${BWHITE}Installing basic packages...${NC}"
 yes | sudo pacman -S --needed iptables-nft
