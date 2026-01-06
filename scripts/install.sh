@@ -640,7 +640,7 @@ EOT
 
 if ! grep -q "^HOOKS=.*colors.*" /etc/mkinitcpio.conf; then
 	if grep -q "^HOOKS=.*systemd.*" /etc/mkinitcpio.conf; then
-		sudo sed -i "s,\(^HOOKS=.*\)systemd\(.*\),\1systemd colors\2," "/etc/mkinitcpio.conf"
+		sudo sed -i "s,\(^HOOKS=.*\)systemd\(.*\),\1systemd sd-colors\2," "/etc/mkinitcpio.conf"
 	else
 		sudo sed -i "s,\(^HOOKS=.*\)udev\(.*\),\1udev colors\2," "/etc/mkinitcpio.conf"
 	fi
