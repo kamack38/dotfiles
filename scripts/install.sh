@@ -206,7 +206,7 @@ PROFILES=(
 )
 
 NVIDIA_DRIVERS=(
-	"nvidia-dkms"
+	"nvidia-open-dkms"
 	"nvidia-utils"
 	"lib32-nvidia-utils"
 	"nvidia-settings"

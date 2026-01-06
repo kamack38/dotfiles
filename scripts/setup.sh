@@ -249,6 +249,16 @@ PREREQUISITES=(
 	"dhclient"
 )
 
+# Swap
+SWAP_SIZE=$TOTAL_RAM_MB
+SWAP_FILE_PATH="/swap/swapfile"
+case $SWAP_TYPE in
+zram)
+	echo "${BLUE}:: ${BWHITE}Adding ${BLUE}zram${BWHITE} to prerequisites...${NC}"
+	PREREQUISITES+=("zram-generator")
+	;;
+esac
+
 # Install GRUB
 if [[ ! -d "/sys/firmware/efi" ]]; then
 	grub-install --boot-directory=/mnt/boot "${DISK}"
@@ -266,16 +276,6 @@ genfstab -L /mnt >>/mnt/etc/fstab
 echo "${YELLOW}:: ${BWHITE}Generated /etc/fstab:${NC}"
 cat /mnt/etc/fstab
 sleep 2
-
-# Swap
-SWAP_SIZE=$TOTAL_RAM_MB
-SWAP_FILE_PATH="/swap/swapfile"
-case $SWAP_TYPE in
-zram)
-	echo "${BLUE}:: ${BWHITE}Installing ${BLUE}zram${BWHITE} prerequisites...${NC}"
-	pacstrap /mnt zram-generator --noconfirm --needed 1>/dev/null
-	;;
-esac
 
 function chroot {
 	echo "${BLUE}:: ${BWHITE}Setting up ${BLUE}GRUB${BWHITE}...${NC}"
@@ -366,6 +366,12 @@ echo "${GREEN}:: ${BWHITE}Setup completed!${NC}"
 read -rp "${YELLOW}:: ${BWHITE}Do you want to run the user configuration? [Y/n]${NC}: " user_config_prompt
 if [[ ! $user_config_prompt == *n* ]]; then
 	HOME="/home/$USERNAME" arch-chroot -u "$USERNAME" /mnt /bin/bash -c "curl -fsSL https://github.com/kamack38/dotfiles/raw/main/scripts/setup.sh | bash"
+fi
+
+# Unmount everything
+umount -R /mnt
+if [[ $MAIN_DEV == "/dev/mapper/cryptroot" ]]; then
+	cryptsetup close /dev/mapper/cryptroot
 fi
 
 read -rp "${RED}:: ${BWHITE}Do you want to reboot? [Y/n]${NC}: " reboot_prompt
