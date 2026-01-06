@@ -375,12 +375,6 @@ if [[ ! $user_config_prompt == *n* ]]; then
 	HOME="/home/$USERNAME" arch-chroot -u "$USERNAME" /mnt /bin/bash -c "curl -fsSL https://github.com/kamack38/dotfiles/raw/main/scripts/setup.sh | bash"
 fi
 
-# Unmount everything
-umount -R /mnt
-if [[ $MAIN_DEV == "/dev/mapper/cryptroot" ]]; then
-	cryptsetup close /dev/mapper/cryptroot
-fi
-
 read -rp "${RED}:: ${BWHITE}Do you want to reboot? [Y/n]${NC}: " reboot_prompt
 if [[ ! $reboot_prompt == *n* ]]; then
 	echo "${YELLOW}:: ${BWHITE}Rebooting...${NC}"
