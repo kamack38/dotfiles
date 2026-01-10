@@ -119,9 +119,7 @@ map("n", "<leader>cn", require "nvchad.lsp.renamer", { desc = "LSP Rename" })
 map({ "n", "x" }, "<leader>ca", require("tiny-code-action").code_action,
   { noremap = true, silent = true, desc = "LSP Code actions" })
 map("n", "gl", vim.diagnostic.open_float, { desc = "LSP Show diagnostics" })
-map("n", "K", function()
-  vim.lsp.buf.hover { border = "rounded" }
-end, { desc = "LSP Hover" })
+map("n", "K", utils.hover_handler, { desc = "LSP Hover" })
 
 -- Leap
 map("n", "<leader>s", function()

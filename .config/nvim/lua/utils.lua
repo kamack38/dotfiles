@@ -190,4 +190,28 @@ function M.jump_prev_mark()
   end
 end
 
+function M.hover_handler()
+  local dap_ok, dap = pcall(require, "dap")
+  if dap_ok and dap.session() ~= nil then
+    local dapui_ok, dapui = pcall(require, "dap.ui.widgets")
+    if dapui_ok and vim.bo.filetype ~= "dap-float" then
+      dapui.hover(nil, { border = "rounded" })
+    end
+  end
+  local ft = vim.bo.filetype
+  if vim.tbl_contains({ "vim", "help" }, ft) then
+    vim.cmd("silent! h " .. vim.fn.expand("<cword>"))
+  elseif vim.tbl_contains({ "man" }, ft) then
+    vim.cmd("silent! Man " .. vim.fn.expand("<cword>"))
+  else
+    vim.lsp.buf.hover({
+      border = "rounded",
+      silent = true,
+      winopts = {
+        conceallevel = 3,
+      },
+    })
+  end
+end
+
 return M
