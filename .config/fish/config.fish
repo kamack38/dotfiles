@@ -169,12 +169,12 @@ end
 
 # Paru
 function pas --description 'Search and install a package' -a pkg
-    command paru -Sl --color=never | fzf --with-nth=2 --multi --preview 'paru -Si {1}/{2}' --preview-window wrap -q$pkg | awk '{print $1"/"$2}' | xargs -ro paru -S --review
+    command paru -Sl --color=never 2>/dev/null | fzf --with-nth=2 --multi --preview 'paru -Si {1}/{2}' --preview-window wrap -q$pkg | awk '{print $1"/"$2}' | xargs -ro paru -S --review
 end
-function pasq --description 'Search and install a package' -a pkg
-    command paru -Sl --color=never | fzf --with-nth=2 --multi --preview 'paru -Si {1}/{2}' --preview-window wrap -q$pkg | awk '{print $1"/"$2}' | xargs -ro paru -Si
+function pasq --description 'Search and show info about a package' -a pkg
+    command paru -Sl --color=never 2>/dev/null | fzf --with-nth=2 --multi --preview 'paru -Si {1}/{2}' --preview-window wrap -q$pkg | awk '{print $1"/"$2}' | xargs -ro paru -Si
 end
-function paq --description 'Search and show info about a package' -a pkg
+function paq --description 'Search and show info about a local package' -a pkg
     command paru -Qq --color=never | fzf --multi --preview 'paru -Qi {1}' --preview-window wrap -q$pkg | xargs -ro paru -Qi
 end
 function par --description 'Search and remove a package' -a pkg

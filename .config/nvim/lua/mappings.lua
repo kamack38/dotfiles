@@ -1,29 +1,7 @@
 require "nvchad.mappings"
 
 local map = vim.keymap.set
-
-local function is_upper(char)
-  return (65 <= char:byte() and char:byte() <= 90)
-end
-
-local function is_lower(char)
-  return (97 <= char:byte() and char:byte() <= 122)
-end
-
-local function is_letter(char)
-  return is_upper(char) or is_lower(char)
-end
-
-local function pick(a, b, cmp)
-  for i, v in ipairs(a) do
-    if cmp(v, b[i]) then
-      return a
-    elseif cmp(b[i], v) then
-      return b
-    end
-  end
-  return b
-end
+local utils = require "utils"
 
 -- Lazy
 map("n", "<leader>uu", "<cmd> Lazy sync <CR>", { desc = "Lazy sync" })
@@ -65,12 +43,8 @@ map("n", "<C-S-m>", "<cmd> Trouble diagnostics toggle<CR>", { desc = "LSP show d
 
 -- Todo-comments
 map("n", "<leader>td", "<cmd> Trouble todo toggle <CR>", { desc = "Todo-comments show" })
-map("n", "]t", function()
-  require("todo-comments").jump_next()
-end, { desc = "Todo-comments next" })
-map("n", "[t", function()
-  require("todo-comments").jump_prev()
-end, { desc = "Todo-comments previous" })
+map("n", "]t", require("todo-comments").jump_next, { desc = "Todo-comments next" })
+map("n", "[t", require("todo-comments").jump_prev, { desc = "Todo-comments previous" })
 
 -- Pasting
 map("n", "<C-p>", "<cmd> pu <CR>", { desc = "Paste in line under" })
@@ -91,40 +65,10 @@ map("v", "<A-S-j>", ":copy'> <CR>", { desc = "Duplicate selected lines down" })
 map({ "n" }, "<A-w>", "<C-w>")
 
 -- Toggle split height between its default and its max
-map({ "n", "t" }, "<A-e>", function()
-  local win_id = vim.api.nvim_get_current_win()
-  local current_height = vim.api.nvim_win_get_height(win_id)
-
-  if vim.b.max_height == nil then
-    vim.b.max_height = 100
-  end
-
-  if current_height ~= vim.b.max_height then
-    vim.b.default_height = current_height
-    vim.api.nvim_win_set_height(win_id, vim.b.max_height)
-    vim.b.max_height = vim.api.nvim_win_get_height(win_id)
-  else
-    vim.api.nvim_win_set_height(win_id, vim.b.default_height)
-  end
-end, { noremap = true, silent = true })
+map({ "n", "t" }, "<A-e>", utils.expand_height, { noremap = true, silent = true })
 
 -- Toggle split width between its default and its max
-map({ "n", "t" }, "<A-y>", function()
-  local win_id = vim.api.nvim_get_current_win()
-  local current_width = vim.api.nvim_win_get_width(win_id)
-
-  if vim.b.max_width == nil then
-    vim.b.max_width = 999
-  end
-
-  if current_width ~= vim.b.max_width then
-    vim.b.default_width = current_width
-    vim.api.nvim_win_set_width(win_id, vim.b.max_width)
-    vim.b.max_width = vim.api.nvim_win_get_width(win_id)
-  else
-    vim.api.nvim_win_set_width(win_id, vim.b.default_width)
-  end
-end, { noremap = true, silent = true })
+map({ "n", "t" }, "<A-y>", utils.expand_width, { noremap = true, silent = true })
 
 -- Saving files
 map(
@@ -165,30 +109,15 @@ end, { desc = "Spider ge" })
 -- Textobjects
 map({ "o", "x" }, "ac", '<cmd>lua require("various-textobjs").subword("outer")<CR>')
 map({ "o", "x" }, "ic", '<cmd>lua require("various-textobjs").subword("inner")<CR>')
-map("n", "gx", function()
-  -- select URL
-  require("various-textobjs").url()
-
-  -- plugin only switches to visual mode when textobj is found
-  local foundURL = vim.fn.mode():find "v"
-  if not foundURL then
-    vim.cmd("tag " .. vim.fn.expand "<cword>")
-    return
-  end
-
-  local url = vim.fn.getregion(vim.fn.getpos ".", vim.fn.getpos "v", { type = "v" })[1]
-  vim.ui.open(url)
-  vim.cmd.normal { "v", bang = true } -- leave visual mode
-end, { desc = "Open next available link" })
+map("n", "gx", utils.open_next_link, { desc = "Open next available link" })
 
 -- Terminal
 map({ "n" }, "<leader>tt", ":terminal<CR>i")
 
 -- Lsp
 map("n", "<leader>cn", require "nvchad.lsp.renamer", { desc = "LSP Rename" })
-map({ "n", "x" }, "<leader>ca", function()
-  require("tiny-code-action").code_action()
-end, { noremap = true, silent = true, desc = "LSP Code actions" })
+map({ "n", "x" }, "<leader>ca", require("tiny-code-action").code_action,
+  { noremap = true, silent = true, desc = "LSP Code actions" })
 map("n", "gl", vim.diagnostic.open_float, { desc = "LSP Show diagnostics" })
 map("n", "K", function()
   vim.lsp.buf.hover { border = "rounded" }
@@ -203,115 +132,9 @@ map("n", "<leader>S", function()
 end, { desc = "Jump till search" })
 
 -- Marks
-map("n", "m", function()
-  local input = vim.fn.getchar()
-  local char = vim.fn.nr2char(input)
-
-  if not is_letter(char) then
-    return
-  end
-
-  local line = vim.api.nvim_win_get_cursor(0)[1]
-  local pos = vim.api.nvim_buf_get_mark(0, char)
-  local row, _ = unpack(pos)
-  if row ~= line then
-    vim.api.nvim_feedkeys("m" .. char, "n", true)
-  else
-    vim.api.nvim_buf_del_mark(0, char)
-  end
-
-  vim.schedule(function()
-    require("guttermarks").refresh()
-  end)
-end, { desc = "Toggle mark under cursor" })
-map("n", "dm", function()
-  local input = vim.fn.getchar()
-  local char = vim.fn.nr2char(input)
-
-  if not is_letter(char) then
-    vim.api.nvim_feedkeys("dm" .. input, "n", true)
-    return
-  end
-
-  vim.api.nvim_buf_del_mark(0, char)
-  vim.schedule(function()
-    require("guttermarks").refresh()
-  end)
-end, { desc = "Delete mark", noremap = true })
-map("n", "dm;", function()
-  local buf = vim.api.nvim_get_current_buf()
-  local line = vim.api.nvim_win_get_cursor(0)[1]
-
-  for _, m in ipairs(vim.fn.getmarklist(buf)) do
-    if m.pos[2] == line and is_lower(m.mark:sub(2)) then
-      vim.api.nvim_buf_del_mark(buf, m.mark:sub(2))
-    end
-  end
-
-  for _, m in ipairs(vim.fn.getmarklist()) do
-    if m.pos[1] == buf and m.pos[2] == line and is_upper(m.mark:sub(2)) then
-      vim.api.nvim_del_mark(m.mark:sub(2))
-    end
-  end
-  require("guttermarks").refresh()
-end, { desc = "Delete marks on the current line" })
-map("n", "dm<Space>", function()
-  local buf = vim.api.nvim_get_current_buf()
-
-  for _, m in ipairs(vim.fn.getmarklist(buf)) do
-    if is_lower(m.mark:sub(2)) then
-      vim.api.nvim_buf_del_mark(buf, m.mark:sub(2))
-    end
-  end
-
-  for _, m in ipairs(vim.fn.getmarklist()) do
-    if m.pos[1] == buf and is_upper(m.mark:sub(2)) then
-      vim.api.nvim_del_mark(m.mark:sub(2))
-    end
-  end
-  require("guttermarks").refresh()
-end, { desc = "Delete all marks in the current buffer" })
-map("n", "m]", function()
-  local buf = vim.api.nvim_get_current_buf()
-  local marks = vim.fn.getmarklist(buf)
-  local cursor_row, cursor_col = unpack(vim.api.nvim_win_get_cursor(0))
-  local function cmp(a, b)
-    return a < b
-  end
-  local next_mark = { math.huge, math.huge }
-  for _, mark in ipairs(marks) do
-    local _, mark_row, mark_col = unpack(mark.pos)
-    if is_lower(mark.mark:sub(2)) then
-      if mark_row > cursor_row then
-        next_mark = pick(next_mark, { mark_row, mark_col - 1 }, cmp)
-      elseif mark_row == cursor_row and mark_col > cursor_col + 1 then
-        next_mark = pick(next_mark, { mark_row, mark_col - 1 }, cmp)
-      end
-    end
-    if next_mark[1] ~= math.huge and next_mark[2] ~= math.huge then
-      vim.api.nvim_win_set_cursor(0, next_mark)
-    end
-  end
-end, { desc = "Jump to next lowercase mark" })
-map("n", "m[", function()
-  local buf = vim.api.nvim_get_current_buf()
-  local marks = vim.fn.getmarklist(buf)
-  local cursor_row, cursor_col = unpack(vim.api.nvim_win_get_cursor(0))
-  local next_mark = { -1, -1 }
-  local function cmp(a, b)
-    return a > b
-  end
-  for _, mark in ipairs(marks) do
-    local _, mark_row, mark_col = unpack(mark.pos)
-    if is_lower(mark.mark:sub(2)) then
-      if mark_row < cursor_row then
-        next_mark = pick(next_mark, { mark_row, mark_col - 1 }, cmp)
-      elseif mark_row == cursor_row and mark_col < cursor_col + 1 then
-        next_mark = pick(next_mark, { mark_row, mark_col - 1 }, cmp)
-      end
-    end
-    if next_mark[1] ~= -1 and next_mark[2] ~= -1 then
-      vim.api.nvim_win_set_cursor(0, next_mark)
-    end
-  end
-end, { desc = "Jump to previous lowercase mark" })
+map("n", "m", utils.toggle_mark, { desc = "Toggle mark under cursor" })
+map("n", "dm", utils.delete_mark, { desc = "Delete mark", noremap = true })
+map("n", "dm;", utils.delete_marks_on_line, { desc = "Delete marks on the current line" })
+map("n", "dm<Space>", utils.delete_all_marks, { desc = "Delete all marks in the current buffer" })
+map("n", "m]", utils.jump_next_mark, { desc = "Jump to next lowercase mark" })
+map("n", "m[", utils.jump_prev_mark, { desc = "Jump to previous lowercase mark" })
