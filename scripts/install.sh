@@ -550,7 +550,7 @@ EOT
 	# Add input and video groups
 	getent group "input" &>/dev/null || sudo groupadd -r input -g 97
 	getent group "video" &>/dev/null || sudo groupadd -r video -g 91
-	sudoe usermod -a -G input "$USER"
+	sudo usermod -a -G input "$USER"
 	sudo usermod -a -G video "$USER"
 fi
 if [[ $SELECTED_PROFILES == *"VM"* ]]; then
