@@ -5,4 +5,4 @@ ConditionEnvironment=HYPRLAND_INSTANCE_SIGNATURE
 
 [Service]
 Type=oneshot
-ExecStart=/home/kamack38/.config/hypr/scripts/gamemode.sh 1
+ExecStart=%h/.config/hypr/scripts/gamemode.sh 1
