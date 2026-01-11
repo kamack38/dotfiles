@@ -182,7 +182,7 @@ DESKTOP_APPS=(
 	"spicetify-cli"                    # Cli for extending spotify
 	"kitty"                            # GPU accelerated terminal
 	"desktop-file-utils"               # Command line utilities for working with desktop entries
-	"yubico-authenticator"             # Yubico Authenticator for Desktop
+	"yubico-authenticator-bin"         # Yubico Authenticator for Desktop
 	"breeze"                           # Artwork, styles and assets for the Breeze visual style for the Plasma Desktop
 	"catppuccin-gtk-theme-macchiato"   # Soothing pastel theme for GTK - Macchiato
 	"ripdrag-git"                      # Drag and drop files to and from the terminal
