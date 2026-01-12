@@ -12,7 +12,12 @@ return {
           local dap = require "dap"
           dap.set_breakpoint(vim.fn.input("Breakpoint condition: "))
         end, { desc = "Debug: Set Conditional Breakpoint" }
-      }
+      },
+      { "<leader>df",
+        function()
+          local widgets = require "dap.ui.widgets"
+          widgets.centered_float(widgets.frames)
+        end, { desc = "Debug: Open Frames" } }
     },
     config = function()
       local dap = require "dap"

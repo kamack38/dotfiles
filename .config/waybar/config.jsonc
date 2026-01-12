@@ -26,6 +26,21 @@
         "disable-scroll": true,
         "all-outputs": true,
         "on-click": "activate"
+        // "format": "{icon}{windows}"
+        // "format-window-separator": ""
+        // "window-rewrite-default": "",
+        // "window-rewrite": {
+        //     "title<.*youtube.*>": "  ",
+        //     "title<.*github.*>": "  ",
+        //     "title<.*x —.*>": "  ",
+        //     "class<firefox.*>": "  ",
+        //     "class<kitty>": "  ",
+        //     "class<org.kde.dolphin>": " 󰉋 ",
+        //     "class<kitty> title<nvim .*>": "  ",
+        //     "class<kitty> title<n .*>": "  ",
+        //     "class<vesktop>": "  ",
+        //     "class<BeeperTexts>": "  "
+        // },
     },
 
     "custom/github": {
