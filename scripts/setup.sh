@@ -31,7 +31,7 @@ sed -i 's/^#Color/Color/' /etc/pacman.conf
 
 # Update keyrings to latest to prevent packages from failing to install
 pacman -Sy --noconfirm archlinux-keyring
-pacman -S --noconfirm --needed pacman-contrib fzf reflector rsync grub bc
+pacman -S --noconfirm --needed pacman-contrib fzf reflector rsync limine bc
 
 # Select disk
 echo "${BLUE}:: ${BWHITE}Select disk to install system on.${NC}"
@@ -241,7 +241,7 @@ PREREQUISITES=(
 	"linux-firmware"
 	"linux-headers"
 	"sudo"
-	"grub"
+	"limine"
 	"archlinux-keyring"
 	"libnewt"
 	"modemmanager"
@@ -259,12 +259,40 @@ zram)
 	;;
 esac
 
-# Install GRUB
+# Install Limine
 if [[ ! -d "/sys/firmware/efi" ]]; then
-	grub-install --boot-directory=/mnt/boot "${DISK}"
+	limine bios-install "$DISK"
 else
 	PREREQUISITES+=("efibootmgr")
+	mkdir -p /mnt/boot/EFI/Limine
+	cp /usr/share/limine/BOOTX64.EFI /mnt/boot/EFI/Limine/
+	EFI_DISK="$(lsblk -no PKNAME -p "$EFI_PART")"
+	EFI_PART_NUMBER="$(lsblk -no PARTN "$EFI_PART" | xargs)"
+	efibootmgr \
+		--create \
+		--disk "$EFI_DISK" \
+		--part "$EFI_PART_NUMBER" \
+		--label "Limine" \
+		--loader "\EFI\Limine\BOOTX64.EFI" \
+		--unicode
 fi
+
+tee /mnt/boot/limine.conf >/dev/null <<EOT
+### Read more at config document: https://codeberg.org/Limine/Limine/src/branch/trunk/CONFIG.md
+timeout: 5
+term_palette: 24273a;ed8796;a6da95;eed49f;8aadf4;f5bde6;8bd5ca;cad3f5
+term_palette_bright: 5b6078;ed8796;a6da95;eed49f;8aadf4;f5bde6;8bd5ca;cad3f5
+term_background: 24273a
+term_foreground: cad3f5
+term_background_bright: 5b6078
+term_foreground_bright: cad3f5
+
+/Arch Linux
+  protocol: linux
+  path: boot():/vmlinuz-linux
+  cmdline: root=/dev/mapper/cryptroot rw rootflags=subvol=@ rd.luks.name=${ENCRYPTED_PARTITION_UUID}=cryptroot loglevel=3 quiet
+  module_path: boot():/initramfs-linux.img
+EOT
 
 # Start arch installation
 echo "${BLUE}:: ${BWHITE}Installing prerequisites to ${BLUE}/mnt${BWHITE}...${NC}"
@@ -278,19 +306,6 @@ cat /mnt/etc/fstab
 sleep 2
 
 function chroot {
-	echo "${BLUE}:: ${BWHITE}Setting up ${BLUE}GRUB${BWHITE}...${NC}"
-	if [[ -d "/sys/firmware/efi" ]]; then
-		grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=GRUB
-	fi
-	if [[ "$ENCRYPT" == true ]]; then
-		if grep -q "^HOOKS=.*systemd.*" /etc/mkinitcpio.conf; then
-			sed -i "s%^GRUB_CMDLINE_LINUX_DEFAULT=\"%GRUB_CMDLINE_LINUX_DEFAULT=\"rd.luks.name=${ENCRYPTED_PARTITION_UUID}=cryptroot root=/dev/mapper/cryptroot %" /etc/default/grub
-		else
-			sed -i "s%^GRUB_CMDLINE_LINUX_DEFAULT=\"%GRUB_CMDLINE_LINUX_DEFAULT=\"cryptdevice=UUID=${ENCRYPTED_PARTITION_UUID}:cryptroot root=/dev/mapper/cryptroot %" /etc/default/grub
-		fi
-		sed -i "s/^#GRUB_ENABLE_CRYPTODISK=y/GRUB_ENABLE_CRYPTODISK=y/" /etc/default/grub
-	fi
-
 	case $SWAP_TYPE in
 	swapfile)
 		echo "${BLUE}:: ${BWHITE}Creating swapfile in ${SWAP_FILE_PATH} of size ${SWAP_SIZE}MB ...${NC}"
@@ -307,7 +322,7 @@ function chroot {
 		if ! grep -q "^HOOKS=.*systemd.*" /etc/mkinitcpio.conf; then
 			sed -i "s,\(^HOOKS=.*\)filesystems\(.*\),\1filesystems resume\2," /etc/mkinitcpio.conf
 		fi
-		sed -i "s,\(^GRUB_CMDLINE_LINUX_DEFAULT=\".*\)\(.*\"\),\1 resume=UUID=${SWAP_FILE_DEV_UUID} resume_offset=${SWAP_FILE_OFFSET}\2," /etc/default/grub
+		sed -i "s,\(cmdline:.*\),\1 resume=UUID=${SWAP_FILE_DEV_UUID} resume_offset=${SWAP_FILE_OFFSET}\2," /boot/limine.conf
 		;;
 	zram)
 		echo "${BLUE}:: ${BWHITE}Creating swap on zram...${NC}"
@@ -322,9 +337,6 @@ compression-algorithm = zstd
 EOT
 		;;
 	esac
-
-	echo "${BLUE}:: ${BWHITE}Generating ${BLUE}GRUB${BWHITE} config...${NC}"
-	grub-mkconfig -o /boot/grub/grub.cfg
 
 	echo "${BLUE}:: ${BWHITE}Creating user...${NC}"
 	useradd -mG wheel -s /bin/bash "$USERNAME"
