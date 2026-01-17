@@ -219,6 +219,8 @@ if [[ "$ENCRYPT" == true ]]; then
 	ENCRYPTED_PARTITION_UUID=$(blkid -s UUID -o value "/dev/disk/by-partlabel/Archlinux")
 
 	echo "${BLUE}:: ${BWHITE}Encrypted partition UUID is: ${BLUE}${ENCRYPTED_PARTITION_UUID}${NC}"
+else
+	MAIN_PARITION_UUID=$(blkid -s UUID -o value "$MAIN_DEV")
 fi
 
 # Mount target
@@ -277,6 +279,16 @@ else
 		--unicode
 fi
 
+if [[ "$ENCRYPT" == true ]]; then
+	if grep -q "^HOOKS=.*systemd.*" /etc/mkinitcpio.conf; then
+		CMDLINE="root=/dev/mapper/cryptroot rw rootflags=subvol=@ rd.luks.name=${MAIN_PARITION_UUID}=cryptroot"
+	else
+		CMDLINE="root=/dev/mapper/cryptroot rw rootflags=subvol=@ cryptdevice=UUID=${ENCRYPTED_PARTITION_UUID}:cryptroot"
+	fi
+else
+	CMDLINE="root=UUID=${MAIN_PARITION_UUID} rw rootflags=subvol=@"
+fi
+
 tee /mnt/boot/limine.conf >/dev/null <<EOT
 ### Read more at config document: https://codeberg.org/Limine/Limine/src/branch/trunk/CONFIG.md
 timeout: 5
@@ -290,7 +302,7 @@ term_foreground_bright: cad3f5
 /Arch Linux
   protocol: linux
   path: boot():/vmlinuz-linux
-  cmdline: root=/dev/mapper/cryptroot rw rootflags=subvol=@ rd.luks.name=${ENCRYPTED_PARTITION_UUID}=cryptroot loglevel=3 quiet
+  cmdline: ${CMDLINE} loglevel=3 quiet
   module_path: boot():/initramfs-linux.img
 EOT
 
