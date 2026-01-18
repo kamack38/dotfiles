@@ -263,7 +263,9 @@ esac
 
 # Install Limine
 if [[ ! -d "/sys/firmware/efi" ]]; then
-	limine bios-install "$DISK"
+	limine bios-install "$DISK" 1 # Install to the BIOS boot partition
+	mkdir -p /mnt/boot/limine
+	cp /usr/share/limine/limine-bios.sys /mnt/boot/limine/
 else
 	PREREQUISITES+=("efibootmgr")
 	mkdir -p /mnt/boot/EFI/Limine
