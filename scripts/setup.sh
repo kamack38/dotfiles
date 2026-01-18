@@ -214,12 +214,9 @@ mount --mkdir -o ${MOUNT_OPTIONS},nodev,nosuid,subvol=@libvirt ${MAIN_DEV} /mnt/
 mount --mkdir -o ${MOUNT_OPTIONS},nodev,nosuid,subvol=@docker ${MAIN_DEV} /mnt/var/lib/docker
 chattr +C /mnt/var/lib/{docker,libvirt}
 
+ROOT_PARTITION_UUID=$(blkid -s UUID -o value "/dev/disk/by-partlabel/Archlinux")
 if [[ "$ENCRYPT" == true ]]; then
-	ENCRYPTED_PARTITION_UUID=$(blkid -s UUID -o value "/dev/disk/by-partlabel/Archlinux")
-
-	echo "${BLUE}:: ${BWHITE}Encrypted partition UUID is: ${BLUE}${ENCRYPTED_PARTITION_UUID}${NC}"
-else
-	MAIN_PARTITION_UUID=$(blkid -s UUID -o value "$MAIN_DEV")
+	echo "${BLUE}:: ${BWHITE}Encrypted partition UUID is: ${BLUE}${ROOT_PARTITION_UUID}${NC}"
 fi
 
 # Mount target
@@ -297,14 +294,14 @@ function chroot {
 	fi
 	if [[ "$ENCRYPT" == true ]]; then
 		if grep -q "^HOOKS=.*systemd.*" /etc/mkinitcpio.conf; then
-			CMDLINE="root=/dev/mapper/cryptroot rw rootflags=subvol=@ rd.luks.name=${ENCRYPTED_PARTITION_UUID}=cryptroot"
+			CMDLINE="root=/dev/mapper/cryptroot rw rootflags=subvol=@ rd.luks.name=${ROOT_PARTITION_UUID}=cryptroot"
 			sed -i "s,\(^HOOKS=.*\)filesystems\(.*\),\1sd-encrypt filesystems\2," /etc/mkinitcpio.conf
 		else
-			CMDLINE="root=/dev/mapper/cryptroot rw rootflags=subvol=@ cryptdevice=UUID=${ENCRYPTED_PARTITION_UUID}:cryptroot"
+			CMDLINE="root=/dev/mapper/cryptroot rw rootflags=subvol=@ cryptdevice=UUID=${ROOT_PARTITION_UUID}:cryptroot"
 			sed -i "s,\(^HOOKS=.*\)filesystems\(.*\),\1encrypt filesystems\2," /etc/mkinitcpio.conf
 		fi
 	else
-		CMDLINE="root=UUID=${MAIN_PARTITION_UUID} rw rootflags=subvol=@"
+		CMDLINE="root=UUID=${ROOT_PARTITION_UUID} rw rootflags=subvol=@"
 	fi
 
 	case $SWAP_TYPE in
@@ -385,15 +382,14 @@ export BLUE
 export GREEN
 export BWHITE
 export NC
+export USERNAME
+export PASSWORD
+export MACHINE_NAME
 export DISK
 export BIOS_PART
 export EFI_PART
-export USERNAME
-export PASSWORD
 export ENCRYPT
-export MACHINE_NAME
-export ENCRYPTED_PARTITION_UUID
-export MAIN_PARTITION_UUID
+export ROOT_PARTITION_UUID
 export SWAP_SIZE
 export SWAP_FILE_PATH
 export SWAP_TYPE
