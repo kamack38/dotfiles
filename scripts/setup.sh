@@ -295,7 +295,7 @@ function chroot {
 	fi
 	if [[ "$ENCRYPT" == true ]]; then
 		if grep -q "^HOOKS=.*systemd.*" /etc/mkinitcpio.conf; then
-			CMDLINE="root=/dev/mapper/cryptroot rw rootflags=subvol=@ rd.luks.name=${MAIN_PARTITION_UUID}=cryptroot"
+			CMDLINE="root=/dev/mapper/cryptroot rw rootflags=subvol=@ rd.luks.name=${ENCRYPTED_PARTITION_UUID}=cryptroot"
 			sed -i "s,\(^HOOKS=.*\)filesystems\(.*\),\1sd-encrypt filesystems\2," /etc/mkinitcpio.conf
 		else
 			CMDLINE="root=/dev/mapper/cryptroot rw rootflags=subvol=@ cryptdevice=UUID=${ENCRYPTED_PARTITION_UUID}:cryptroot"
