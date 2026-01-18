@@ -380,6 +380,7 @@ export -f chroot
 
 # Export vars
 export BLUE
+export GREEN
 export BWHITE
 export NC
 export DISK
