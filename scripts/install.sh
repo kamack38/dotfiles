@@ -74,7 +74,6 @@ NORMAL_PROFILE=(
 	"playerctl"               # Command-line utility and library for controlling media players
 	"btop"                    # System monitor tool
 	"reflector"               # Pacman mirror sorter
-	"garuda-hooks"            # Garuda pacman hooks
 	"wget"                    # Network utility to retrieve files from the Web
 	"bc"                      # An arbitrary precision calculator language (required for mpris-noti)
 	"mpd-mpris"               # An implementation of the MPRIS protocol for MPD.
