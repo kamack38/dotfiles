@@ -498,7 +498,7 @@ done <<<"$SELECTED_PROFILES"
 NORMAL_PROFILE+=("${PROFILE_PACKAGES[@]}")
 
 # Remove conflicts
-if [[ $(pacman -Q jack2) ]]; then
+if [[ $(pacman -Qq jack2 2>/dev/null) ]]; then
 	echo "${YELLOW}:: ${BWHITE}Removing ${BLUE}jack2${BWHITE} package...${NC}"
 	sudo pacman -Rdd --noconfirm jack2
 fi
@@ -751,6 +751,12 @@ EOT
 		fi
 	fi
 fi
+
+# Add kernel cmdline
+CMDLINE="$(cat /proc/cmdline)"
+sudo tee /etc/limine-entry-tool.d/10-default.conf >/dev/null <<EOT
+KERNEL_CMDLINE[default]="${CMDLINE}"
+EOT
 
 # Disable watchdog
 echo "${BLUE}:: ${BWHITE}Disabling watchdog...${NC}"
