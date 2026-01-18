@@ -650,7 +650,7 @@ fi
 # Set default shell to fish
 if [ ! "$(basename -- "$SHELL")" = "fish" ]; then
 	echo "${YELLOW}:: ${BWHITE}Setting default shell to ${BLUE}fish${NC}"
-	sudo chsh -s /bin/fish "$USER"
+	sudo chsh -s /usr/bin/fish "$USER"
 fi
 
 # Enable services
