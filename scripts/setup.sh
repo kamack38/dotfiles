@@ -31,7 +31,7 @@ sed -i 's/^#Color/Color/' /etc/pacman.conf
 
 # Update keyrings to latest to prevent packages from failing to install
 pacman -Sy --noconfirm archlinux-keyring
-pacman -S --noconfirm --needed pacman-contrib fzf reflector rsync limine bc
+pacman -S --noconfirm --needed pacman-contrib fzf reflector rsync bc
 
 # Select disk
 echo "${BLUE}:: ${BWHITE}Select disk to install system on.${NC}"
@@ -220,7 +220,7 @@ if [[ "$ENCRYPT" == true ]]; then
 
 	echo "${BLUE}:: ${BWHITE}Encrypted partition UUID is: ${BLUE}${ENCRYPTED_PARTITION_UUID}${NC}"
 else
-	MAIN_PARITION_UUID=$(blkid -s UUID -o value "$MAIN_DEV")
+	MAIN_PARTITION_UUID=$(blkid -s UUID -o value "$MAIN_DEV")
 fi
 
 # Mount target
@@ -251,6 +251,11 @@ PREREQUISITES=(
 	"dhclient"
 )
 
+# Add efibootmgr for a UEFI setup
+if [[ -d "/sys/firmware/efi" ]]; then
+	PREREQUISITES+=("efibootmgr")
+fi
+
 # Swap
 SWAP_SIZE=$TOTAL_RAM_MB
 SWAP_FILE_PATH="/swap/swapfile"
@@ -260,53 +265,6 @@ zram)
 	PREREQUISITES+=("zram-generator")
 	;;
 esac
-
-# Install Limine
-if [[ ! -d "/sys/firmware/efi" ]]; then
-	limine bios-install "$DISK" 1 # Install to the BIOS boot partition
-	mkdir -p /mnt/boot/limine
-	cp /usr/share/limine/limine-bios.sys /mnt/boot/limine/
-else
-	PREREQUISITES+=("efibootmgr")
-	mkdir -p /mnt/boot/EFI/Limine
-	cp /usr/share/limine/BOOTX64.EFI /mnt/boot/EFI/Limine/
-	EFI_DISK="$(lsblk -no PKNAME -p "$EFI_PART")"
-	EFI_PART_NUMBER="$(lsblk -no PARTN "$EFI_PART" | xargs)"
-	efibootmgr \
-		--create \
-		--disk "$EFI_DISK" \
-		--part "$EFI_PART_NUMBER" \
-		--label "Limine" \
-		--loader "\EFI\Limine\BOOTX64.EFI" \
-		--unicode
-fi
-
-if [[ "$ENCRYPT" == true ]]; then
-	if grep -q "^HOOKS=.*systemd.*" /etc/mkinitcpio.conf; then
-		CMDLINE="root=/dev/mapper/cryptroot rw rootflags=subvol=@ rd.luks.name=${MAIN_PARITION_UUID}=cryptroot"
-	else
-		CMDLINE="root=/dev/mapper/cryptroot rw rootflags=subvol=@ cryptdevice=UUID=${ENCRYPTED_PARTITION_UUID}:cryptroot"
-	fi
-else
-	CMDLINE="root=UUID=${MAIN_PARITION_UUID} rw rootflags=subvol=@"
-fi
-
-tee /mnt/boot/limine.conf >/dev/null <<EOT
-### Read more at config document: https://codeberg.org/Limine/Limine/src/branch/trunk/CONFIG.md
-timeout: 5
-term_palette: 24273a;ed8796;a6da95;eed49f;8aadf4;f5bde6;8bd5ca;cad3f5
-term_palette_bright: 5b6078;ed8796;a6da95;eed49f;8aadf4;f5bde6;8bd5ca;cad3f5
-term_background: 24273a
-term_foreground: cad3f5
-term_background_bright: 5b6078
-term_foreground_bright: cad3f5
-
-/Arch Linux
-  protocol: linux
-  path: boot():/vmlinuz-linux
-  cmdline: ${CMDLINE} loglevel=3 quiet
-  module_path: boot():/initramfs-linux.img
-EOT
 
 # Start arch installation
 echo "${BLUE}:: ${BWHITE}Installing prerequisites to ${BLUE}/mnt${BWHITE}...${NC}"
@@ -320,6 +278,36 @@ cat /mnt/etc/fstab
 sleep 2
 
 function chroot {
+	echo "${BLUE}:: ${BWHITE}Setting up ${GREEN}Limine${BWHITE}...${NC}"
+	if [[ ! -d "/sys/firmware/efi" ]]; then
+		limine bios-install "$DISK" 1 # Install to the BIOS boot partition
+		mkdir -p /boot/limine
+		cp /usr/share/limine/limine-bios.sys /boot/limine/
+	else
+		mkdir -p /boot/EFI/Limine
+		cp /usr/share/limine/BOOTX64.EFI /boot/EFI/Limine/
+		EFI_DISK="$(lsblk -no PKNAME -p "$EFI_PART")"
+		EFI_PART_NUMBER="$(lsblk -no PARTN "$EFI_PART" | xargs)"
+		efibootmgr \
+			--create \
+			--disk "$EFI_DISK" \
+			--part "$EFI_PART_NUMBER" \
+			--label "Limine" \
+			--loader "\EFI\Limine\BOOTX64.EFI" \
+			--unicode
+	fi
+	if [[ "$ENCRYPT" == true ]]; then
+		if grep -q "^HOOKS=.*systemd.*" /etc/mkinitcpio.conf; then
+			CMDLINE="root=/dev/mapper/cryptroot rw rootflags=subvol=@ rd.luks.name=${MAIN_PARTITION_UUID}=cryptroot"
+			sed -i "s,\(^HOOKS=.*\)filesystems\(.*\),\1sd-encrypt filesystems\2," /etc/mkinitcpio.conf
+		else
+			CMDLINE="root=/dev/mapper/cryptroot rw rootflags=subvol=@ cryptdevice=UUID=${ENCRYPTED_PARTITION_UUID}:cryptroot"
+			sed -i "s,\(^HOOKS=.*\)filesystems\(.*\),\1encrypt filesystems\2," /etc/mkinitcpio.conf
+		fi
+	else
+		CMDLINE="root=UUID=${MAIN_PARTITION_UUID} rw rootflags=subvol=@"
+	fi
+
 	case $SWAP_TYPE in
 	swapfile)
 		echo "${BLUE}:: ${BWHITE}Creating swapfile in ${SWAP_FILE_PATH} of size ${SWAP_SIZE}MB ...${NC}"
@@ -336,7 +324,7 @@ function chroot {
 		if ! grep -q "^HOOKS=.*systemd.*" /etc/mkinitcpio.conf; then
 			sed -i "s,\(^HOOKS=.*\)filesystems\(.*\),\1filesystems resume\2," /etc/mkinitcpio.conf
 		fi
-		sed -i "s,\(cmdline:.*\),\1 resume=UUID=${SWAP_FILE_DEV_UUID} resume_offset=${SWAP_FILE_OFFSET}\2," /boot/limine.conf
+		CMDLINE+=" resume=UUID=${SWAP_FILE_DEV_UUID} resume_offset=${SWAP_FILE_OFFSET}"
 		;;
 	zram)
 		echo "${BLUE}:: ${BWHITE}Creating swap on zram...${NC}"
@@ -351,6 +339,23 @@ compression-algorithm = zstd
 EOT
 		;;
 	esac
+
+	tee /boot/limine.conf >/dev/null <<EOT
+### Read more at config document: https://codeberg.org/Limine/Limine/src/branch/trunk/CONFIG.md
+timeout: 5
+term_palette: 24273a;ed8796;a6da95;eed49f;8aadf4;f5bde6;8bd5ca;cad3f5
+term_palette_bright: 5b6078;ed8796;a6da95;eed49f;8aadf4;f5bde6;8bd5ca;cad3f5
+term_background: 24273a
+term_foreground: cad3f5
+term_background_bright: 5b6078
+term_foreground_bright: cad3f5
+
+/Arch Linux
+  protocol: linux
+  path: boot():/vmlinuz-linux
+  cmdline: ${CMDLINE} loglevel=3 quiet
+  module_path: boot():/initramfs-linux.img
+EOT
 
 	echo "${BLUE}:: ${BWHITE}Creating user...${NC}"
 	useradd -mG wheel -s /bin/bash "$USERNAME"
@@ -370,15 +375,6 @@ EOT
 	echo "${BLUE}:: ${BWHITE}Hostname is set to ${BLUE}${MACHINE_NAME}${NC}"
 	echo "$MACHINE_NAME" >/etc/hostname
 
-	if [[ "$ENCRYPT" == true ]]; then
-		# Add encrypt hook
-		if grep -q "^HOOKS=.*systemd.*" /etc/mkinitcpio.conf; then
-			sed -i "s,\(^HOOKS=.*\)filesystems\(.*\),\1sd-encrypt filesystems\2," /etc/mkinitcpio.conf
-		else
-			sed -i "s,\(^HOOKS=.*\)filesystems\(.*\),\1encrypt filesystems\2," /etc/mkinitcpio.conf
-		fi
-	fi
-
 	# Make sd-vconsole error go away
 	touch /etc/vconsole.conf
 	mkinitcpio -P
@@ -390,11 +386,13 @@ export BLUE
 export BWHITE
 export NC
 export DISK
+export EFI_PART
 export USERNAME
 export PASSWORD
 export ENCRYPT
 export MACHINE_NAME
 export ENCRYPTED_PARTITION_UUID
+export MAIN_PARTITION_UUID
 export SWAP_SIZE
 export SWAP_FILE_PATH
 export SWAP_TYPE
