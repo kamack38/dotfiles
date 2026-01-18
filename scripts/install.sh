@@ -675,7 +675,7 @@ if [[ "${SELECTED_DE}" != "" || $(pacman -Q sddm) ]]; then
 	done
 
 	# Symlink Firefox
-	sudo ln -s /usr/bin/firefox-developer-edition /usr/bin/firefox
+	sudo ln -s /usr/bin/firefox-developer-edition /usr/bin/firefox || :
 
 	# Enable service
 	sudo systemctl enable sddm.service
