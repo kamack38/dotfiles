@@ -48,6 +48,7 @@ read -rp "${BLUE}:: ${BWHITE}Do you wish to ${RED}ERASE${BWHITE} the disk before
 
 use_x_efi="n"
 if [[ $erase_disk == n* ]]; then
+	# We assume that the EFI partition is on the selected disk
 	EFI_PART=$(lsblk -n -o PARTTYPE,KNAME "$DISK" | awk '$1=="c12a7328-f81f-11d2-ba4b-00a0c93ec93b" { print "/dev/"$2"" }')
 
 	if [ -n "$EFI_PART" ]; then
@@ -142,10 +143,12 @@ echo "${BLUE}:: ${BWHITE}Formatting disk...${NC}"
 if [[ ! -d "/sys/firmware/efi" ]]; then
 	echo "${YELLOW}:: ${BWHITE}BIOS system detected...${NC}"
 	sgdisk -n "0::+1M" --typecode="0:ef02" --change-name="0:BIOSBOOT" "${DISK}" # BIOS Boot Partition
+	BIOS_PART="/dev/disk/by-partlabel/BIOSBOOT"
 fi
 
 if [[ $use_x_efi == n* ]]; then
 	sgdisk -n "0::+512M" --typecode="0:ef00" --change-name="0:EFIBOOT" "${DISK}" # UEFI Boot Partition
+	EFI_PART="/dev/disk/by-partlabel/EFIBOOT"
 fi
 sgdisk -N "0" --typecode="0:8300" --change-name="0:Archlinux" "${DISK}" # Root Partition, default start, remaining
 
@@ -155,8 +158,7 @@ partprobe "${DISK}"
 # Create boot partition
 if [[ $use_x_efi == n* ]]; then
 	echo "${BLUE}:: ${BWHITE}Formatting EFI partition...${NC}"
-	mkfs.fat -F32 -n "EFIBOOT" "/dev/disk/by-partlabel/EFIBOOT"
-	EFI_PART="/dev/disk/by-partlabel/EFIBOOT"
+	mkfs.fat -F32 -n "EFIBOOT" "$EFI_PART"
 fi
 
 if [[ "$ENCRYPT" == true ]]; then
@@ -277,17 +279,17 @@ sleep 2
 function chroot {
 	echo "${BLUE}:: ${BWHITE}Setting up ${GREEN}Limine${BWHITE}...${NC}"
 	if [[ ! -d "/sys/firmware/efi" ]]; then
-		limine bios-install "$DISK" 1 # Install to the BIOS boot partition
+		BIOS_PART_NUMBER="$(lsblk -no PARTN "$BIOS_PART" | xargs)"
+		limine bios-install "$DISK" "$BIOS_PART_NUMBER" # Install to the BIOS boot partition
 		mkdir -p /boot/limine
 		cp /usr/share/limine/limine-bios.sys /boot/limine/
 	else
 		mkdir -p /boot/EFI/Limine
 		cp /usr/share/limine/BOOTX64.EFI /boot/EFI/Limine/
-		EFI_DISK="$(lsblk -no PKNAME -p "$EFI_PART")"
 		EFI_PART_NUMBER="$(lsblk -no PARTN "$EFI_PART" | xargs)"
 		efibootmgr \
 			--create \
-			--disk "$EFI_DISK" \
+			--disk "$DISK" \
 			--part "$EFI_PART_NUMBER" \
 			--label "Limine" \
 			--loader "\EFI\Limine\BOOTX64.EFI" \
@@ -384,6 +386,7 @@ export GREEN
 export BWHITE
 export NC
 export DISK
+export BIOS_PART
 export EFI_PART
 export USERNAME
 export PASSWORD
