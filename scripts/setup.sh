@@ -31,7 +31,8 @@ sed -i 's/^#Color/Color/' /etc/pacman.conf
 
 # Update keyrings to latest to prevent packages from failing to install
 pacman -Sy --noconfirm archlinux-keyring
-pacman -S --noconfirm --needed pacman-contrib fzf reflector rsync bc
+echo "${BLUE}:: ${BWHITE}Installing prerequisites...${NC}"
+pacman -S --noconfirm --needed pacman-contrib fzf reflector rsync bc gptfdisk btrfs-progs glibc
 
 # Select disk
 echo "${BLUE}:: ${BWHITE}Select disk to install system on.${NC}"
@@ -122,10 +123,6 @@ fi
 
 # Create mount directory
 mkdir -p /mnt
-
-# Install Prerequisites
-echo "${BLUE}:: ${BWHITE}Installing prerequisites...${NC}"
-pacman -S --noconfirm --needed gptfdisk btrfs-progs glibc
 
 # Make sure everything is unmounted when starting
 if grep -qs '/mnt' /proc/mounts; then
