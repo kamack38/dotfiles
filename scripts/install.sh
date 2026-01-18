@@ -754,6 +754,7 @@ fi
 # Add kernel cmdline
 CMDLINE="$(cat /proc/cmdline)"
 sudo tee /etc/limine-entry-tool.d/10-default.conf >/dev/null <<EOT
+ESP_PATH="/boot"
 KERNEL_CMDLINE[default]="${CMDLINE}"
 EOT
 
