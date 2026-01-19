@@ -769,9 +769,6 @@ blacklist iTCO_wdt
 blacklist sp5100_tco
 EOF
 
-# Create initial ramdisk
-sudo limine-mkinitcpio
-
 # Enable password feedback and other options
 sudo mkdir -p /etc/sudoers.d
 sudo tee /etc/sudoers.d/01_pwfeedback >/dev/null <<EOT
@@ -901,6 +898,9 @@ EOT
 		sudo rkhunter --check --sk
 	fi
 fi
+
+# Create initial ramdisk
+sudo limine-mkinitcpio
 
 read -rp "${RED}:: ${BWHITE}Do you want to reboot? [Y/n]${NC}: " reboot_prompt
 
