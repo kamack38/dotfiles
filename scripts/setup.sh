@@ -353,6 +353,12 @@ term_foreground_bright: cad3f5
   module_path: boot():/initramfs-linux.img
 EOT
 
+	mkdir -p /etc/limine-entry-tool.d/
+	tee /etc/limine-entry-tool.d/10-default.conf >/dev/null <<EOT
+ESP_PATH="/boot"
+KERNEL_CMDLINE[default]="${CMDLINE} loglevel=3 quiet"
+EOT
+
 	echo "${BLUE}:: ${BWHITE}Creating user...${NC}"
 	useradd -mG wheel -s /bin/bash "$USERNAME"
 	echo "${BLUE}:: ${BWHITE}$USERNAME added to wheel group, default shell set to ${BLUE}/bin/bash${NC}"

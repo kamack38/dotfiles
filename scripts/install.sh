@@ -561,6 +561,11 @@ if [[ $SELECTED_PROFILES == *"VM"* ]]; then
 
 	# Autostart bridge
 	sudo virsh net-autostart default
+
+	# Fix permissions
+	sudo mkdir -p /var/lib/libvirt/
+	sudo chown -R :libvirt /var/lib/libvirt
+	sudo chmod -R g=u /var/lib/libvirt
 fi
 if [[ $SELECTED_PROFILES == *"SOUND"* ]]; then
 	echo "${BLUE}:: ${BWHITE}Adding ${BLUE}sound${BWHITE} support...${NC}"
@@ -750,13 +755,6 @@ EOT
 		fi
 	fi
 fi
-
-# Add kernel cmdline
-CMDLINE="$(cat /proc/cmdline)"
-sudo tee /etc/limine-entry-tool.d/10-default.conf >/dev/null <<EOT
-ESP_PATH="/boot"
-KERNEL_CMDLINE[default]="${CMDLINE}"
-EOT
 
 # Disable watchdog
 echo "${BLUE}:: ${BWHITE}Disabling watchdog...${NC}"
