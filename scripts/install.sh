@@ -72,10 +72,8 @@ NORMAL_PROFILE=(
 	"noto-fonts-emoji"        # Google Noto emoji fonts
 	"terminus-font"           # Monospace bitmap font (for X11 and console)
 	"playerctl"               # Command-line utility and library for controlling media players
-	"update-grub"             # Utility for updating grub config
 	"btop"                    # System monitor tool
 	"reflector"               # Pacman mirror sorter
-	"garuda-hooks"            # Garuda pacman hooks
 	"wget"                    # Network utility to retrieve files from the Web
 	"bc"                      # An arbitrary precision calculator language (required for mpris-noti)
 	"mpd-mpris"               # An implementation of the MPRIS protocol for MPD.
@@ -87,7 +85,9 @@ NORMAL_PROFILE=(
 	"libfido2"                # Library functionality for FIDO 2.0, including communication with a device over USB
 	"yubikey-manager"         # Python library and command line tool for configuring a YubiKey
 	"xdg-user-dirs"           # Manages user directories
-	"snapper-support"         # Support package for enabling Snapper with snap-pac and grub-btrfs
+	"limine-mkinitcpio-hook"  # Install kernel for the Limine bootloader.
+	"limine-snapper-sync"     # The tool syncs Limine snapshot entries with Snapper snapshots.
+	"cachyos-snapper-support" # CachyOS package that handles snapper configs.
 	"android-udev"            # Udev rules to connect Android devices to your linux box
 	"${DEV_PROFILE[@]}"
 )
@@ -497,7 +497,7 @@ done <<<"$SELECTED_PROFILES"
 NORMAL_PROFILE+=("${PROFILE_PACKAGES[@]}")
 
 # Remove conflicts
-if [[ $(pacman -Q jack2) ]]; then
+if [[ $(pacman -Qq jack2 2>/dev/null) ]]; then
 	echo "${YELLOW}:: ${BWHITE}Removing ${BLUE}jack2${BWHITE} package...${NC}"
 	sudo pacman -Rdd --noconfirm jack2
 fi
@@ -561,6 +561,11 @@ if [[ $SELECTED_PROFILES == *"VM"* ]]; then
 
 	# Autostart bridge
 	sudo virsh net-autostart default
+
+	# Fix permissions
+	sudo mkdir -p /var/lib/libvirt/
+	sudo chown -R :libvirt /var/lib/libvirt
+	sudo chmod -R g=u /var/lib/libvirt
 fi
 if [[ $SELECTED_PROFILES == *"SOUND"* ]]; then
 	echo "${BLUE}:: ${BWHITE}Adding ${BLUE}sound${BWHITE} support...${NC}"
@@ -675,7 +680,7 @@ if [[ "${SELECTED_DE}" != "" || $(pacman -Q sddm) ]]; then
 	done
 
 	# Symlink Firefox
-	sudo ln -s /usr/bin/firefox-developer-edition /usr/bin/firefox
+	sudo ln -s /usr/bin/firefox-developer-edition /usr/bin/firefox || :
 
 	# Enable service
 	sudo systemctl enable sddm.service
@@ -751,36 +756,11 @@ EOT
 	fi
 fi
 
-# Splash screen
-read -rp "${YELLOW}:: ${BWHITE}Do you want to install plymouth (splash screen)? [y/N]${NC}: " plymouth_install
-if [[ $(pacman -Q grub) && $plymouth_install == y* ]]; then
-	echo "${BLUE}:: ${BWHITE}Installing plymouth...${NC}"
-
-	# Add archcraft repository
-	archcraft
-	sudo pacman -Sy
-	$HELPER -S --noconfirm --needed --quiet "${PLYMOUTH_PACKAGES[@]}"
-
-	# Set default plymouth theme
-	sudo plymouth-set-default-theme -R archcraft
-
-	# Plymouth hook
-	if ! grep -q "^HOOKS=.*plymouth.*" /etc/mkinitcpio.conf; then
-		echo "${YELLOW}:: ${BWHITE}Adding plymouth hook...${NC}"
-		sudo sed -i "s,\(^HOOKS=.*\)udev\(.*\),\1udev plymouth\2," "/etc/mkinitcpio.conf"
-	else
-		echo "${YELLOW}:: ${BWHITE}plymouth hook already exists${NC} -- skipping"
-	fi
-
-	# Update grub config
-	sudo sed -i "s,\(GRUB_CMDLINE_LINUX_DEFAULT=\".*\)\(\"\),\1 quiet splash vt.global_cursor_default=0\2," "/etc/default/grub"
-fi
-
 # Disable watchdog
 echo "${BLUE}:: ${BWHITE}Disabling watchdog...${NC}"
-if ! grep -q "^GRUB_CMDLINE_LINUX_DEFAULT=.*nowatchdog.*" /etc/default/grub.conf; then
-	sudo sed -i "s,\(GRUB_CMDLINE_LINUX_DEFAULT=\".*\)\(\"\),\1 nowatchdog\2," "/etc/default/grub"
-fi
+sudo tee /etc/limine-entry-tool.d/20-disable-watchdog.conf >/dev/null <<EOT
+KERNEL_CMDLINE[default]+="nowatchdog"
+EOT
 sudo tee /etc/modprobe.d/blacklist.conf >/dev/null <<EOF
 # Blacklist the Intel TCO Watchdog/Timer module
 blacklist iTCO_wdt
@@ -788,10 +768,6 @@ blacklist iTCO_wdt
 # Blacklist the AMD SP5100 TCO Watchdog/Timer module (Required for Ryzen cpus)
 blacklist sp5100_tco
 EOF
-sudo grub-mkconfig -o /boot/grub/grub.cfg
-
-# Create initial ramdisk
-sudo mkinitcpio -P
 
 # Enable password feedback and other options
 sudo mkdir -p /etc/sudoers.d
@@ -868,9 +844,9 @@ EOT
 	echo "${BLUE}:: ${BWHITE}Securing ${BLUE}/boot${BWHITE} permissions...${NC}"
 	sudo chmod 700 /boot
 
-	if sudo test -f /boot/grub/grub.cfg; then
-		echo "${BLUE}:: ${BWHITE}Securing ${BLUE}/boot/grub/grub.cfg${BWHITE} permissions...${NC}"
-		sudo chmod 600 /boot/grub/grub.cfg
+	if sudo test -f /boot/limine.conf; then
+		echo "${BLUE}:: ${BWHITE}Securing ${BLUE}/boot/limine.conf${BWHITE} permissions...${NC}"
+		sudo chmod 600 /boot/limine.conf
 	fi
 
 	echo "${BLUE}:: ${BWHITE}Securing ${BLUE}cron${BWHITE} permissions...${NC}"
@@ -900,9 +876,9 @@ EOT
 	sudo systemctl enable apparmor.service
 	sudo sed -i 's/^#write-cache/write-cache/' /etc/apparmor/parser.conf
 	sudo sed -i 's/^#Optimize=compress-fast/Optimize=compress-fast/' /etc/apparmor/parser.conf
-	if ! grep -q "^GRUB_CMDLINE_LINUX_DEFAULT=.*lsm.*" /etc/default/grub.conf; then
-		sudo sed -i 's#\(^GRUB_CMDLINE_LINUX_DEFAULT=".*\)\(.*"\)#\1 lsm=landlock,lockdown,yama,integrity,apparmor,bpf\2#' /etc/default/grub
-	fi
+	sudo tee /etc/limine-entry-tool.d/30-apparmor.conf >/dev/null <<EOT
+KERNEL_CMDLINE[default]+="lsm=landlock,lockdown,yama,integrity,apparmor,bpf"
+EOT
 
 	echo "${BLUE}:: ${BWHITE}Setting ${BLUE}umask${BWHITE} to 0077...${NC}"
 	sudo sed -i 's/UMASK\t\t022/UMASK\t\t027/' /etc/login.defs
@@ -922,6 +898,9 @@ EOT
 		sudo rkhunter --check --sk
 	fi
 fi
+
+# Create initial ramdisk
+sudo limine-mkinitcpio
 
 read -rp "${RED}:: ${BWHITE}Do you want to reboot? [Y/n]${NC}: " reboot_prompt
 

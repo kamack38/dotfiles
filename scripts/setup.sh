@@ -31,7 +31,8 @@ sed -i 's/^#Color/Color/' /etc/pacman.conf
 
 # Update keyrings to latest to prevent packages from failing to install
 pacman -Sy --noconfirm archlinux-keyring
-pacman -S --noconfirm --needed pacman-contrib fzf reflector rsync grub bc
+echo "${BLUE}:: ${BWHITE}Installing prerequisites...${NC}"
+pacman -S --noconfirm --needed pacman-contrib fzf reflector rsync bc gptfdisk btrfs-progs glibc
 
 # Select disk
 echo "${BLUE}:: ${BWHITE}Select disk to install system on.${NC}"
@@ -47,6 +48,7 @@ read -rp "${BLUE}:: ${BWHITE}Do you wish to ${RED}ERASE${BWHITE} the disk before
 
 use_x_efi="n"
 if [[ $erase_disk == n* ]]; then
+	# We assume that the EFI partition is on the selected disk
 	EFI_PART=$(lsblk -n -o PARTTYPE,KNAME "$DISK" | awk '$1=="c12a7328-f81f-11d2-ba4b-00a0c93ec93b" { print "/dev/"$2"" }')
 
 	if [ -n "$EFI_PART" ]; then
@@ -123,10 +125,6 @@ fi
 # Create mount directory
 mkdir -p /mnt
 
-# Install Prerequisites
-echo "${BLUE}:: ${BWHITE}Installing prerequisites...${NC}"
-pacman -S --noconfirm --needed gptfdisk btrfs-progs glibc
-
 # Make sure everything is unmounted when starting
 if grep -qs '/mnt' /proc/mounts; then
 	echo "${YELLOW}:: ${BLUE}/mnt${BWHITE} is mounted${NC} -- unmounting"
@@ -145,10 +143,12 @@ echo "${BLUE}:: ${BWHITE}Formatting disk...${NC}"
 if [[ ! -d "/sys/firmware/efi" ]]; then
 	echo "${YELLOW}:: ${BWHITE}BIOS system detected...${NC}"
 	sgdisk -n "0::+1M" --typecode="0:ef02" --change-name="0:BIOSBOOT" "${DISK}" # BIOS Boot Partition
+	BIOS_PART="/dev/disk/by-partlabel/BIOSBOOT"
 fi
 
 if [[ $use_x_efi == n* ]]; then
 	sgdisk -n "0::+512M" --typecode="0:ef00" --change-name="0:EFIBOOT" "${DISK}" # UEFI Boot Partition
+	EFI_PART="/dev/disk/by-partlabel/EFIBOOT"
 fi
 sgdisk -N "0" --typecode="0:8300" --change-name="0:Archlinux" "${DISK}" # Root Partition, default start, remaining
 
@@ -158,8 +158,7 @@ partprobe "${DISK}"
 # Create boot partition
 if [[ $use_x_efi == n* ]]; then
 	echo "${BLUE}:: ${BWHITE}Formatting EFI partition...${NC}"
-	mkfs.fat -F32 -n "EFIBOOT" "/dev/disk/by-partlabel/EFIBOOT"
-	EFI_PART="/dev/disk/by-partlabel/EFIBOOT"
+	mkfs.fat -F32 -n "EFIBOOT" "$EFI_PART"
 fi
 
 if [[ "$ENCRYPT" == true ]]; then
@@ -215,10 +214,9 @@ mount --mkdir -o ${MOUNT_OPTIONS},nodev,nosuid,subvol=@libvirt ${MAIN_DEV} /mnt/
 mount --mkdir -o ${MOUNT_OPTIONS},nodev,nosuid,subvol=@docker ${MAIN_DEV} /mnt/var/lib/docker
 chattr +C /mnt/var/lib/{docker,libvirt}
 
+ROOT_PARTITION_UUID=$(blkid -s UUID -o value "/dev/disk/by-partlabel/Archlinux")
 if [[ "$ENCRYPT" == true ]]; then
-	ENCRYPTED_PARTITION_UUID=$(blkid -s UUID -o value "/dev/disk/by-partlabel/Archlinux")
-
-	echo "${BLUE}:: ${BWHITE}Encrypted partition UUID is: ${BLUE}${ENCRYPTED_PARTITION_UUID}${NC}"
+	echo "${BLUE}:: ${BWHITE}Encrypted partition UUID is: ${BLUE}${ROOT_PARTITION_UUID}${NC}"
 fi
 
 # Mount target
@@ -241,13 +239,18 @@ PREREQUISITES=(
 	"linux-firmware"
 	"linux-headers"
 	"sudo"
-	"grub"
+	"limine"
 	"archlinux-keyring"
 	"libnewt"
 	"modemmanager"
 	"networkmanager"
 	"dhclient"
 )
+
+# Add efibootmgr for a UEFI setup
+if [[ -d "/sys/firmware/efi" ]]; then
+	PREREQUISITES+=("efibootmgr")
+fi
 
 # Swap
 SWAP_SIZE=$TOTAL_RAM_MB
@@ -258,13 +261,6 @@ zram)
 	PREREQUISITES+=("zram-generator")
 	;;
 esac
-
-# Install GRUB
-if [[ ! -d "/sys/firmware/efi" ]]; then
-	grub-install --boot-directory=/mnt/boot "${DISK}"
-else
-	PREREQUISITES+=("efibootmgr")
-fi
 
 # Start arch installation
 echo "${BLUE}:: ${BWHITE}Installing prerequisites to ${BLUE}/mnt${BWHITE}...${NC}"
@@ -278,17 +274,34 @@ cat /mnt/etc/fstab
 sleep 2
 
 function chroot {
-	echo "${BLUE}:: ${BWHITE}Setting up ${BLUE}GRUB${BWHITE}...${NC}"
-	if [[ -d "/sys/firmware/efi" ]]; then
-		grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=GRUB
+	echo "${BLUE}:: ${BWHITE}Setting up ${GREEN}Limine${BWHITE}...${NC}"
+	if [[ ! -d "/sys/firmware/efi" ]]; then
+		BIOS_PART_NUMBER="$(lsblk -no PARTN "$BIOS_PART" | xargs)"
+		limine bios-install "$DISK" "$BIOS_PART_NUMBER" # Install to the BIOS boot partition
+		mkdir -p /boot/limine
+		cp /usr/share/limine/limine-bios.sys /boot/limine/
+	else
+		mkdir -p /boot/EFI/Limine
+		cp /usr/share/limine/BOOTX64.EFI /boot/EFI/Limine/
+		EFI_PART_NUMBER="$(lsblk -no PARTN "$EFI_PART" | xargs)"
+		efibootmgr \
+			--create \
+			--disk "$DISK" \
+			--part "$EFI_PART_NUMBER" \
+			--label "Limine" \
+			--loader "\EFI\Limine\BOOTX64.EFI" \
+			--unicode
 	fi
 	if [[ "$ENCRYPT" == true ]]; then
 		if grep -q "^HOOKS=.*systemd.*" /etc/mkinitcpio.conf; then
-			sed -i "s%^GRUB_CMDLINE_LINUX_DEFAULT=\"%GRUB_CMDLINE_LINUX_DEFAULT=\"rd.luks.name=${ENCRYPTED_PARTITION_UUID}=cryptroot root=/dev/mapper/cryptroot %" /etc/default/grub
+			CMDLINE="root=/dev/mapper/cryptroot rw rootflags=subvol=@ rd.luks.name=${ROOT_PARTITION_UUID}=cryptroot"
+			sed -i "s,\(^HOOKS=.*\)filesystems\(.*\),\1sd-encrypt filesystems\2," /etc/mkinitcpio.conf
 		else
-			sed -i "s%^GRUB_CMDLINE_LINUX_DEFAULT=\"%GRUB_CMDLINE_LINUX_DEFAULT=\"cryptdevice=UUID=${ENCRYPTED_PARTITION_UUID}:cryptroot root=/dev/mapper/cryptroot %" /etc/default/grub
+			CMDLINE="root=/dev/mapper/cryptroot rw rootflags=subvol=@ cryptdevice=UUID=${ROOT_PARTITION_UUID}:cryptroot"
+			sed -i "s,\(^HOOKS=.*\)filesystems\(.*\),\1encrypt filesystems\2," /etc/mkinitcpio.conf
 		fi
-		sed -i "s/^#GRUB_ENABLE_CRYPTODISK=y/GRUB_ENABLE_CRYPTODISK=y/" /etc/default/grub
+	else
+		CMDLINE="root=UUID=${ROOT_PARTITION_UUID} rw rootflags=subvol=@"
 	fi
 
 	case $SWAP_TYPE in
@@ -307,7 +320,7 @@ function chroot {
 		if ! grep -q "^HOOKS=.*systemd.*" /etc/mkinitcpio.conf; then
 			sed -i "s,\(^HOOKS=.*\)filesystems\(.*\),\1filesystems resume\2," /etc/mkinitcpio.conf
 		fi
-		sed -i "s,\(^GRUB_CMDLINE_LINUX_DEFAULT=\".*\)\(.*\"\),\1 resume=UUID=${SWAP_FILE_DEV_UUID} resume_offset=${SWAP_FILE_OFFSET}\2," /etc/default/grub
+		CMDLINE+=" resume=UUID=${SWAP_FILE_DEV_UUID} resume_offset=${SWAP_FILE_OFFSET}"
 		;;
 	zram)
 		echo "${BLUE}:: ${BWHITE}Creating swap on zram...${NC}"
@@ -323,8 +336,28 @@ EOT
 		;;
 	esac
 
-	echo "${BLUE}:: ${BWHITE}Generating ${BLUE}GRUB${BWHITE} config...${NC}"
-	grub-mkconfig -o /boot/grub/grub.cfg
+	tee /boot/limine.conf >/dev/null <<EOT
+### Read more at config document: https://codeberg.org/Limine/Limine/src/branch/trunk/CONFIG.md
+timeout: 5
+term_palette: 24273a;ed8796;a6da95;eed49f;8aadf4;f5bde6;8bd5ca;cad3f5
+term_palette_bright: 5b6078;ed8796;a6da95;eed49f;8aadf4;f5bde6;8bd5ca;cad3f5
+term_background: 24273a
+term_foreground: cad3f5
+term_background_bright: 5b6078
+term_foreground_bright: cad3f5
+
+/Arch Linux
+  protocol: linux
+  path: boot():/vmlinuz-linux
+  cmdline: ${CMDLINE} loglevel=3 quiet
+  module_path: boot():/initramfs-linux.img
+EOT
+
+	mkdir -p /etc/limine-entry-tool.d/
+	tee /etc/limine-entry-tool.d/10-default.conf >/dev/null <<EOT
+ESP_PATH="/boot"
+KERNEL_CMDLINE[default]="${CMDLINE} loglevel=3 quiet"
+EOT
 
 	echo "${BLUE}:: ${BWHITE}Creating user...${NC}"
 	useradd -mG wheel -s /bin/bash "$USERNAME"
@@ -344,15 +377,6 @@ EOT
 	echo "${BLUE}:: ${BWHITE}Hostname is set to ${BLUE}${MACHINE_NAME}${NC}"
 	echo "$MACHINE_NAME" >/etc/hostname
 
-	if [[ "$ENCRYPT" == true ]]; then
-		# Add encrypt hook
-		if grep -q "^HOOKS=.*systemd.*" /etc/mkinitcpio.conf; then
-			sed -i "s,\(^HOOKS=.*\)filesystems\(.*\),\1sd-encrypt filesystems\2," /etc/mkinitcpio.conf
-		else
-			sed -i "s,\(^HOOKS=.*\)filesystems\(.*\),\1encrypt filesystems\2," /etc/mkinitcpio.conf
-		fi
-	fi
-
 	# Make sd-vconsole error go away
 	touch /etc/vconsole.conf
 	mkinitcpio -P
@@ -361,14 +385,17 @@ export -f chroot
 
 # Export vars
 export BLUE
+export GREEN
 export BWHITE
 export NC
-export DISK
 export USERNAME
 export PASSWORD
-export ENCRYPT
 export MACHINE_NAME
-export ENCRYPTED_PARTITION_UUID
+export DISK
+export BIOS_PART
+export EFI_PART
+export ENCRYPT
+export ROOT_PARTITION_UUID
 export SWAP_SIZE
 export SWAP_FILE_PATH
 export SWAP_TYPE
@@ -381,7 +408,7 @@ echo "${GREEN}:: ${BWHITE}Setup completed!${NC}"
 read -rp "${YELLOW}:: ${BWHITE}Do you want to run the user configuration? [Y/n]${NC}: " user_config_prompt
 if [[ ! $user_config_prompt == *n* ]]; then
 	sudo cp /etc/resolv.conf /mnt/etc/resolv.conf
-	HOME="/home/$USERNAME" arch-chroot -u "$USERNAME" /mnt /bin/bash -c "bash <(curl -fsSL https://github.com/kamack38/dotfiles/raw/main/scripts/install.sh)"
+	HOME="/home/$USERNAME" arch-chroot -u "$USERNAME" /mnt /bin/bash -c "bash <(curl -fsSL https://github.com/kamack38/dotfiles/raw/feat/limine/scripts/install.sh)"
 fi
 
 read -rp "${RED}:: ${BWHITE}Do you want to reboot? [Y/n]${NC}: " reboot_prompt
