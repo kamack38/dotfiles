@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+BWHITE=$'\e[1;37m'
+GREEN=$'\e[0;32m'
+NC=$'\e[0m' # No Colour
+
+ucode="amd-ucode.img"
+b2sum=$(b2sum "/boot/$ucode" | cut -d' ' -f1)
+if ! grep -q "$ucode#$b2sum" /boot/limine.conf; then
+	echo "${GREEN}:: ${BWHITE}Adding ${BLUE}$ucode${BWHITE} to booster image...${NC}"
+	sudo sed -i -e '/\/\/booster-linux-cachyos/,/cmdline:/ {' -e "/module_path:/ a \  module_path: boot():/$ucode#$b2sum" -e '}' /boot/limine.conf
+fi
