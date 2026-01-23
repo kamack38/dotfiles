@@ -75,6 +75,9 @@ alias ~="cd ~" # `cd` is probably faster to type though
 alias -- -="cd -"
 alias cls="clear"
 
+# Applications
+alias g='git'
+
 # Alias kitty
 alias xterm-kitty="kitty"
 

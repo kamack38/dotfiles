@@ -55,6 +55,7 @@ NORMAL_PROFILE=(
 	"ffmpeg"                  # Audio/Image/Video file converter
 	"yt-dlp"                  # Better YouTube downloader
 	"neovim"                  # Vim-like text editor
+	"tree-sitter-cli"         # TS Cli for NeoVim
 	"glow"                    # Command-line markdown renderer
 	"fish"                    # New shell
 	"fisher"                  # Fish plugin manager
