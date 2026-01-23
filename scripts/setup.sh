@@ -408,7 +408,7 @@ echo "${GREEN}:: ${BWHITE}Setup completed!${NC}"
 read -rp "${YELLOW}:: ${BWHITE}Do you want to run the user configuration? [Y/n]${NC}: " user_config_prompt
 if [[ ! $user_config_prompt == *n* ]]; then
 	sudo cp /etc/resolv.conf /mnt/etc/resolv.conf
-	HOME="/home/$USERNAME" arch-chroot -u "$USERNAME" /mnt /bin/bash -c "bash <(curl -fsSL https://github.com/kamack38/dotfiles/raw/main/scripts/install.sh)"
+	HOME="/home/$USERNAME" USER="$USERNAME" arch-chroot -u "$USERNAME" /mnt /bin/bash -c "bash <(curl -fsSL https://github.com/kamack38/dotfiles/raw/main/scripts/install.sh)"
 fi
 
 read -rp "${RED}:: ${BWHITE}Do you want to reboot? [Y/n]${NC}: " reboot_prompt
