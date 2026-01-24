@@ -90,6 +90,7 @@ NORMAL_PROFILE=(
 	"limine-snapper-sync"     # The tool syncs Limine snapshot entries with Snapper snapshots.
 	"cachyos-snapper-support" # CachyOS package that handles snapper configs.
 	"android-udev"            # Udev rules to connect Android devices to your linux box
+	"rustic"                  # Fast, encrypted, deduplicated backups powered by Rust (reads and writes restic repos)
 	"${DEV_PROFILE[@]}"
 )
 
