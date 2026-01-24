@@ -113,6 +113,7 @@ return {
   { import = "nvchad.blink.lazyspec" },
   {
     "Saghen/blink.cmp",
+    version = "1.*",
     opts = {
       sources = {
         providers = {
