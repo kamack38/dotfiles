@@ -8,7 +8,7 @@ asusctl profile next
 MESSAGE="$(asusctl profile get | head -n 1)"
 PROFILE="$(echo $MESSAGE | awk '{print $NF}')"
 case "$PROFILE" in
-"Quiet")
+"Quiet" | "LowPower")
 	ICON_COLOR="green"
 	;;
 "Balanced")
