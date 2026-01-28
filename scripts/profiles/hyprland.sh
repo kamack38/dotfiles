@@ -40,6 +40,7 @@ HYPRLAND_PACKAGES=(
 	"libva"                         # Video Acceleration (VA) API for Linux
 	"qt6ct-kde"                     # Qt 6 Configuration Utility, patched to work correctly with KDE applications
 	"nwg-look"                      # GTK3 settings editor adapted to work on wlroots-based compositors
+	"network-manager-applet"        # Applet for managing network connections
 	"wayland-pipewire-idle-inhibit" # Inhibit wayland idle when computer is playing sound
 	"uwsm"                          # A standalone Wayland session manager
 	"libnewt"                       # UWSM dependency
