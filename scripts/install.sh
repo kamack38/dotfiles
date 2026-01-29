@@ -400,6 +400,7 @@ else
 	git clone --bare $REPO "$DOTFILES"
 	git --git-dir="$DOTFILES" --work-tree="$HOME" fetch --all
 	git --git-dir="$DOTFILES" --work-tree="$HOME" config --local status.showUntrackedFiles no
+	git --git-dir="$DOTFILES" --work-tree="$HOME" config --local remote.origin.fetch '+refs/heads/*:refs/remotes/origin/*'
 	git --git-dir="$DOTFILES" --work-tree="$HOME" checkout --force
 fi
 
