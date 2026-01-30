@@ -88,7 +88,6 @@ NORMAL_PROFILE=(
 	"xdg-user-dirs"           # Manages user directories
 	"limine-mkinitcpio-hook"  # Install kernel for the Limine bootloader.
 	"limine-snapper-sync"     # The tool syncs Limine snapshot entries with Snapper snapshots.
-	"cachyos-snapper-support" # CachyOS package that handles snapper configs.
 	"android-udev"            # Udev rules to connect Android devices to your linux box
 	"rustic"                  # Fast, encrypted, deduplicated backups powered by Rust (reads and writes restic repos)
 	"${DEV_PROFILE[@]}"
@@ -602,6 +601,74 @@ if [[ $SELECTED_PROFILES == *"DOCKER"* ]]; then
 	# Enable services
 	sudo systemctl enable docker.socket
 	sudo usermod -a -G docker "$USER"
+fi
+
+# Create snapper config
+sudo mkdir -p /etc/snapper/config-templates
+sudo tee /etc/snapper/config-templates/snapper-root <<EOF
+# subvolume to snapshot
+SUBVOLUME="/"
+
+# filesystem type
+FSTYPE="btrfs"
+
+# btrfs qgroup for space aware cleanup algorithms
+QGROUP=""
+
+# fraction or absolute size of the filesystems space the snapshots may use
+SPACE_LIMIT="0.5"
+
+# fraction or absolute size of the filesystems space that should be free
+FREE_LIMIT="0.2"
+
+# users and groups allowed to work with config
+ALLOW_USERS=""
+ALLOW_GROUPS=""
+
+# sync users and groups from ALLOW_USERS and ALLOW_GROUPS to .snapshots
+# directory
+SYNC_ACL="no"
+
+# start comparing pre- and post-snapshot in background after creating
+# post-snapshot
+BACKGROUND_COMPARISON="yes"
+
+# run daily number cleanup
+NUMBER_CLEANUP="yes"
+
+# limit for number cleanup
+NUMBER_MIN_AGE="3600"
+NUMBER_LIMIT="8"
+NUMBER_LIMIT_IMPORTANT="5"
+
+# create hourly snapshots
+TIMELINE_CREATE="no"
+
+# cleanup hourly snapshots after some time
+TIMELINE_CLEANUP="yes"
+
+# limits for timeline cleanup
+TIMELINE_MIN_AGE="1800"
+TIMELINE_LIMIT_HOURLY="5"
+TIMELINE_LIMIT_DAILY="7"
+TIMELINE_LIMIT_WEEKLY="0"
+TIMELINE_LIMIT_MONTHLY="0"
+TIMELINE_LIMIT_YEARLY="0"
+
+# cleanup empty pre-post-pairs
+EMPTY_PRE_POST_CLEANUP="yes"
+
+# limits for empty pre-post-pair cleanup
+EMPTY_PRE_POST_MIN_AGE="1800"
+EOF
+
+systemctl enable --now snapper-cleanup.timer
+
+# Workaround if script is run inside chroot
+if [ "$(stat -c %d:%i /)" != "$(stat -c %d:%i /proc/1/root/.)" ]; then
+	/usr/bin/snapper --no-dbus -c root create-config --template snapper-root /
+else
+	/usr/bin/snapper -c root create-config --template snapper-root /
 fi
 
 # Add .local/bin to PATH
