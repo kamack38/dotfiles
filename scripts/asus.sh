@@ -61,8 +61,8 @@ systemctl enable --now --user batsignal.service
 
 # Set keyboard light
 echo "${BLUE}:: ${BWHITE}Setting keyboard light...${NC}"
-asusctl aura rainbow-wave -d right -s low
-asusctl -k off
+asusctl aura effect rainbow-wave --speed low --direction right
+asusctl leds set off
 
 echo "${BLUE}:: ${BWHITE}Fixing sound...${NC}"
 sudo tee /etc/modprobe.d/hda-jack-retask.conf >/dev/null <<EOF

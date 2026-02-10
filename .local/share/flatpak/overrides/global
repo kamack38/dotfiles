@@ -1,3 +1,4 @@
 [Context]
-devices=dri;
-filesystems=/usr/share/icons:ro;
+sockets=wayland
+devices=dri
+filesystems=/usr/share/icons:ro
