@@ -157,6 +157,10 @@ TYPST_DEV_PROFILE=(
 	"websocat"     # Command-line client for web sockets (required for typst-preview.nvim)
 )
 
+OCAML_DEV_PROFILE=(
+	"opam" # OCaml package manager
+)
+
 DOCKER_PROFILE=(
 	"docker"         # Pack, ship and run any application as a lightweight container
 	"docker-compose" # Fast, isolated development environments using Docker
@@ -203,6 +207,7 @@ PROFILES=(
 	"Rust Dev"
 	"Android Dev"
 	"Typst Dev"
+	"Ocaml Dev"
 	"Docker"
 )
 
@@ -594,6 +599,22 @@ if [[ $SELECTED_PROFILES == *"ANDROID_DEV"* ]]; then
 	# Fix permissions
 	sudo chown -R root:android /opt/android-sdk
 	sudo chmod -R g=u /opt/android-sdk
+fi
+if [[ $SELECTED_PROFILES == *"OCAML_DEV"* ]]; then
+	echo "${BLUE}:: ${BWHITE}Adding ${BLUE}Ocaml dev${BWHITE} support...${NC}"
+
+	# Init opam
+	opam init --bare -y
+
+	# Add fish env
+	ln -s "$OPAMROOT/opam-init/init.fish" "$XDG_CONFIG_HOME/fish/conf.d/opam.fish"
+	source "$OPAMROOT/opam-init/init.sh"
+
+	opam switch create system ocaml-system
+	eval (opam env --switch=system)
+
+	# Install components
+	opam install -y utop ocaml-lsp-server ocamlformat
 fi
 if [[ $SELECTED_PROFILES == *"DOCKER"* ]]; then
 	echo "${BLUE}:: ${BWHITE}Configuring ${BLUE}Docker${BWHITE} profile...${NC}"
