@@ -15,6 +15,8 @@ local servers = {
   --     language = "pl-PL"
   --   }
   -- },
+  ocamllsp = {},
+  sqruff = {},
   kotlin_lsp = {},
   rust_analyzer = {
     filetypes = { "rust" },
