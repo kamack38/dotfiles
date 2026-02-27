@@ -172,6 +172,7 @@ DESKTOP_APPS=(
 	"sddm"                             # QML based X11 and Wayland display manager
 	"ark"                              # Archive Manager
 	"dolphin"                          # File Manager
+	"ffmpegthumbs"                     # FFmpeg-based thumbnail creator for video files
 	"archlinux-xdg-menu"               # Generate WM menu from xdg files (Fix dolphin no "open with" programs)
 	"partitionmanager"                 # Partition Manager
 	"gwenview"                         # Image viewer
@@ -611,7 +612,7 @@ if [[ $SELECTED_PROFILES == *"OCAML_DEV"* ]]; then
 	source "$OPAMROOT/opam-init/init.sh"
 
 	opam switch create system ocaml-system
-	eval (opam env --switch=system)
+	eval "$(opam env --switch=system)"
 
 	# Install components
 	opam install -y utop ocaml-lsp-server ocamlformat
