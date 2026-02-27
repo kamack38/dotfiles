@@ -46,6 +46,7 @@ return {
         "bash",
         "fish",
 
+        "sql",
         "lua",
         "vim",
         "markdown",
