@@ -151,10 +151,10 @@ ANDROID_DEV_PROFILE=(
 )
 
 TYPST_DEV_PROFILE=(
-	"typst"        # A markup-based typesetting system for the sciences
-	"typstyle-bin" # Beautiful and reliable typst code formatter
-	"tinymist"     # An integrated language service for Typst
-	"websocat"     # Command-line client for web sockets (required for typst-preview.nvim)
+	"typst"    # A markup-based typesetting system for the sciences
+	"typstyle" # Beautiful and reliable typst code formatter
+	"tinymist" # An integrated language service for Typst
+	"websocat" # Command-line client for web sockets (required for typst-preview.nvim)
 )
 
 OCAML_DEV_PROFILE=(
