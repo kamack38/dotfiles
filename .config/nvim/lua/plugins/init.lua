@@ -72,12 +72,6 @@ return {
         select = {
           enable = true,
           lookahead = true,
-          keymaps = {
-            ["aa"] = "@parameter.outer",
-            ["ia"] = "@parameter.inner",
-            ["af"] = "@function.outer",
-            ["if"] = "@function.inner",
-          },
           selection_modes = {
             ["@parameter.outer"] = "v", -- char wise
             ["@function.outer"] = "V",  -- line wise

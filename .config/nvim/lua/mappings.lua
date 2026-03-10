@@ -111,6 +111,20 @@ map({ "o", "x" }, "ac", '<cmd>lua require("various-textobjs").subword("outer")<C
 map({ "o", "x" }, "ic", '<cmd>lua require("various-textobjs").subword("inner")<CR>')
 map("n", "gx", utils.open_next_link, { desc = "Open next available link" })
 
+-- TS Textobjects
+local ts_keymaps = {
+  ["aa"] = "@parameter.outer",
+  ["ia"] = "@parameter.inner",
+  ["af"] = "@function.outer",
+  ["if"] = "@function.inner",
+  ["as"] = "@local.sope",
+}
+for mapping, query in pairs(ts_keymaps) do
+  map({ "x", "o" }, mapping, function()
+    require("nvim-treesitter-textobjects.select").select_textobject(query, "textobjects")
+  end, { desc = "Select " .. query })
+end
+
 -- Terminal
 map({ "n" }, "<leader>tt", ":terminal<CR>i")
 
