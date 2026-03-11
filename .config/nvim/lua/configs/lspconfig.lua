@@ -15,7 +15,26 @@ local servers = {
   --     language = "pl-PL"
   --   }
   -- },
-  ocamllsp = {},
+  ocamllsp = {
+    root_dir = function(bufnr, on_dir)
+      local fname = vim.api.nvim_buf_get_name(bufnr)
+      local util = require('lspconfig.util')
+
+      -- root_pattern takes a variadic list of strings or a single table
+      local root = util.root_pattern(
+        "dune-project",
+        "dune-workspace",
+        "*.opam",
+        "opam",
+        "esy.json",
+        "package.json",
+        "*.ml",
+        ".git"
+      )(fname)
+
+      on_dir(root)
+    end
+  },
   sqruff = {},
   kotlin_lsp = {},
   rust_analyzer = {

@@ -582,7 +582,10 @@ return {
       fzf_lua = {
         enabled = true,
       },
-      detection_methods = { "lsp", "pattern" },
+      lsp = {
+        enabled = true,
+        no_fallback = true,
+      },
       patterns = {
         "bin",
         ">Documents",
