@@ -549,6 +549,9 @@ return {
     opts = require("configs.code_runner"),
   },
 
+  -- REPL
+  { import = "configs.iron" },
+
   -- Debugger
   { import = "configs.dap" },
 
