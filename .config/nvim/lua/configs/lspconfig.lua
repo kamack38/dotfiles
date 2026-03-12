@@ -6,6 +6,7 @@ local servers = {
   html = {},
   -- nil_ls = {},
   ruff = {},
+  ty = {},
   tailwindcss = {},
   -- texlab = {},
   -- ts_ls = {},
