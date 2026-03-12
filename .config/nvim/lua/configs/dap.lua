@@ -2,7 +2,7 @@ return {
   {
     "mfussenegger/nvim-dap",
     keys = {
-      { "<F8>",      "<cmd>DapContinue<cr>",         { desc = "Debug: Continue" } },
+      { "<F8>",      "<cmd>DapContinue<cr>",         { desc = "Debug: Continue" },         mode = { "n", "t" } },
       { "<F10>",     "<cmd>DapStepOver<cr>",         { desc = "Debug: Step Over" } },
       { "<F11>",     "<cmd>DapStepInto<cr>",         { desc = "Debug: Step Into" } },
       { "<F12>",     "<cmd>DapStepOut<cr>",          { desc = "Debug: Step Out" } },
@@ -113,6 +113,9 @@ return {
         dapui.close()
       end
     end,
+    dependencies = {
+      'theHamsta/nvim-dap-virtual-text',
+    }
   },
 
   {
@@ -122,5 +125,10 @@ return {
       "nvim-neotest/nvim-nio"
     },
     opts = {},
+  },
+
+  {
+    "theHamsta/nvim-dap-virtual-text",
+    opts = {}
   }
 }
