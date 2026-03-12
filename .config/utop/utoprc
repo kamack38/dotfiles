@@ -1,0 +1,34 @@
+! -*- conf-xdefaults -*-
+! Common resources
+
+profile:                  dark
+
+! Main Foreground (Gainsboro)
+identifier.foreground:    none
+
+! Keywords: #c678dd -> x-mediumpurple1
+keyword.foreground:       x-mediumpurple1
+symbol.foreground:        x-mediumpurple1
+
+! Modules/Functions: #61afef -> x-skyblue2
+module.foreground:        x-skyblue2
+
+! Strings/Chars: #98c379 -> x-palegreen3
+string.foreground:        x-palegreen3
+char.foreground:          x-palegreen3
+
+! Constants/Numbers: #d19a66 -> x-lightsalmon1
+constant.foreground:      x-lightsalmon1
+
+! Comments: #5c6370 -> x-grey50
+comment.foreground:       x-grey50
+doc.foreground:           x-grey70
+
+! Preprocessor/Errors: #e06c75 -> x-indianred1
+directive.foreground:     x-indianred1
+quotation.foreground:     x-indianred1
+error.foreground:         x-indianred1
+symbol.foreground:        x-indianred1
+
+! Match Highlight: #3e4452 -> x-grey30
+parenthesis.background:   x-grey30

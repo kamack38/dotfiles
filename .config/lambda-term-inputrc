@@ -1,0 +1,5 @@
+[read-line]
+C-w: kill-prev-word
+C-backspace: kill-prev-word
+C-k: history-prev
+C-j: history-next
