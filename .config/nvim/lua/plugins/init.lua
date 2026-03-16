@@ -423,24 +423,8 @@ return {
   ------------------------------------- Other ---------------------------------------
 
   -- AI features
-  -- {
-  --   "yetone/avante.nvim",
-  --   event = "VeryLazy",
-  --   version = false,
-  --   config = function()
-  --     dofile(vim.g.base46_cache .. "avante")
-  --     require "configs.avante"
-  --   end,
-  --   build = "make",
-  --   dependencies = {
-  --     "nvim-treesitter/nvim-treesitter",
-  --     "stevearc/dressing.nvim",
-  --     "nvim-lua/plenary.nvim",
-  --     "MunifTanjim/nui.nvim",
-  --     "hrsh7th/nvim-cmp",
-  --     "nvim-tree/nvim-web-devicons",
-  --   },
-  -- },
+  -- { import = "configs.ai" },
+
 
   -- Picker
   {
@@ -560,7 +544,6 @@ return {
     "kawre/leetcode.nvim",
     cmd = "Leet",
     dependencies = {
-      -- include a picker of your choice, see picker section for more details
       "nvim-lua/plenary.nvim",
       "MunifTanjim/nui.nvim",
     },
