@@ -161,6 +161,13 @@ OCAML_DEV_PROFILE=(
 	"opam" # OCaml package manager
 )
 
+ASSEMBLY_DEV_PROFILE=(
+	"asm-lsp" # A language server for NASM/GAS/GO Assembly
+	"asmfmt"  # Format your assembler code in a similar way that gofmt formats your Go code.
+	"tinyxxd" # Standalone version of the hex dump utility that comes with ViM
+	"gdb"     # The GNU Debugger
+)
+
 DOCKER_PROFILE=(
 	"docker"         # Pack, ship and run any application as a lightweight container
 	"docker-compose" # Fast, isolated development environments using Docker
@@ -209,6 +216,7 @@ PROFILES=(
 	"Android Dev"
 	"Typst Dev"
 	"Ocaml Dev"
+	"Assembly Dev"
 	"Docker"
 )
 

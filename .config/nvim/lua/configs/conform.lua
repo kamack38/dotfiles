@@ -12,6 +12,7 @@ local options = {
   },
 
   formatters_by_ft = {
+    asm = { "asmfmt" },
     javascript = { "biome" },
     javascriptreact = { "biome" },
     typescript = { "biome" },
