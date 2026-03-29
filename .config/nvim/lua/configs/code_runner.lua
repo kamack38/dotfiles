@@ -1,7 +1,7 @@
 return {
   filetype = {
     c =
-    'cd "$dir" && mkdir -p "$dir/bin" && gcc "$dir/$fileName" -o "$dir/bin/$fileNameWithoutExt" -std=c11 -Wall -Wextra -fsanitize=address,undefined && "$dir/bin/$fileNameWithoutExt"',
+    'cd $dir && mkdir -p $dir/bin && gcc $dir/$fileName -o $dir/bin/$fileNameWithoutExt -std=c11 -Wall -Wextra -fsanitize=address,undefined && $dir/bin/$fileNameWithoutExt',
     cpp = function()
       if vim.fn.has "win32" == 1 then
         return

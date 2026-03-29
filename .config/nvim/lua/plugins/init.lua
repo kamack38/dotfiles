@@ -487,7 +487,9 @@ return {
       "nvim-tree/nvim-web-devicons",
     },
     cmd = { "Octo" },
-    opts = {},
+    opts = {
+      picker = "fzf-lua",
+    },
   },
 
   -- Track the time you're spending with your code
