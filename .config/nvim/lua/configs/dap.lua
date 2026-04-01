@@ -1,10 +1,11 @@
 return {
   {
     "mfussenegger/nvim-dap",
+    cmd = { "DapToggleBreakpoint" },
     keys = {
       { "<F8>",      "<cmd>DapContinue<cr>",         { desc = "Debug: Continue" },         mode = { "n", "t" } },
-      { "<F6>",      "<cmd>DapStepOver<cr>",         { desc = "Debug: Step Over" } },
-      { "<F5>",      "<cmd>DapStepInto<cr>",         { desc = "Debug: Step Into" } },
+      { "<F6>",      "<cmd>DapStepOver<cr>",         { desc = "Debug: Step Over" },        mode = { "n", "t" } },
+      { "<F5>",      "<cmd>DapStepInto<cr>",         { desc = "Debug: Step Into" },        mode = { "n", "t" } },
       { "<F12>",     "<cmd>DapStepOut<cr>",          { desc = "Debug: Step Out" } },
       { "<leader>b", "<cmd>DapToggleBreakpoint<cr>", { desc = "Debug: Toggle Breakpoint" } },
       { "<leader>B",
@@ -114,7 +115,7 @@ return {
           end,
           cwd = "${workspaceFolder}",
           externalTerminal = false,
-          stopOnEntry = false,
+          stopOnEntry = true,
           args = {},
         },
       }
@@ -149,7 +150,46 @@ return {
       "mfussenegger/nvim-dap",
       "nvim-neotest/nvim-nio"
     },
-    opts = {},
+    opts = {
+      layouts = {
+        {
+          elements = {
+            {
+              id = "scopes",
+              size = 0.40
+            },
+            {
+              id = "stacks",
+              size = 0.25
+            },
+            {
+              id = "watches",
+              size = 0.25
+            },
+            {
+              id = "breakpoints",
+              size = 0.10
+            }
+          },
+          position = "left",
+          size = 40
+        },
+        {
+          elements = {
+            {
+              id = "repl",
+              size = 0.5
+            },
+            {
+              id = "console",
+              size = 0.5
+            }
+          },
+          position = "bottom",
+          size = 15
+        }
+      }
+    },
   },
 
   {

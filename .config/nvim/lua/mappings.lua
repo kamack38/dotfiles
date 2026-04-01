@@ -159,6 +159,9 @@ map({ "n", "x" }, "<leader>ca", require("tiny-code-action").code_action,
 map("n", "gl", vim.diagnostic.open_float, { desc = "LSP Show diagnostics" })
 map("n", "K", utils.hover_handler, { desc = "LSP Hover" })
 
+-- Dap
+map("n", "<leader>b", "<cmd>DapToggleBreakpoint<cr>", { desc = "Debug: Toggle Breakpoint" })
+
 -- Leap
 map("n", "<leader>s", function()
   require("leap").leap { target_windows = { vim.fn.win_getid() } }
