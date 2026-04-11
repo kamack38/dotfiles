@@ -784,6 +784,10 @@ if [[ "${SELECTED_DE}" != "" || $(pacman -Q sddm) ]]; then
 	# Symlink Firefox
 	sudo ln -s /usr/bin/firefox-developer-edition /usr/bin/firefox || :
 
+	# Symlink qt6ct theme
+	sudo mkdir -p /etc/xdg/qt6ct
+	sudo ln -sf "$HOME/.config/qt6ct/qt6ct.conf" /etc/xdg/qt6ct/qt6ct.conf
+
 	# Enable service
 	sudo systemctl enable sddm.service
 
