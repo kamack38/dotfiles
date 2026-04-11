@@ -87,3 +87,14 @@ if vim.g.neovide then
   vim.o.guifont = "FiraCode Nerd Font Mono Med:h12"
   vim.g.neovide_opacity = 0.8
 end
+
+-- Filetypes
+vim.filetype.add({
+  extension = {
+    mly = 'menhir',
+    mll = 'ocamllex',
+    mli = 'ocamlinterface',
+    re  = 'reason',
+    rei = 'reason',
+  },
+})

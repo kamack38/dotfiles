@@ -556,7 +556,7 @@ return {
     },
   },
 
-  -- -- Set project root correctly
+  -- Set project root correctly
   {
     "DrKJeff16/project.nvim",
     lazy = false,

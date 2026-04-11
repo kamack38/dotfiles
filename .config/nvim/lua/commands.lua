@@ -23,6 +23,21 @@ create_cmd("CdBufferRoot", function()
   vim.cmd("cd " .. dir)
 end, {})
 
+-- Restart neovim
+create_cmd("Restart", function()
+  local session = vim.fn.stdpath('state') .. '/restart_session.vim'
+  vim.cmd('mksession! ' .. vim.fn.fnameescape(session))
+  vim.cmd('restart source ' .. vim.fn.fnameescape(session))
+end, { desc = 'Restart Neovim' })
+
+-- Move buffers
+create_cmd("MoveBufRight", function()
+  require("nvchad.tabufline").move_buf(1)
+end, { desc = "Move buffer right" })
+create_cmd("MoveBufLeft", function()
+  require("nvchad.tabufline").move_buf(-1)
+end, { desc = "Move buffer left" })
+
 -- Editor config reload
 create_cmd("EditorConfigReload", function()
   vim.api.nvim_exec_autocmds("BufReadPost", { buffer = 0 })
