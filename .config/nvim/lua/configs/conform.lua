@@ -1,10 +1,15 @@
+local config_home = (os.getenv("XDG_CONFIG_HOME"))
+    or (os.getenv("HOME") and os.getenv("HOME") .. "/.config")
+    or (os.getenv("HOMEPATH") and os.getenv("HOMEPATH") .. "/.config")
+    or ""
+
 local options = {
   formatters = {
     shfmt = {
       prepend_args = { "-i", "0" },
     },
     biome = {
-      append_args = { "--config-path", ((os.getenv "XDG_CONFIG_HOME") or (os.getenv "HOME" .. "/.config")) .. "/biome.json" }
+      append_args = { "--config-path", config_home .. "/biome.json" }
     },
     ["deno_fmt"] = {
       append_args = { "--line-width", "100" },
