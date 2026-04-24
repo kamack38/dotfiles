@@ -93,7 +93,6 @@ alias icat="kitty +kitten icat"
 alias xterm-kitty="kitty"
 alias n="nvim"
 alias btc="bluetoothctl"
-alias xo="xdg-open"
 alias si="su -s /bin/fish"
 alias gp="glow -p"
 alias rd="ripdrag"
@@ -120,6 +119,11 @@ function r -a path
     else
         echo "Object does not exist!"
     end
+end
+
+# Open and detach
+function xo --description 'Open file and detach'
+    nohup xdg-open $argv >/dev/null 2>&1 &
 end
 
 # See diff between .pacnew files
