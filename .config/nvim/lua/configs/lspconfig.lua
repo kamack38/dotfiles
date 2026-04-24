@@ -37,6 +37,15 @@ local servers = {
       on_dir(root)
     end
   },
+  menhir_lsp = {
+    cmd = { "menhir-lsp" },
+    filetypes = { "ocaml.menhir", "ocaml.ocamllex", "menhir", "ocamllex" },
+    root_dir = function(bufnr, on_dir)
+      local util = require('lspconfig.util')
+      local root = util.root_pattern("dune-project", "dune-workspace", ".git")(vim.api.nvim_buf_get_name(bufnr))
+      on_dir(root)
+    end,
+  },
   sqruff = {},
   kotlin_lsp = {},
   rust_analyzer = {
