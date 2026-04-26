@@ -43,6 +43,9 @@ create_cmd("EditorConfigReload", function()
   vim.api.nvim_exec_autocmds("BufReadPost", { buffer = 0 })
 end, {})
 
+-- Show lsp info
+create_cmd("LspInfo", "checkhealth vim.lsp", {})
+
 -- Dynamic terminal padding
 autocmd("VimEnter", {
   pattern = "*",
