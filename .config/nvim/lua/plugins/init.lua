@@ -58,16 +58,6 @@ return {
         disable = { "html" },
       },
 
-      incremental_selection = {
-        enable = true,
-        keymaps = {
-          init_selection = "gnn",
-          node_incremental = "grn",
-          node_decremental = "grm",
-          scope_incremental = "grc",
-        },
-      },
-
       textobjects = {
         select = {
           enable = true,
@@ -416,6 +406,7 @@ return {
     opts = {
       keymaps = {
         useDefaults = true,
+        disabledDefaults = { "an", "in" },
       },
     },
   },

@@ -2,6 +2,10 @@ require "nvchad.options"
 
 local opt = vim.opt
 
+pcall(function()
+  require('vim._core.ui2').enable()
+end)
+
 if vim.fn.has "win32" == 1 then
   opt.shell = "pwsh.exe"
   opt.shellcmdflag = "-nol -nop -c"
