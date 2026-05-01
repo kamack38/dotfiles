@@ -160,6 +160,10 @@ map("n", "gl", vim.diagnostic.open_float, { desc = "LSP Show diagnostics" })
 map("n", "gy", function()
   vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
 end, { desc = "LSP Toggle inlay hints" })
+map('n', 'gK', function()
+  local lines_disabled = not vim.diagnostic.config().virtual_lines
+  vim.diagnostic.config({ virtual_lines = lines_disabled, virtual_text = not lines_disabled })
+end, { desc = "Toggle diagnostic virtual_lines" })
 map("n", "K", utils.hover_handler, { desc = "LSP Hover" })
 
 -- Dap
