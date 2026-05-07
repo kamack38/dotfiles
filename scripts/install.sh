@@ -625,6 +625,12 @@ if [[ $SELECTED_PROFILES == *"OCAML_DEV"* ]]; then
 	# Install components
 	opam install -y utop ocaml-lsp-server ocamlformat
 fi
+if [[ $SELECTED_PROFILES == *"ASSEMBLY_DEV"* ]]; then
+	echo "${BLUE}:: ${BWHITE}Adding ${BLUE}Assembly dev${BWHITE} support...${NC}"
+
+	# Create state directory
+	mkdir -p $XDG_STATE_HOME/gdb
+fi
 if [[ $SELECTED_PROFILES == *"DOCKER"* ]]; then
 	echo "${BLUE}:: ${BWHITE}Configuring ${BLUE}Docker${BWHITE} profile...${NC}"
 

@@ -1,0 +1,18 @@
+python
+import os
+import glob
+import gdb
+
+# Path to your user-specific gdbinit.d directory
+gdbinit_dir = os.path.expanduser("~/.config/gdb/gdbinit.d")
+
+if os.path.isdir(gdbinit_dir):
+    # Sort files alphabetically so you can control load order (e.g., 00-xxx, 10-yyy)
+    for filepath in sorted(glob.glob(os.path.join(gdbinit_dir, "*"))):
+        # Only source valid configuration files
+        if filepath.endswith((".gdb", ".py", ".gdbinit")):
+            try:
+                gdb.execute(f"source {filepath}")
+            except Exception as e:
+                print(f"Error loading {os.path.basename(filepath)}: {e}")
+end
