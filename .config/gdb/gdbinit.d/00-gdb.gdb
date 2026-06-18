@@ -29,7 +29,7 @@ class PrintMatrix(gdb.Command):
 PrintMatrix()
 end
 
-set debuginfod enabled on
+set debuginfod enabled off
 set disassembly-flavor att
 set confirm off
 set history save

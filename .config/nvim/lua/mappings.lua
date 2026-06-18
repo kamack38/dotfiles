@@ -151,6 +151,21 @@ map({ "n", "x", "o" }, "T", ts_repeat_move.builtin_T_expr, { expr = true })
 
 -- Terminal
 map({ "n" }, "<leader>tt", ":terminal<CR>i")
+map({ "n", "t" }, "<M-o>", function()
+  require("nvchad.term").toggle {
+    pos = "float",
+    id = "opcode",
+    cmd = "opencode",
+    float_opts = {
+      relative = "editor",
+      row = 0,
+      col = 0,
+      width = 1.0,
+      height = 1.0,
+      border = "none",
+    }
+  }
+end, { desc = "OpenCode terminal" })
 
 -- Lsp
 map("n", "<leader>cn", require "nvchad.lsp.renamer", { desc = "LSP Rename" })
