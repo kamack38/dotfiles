@@ -900,6 +900,13 @@ sudo tee /etc/pam.d/environment >/dev/null <<EOT
 session    required   pam_env.so readenv=1 user_readenv=1
 EOT
 
+# Decrease user service timers
+sudo tee /usr/lib/systemd/user.conf.d/00-timeout.conf >/dev/null <<EOT
+[Manager]
+DefaultTimeoutStartSec=15s
+DefaultTimeoutStopSec=10s
+EOT
+
 read -rp "${BLUE}:: ${BWHITE}Do you want to add additional pacman repositories (archstrike, blackarch, archcraft)? [y/N]${NC}: " repos_script
 
 if [[ $repos_script == y* ]]; then
