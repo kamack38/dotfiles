@@ -198,7 +198,7 @@ DESKTOP_APPS=(
 	"yubico-authenticator-bin"         # Yubico Authenticator for Desktop
 	"breeze"                           # Artwork, styles and assets for the Breeze visual style for the Plasma Desktop
 	"catppuccin-gtk-theme-macchiato"   # Soothing pastel theme for GTK - Macchiato
-	"ripdrag-git"                      # Drag and drop files to and from the terminal
+	"ripdrag"                          # Drag and drop files to and from the terminal
 	"btrfs-assistant"                  # An application for managing BTRFS subvolumes and Snapper snapshots
 	"flatpak"                          # Linux application sandboxing and distribution framework (formerly xdg-app)
 	"darkly-qt6-git"                   # Modern style for KF6/Qt6 applications (fork of Lightly)
