@@ -907,6 +907,9 @@ DefaultTimeoutStartSec=15s
 DefaultTimeoutStopSec=10s
 EOT
 
+# Increase number of password tries
+sudo sed -i 's/^#\?\s*deny\s*=.*/deny = 5/' /etc/security/faillock.conf
+
 read -rp "${BLUE}:: ${BWHITE}Do you want to add additional pacman repositories (archstrike, blackarch, archcraft)? [y/N]${NC}: " repos_script
 
 if [[ $repos_script == y* ]]; then
