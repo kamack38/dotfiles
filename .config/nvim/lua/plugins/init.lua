@@ -531,9 +531,6 @@ return {
   {
     "DrKJeff16/project.nvim",
     lazy = false,
-    init = function()
-      vim.g.project_lsp_nowarn = 1
-    end,
     opts = {
       fzf_lua = {
         enabled = true,
