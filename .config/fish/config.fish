@@ -250,6 +250,11 @@ function mp -a output_file
     tm (wl-paste) "$output_file"
 end
 
+# OCR. Supply the lang using command parameter eg. eng+pol
+function clipocr -d "Ocr current clipboard contents using tesseract" -a lang
+    wl-paste -t image/png | tesseract - - -l $lang
+end
+
 # Copying and pasting files
 function cpf -d 'Copy file contents to clipboard' -a file_name
     cat "$file_name" | wl-copy
@@ -301,3 +306,7 @@ end
 # pnpm end
 
 bind \cj history-search-forward
+
+# Added by LM Studio CLI (lms)
+set -gx PATH $PATH /home/kamack38/.lmstudio/bin
+# End of LM Studio CLI section
