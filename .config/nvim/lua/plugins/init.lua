@@ -429,8 +429,7 @@ return {
           ["bg+"] = { "bg", { "VisualNonText" }, "bold", "underline" },
           ["gutter"] = "-1",
         },
-      }
-      )
+      })
     end,
   },
   {

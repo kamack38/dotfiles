@@ -65,8 +65,8 @@ abbr -a \*\* --position anywhere --function last_path # Last typed path in the c
 # ------------
 # LS aliases
 alias ll='eza -alF --git'
-alias ls='eza --icons'
-alias la='eza -a --icons'
+alias ls='eza --icons always'
+alias la='eza -a --icons always'
 alias lt='eza -T'
 alias le='eza -alTL 2'
 

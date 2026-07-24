@@ -41,6 +41,7 @@ M.add = {
   -- GutterMarks
   GutterMarksLocal = { fg = "red" },
   GutterMarksGlobal = { fg = "yellow" },
+  GutterMarksSpecial = { fg = colors.one_bg3 }
 }
 
 return M
