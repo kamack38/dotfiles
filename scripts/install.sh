@@ -910,6 +910,20 @@ EOT
 # Increase number of password tries
 sudo sed -i 's/^#\?\s*deny\s*=.*/deny = 5/' /etc/security/faillock.conf
 
+# Enable Quad9 with DoT
+sudo mkdir -p /etc/systemd/resolved.conf.d
+sudo tee /etc/systemd/resolved.conf.d/quad9-dot.conf >/dev/null <<EOT
+[Resolve]
+DNS=9.9.9.9#dns.quad9.net 149.112.112.112#dns.quad9.net 2620:fe::fe#dns.quad9.net 2620:fe::9#dns.quad9.net
+Domains=~.
+DNSOverTLS=yes
+EOT
+sudo systemctl restart systemd-resolved
+
+echo "${BLUE}:: ${BWHITE}Current DNS status:${NC}"
+sleep 3
+resolvectl status
+
 read -rp "${BLUE}:: ${BWHITE}Do you want to add additional pacman repositories (archstrike, blackarch, archcraft)? [y/N]${NC}: " repos_script
 
 if [[ $repos_script == y* ]]; then
