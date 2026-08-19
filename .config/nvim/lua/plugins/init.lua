@@ -233,6 +233,11 @@ return {
               icon = " ",
               hl = "DevIconKotlin",
             },
+            ["instagram%.com"] = {
+              priority = 9999,
+              icon = " ",
+              hl = "pink",
+            },
           },
         },
       }
