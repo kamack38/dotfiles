@@ -1,6 +1,6 @@
 <?xml version='1.0'?>
 <!DOCTYPE gui SYSTEM 'kpartgui.dtd'>
-<gui name="dolphin" version="48">
+<gui name="dolphin" version="49">
  <MenuBar>
   <Menu name="file">
    <Action name="new_menu"/>
@@ -41,15 +41,19 @@
    <Action name="view_zoom_out"/>
    <Separator/>
    <Action name="sort"/>
+   <Action name="group_by"/>
    <Action name="view_mode"/>
    <Action name="additional_info"/>
    <Action name="show_preview"/>
-   <Action name="show_in_groups"/>
    <Action name="show_hidden_files"/>
    <Action name="act_as_admin"/>
    <Separator/>
+   <Action name="restore_view_settings_default"/>
+   <Action name="view_properties"/>
+   <Separator/>
    <Action name="split_view_menu"/>
    <Action name="popout_split_view"/>
+   <Action name="focus_inactive_split_view"/>
    <Action name="split_stash"/>
    <Action name="redisplay"/>
    <Action name="stop"/>
@@ -60,8 +64,6 @@
     <Action name="editable_location"/>
     <Action name="replace_location"/>
    </Menu>
-   <Separator/>
-   <Action name="view_properties"/>
   </Menu>
   <Menu name="go">
    <Action name="bookmarks"/>

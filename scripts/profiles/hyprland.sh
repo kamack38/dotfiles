@@ -20,8 +20,7 @@ HYPRLAND_PACKAGES=(
 	"hyprpaper"                     # A blazing fast wayland wallpaper utility with IPC controls.
 	"hyprlock"                      # hyprland’s GPU-accelerated screen locking utility
 	"hypridle"                      # hyprland’s idle daemon
-	"rofi"                          # A window switcher, application launcher and dmenu replacement
-	"rofi-emoji"                    # A Rofi plugin for selecting emojis
+	"vicinae"                       # A focused launcher for your desktop
 	"wl-clipboard"                  # Command-line copy/paste utilities for Wayland
 	"hyprsunset"                    # An application to enable a blue-light filter on Hyprland
 	"cliphist"                      # clipboard history "manager" for wayland
@@ -55,3 +54,4 @@ systemctl enable --now --user wayland-pipewire-idle-inhibit.service
 systemctl enable --user hypridle.service
 systemctl enable --user hyprpaper.service
 systemctl enable --user waybar.service
+systemctl enable --user vicinae.service

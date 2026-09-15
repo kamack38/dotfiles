@@ -1,0 +1,1 @@
+[{"id":"brave-search","name":"Brave search","icon":"icon://favicon/search.brave.com?fallback=icon://omnicast/image?fill%3Dprimary-text","url":"https://search.brave.com/search?q={argument name=\"query\"}","app":"default","openCount":1,"createdAt":1788197445,"updatedAt":1788197445,"lastUsedAt":1789473908}]
