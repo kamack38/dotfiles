@@ -11,6 +11,9 @@
 {
    "$schema": "https://vicinae.com/schemas/config.json",
    "close_on_focus_loss": false,
+   "global_shortcuts": {
+      "toggle": "super+R"
+   },
    "font": {
       "normal": {
          "size": 11
@@ -35,6 +38,20 @@
       },
       "browser-extension": {
          "enabled": false
+      },
+      "clipboard": {
+         "entrypoints": {
+            "history": {
+               "shortcut": "super+V"
+            }
+         }
+      },
+      "core": {
+         "entrypoints": {
+            "search-emojis": {
+               "shortcut": "super+."
+            }
+         }
       },
       "developer": {
          "enabled": false
