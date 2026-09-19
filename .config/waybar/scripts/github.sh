@@ -1,8 +1,10 @@
 #!/bin/bash
 
 token=$(cat "${HOME}/.keys/github-noti.token")
-count=$(curl -u "username:${token}" https://api.github.com/notifications | jq '. | length')
+response=$(curl -u "username:${token}" https://api.github.com/notifications)
+count=$(echo "$response" | jq '. | length')
+tooltip=$(echo "$response" | jq '.[] | ("- " + .subject.title + " (" + .repository.full_name + ")")')
 
 if [[ "$count" != "0" ]]; then
-	echo '{"text":'$count',"tooltip":"$tooltip","class":"$class"}'
+	echo '{"text":'$count',"tooltip":'$tooltip',"class":"$class"}'
 fi
