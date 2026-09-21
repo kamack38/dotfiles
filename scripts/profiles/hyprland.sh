@@ -55,3 +55,4 @@ systemctl enable --user hypridle.service
 systemctl enable --user hyprpaper.service
 systemctl enable --user waybar.service
 systemctl enable --user vicinae.service
+systemctl enable --user plasma-polkit-agent.service

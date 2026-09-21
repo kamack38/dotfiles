@@ -39,6 +39,13 @@
             }
          }
       },
+      "applications": {
+         "preferences": {
+            "defaultAction": "focus",
+            "launchPrefix": "runapp --",
+            "paths": []
+         }
+      },
       "browser-extension": {
          "enabled": false
       },
