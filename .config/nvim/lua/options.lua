@@ -82,6 +82,13 @@ vim.filetype.add {
   pattern = { [".*/hypr/.*%.conf"] = "hyprlang" },
 }
 
+-- Set Obsidian bases filetype
+vim.filetype.add({
+  extension = {
+    base = "yaml",
+  },
+})
+
 vim.g.editorconfig = true
 
 -- Disable recommended markdown style
