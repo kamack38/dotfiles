@@ -701,11 +701,15 @@ EOF
 
 sudo systemctl enable --now snapper-cleanup.timer
 
-# Workaround if script is run inside chroot
-if [ "$(stat -c %d:%i /)" != "$(stat -c %d:%i /proc/1/root/.)" ]; then
-	sudo /usr/bin/snapper --no-dbus -c root create-config --template snapper-root /
+if [ ! -f "/etc/snapper/configs/root" ]; then
+	# Workaround if script is run inside chroot
+	if [ "$(stat -c %d:%i /)" != "$(stat -c %d:%i /proc/1/root/.)" ]; then
+		sudo /usr/bin/snapper --no-dbus -c root create-config --template snapper-root /
+	else
+		sudo /usr/bin/snapper -c root create-config --template snapper-root /
+	fi
 else
-	sudo /usr/bin/snapper -c root create-config --template snapper-root /
+	echo "${YELLOW}:: ${BWHITE}Snapper root config already exists -- skipping"
 fi
 
 # Add .local/bin to PATH
