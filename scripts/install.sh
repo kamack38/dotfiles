@@ -699,7 +699,7 @@ EMPTY_PRE_POST_CLEANUP="yes"
 EMPTY_PRE_POST_MIN_AGE="1800"
 EOF
 
-systemctl enable --now snapper-cleanup.timer
+sudo systemctl enable --now snapper-cleanup.timer
 
 # Workaround if script is run inside chroot
 if [ "$(stat -c %d:%i /)" != "$(stat -c %d:%i /proc/1/root/.)" ]; then
