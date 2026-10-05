@@ -703,9 +703,9 @@ sudo systemctl enable --now snapper-cleanup.timer
 
 # Workaround if script is run inside chroot
 if [ "$(stat -c %d:%i /)" != "$(stat -c %d:%i /proc/1/root/.)" ]; then
-	/usr/bin/snapper --no-dbus -c root create-config --template snapper-root /
+	sudo /usr/bin/snapper --no-dbus -c root create-config --template snapper-root /
 else
-	/usr/bin/snapper -c root create-config --template snapper-root /
+	sudo /usr/bin/snapper -c root create-config --template snapper-root /
 fi
 
 # Add .local/bin to PATH
