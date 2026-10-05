@@ -415,6 +415,7 @@ else
 	git --git-dir="$DOTFILES" --work-tree="$HOME" config --local status.showUntrackedFiles no
 	git --git-dir="$DOTFILES" --work-tree="$HOME" config --local remote.origin.fetch '+refs/heads/*:refs/remotes/origin/*'
 	git --git-dir="$DOTFILES" --work-tree="$HOME" checkout --force
+	git --git-dir="$DOTFILES" --work-tree="$HOME" branch --set-upstream-to=origin/main main
 fi
 
 # Load XDG variables
