@@ -906,6 +906,7 @@ session    required   pam_env.so readenv=1 user_readenv=1
 EOT
 
 # Decrease user service timers
+sudo mkdir -p /usr/lib/systemd/user.conf.d
 sudo tee /usr/lib/systemd/user.conf.d/00-timeout.conf >/dev/null <<EOT
 [Manager]
 DefaultTimeoutStartSec=15s
