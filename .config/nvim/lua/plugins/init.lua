@@ -545,10 +545,8 @@ return {
       },
       patterns = {
         "bin",
-        ">Documents",
         ">.config",
         ".git",
-        ".github",
         "_darcs",
         ".hg",
         ".bzr",
