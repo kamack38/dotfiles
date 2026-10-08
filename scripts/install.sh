@@ -400,8 +400,8 @@ sudo sed -i 's/^#ParallelDownloads/ParallelDownloads/' /etc/pacman.conf
 # Enable color
 sudo sed -i 's/^#Color/Color/' /etc/pacman.conf
 
-# Enable candy
-sudo sed -i 's/^#ILoveCandy/ILoveCandy/' /etc/pacman.conf
+# Enable pretty progress bar
+sudo sed -i 's/^#PrettyProgressBar/PrettyProgressBar/' /etc/pacman.conf
 
 # Install dotfiles
 if [[ -d "$DOTFILES" && "$(git -C "$DOTFILES" ls-remote --get-url)" == "$REPO"* ]]; then
