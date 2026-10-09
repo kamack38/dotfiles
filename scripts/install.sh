@@ -312,6 +312,7 @@ SPELLCHECK_LOCALES=("${MAIN_LOCALE/_*/}" "${SECONDARY_LOCALE/_*/}")
 KB_LAYOUT="pl" # To get all keyboard layouts run `localectl list-keymaps`
 MAKEFLAGS="-j$(nproc)"
 CURRENT_USER="$USER"
+DOTGIT="git --git-dir=$DOTFILES --work-tree=$HOME"
 
 # Root notice
 if [ "$(id -u)" = 0 ]; then
@@ -406,16 +407,15 @@ sudo sed -i 's/^#PrettyProgressBar/PrettyProgressBar/' /etc/pacman.conf
 # Install dotfiles
 if [[ -d "$DOTFILES" && "$(git -C "$DOTFILES" ls-remote --get-url)" == "$REPO"* ]]; then
 	echo "${YELLOW}:: ${BLUE}dotfiles${BWHITE} are already installed${NC} -- updating"
-	git --git-dir="$DOTFILES" --work-tree="$HOME" fetch --all
-	git --git-dir="$DOTFILES" --work-tree="$HOME" pull --all
+	$DOTGIT fetch --all
+	$DOTGIT pull --all
 else
 	echo "${YELLOW}:: ${BWHITE}Cloning ${BLUE}dotfiles${NC} from ${BLUE}${REPO#*//*/}${NC}"
 	git clone --bare $REPO "$DOTFILES"
-	git --git-dir="$DOTFILES" --work-tree="$HOME" fetch --all
-	git --git-dir="$DOTFILES" --work-tree="$HOME" config --local status.showUntrackedFiles no
-	git --git-dir="$DOTFILES" --work-tree="$HOME" config --local remote.origin.fetch '+refs/heads/*:refs/remotes/origin/*'
-	git --git-dir="$DOTFILES" --work-tree="$HOME" checkout --force
-	git --git-dir="$DOTFILES" --work-tree="$HOME" branch --set-upstream-to=origin/main main
+	$DOTGIT config --local status.showUntrackedFiles no
+	$DOTGIT config --local remote.origin.fetch '+refs/heads/*:refs/remotes/origin/*'
+	$DOTGIT fetch --all
+	$DOTGIT checkout -B main --force origin/main
 fi
 
 # Load XDG variables
