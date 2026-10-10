@@ -56,3 +56,6 @@ KERAS_HOME DEFAULT=${XDG_STATE_HOME}/keras
 
 # Maven
 MAVEN_ARGS DEFAULT=${XDG_CONFIG_HOME}/maven/settings.xml
+
+# Copilot
+COPILOT_HOME DEFAULT=${XDG_DATA_HOME}/copilot
