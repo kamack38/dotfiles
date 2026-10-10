@@ -130,6 +130,7 @@ VM_PROFILE=(
 
 BLUETOOTH_PROFILE=(
 	"bluetooth-support" # Metapkg containing needed packages for using Bluetooth
+	"blueman"           # GTK+ Bluetooth Manager
 )
 
 RUST_DEV_PROFILE=(
