@@ -21,6 +21,7 @@ PACKAGES=(
 	"preload"                   # Makes applications run faster by prefetching binaries and shared objects
 	"irqbalance"                # IRQ balancing daemon for SMP systems
 	"ananicy-cpp"               # Autonice daemon, featuring lower CPU and RAM usage.
+	"hdparm"                    # A shell utility for manipulating Linux IDE drive/driver parameters
 	"cachyos-ananicy-rules-git" # CachyOS - ananicy-rules
 	"btrfsmaintenance"          # Btrfs maintenance scripts
 	"profile-sync-daemon"       # Symlinks and syncs browser profile dirs to RAM
