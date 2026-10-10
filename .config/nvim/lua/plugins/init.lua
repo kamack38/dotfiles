@@ -543,6 +543,10 @@ return {
         enabled = true,
         no_fallback = true,
       },
+      different_owners = {
+        allow = false,
+        notify = false,
+      },
       patterns = {
         "bin",
         ">.config",
