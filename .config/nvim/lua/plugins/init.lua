@@ -547,6 +547,7 @@ return {
         "bin",
         ">.config",
         ".git",
+        ".root",
         "_darcs",
         ".hg",
         ".bzr",

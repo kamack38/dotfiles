@@ -19,11 +19,10 @@
 
 ## Installation
 
-If you're looking for [Arch Linux Installation](#arch-linux-installation) go to
-the section below
+If you're looking for [Arch Linux Installation](#arch-linux-installation) go to the section below
 
 ```bash
-bash <(curl -sL https://github.com/kamack38/dotfiles/raw/main/scripts/install.sh)
+bash <(curl -fsSL https://github.com/kamack38/dotfiles/raw/main/scripts/install.sh)
 ```
 
 ### Arch Linux Installation
@@ -32,7 +31,7 @@ To setup a brand new version of Arch Linux you can use the command below in an
 [ISO](https://archlinux.org/download/)
 
 ```bash
-bash <(curl -sL https://github.com/kamack38/dotfiles/raw/main/scripts/setup.sh)
+bash <(curl -fsSL https://github.com/kamack38/dotfiles/raw/main/scripts/setup.sh)
 ```
 
 ## 📸 Screenshots
@@ -52,5 +51,4 @@ bash <(curl -sL https://github.com/kamack38/dotfiles/raw/main/scripts/setup.sh)
 
 ![AwesomeWM](./../Pictures/Screenshots/awesomewm.png)
 
-For some tips checkout
-[Essentials](https://github.com/kamack38/Essentials/wiki).
+For some tips checkout [Essentials](https://github.com/kamack38/Essentials/wiki).

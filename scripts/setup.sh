@@ -155,6 +155,9 @@ sgdisk -N "0" --typecode="0:8300" --change-name="0:Archlinux" "${DISK}" # Root P
 echo "${BLUE}:: ${BWHITE}Rereading partition table...${NC}"
 partprobe "${DISK}"
 
+# Wait for the disk lables to register
+udevadm settle
+
 # Create boot partition
 if [[ $use_x_efi == n* ]]; then
 	echo "${BLUE}:: ${BWHITE}Formatting EFI partition...${NC}"
