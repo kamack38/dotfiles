@@ -715,7 +715,8 @@ fi
 export PATH="$HOME/.local/bin:$PATH"
 
 # Update xdg dirs
-xdg-user-dirs-update --force
+mkdir -p "$HOME/Downloads" "$HOME/Documents" "$HOME/Music" "$HOME/Pictures" "$HOME/Videos" "$HOME/Documents/GitHUB"
+xdg-user-dirs-update
 
 # Update tealdeer cache
 tldr --update
