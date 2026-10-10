@@ -147,7 +147,7 @@ if [[ ! -d "/sys/firmware/efi" ]]; then
 fi
 
 if [[ $use_x_efi == n* ]]; then
-	sgdisk -n "0::+512M" --typecode="0:ef00" --change-name="0:EFIBOOT" "${DISK}" # UEFI Boot Partition
+	sgdisk -n "0::+1G" --typecode="0:ef00" --change-name="0:EFIBOOT" "${DISK}" # UEFI Boot Partition
 	EFI_PART="/dev/disk/by-partlabel/EFIBOOT"
 fi
 sgdisk -N "0" --typecode="0:8300" --change-name="0:Archlinux" "${DISK}" # Root Partition, default start, remaining
