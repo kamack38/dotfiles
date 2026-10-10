@@ -1014,6 +1014,15 @@ EOT
 
 	echo "${BLUE}:: ${BWHITE}Enabling ${BLUE}AppArmor${BWHITE} rules...${NC}"
 	sudo systemctl enable apparmor.service
+	sudo systemctl enable audit.service
+
+	# Fix git
+	sudo tee /etc/apparmor.d/local/git >/dev/null <<EOT
+owner /home/*/.dotfiles/{,**} rwlk,
+owner /home/*/.local/share/nvim/{,**} rwlk,
+EOT
+	sudo sed -i 's|^[[:space:]]*deny owner @{code_config_dirs}/[*][*] rw,|# &|' /etc/apparmor.d/git
+
 	sudo sed -i 's/^#write-cache/write-cache/' /etc/apparmor/parser.conf
 	sudo sed -i 's/^#Optimize=compress-fast/Optimize=compress-fast/' /etc/apparmor/parser.conf
 	sudo tee /etc/limine-entry-tool.d/30-apparmor.conf >/dev/null <<EOT
