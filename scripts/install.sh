@@ -291,8 +291,6 @@ RAZER_PACKAGES=(
 )
 
 SECURITY_PACKAGES=(
-	"lynis"                  # Security and system auditing tool to harden Unix/Linux systems
-	"rkhunter"               # Checks machines for the presence of rootkits and other unwanted tools
 	"libpwquality"           # Library for password quality checking and generating random passwords
 	"ufw"                    # Uncomplicated and easy to use CLI tool for managing a netfilter firewall
 	"apparmor"               # Mandatory Access Control (MAC) using Linux Security Module (LSM)
@@ -1029,16 +1027,6 @@ EOT
 	sudo tee -a /etc/pam.d/system-login >/dev/null <<EOT
 auth optional pam_faildelay.so delay=4000000
 EOT
-
-	read -rp "${BLUE}:: ${BWHITE}Do you want to scan your device now? [y/N]${NC}: " SCAN
-	if [[ $SCAN == y* ]]; then
-		echo "${BLUE}:: ${BWHITE}Running ${BLUE}lynis${BWHITE}...${NC}"
-		sudo lynis update info
-		sudo lynis audit system
-		echo "${BLUE}:: ${BWHITE}Checking for ${BLUE}rootkits${BWHITE}...${NC}"
-		sudo rkhunter --propupd
-		sudo rkhunter --check --sk
-	fi
 fi
 
 # Create initial ramdisk

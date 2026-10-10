@@ -342,6 +342,7 @@ EOT
 	tee /boot/limine.conf >/dev/null <<EOT
 ### Read more at config document: https://codeberg.org/Limine/Limine/src/branch/trunk/CONFIG.md
 timeout: 5
+default_entry: 2
 term_palette: 24273a;ed8796;a6da95;eed49f;8aadf4;f5bde6;8bd5ca;cad3f5
 term_palette_bright: 5b6078;ed8796;a6da95;eed49f;8aadf4;f5bde6;8bd5ca;cad3f5
 term_background: 24273a
