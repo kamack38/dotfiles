@@ -179,6 +179,7 @@ DOCKER_PROFILE=(
 DESKTOP_APPS=(
 	"sddm"                             # QML based X11 and Wayland display manager
 	"ark"                              # Archive Manager
+	"okular"                           # Document viewer
 	"dolphin"                          # File Manager
 	"ffmpegthumbs"                     # FFmpeg-based thumbnail creator for video files
 	"archlinux-xdg-menu"               # Generate WM menu from xdg files (Fix dolphin no "open with" programs)
