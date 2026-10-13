@@ -107,13 +107,14 @@ map({ "n", "v" }, "ge", function()
 end, { desc = "Spider ge" })
 
 -- Textobjects
-map({ "o", "x" }, "ac", '<cmd>lua require("various-textobjs").subword("outer")<CR>')
-map({ "o", "x" }, "ic", '<cmd>lua require("various-textobjs").subword("inner")<CR>')
+map({ "o", "x" }, "ac", '<cmd>lua require("various-textobjs").subword("outer")<CR>', { desc = "around subword textobj" })
+map({ "o", "x" }, "ic", '<cmd>lua require("various-textobjs").subword("inner")<CR>', { desc = "inner subword textobj" })
 map("n", "gx", utils.open_next_link, { desc = "Open next available link" })
 
 -- TS Textobjects
 local ts_repeat_move = require "nvim-treesitter-textobjects.repeatable_move"
 local ts_move = require("nvim-treesitter-textobjects.move")
+local ts_select = require("nvim-treesitter-textobjects.select")
 local ts_keymaps = {
   ["aa"] = "@parameter.outer",
   ["ia"] = "@parameter.inner",
@@ -123,7 +124,7 @@ local ts_keymaps = {
 }
 for mapping, query in pairs(ts_keymaps) do
   map({ "x", "o" }, mapping, function()
-    require("nvim-treesitter-textobjects.select").select_textobject(query, "textobjects")
+    ts_select.select_textobject(query, "textobjects")
   end, { desc = "Select " .. query })
 end
 map({ "n", "x", "o" }, "]m", function()
