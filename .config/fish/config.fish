@@ -158,6 +158,14 @@ if test -d /tmp/hypr
 end
 alias unlock-hyprland="hyprctl -i 0 keyword misc:allow_session_lock_restore 1 && hyprctl -i 0 dispatch exec hyprlock"
 
+# GnuPG
+function enable-gpg-ssh
+    export GPG_TTY=$(tty)
+    export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
+    gpgconf --launch gpg-agent
+    gpg-connect-agent updatestartuptty /bye >/dev/null
+end
+
 # Virtual machine
 function remove-vm -a vm
     sudo virsh shutdown --domain $vm
