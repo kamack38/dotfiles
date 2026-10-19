@@ -82,6 +82,7 @@ return {
 
   base46 = {
     theme = "onedark",
+    theme_toggle = { "onedark", "one_light" },
     transparency = true,
     hl_override = require("highlights").override,
     hl_add = require("highlights").add,
