@@ -97,6 +97,9 @@ EOF
 0x21 0x03211020
 EOF
 
+	# Remove nvidia modules that prevent hibernation
+	sudo sed -i -E '/^MODULES=/{s/\bnvidia[a-z_]*\b//g; s/[[:space:]]+/ /g; s/\( /(/; s/ \)/)/}' /etc/mkinitcpio.conf
+
 	echo "${BLUE}:: ${BWHITE}Running mkinitcpio...${NC}"
 	sudo mkinitcpio -P
 
