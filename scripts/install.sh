@@ -942,11 +942,11 @@ if [[ $repos_script == y* ]]; then
 	sudo pacman -Sy
 fi
 
-read -rp "${BLUE}:: ${BWHITE}Do you want to run script for asus laptops? [y/N]${NC}: " asus_script
+read -rp "${BLUE}:: ${BWHITE}Do you want to run script for laptop tweaks? [y/N]${NC}: " laptop_script
 
-if [[ $asus_script == y* ]]; then
-	echo "${BLUE}:: ${BWHITE}Running asus script...${NC}"
-	bash "$HOME/scripts/asus.sh"
+if [[ $laptop_script == y* ]]; then
+	echo "${BLUE}:: ${BWHITE}Running laptop tweaks script...${NC}"
+	bash "$HOME/scripts/tweaks.sh"
 fi
 
 read -rp "${BLUE}:: ${BWHITE}Do you want to add support for razer hardware? [y/N]${NC}: " razer_script

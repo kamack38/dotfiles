@@ -15,41 +15,47 @@ NC=$'\e[0m' # No Colour
 HELPER="paru"
 
 PACKAGES=(
-	"asusctl"                   # Asus drivers and management
-	"nvidia-prime"              # Offload to an NVIDIA GPU
-	"batsignal"                 # A lightweight battery monitor daemon
-	"preload"                   # Makes applications run faster by prefetching binaries and shared objects
-	"irqbalance"                # IRQ balancing daemon for SMP systems
-	"ananicy-cpp"               # Autonice daemon, featuring lower CPU and RAM usage.
-	"hdparm"                    # A shell utility for manipulating Linux IDE drive/driver parameters
-	"cachyos-ananicy-rules-git" # CachyOS - ananicy-rules
-	"btrfsmaintenance"          # Btrfs maintenance scripts
-	"profile-sync-daemon"       # Symlinks and syncs browser profile dirs to RAM
-	"systemd-oomd-defaults"     # Configuration files for systemd-oomd
-	"supergfxctl"               # A utility for Linux graphics switching on Intel/AMD iGPU + nVidia dGPU laptops
-	"rog-control-center"        # GUI for asusctl (required for notification icons)
+	"linux-cachyos-eevdf"         # The Linux EEVDF scheduler + Cachy Sauce Kernel by CachyOS with other patches and improvements kernel and modules
+	"linux-cachyos-eevdf-headers" # Kernel headers
+	"batsignal"                   # A lightweight battery monitor daemon
+	"preload"                     # Makes applications run faster by prefetching binaries and shared objects
+	"irqbalance"                  # IRQ balancing daemon for SMP systems
+	"ananicy-cpp"                 # Autonice daemon, featuring lower CPU and RAM usage.
+	"hdparm"                      # A shell utility for manipulating Linux IDE drive/driver parameters
+	"cachyos-ananicy-rules-git"   # CachyOS - ananicy-rules
+	"btrfsmaintenance"            # Btrfs maintenance scripts
+	"profile-sync-daemon"         # Symlinks and syncs browser profile dirs to RAM
+	"systemd-oomd-defaults"       # Configuration files for systemd-oomd
 )
 
-KERNEL_PACKAGES=(
-	"linux-g14" # Custom kernel with patches for asus laptops
-	"linux-g14-headers"
+ASUS_PACKAGES=(
+	"asusctl"            # Asus drivers and management
+	"rog-control-center" # GUI for asusctl (required for notification icons)
 )
 
-# Add asusctl repository
-source "$HOME/scripts/repos.sh"
-g14
+NVIDIA_PACKAGES=(
+	"linux-cachyos-eevdf-nvidia-open" # Nvidia modules for the kernel
+	"cardwire"                        # GPU manager for Wayland systems using eBPF LSM hooks
+	"nvidia-prime"                    # Offload to an NVIDIA GPU
+)
+
+read -rp "${BLUE}:: ${BWHITE}Do you want to install tweaks for asus laptops? [y/N]${NC}: " asus_laptops
+read -rp "${BLUE}:: ${BWHITE}Do you want to install tweaks for NVIDIA dGPU? [y/N]${NC}: " nvidia
+
+if [[ $asus_laptops == y* ]]; then
+	PACKAGES+=("${ASUS_PACKAGES[@]}")
+
+	# Add asusctl repository
+	source "$HOME/scripts/repos.sh"
+	g14
+fi
+if [[ $nvidia == y* ]]; then
+	PACKAGES+=("${NVIDIA_PACKAGES[@]}")
+fi
 
 # Refresh repositories
 echo "${BLUE}:: ${BWHITE}Refreshing repositories...${NC}"
 sudo pacman -Syy
-
-# Remove default kernel
-read -rp "${YELLOW}:: ${BWHITE}Do you want to install the ${BLUE}g14 kernel${BWHITE} and remove the default one? [Y/n]${NC}: " replace_kernel
-if [[ ! $replace_kernel == n* ]]; then
-	echo "${GREEN}:: ${BWHITE}Replacing ${BLUE}kernels${BWHITE}...${NC}"
-	sudo pacman -Rdd --noconfirm linux linux-headers
-	PACKAGES+=("${KERNEL_PACKAGES[@]}")
-fi
 
 # Install packages
 echo "${BLUE}:: ${BWHITE}Installing packages...${NC}"
@@ -57,20 +63,22 @@ $HELPER -S --noconfirm --needed --quiet "${PACKAGES[@]}"
 
 # Enable daemons
 echo "${BLUE}:: ${BWHITE}Enabling daemons...${NC}"
-sudo systemctl enable --now asusd.service
-systemctl enable --now --user batsignal.service
+systemctl --user add-wants graphical-session.target batsignal.service
 
-# Set keyboard light
-echo "${BLUE}:: ${BWHITE}Setting keyboard light...${NC}"
-asusctl aura effect rainbow-wave --speed low --direction right
-asusctl leds set off
+if [[ $asus_laptops == y* ]]; then
+	sudo systemctl enable --now asusd.service
 
-echo "${BLUE}:: ${BWHITE}Fixing sound...${NC}"
-sudo tee /etc/modprobe.d/hda-jack-retask.conf >/dev/null <<EOF
+	# Set keyboard light
+	echo "${BLUE}:: ${BWHITE}Setting keyboard light...${NC}"
+	asusctl aura effect rainbow-wave --speed low --direction right
+	asusctl leds set off
+
+	echo "${BLUE}:: ${BWHITE}Fixing sound...${NC}"
+	sudo tee /etc/modprobe.d/hda-jack-retask.conf >/dev/null <<EOF
 options snd-hda-intel patch=hda-jack-retask.fw,hda-jack-retask.fw,hda-jack-retask.fw,hda-jack-retask.fw
 EOF
 
-sudo tee /lib/firmware/hda-jack-retask.fw >/dev/null <<EOF
+	sudo tee /lib/firmware/hda-jack-retask.fw >/dev/null <<EOF
 [codec]
 0x10ec0285 0x10431602 0
 
@@ -89,14 +97,17 @@ sudo tee /lib/firmware/hda-jack-retask.fw >/dev/null <<EOF
 0x21 0x03211020
 EOF
 
-echo "${BLUE}:: ${BWHITE}Running mkinitcpio...${NC}"
-sudo mkinitcpio -P
+	echo "${BLUE}:: ${BWHITE}Running mkinitcpio...${NC}"
+	sudo mkinitcpio -P
 
-# Fix slow internet
-# sudo sysctl net.ipv4.tcp_ecn=0
+	# Fix slow internet
+	# sudo sysctl net.ipv4.tcp_ecn=0
+fi
 
+echo "${BLUE}:: ${BWHITE}Applying ${BLUE}tweaks${BWHITE}...${NC}"
+# ################
 # Powersave Tweaks
-echo "${BLUE}:: ${BWHITE}Applying ${BLUE}powersave tweaks${BWHITE}...${NC}"
+# ################
 
 # Disable NMI Watchdog
 # - The NMI watchdog is a debugging feature to catch hardware hangs that cause a kernel panic. On some systems it can generate a lot of interrupts, causing a noticeable increase in power usag
@@ -126,23 +137,6 @@ ACTION=="change", SUBSYSTEM=="power_supply", ATTRS{type}=="Mains", ATTRS{online}
 ACTION=="change", SUBSYSTEM=="power_supply", ATTRS{type}=="Mains", ATTRS{online}=="0", RUN+="/usr/bin/systemctl --user --machine $USER@ start battery.service"
 ACTION=="change", SUBSYSTEM=="power_supply", ATTRS{type}=="Mains", ATTRS{online}=="1", RUN+="/usr/bin/systemctl --user --machine $USER@ start ac.service"
 EOF
-
-# Nvidia power rules
-sudo tee /etc/udev/rules.d/80-nvidia-pm.rules >/dev/null <<EOF
-# Enable runtime PM for NVIDIA VGA/3D controller devices on driver bind
-ACTION=="bind", SUBSYSTEM=="pci", ATTR{vendor}=="0x10de", ATTR{class}=="0x030000", TEST=="power/control", ATTR{power/control}="auto"
-ACTION=="bind", SUBSYSTEM=="pci", ATTR{vendor}=="0x10de", ATTR{class}=="0x030200", TEST=="power/control", ATTR{power/control}="auto"
-
-# Disable runtime PM for NVIDIA VGA/3D controller devices on driver unbind
-ACTION=="unbind", SUBSYSTEM=="pci", ATTR{vendor}=="0x10de", ATTR{class}=="0x030000", TEST=="power/control", ATTR{power/control}="on"
-ACTION=="unbind", SUBSYSTEM=="pci", ATTR{vendor}=="0x10de", ATTR{class}=="0x030200", TEST=="power/control", ATTR{power/control}="on"
-EOF
-
-# Dynamic power management for Ampere and later cards
-sudo tee /etc/modprobe.d/nvidia-pm.conf >/dev/null <<EOF
-options nvidia "NVreg_DynamicPowerManagement=0x03"
-EOF
-
 # Don't start irqbalance when on battery
 sudo mkdir -p /etc/systemd/system/irqbalance.service.d
 sudo tee /etc/systemd/system/irqbalance.service.d/override.conf >/dev/null <<EOF
@@ -150,39 +144,9 @@ sudo tee /etc/systemd/system/irqbalance.service.d/override.conf >/dev/null <<EOF
 ConditionACPower=true
 EOF
 
-# Disable dedicated gpu when on battery
-sudo tee /etc/systemd/system/gpu-switch.service >/dev/null <<EOF
-[Unit]
-Description=Set GPU mode before supergfxd
-Before=supergfxd.service
-
-[Service]
-Type=oneshot
-ExecStart=/usr/local/bin/set-gpu-mode.sh
-
-[Install]
-WantedBy=multi-user.target
-EOF
-
-sudo tee /usr/local/bin/set-gpu-mode.sh >/dev/null <<EOF
-#!/bin/bash
-if [ \$(cat /sys/class/power_supply/ADP0/online) == "0" ]; then
-	echo "Setting mode to Integrated"
-	sed -i 's/Hybrid/Integrated/' /etc/supergfxd.conf
-else
-	echo "Setting mode to Hybrid"
-	sed -i 's/Integrated/Hybrid/' /etc/supergfxd.conf
-fi
-EOF
-
+# ##################
 # Performance tweaks
-echo "${BLUE}:: ${BWHITE}Applying ${BLUE}performance tweaks${BWHITE}...${NC}"
-
-# Disable nouveau
-sudo tee /etc/modprobe.d/blacklist-nvidia-nouveau.conf >/dev/null <<EOT
-blacklist nouveau
-options nouveau modeset=0
-EOT
+# ##################
 
 # Improve disk performance
 sudo tee /etc/udev/rules.d/69-hdparm.rules >/dev/null <<EOF
@@ -201,10 +165,37 @@ ACTION=="add|change", KERNEL=="sd[a-z]|mmcblk[0-9]*", ATTR{queue/rotational}=="0
 ACTION=="add|change", KERNEL=="sd[a-z]", ATTR{queue/rotational}=="1", ATTR{queue/scheduler}="bfq"
 EOF
 
+if [[ $nvidia == y* ]]; then
+	echo "${BLUE}:: ${BWHITE}Applying ${BLUE}NVIDIA tweaks${BWHITE}...${NC}"
+	# Nvidia power rules
+	sudo tee /etc/udev/rules.d/80-nvidia-pm.rules >/dev/null <<EOF
+# Enable runtime PM for NVIDIA VGA/3D controller devices on driver bind
+ACTION=="bind", SUBSYSTEM=="pci", ATTR{vendor}=="0x10de", ATTR{class}=="0x030000", TEST=="power/control", ATTR{power/control}="auto"
+ACTION=="bind", SUBSYSTEM=="pci", ATTR{vendor}=="0x10de", ATTR{class}=="0x030200", TEST=="power/control", ATTR{power/control}="auto"
+
+# Disable runtime PM for NVIDIA VGA/3D controller devices on driver unbind
+ACTION=="unbind", SUBSYSTEM=="pci", ATTR{vendor}=="0x10de", ATTR{class}=="0x030000", TEST=="power/control", ATTR{power/control}="on"
+ACTION=="unbind", SUBSYSTEM=="pci", ATTR{vendor}=="0x10de", ATTR{class}=="0x030200", TEST=="power/control", ATTR{power/control}="on"
+EOF
+
+	# Dynamic power management for Ampere and later cards
+	sudo tee /etc/modprobe.d/nvidia-pm.conf >/dev/null <<EOF
+options nvidia "NVreg_DynamicPowerManagement=0x03"
+EOF
+
+	# Disable nouveau
+	sudo tee /etc/modprobe.d/blacklist-nvidia-nouveau.conf >/dev/null <<EOT
+blacklist nouveau
+options nouveau modeset=0
+EOT
+
+	# Enable services
+	sudo systemctl enable --now cardwired.service
+fi
+
 # Enable daemons
 echo "${BLUE}:: ${BWHITE}Enabling ${BLUE}daemons${BWHITE}...${NC}"
 systemctl enable --user psd
 sudo systemctl enable ananicy-cpp
 sudo systemctl enable irqbalance
 sudo systemctl enable preload
-sudo systemctl enable gpu-switch
