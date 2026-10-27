@@ -32,7 +32,6 @@ HYPRLAND_PACKAGES=(
 	"xdg-desktop-portal-hyprland"   # xdg-desktop-portal backend for hyprland
 	"wev"                           # A tool for debugging wayland events, similar to xev
 	"sddm"                          # QML based X11 and Wayland display manager
-	"autorandr"                     # Auto-detect connected display hardware and load appropriate X11 setup using xrandr
 	"dunst"                         # Customizable and lightweight notification-daemon
 	"ttf-iosevka-nerd"              # Patched font Iosevka from nerd fonts library (used by Dunst)
 	"qt6-wayland"                   # Provides APIs for Wayland
