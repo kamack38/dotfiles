@@ -1,9 +1,9 @@
 hyprctl monitors -j |
 	jq -r '.[] |
-	select(.disabled | not) |
-	"\(.name),\(.width)x\(.height)@60,\(.x)x\(.y),\(.scale),transform,\(.transform)"' |
+        select(.disabled | not) |
+        "hl.monitor({ output = \"\(.name)\", mode = \"\(.width)x\(.height)@60\", position = \"\(.x)x\(.y)\", scale = \(.scale), transform = \(.transform) })"' |
 	while read -r cfg; do
-		hyprctl keyword monitor "$cfg"
+		hyprctl eval "$cfg"
 	done
 
 echo 2 | sudo tee /sys/class/drm/card*-eDP-*/amdgpu/panel_power_savings
