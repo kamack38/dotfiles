@@ -170,8 +170,13 @@ EOF
 
 if [[ $nvidia == y* ]]; then
 	echo "${BLUE}:: ${BWHITE}Applying ${BLUE}NVIDIA tweaks${BWHITE}...${NC}"
-	# Nvidia power rules
-	sudo tee /etc/udev/rules.d/80-nvidia-pm.rules >/dev/null <<EOF
+	# Dynamic power management for Turing+ (RTX 20xx / GTX 16xx+) and later cards
+	ARCH=$(nvidia-smi -q | awk -F': ' '/Product Architecture/ {print $2}' | xargs)
+	if [[ "$ARCH" =~ ^(Turing|Ampere|Ada Lovelace|Blackwell)$ ]]; then
+		echo "${GREEN}:: ${BWHITE}Turing+ GPU detected ($ARCH). RTD3 supported.${NC}"
+		echo "Turing+ GPU detected ($ARCH). RTD3 supported."
+		# Nvidia power rules
+		sudo tee /etc/udev/rules.d/80-nvidia-pm.rules >/dev/null <<EOF
 # Enable runtime PM for NVIDIA VGA/3D controller devices on driver bind
 ACTION=="bind", SUBSYSTEM=="pci", ATTR{vendor}=="0x10de", ATTR{class}=="0x030000", TEST=="power/control", ATTR{power/control}="auto"
 ACTION=="bind", SUBSYSTEM=="pci", ATTR{vendor}=="0x10de", ATTR{class}=="0x030200", TEST=="power/control", ATTR{power/control}="auto"
@@ -181,10 +186,12 @@ ACTION=="unbind", SUBSYSTEM=="pci", ATTR{vendor}=="0x10de", ATTR{class}=="0x0300
 ACTION=="unbind", SUBSYSTEM=="pci", ATTR{vendor}=="0x10de", ATTR{class}=="0x030200", TEST=="power/control", ATTR{power/control}="on"
 EOF
 
-	# Dynamic power management for Ampere and later cards
-	sudo tee /etc/modprobe.d/nvidia-pm.conf >/dev/null <<EOF
+		sudo tee /etc/modprobe.d/nvidia-pm.conf >/dev/null <<EOF
 options nvidia "NVreg_DynamicPowerManagement=0x03"
 EOF
+	else
+		echo "${YELLOW}:: ${BWHITE}Pre-Turing or unsupported GPU detected ($ARCH).${NC}"
+	fi
 
 	# Disable nouveau
 	sudo tee /etc/modprobe.d/blacklist-nvidia-nouveau.conf >/dev/null <<EOT
