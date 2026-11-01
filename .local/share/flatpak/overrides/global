@@ -1,4 +1,8 @@
 [Context]
-sockets=wayland
-devices=dri
-filesystems=/usr/share/icons:ro
+sockets=wayland;
+devices=dri;
+filesystems=/usr/share/icons:ro;
+
+[Environment]
+GTK_THEME=catppuccin-macchiato-blue-standard+default
+ICON_THEME=Fluent-dark
