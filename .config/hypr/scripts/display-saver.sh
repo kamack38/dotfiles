@@ -6,5 +6,6 @@ hyprctl monitors -j |
 		hyprctl eval "$cfg"
 	done
 
+brightnessctl set 50%
 echo 2 | sudo tee /sys/class/drm/card*-eDP-*/amdgpu/panel_power_savings
 echo "Current power saving level is: $(cat /sys/class/drm/card*-eDP-*/amdgpu/panel_power_savings)"
