@@ -287,11 +287,6 @@ PLYMOUTH_PACKAGES=(
 	"archcraft-plymouth-theme" # Default plymouth theme for Archcraft
 )
 
-RAZER_PACKAGES=(
-	"polychromatic-git"  # RGB lighting management front-end application for OpenRazer
-	"openrazer-meta-git" # Meta package for installing all required openrazer packages
-)
-
 SECURITY_PACKAGES=(
 	"libpwquality"           # Library for password quality checking and generating random passwords
 	"ufw"                    # Uncomplicated and easy to use CLI tool for managing a netfilter firewall
@@ -947,16 +942,6 @@ read -rp "${BLUE}:: ${BWHITE}Do you want to run script for laptop tweaks? [y/N]$
 if [[ $laptop_script == y* ]]; then
 	echo "${BLUE}:: ${BWHITE}Running laptop tweaks script...${NC}"
 	bash "$HOME/scripts/tweaks.sh"
-fi
-
-read -rp "${BLUE}:: ${BWHITE}Do you want to add support for razer hardware? [y/N]${NC}: " razer_script
-
-if [[ $razer_script == y* ]]; then
-	echo "${BLUE}:: ${BWHITE}Installing razer drivers & RGB software...${NC}"
-	$HELPER -S --noconfirm --needed --quiet "${RAZER_PACKAGES[@]}"
-
-	# Add current user to plugdev group
-	sudo gpasswd -a "$CURRENT_USER" plugdev
 fi
 
 read -rp "${BLUE}:: ${BWHITE}Do you want to harden your system? [y/N]${NC}: " harden
