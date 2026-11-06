@@ -21,7 +21,7 @@ end
 bind(c.main_mod .. " + SHIFT + Q", hl.dsp.exit())
 bind(c.main_mod .. " + SHIFT + R", hl.dsp.reload_config())
 bind(c.main_mod .. " + F1", command(c.scripts .. "/gamemode.sh"))
-bind(c.main_mod .. " + SHIFT + Z", command("toggle_zoom"))
+bind(c.main_mod .. " + SHIFT + Z", u.toggle_zoom)
 
 -- Apps
 bind(c.main_mod .. " + grave", command(c.term))
@@ -37,7 +37,7 @@ bind(c.main_mod .. " + Escape", command(c.powermenu))
 
 -- Screenshot
 bind("Print", command("grimblast --notify --cursor copysave output"))
-bind(c.main_mod .. " + SHIFT + S", command("grimblast --notify copysave area"))
+bind(c.main_mod .. " + SHIFT + S", command("grimblast --freeze --notify copysave area"))
 
 -- Window state
 bind(c.main_mod .. " + X", hl.dsp.window.kill())
