@@ -52,11 +52,13 @@ rule("wlogout-full", { class = "wlogout" }, {
   float = true, fullscreen = true, no_anim = true, stay_focused = true,
 })
 
-rule("xwayland-bridge", { class = "^(xwaylandvideobridge)$" }, {
-  opacity = "0.0 override 0.0 override",
-  no_anim = true,
-  no_focus = true,
+rule("xwayland-video-bridge-fixes", { class = "xwaylandvideobridge" }, {
   no_initial_focus = true,
+  no_focus = true,
+  no_anim = true,
+  no_blur = true,
+  max_size = { 1, 1 },
+  opacity = 0.0
 })
 rule("msoffice", { class = "^(Microsoft (Excel|Access))$" }, {
   no_anim = true, no_blur = true, border_size = 0, no_shadow = true,

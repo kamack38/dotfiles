@@ -40,7 +40,7 @@ bind("Print", command("grimblast --notify --cursor copysave output"))
 bind(c.main_mod .. " + SHIFT + S", command("grimblast --freeze --notify copysave area"))
 
 -- Window state
-bind(c.main_mod .. " + X", hl.dsp.window.kill())
+bind(c.main_mod .. " + X", hl.dsp.window.close())
 bind(c.main_mod .. " + SPACE", hl.dsp.window.float({ action = "toggle" }))
 bind(c.main_mod .. " + F", hl.dsp.window.fullscreen({ mode = 0 }))
 hl.bind(c.main_mod .. " + SHIFT + F", hl.dsp.window.fullscreen_state({ internal = 0, client = 2, action = "toggle" }))
